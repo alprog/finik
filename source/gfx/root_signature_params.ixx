@@ -14,5 +14,6 @@ export struct FrameConstants
     Matrix ViewProjection;
     Matrix View;
     Matrix Projection;
+    Matrix ShadowViewProjection;
     Vector4 LightDirection;
 };

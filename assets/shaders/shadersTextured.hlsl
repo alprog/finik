@@ -10,6 +10,7 @@ struct VSInput
 struct PSInput
 {
 	float4 position : SV_POSITION;
+	float4 shadowPosition : TEXCOORD2;
 	float3 normal : TEXCOORD0;
 	float2 uv : TEXCOORD1;
 };
@@ -18,9 +19,10 @@ PSInput VSMain(VSInput input)
 {
 	PSInput result;
 	
-	float4x4 MVP = mul(Model, ViewProject);
+	float4 worldPosition = mul(float4(input.position, 1), Model);
 
-	result.position = mul(float4(input.position, 1), MVP);
+	result.position = mul(worldPosition, ViewProject);
+	result.shadowPosition = mul(worldPosition, ShadowViewProjection);
 	result.normal = input.normal;
 	result.uv = input.uv;
 

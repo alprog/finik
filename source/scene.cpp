@@ -50,6 +50,19 @@ void Scene::render(RenderContext& renderContext, Camera* camera, RenderPass pass
     auto P = camera->projectionMatrix;
     frameConstants->ViewProjection = V * P;
     frameConstants->LightDirection = light.direction;
+
+    if (pass == RenderPass::Main)
+    {
+        // temp code, replace it
+        Camera shadowCamera;
+        shadowCamera.FieldOfView = std::numbers::pi / 4.0f;
+        shadowCamera.lookAt = camera->lookAt;
+        shadowCamera.position = shadowCamera.lookAt - light.direction.xyz() * 100;
+        shadowCamera.calcViewMatrix();
+        shadowCamera.calcProjectionMatrix();
+        frameConstants->ShadowViewProjection = shadowCamera.viewMatrix * shadowCamera.projectionMatrix;
+    }
+
     renderContext.setFrameConstants(frameConstants.GpuAddress);
 
     //----------------------
