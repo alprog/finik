@@ -48,7 +48,9 @@ void SceneView::draw_content()
 
     std::shared_ptr<RenderLane>& lane = Shadows ? shadowMapLane : renderLane;
 
-    D3D12_GPU_DESCRIPTOR_HANDLE handle = Depth ? lane->getSurface().depthTextureHandle.getGPU() : lane->getSurface().textureHandle.getGPU();
+    bool UseDepth = Depth || Shadows;
+
+    D3D12_GPU_DESCRIPTOR_HANDLE handle = UseDepth ? lane->getSurface().depthTextureHandle.getGPU() : lane->getSurface().textureHandle.getGPU();
 
     ImTextureID textureId = (void*)handle.ptr;
 
@@ -58,7 +60,7 @@ void SceneView::draw_content()
 
     auto imageStartPos = ImGui::GetCursorScreenPos();
 
-    if (Depth)
+    if (UseDepth)
     {
         auto Callback = [](const ImDrawList* parent_list, const ImDrawCmd* cmd) //
         {
@@ -72,7 +74,7 @@ void SceneView::draw_content()
     }
     ImGui::Image(textureId, imSize);
 
-    if (Depth)
+    if (UseDepth)
     {
         GImGui->CurrentWindow->DrawList->AddCallback((ImDrawCallback)(-8), nullptr);
     }

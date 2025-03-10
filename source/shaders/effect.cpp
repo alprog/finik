@@ -41,7 +41,7 @@ std::shared_ptr<PipelineState> Effect::getPipelineState()
 {
     if (pipelineState == nullptr)
     {
-        auto pixelBytecode = pixelShader ? pixelShader->bytecode : ShaderManager::GetInstance().getFallbackByteCode(ShaderType::Pixel);
+        ShaderByteCode pixelBytecode = pixelShader ? pixelShader->bytecode : ShaderByteCode();
         PipelineSettings settings(vertexShader->bytecode, pixelBytecode);
         settings.type = type;
         pipelineState = Single::Get<PSOManager>().get_pso(settings);

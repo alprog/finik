@@ -11,7 +11,7 @@ RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize re
     , pass{pass}
     , camera{camera}
 {
-    surface.init(resolution, true, true);
+    surface.init(resolution, pass != RenderPass::Shadow, true);
 }
 
 void RenderLane::resize(IntSize resolution)

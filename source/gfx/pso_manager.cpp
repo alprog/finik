@@ -48,7 +48,10 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     psoDesc.pRootSignature = renderSystem.getRootSignature().signatureImpl.Get();
 
     psoDesc.VS = CD3DX12_SHADER_BYTECODE(settings.vertexByteCode.Get());
-    psoDesc.PS = CD3DX12_SHADER_BYTECODE(settings.pixelByteCode.Get());
+    if (settings.pixelByteCode)
+    {
+        psoDesc.PS = CD3DX12_SHADER_BYTECODE(settings.pixelByteCode.Get());
+    }
     psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
     psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
 
