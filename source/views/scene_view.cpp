@@ -20,6 +20,9 @@ SceneView::SceneView(const char* name, Scene& scene)
     shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, IntSize{1024, 1024});
     renderLane = std::make_shared<RenderLane>(scene, RenderPass::Main, camera, IntSize{1024, 800});
 
+    // temp code, redo it
+    scene.shadowTextureId = shadowMapLane->getSurface().depthTextureHandle.getIndex();
+
     auto& lanes = Single::Get<RenderSystem>().lanes;
     lanes.append(shadowMapLane);
     lanes.append(renderLane);

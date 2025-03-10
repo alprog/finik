@@ -32,5 +32,6 @@ public:
     Vector3 castedPos;
 
     Light light;
+    uint32 shadowTextureId;
     //ShadowMaps shadowMaps;
 };

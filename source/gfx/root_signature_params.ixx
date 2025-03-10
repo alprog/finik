@@ -16,4 +16,5 @@ export struct FrameConstants
     Matrix Projection;
     Matrix ShadowViewProjection;
     Vector4 LightDirection;
+    uint32 ShadowTextureId;
 };

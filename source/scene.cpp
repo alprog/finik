@@ -61,6 +61,7 @@ void Scene::render(RenderContext& renderContext, Camera* camera, RenderPass pass
         shadowCamera.calcViewMatrix();
         shadowCamera.calcProjectionMatrix();
         frameConstants->ShadowViewProjection = shadowCamera.viewMatrix * shadowCamera.projectionMatrix;
+        frameConstants->ShadowTextureId = this->shadowTextureId;
     }
 
     renderContext.setFrameConstants(frameConstants.GpuAddress);

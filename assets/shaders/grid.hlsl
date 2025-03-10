@@ -11,6 +11,7 @@ struct VSInput
 struct PSInput
 {
 	float4 position : SV_POSITION;
+	float4 shadowPosition : TEXCOORD3;
 	float3 normal : TEXCOORD0;
 	float2 uv : TEXCOORD1;
 	uint2 coord : TEXCOORD2;
@@ -20,9 +21,11 @@ PSInput VSMain(VSInput input)
 {
 	PSInput result;
 
-	float4x4 MVP = mul(Model, ViewProject);
+	float4 worldPosition = mul(float4(input.position, 1), Model);
 
-	result.position = mul(float4(input.position, 1), MVP);
+	result.position = mul(worldPosition, ViewProject);
+	result.shadowPosition = mul(worldPosition, ShadowViewProjection);
+	result.shadowPosition /= result.shadowPosition.w;
 	result.normal = input.normal;
 	result.uv = input.uv;
 	result.coord = input.coord;
@@ -30,11 +33,24 @@ PSInput VSMain(VSInput input)
 	return result;
 }
 
+float LinearizeDepth(float depth, float nearPlane, float farPlane)
+{
+    return (2.0 * nearPlane) / (farPlane + nearPlane - depth * (farPlane - nearPlane));
+}
+
 float4 PSMain(PSInput input) : SV_TARGET
 {
+	Texture2D shadowTexture = textures[ShadowTextureId];
+	
+	float2 shadowUV = float2(input.shadowPosition.x / 2 + 0.5, 0.5 - input.shadowPosition.y / 2);
+	
+	float shadowValue = shadowTexture.Sample(DefaultSampler, shadowUV).r;
+	shadowValue = LinearizeDepth(shadowValue, 0.1f, 400);
+	
+	return float4(shadowValue, 0, 0, 1);
+
 	if (input.position.z == 0)
 		return 1;
-
 		
 	Texture2D cellTexture = textures[Materials[MaterialId].TextureA];
 	Texture2D gridTexture = textures[Materials[MaterialId].TextureB];
