@@ -21,7 +21,7 @@ SceneView::SceneView(const char* name, Scene& scene)
     renderLane = std::make_shared<RenderLane>(scene, RenderPass::Main, camera, IntSize{1024, 800});
 
     // temp code, redo it
-    scene.shadowTextureId = shadowMapLane->getSurface().depthTextureHandle.getIndex();
+    scene.shadowTextureId = shadowMapLane->getFrameBuffer().depthTextureHandle.getIndex();
 
     auto& lanes = Single::Get<RenderSystem>().lanes;
     lanes.append(shadowMapLane);
@@ -53,7 +53,7 @@ void SceneView::draw_content()
 
     bool UseDepth = Depth || Shadows;
 
-    D3D12_GPU_DESCRIPTOR_HANDLE handle = UseDepth ? lane->getSurface().depthTextureHandle.getGPU() : lane->getSurface().textureHandle.getGPU();
+    D3D12_GPU_DESCRIPTOR_HANDLE handle = UseDepth ? lane->getFrameBuffer().depthTextureHandle.getGPU() : lane->getFrameBuffer().textureHandle.getGPU();
 
     ImTextureID textureId = (void*)handle.ptr;
 

@@ -1,7 +1,7 @@
 export module render_lane;
 
 import core;
-import render_surface;
+import frame_buffer;
 import scene_system_fwd;
 import render_pass;
 
@@ -11,13 +11,13 @@ public:
     RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution);
     void resize(IntSize resolution);
 
-    RenderSurface& getSurface();
+    FrameBuffer& getFrameBuffer();
     void render();
 
 private:
     Scene& scene;
     Camera& camera;
-    RenderSurface surface;
+    FrameBuffer frameBuffer;
     RenderPass pass;
 
     uint64 fenceValue = 0;

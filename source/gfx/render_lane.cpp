@@ -11,25 +11,25 @@ RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize re
     , pass{pass}
     , camera{camera}
 {
-    surface.init(resolution, pass != RenderPass::Shadow, true);
+    frameBuffer.init(resolution, pass != RenderPass::Shadow, true);
 }
 
 void RenderLane::resize(IntSize resolution)
 {
-    if (surface.resolution != resolution)
+    if (frameBuffer.resolution != resolution)
     {
         RenderSystem& render_system = Single::Get<RenderSystem>();
         render_system.get_command_queue().Flush();
 
-        surface.resize(resolution);
+        frameBuffer.resize(resolution);
         camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
         camera.calcProjectionMatrix();
     }
 }
 
-RenderSurface& RenderLane::getSurface()
+FrameBuffer& RenderLane::getFrameBuffer()
 {
-    return surface;
+    return frameBuffer;
 }
 
 void RenderLane::render()
@@ -44,11 +44,11 @@ void RenderLane::render()
     CommandList& commandList = render_system.getFreeCommandList();
     commandList.startRecording();
 
-    surface.startRendering(commandList);
+    frameBuffer.startRendering(commandList);
 
     RenderContext context(render_system, *commandList.listImpl.Get());
     scene.render(context, &camera, pass);
-    surface.endRendering(commandList);
+    frameBuffer.endRendering(commandList);
 
     commandList.endRecording();
     commandQueue.execute(commandList);

@@ -100,7 +100,7 @@ void SwapChain::CreateRenderTargets()
         ID3D12Resource* pBackBuffer = nullptr;
         swapChain->GetBuffer(i, IID_PPV_ARGS(&pBackBuffer));
         render_system.get_device()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle);
-        renderTarget->resource = pBackBuffer;
+        renderTarget->resource.InternalResource = pBackBuffer;
 
         renderTargets.append(renderTarget);
     }
@@ -122,16 +122,7 @@ void SwapChain::CreateRenderTarget()
 
     D3D12_CLEAR_VALUE clearValue;
     clearValue.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-
-    auto result = render_system.get_device()->CreateCommittedResource(
-        &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
-        D3D12_HEAP_FLAG_NONE,
-        &resourceDesc,
-        D3D12_RESOURCE_STATE_RENDER_TARGET,
-        &clearValue,
-        IID_PPV_ARGS(&renderTarget->resource));
-    if (FAILED(result))
-        throw;
+    renderTarget->resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_RENDER_TARGET, &clearValue);
 }
 
 void SwapChain::CreateDepthStencil()
@@ -229,7 +220,7 @@ void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
     D3D12_RESOURCE_BARRIER barrier = {};
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.Get();
+    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.InternalResource;
     barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
     barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
@@ -263,7 +254,7 @@ void SwapChain::finish_frame(ID3D12GraphicsCommandList* command_list)
     D3D12_RESOURCE_BARRIER barrier = {};
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.Get();
+    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.InternalResource;
     barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
     barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;

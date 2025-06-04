@@ -1,10 +1,10 @@
 module;
 #include "dx.h"
-module render_surface;
+module frame_buffer;
 
 import render_system;
 
-void RenderSurface::init(IntSize resolution, bool renderTargetEnabled, bool depthStencilEnabled)
+void FrameBuffer::init(IntSize resolution, bool renderTargetEnabled, bool depthStencilEnabled)
 {
     this->renderTargetEnabled = renderTargetEnabled;
     this->depthStencilEnabled = depthStencilEnabled;
@@ -12,7 +12,7 @@ void RenderSurface::init(IntSize resolution, bool renderTargetEnabled, bool dept
     resize(resolution);
 }
 
-void RenderSurface::createHandles()
+void FrameBuffer::createHandles()
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     if (renderTargetEnabled)
@@ -27,7 +27,7 @@ void RenderSurface::createHandles()
     }
 }
 
-void RenderSurface::resize(IntSize resolution)
+void FrameBuffer::resize(IntSize resolution)
 {
     this->resolution = resolution;
     if (renderTargetEnabled)
@@ -40,7 +40,7 @@ void RenderSurface::resize(IntSize resolution)
     }
 }
 
-void RenderSurface::recreateRenderTarget()
+void FrameBuffer::recreateRenderTarget()
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     CD3DX12_RESOURCE_DESC resourceDesc(
@@ -60,7 +60,7 @@ void RenderSurface::recreateRenderTarget()
     render_system.get_device()->CreateShaderResourceView(renderTarget.getInternal(), nullptr, textureHandle.getCPU());
 }
 
-void RenderSurface::recreateDepthStencil()
+void FrameBuffer::recreateDepthStencil()
 {
     CD3DX12_RESOURCE_DESC resourceDesc(
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
@@ -91,7 +91,7 @@ void RenderSurface::recreateDepthStencil()
     render_system.get_device()->CreateShaderResourceView(depthStencil.getInternal(), &SRVDesc, depthTextureHandle.getCPU());
 }
 
-void RenderSurface::startRendering(CommandList& commandList)
+void FrameBuffer::startRendering(CommandList& commandList)
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
 
@@ -127,7 +127,7 @@ void RenderSurface::startRendering(CommandList& commandList)
     commandList.listImpl->RSSetScissorRects(1, &scissorRect);
 }
 
-void RenderSurface::endRendering(CommandList& commandList)
+void FrameBuffer::endRendering(CommandList& commandList)
 {
     if (renderTargetEnabled)
     {

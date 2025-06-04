@@ -1,4 +1,4 @@
-export module render_surface;
+export module frame_buffer;
 
 import core;
 import descriptor_handle;
@@ -6,7 +6,7 @@ import dx;
 import command_list;
 import gpu_resource;
 
-export class RenderSurface
+export class FrameBuffer
 {
 public:
     void init(IntSize resolution, bool renderTargetEnabled, bool depthStencilEnabled);

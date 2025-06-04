@@ -159,8 +159,8 @@
     <ClCompile Include="gfx\pso_manager.cpp" />
     <ClCompile Include="gfx\pso_manager.ixx" />
     <ClCompile Include="gfx\render_pass.ixx" />
-    <ClCompile Include="gfx\render_surface.cpp" />
-    <ClCompile Include="gfx\render_surface.ixx" />
+    <ClCompile Include="gfx\frame_buffer.cpp" />
+    <ClCompile Include="gfx\frame_buffer.ixx" />
     <ClCompile Include="gfx\pipeline_state.cpp" />
     <ClCompile Include="shadows\shadow_maps.ixx" />
     <ClCompile Include="views\console_view.cpp" />
