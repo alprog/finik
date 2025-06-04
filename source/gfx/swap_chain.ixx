@@ -20,7 +20,7 @@ export struct FrameContext
 export struct SwapChainRenderTarget
 {
     MyPtr<ID3D12Resource> resource;
-    DescriptorHandle targetHandle;
+    DescriptorHandle handle;
 };
 
 export class SwapChain

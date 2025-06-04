@@ -9,6 +9,6 @@ export class RenderSurface
 {
 public:
     GpuResource resource;
-    DescriptorHandle targetHandle;
+    DescriptorHandle handle;
     DescriptorHandle textureHandle;
 };

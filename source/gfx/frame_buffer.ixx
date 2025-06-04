@@ -5,6 +5,7 @@ import descriptor_handle;
 import dx;
 import command_list;
 import gpu_resource;
+import render_surface;
 
 export class FrameBuffer
 {
@@ -22,14 +23,10 @@ public:
     IntSize resolution;
 
     bool renderTargetEnabled;
-    GpuResource renderTarget;
-    DescriptorHandle renderTargetHandle;
-    DescriptorHandle textureHandle;
-
+    RenderSurface renderTarget;
+    
     bool depthStencilEnabled;
-    GpuResource depthStencil;
-    DescriptorHandle depthStencilHandle;
-    DescriptorHandle depthTextureHandle;
+    RenderSurface depthStencil;
 
     D3D12_VIEWPORT viewport = {0};
     D3D12_RECT scissorRect;

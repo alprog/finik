@@ -17,13 +17,13 @@ void FrameBuffer::createHandles()
     RenderSystem& render_system = Single::Get<RenderSystem>();
     if (renderTargetEnabled)
     {
-        renderTargetHandle = render_system.getRtvHeap()->getNextHandle();
-        textureHandle = render_system.getCommonHeap()->getNextHandle();
+        renderTarget.handle = render_system.getRtvHeap()->getNextHandle();
+        renderTarget.textureHandle = render_system.getCommonHeap()->getNextHandle();
     }
     if (depthStencilEnabled)
     {
-        depthStencilHandle = render_system.getDsvHeap()->getNextHandle();
-        depthTextureHandle = render_system.getCommonHeap()->getNextHandle();
+        depthStencil.handle = render_system.getDsvHeap()->getNextHandle();
+        depthStencil.textureHandle = render_system.getCommonHeap()->getNextHandle();
     }
 }
 
@@ -54,10 +54,10 @@ void FrameBuffer::recreateRenderTarget()
     D3D12_CLEAR_VALUE clearValue;
     clearValue.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
-    renderTarget.reinit(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);
+    renderTarget.resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);
 
-    render_system.get_device()->CreateRenderTargetView(renderTarget.getInternal(), nullptr, renderTargetHandle.getCPU());
-    render_system.get_device()->CreateShaderResourceView(renderTarget.getInternal(), nullptr, textureHandle.getCPU());
+    render_system.get_device()->CreateRenderTargetView(renderTarget.resource.getInternal(), nullptr, renderTarget.handle.getCPU());
+    render_system.get_device()->CreateShaderResourceView(renderTarget.resource.getInternal(), nullptr, renderTarget.textureHandle.getCPU());
 }
 
 void FrameBuffer::recreateDepthStencil()
@@ -77,9 +77,9 @@ void FrameBuffer::recreateDepthStencil()
 
     RenderSystem& render_system = Single::Get<RenderSystem>();
 
-    depthStencil.reinit(resourceDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue);
+    depthStencil.resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue);
 
-    render_system.get_device()->CreateDepthStencilView(depthStencil.getInternal(), nullptr, depthStencilHandle.getCPU());
+    render_system.get_device()->CreateDepthStencilView(depthStencil.resource.getInternal(), nullptr, depthStencil.handle.getCPU());
 
     // Create the shader resource view
     D3D12_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
@@ -88,7 +88,7 @@ void FrameBuffer::recreateDepthStencil()
     SRVDesc.Texture2D.MipLevels = 1;
 
     SRVDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    render_system.get_device()->CreateShaderResourceView(depthStencil.getInternal(), &SRVDesc, depthTextureHandle.getCPU());
+    render_system.get_device()->CreateShaderResourceView(depthStencil.resource.getInternal(), &SRVDesc, depthStencil.textureHandle.getCPU());
 }
 
 void FrameBuffer::startRendering(CommandList& commandList)
@@ -97,22 +97,22 @@ void FrameBuffer::startRendering(CommandList& commandList)
 
     if (renderTargetEnabled)
     {
-        commandList.transition(renderTarget, D3D12_RESOURCE_STATE_RENDER_TARGET);
+        commandList.transition(renderTarget.resource, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
         const float clear_color_with_alpha[4] = {0.5f, 0.2f, 0.2f, 1.0f};
-        commandList.listImpl->ClearRenderTargetView(renderTargetHandle.getCPU(), clear_color_with_alpha, 0, nullptr);
+        commandList.listImpl->ClearRenderTargetView(renderTarget.handle.getCPU(), clear_color_with_alpha, 0, nullptr);
     }
     if (depthStencilEnabled)
     {
-        commandList.transition(depthStencil, D3D12_RESOURCE_STATE_DEPTH_WRITE);
-        commandList.listImpl->ClearDepthStencilView(depthStencilHandle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+        commandList.transition(depthStencil.resource, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+        commandList.listImpl->ClearDepthStencilView(depthStencil.handle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     }
 
     commandList.listImpl->OMSetRenderTargets(
         renderTargetEnabled ? 1 : 0,
-        renderTargetEnabled ? &renderTargetHandle.getCPU() : nullptr,
+        renderTargetEnabled ? &renderTarget.handle.getCPU() : nullptr,
         FALSE,
-        depthStencilEnabled ? &depthStencilHandle.getCPU() : nullptr);
+        depthStencilEnabled ? &depthStencil.handle.getCPU() : nullptr);
 
     ID3D12DescriptorHeap* a = render_system.getCommonHeap()->get();
     commandList.listImpl->SetDescriptorHeaps(1, &a);
@@ -131,10 +131,10 @@ void FrameBuffer::endRendering(CommandList& commandList)
 {
     if (renderTargetEnabled)
     {
-        commandList.transition(renderTarget, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        commandList.transition(renderTarget.resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
     }
     if (depthStencilEnabled)
     {
-        commandList.transition(depthStencil, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        commandList.transition(depthStencil.resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
     }
 }

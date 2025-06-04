@@ -94,11 +94,11 @@ void SwapChain::CreateRenderTargets()
     {
         auto renderTarget = std::make_shared<SwapChainRenderTarget>();
         DescriptorHeap* heap = render_system.getRtvHeap();
-        renderTarget->targetHandle = heap->getNextHandle();
+        renderTarget->handle = heap->getNextHandle();
 
         ID3D12Resource* pBackBuffer = nullptr;
         swapChain->GetBuffer(i, IID_PPV_ARGS(&pBackBuffer));
-        render_system.get_device()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->targetHandle.getCPU());
+        render_system.get_device()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle.getCPU());
         renderTarget->resource = pBackBuffer;
 
         renderTargets.append(renderTarget);
@@ -209,7 +209,7 @@ void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
     // Render Dear ImGui graphics
     const float clear_color_with_alpha[4] = {0.2f, 0.2f, 0.2f, 1.0f};
 
-    D3D12_CPU_DESCRIPTOR_HANDLE handle = renderTargets[backBufferIdx]->targetHandle.getCPU();
+    D3D12_CPU_DESCRIPTOR_HANDLE handle = renderTargets[backBufferIdx]->handle.getCPU();
     command_list->ClearRenderTargetView(handle, clear_color_with_alpha, 0, nullptr);
     command_list->ClearDepthStencilView(depthStencilHandle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     command_list->OMSetRenderTargets(1, &handle, FALSE, &depthStencilHandle.getCPU());
