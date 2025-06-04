@@ -93,7 +93,7 @@ void SwapChain::CreateRenderTargets()
 
     for (uint32 i = 0; i < NUM_BACK_BUFFER; i++)
     {
-        auto renderTarget = std::make_shared<RenderTarget>();
+        auto renderTarget = std::make_shared<RenderSurface>();
         DescriptorHeap* heap = render_system.getRtvHeap();
         renderTarget->handle = heap->getNextHandle().getCPU();
 
@@ -108,7 +108,7 @@ void SwapChain::CreateRenderTargets()
 
 void SwapChain::CreateRenderTarget()
 {
-    renderTarget = std::make_shared<RenderTarget>();
+    renderTarget = std::make_shared<RenderSurface>();
 
     CD3DX12_RESOURCE_DESC resourceDesc(
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,

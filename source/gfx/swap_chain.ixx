@@ -6,7 +6,7 @@ import core;
 import dx;
 import descriptor_handle;
 import render_system_fwd;
-import render_target;
+import render_surface;
 
 export constexpr int NUM_BACK_BUFFER = 3;
 export constexpr int NUM_FRAMES_IN_FLIGHT = 3;
@@ -41,8 +41,8 @@ public:
     MyPtr<IDXGISwapChain3> swapChain;
 
     HANDLE hSwapChainWaitableObject;
-    Array<std::shared_ptr<RenderTarget>> renderTargets;
-    std::shared_ptr<RenderTarget> renderTarget;
+    Array<std::shared_ptr<RenderSurface>> renderTargets;
+    std::shared_ptr<RenderSurface> renderTarget;
 
     MyPtr<ID3D12Resource> depthStencil;
     DescriptorHandle depthStencilHandle;

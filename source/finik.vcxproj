@@ -235,8 +235,8 @@
     <ClCompile Include="shaders\effect.ixx" />
     <ClCompile Include="gfx\render_system.cpp" />
     <ClCompile Include="gfx\render_system.ixx" />
-    <ClCompile Include="gfx\render_target.cpp" />
-    <ClCompile Include="gfx\render_target.ixx" />
+    <ClCompile Include="gfx\render_surface.cpp" />
+    <ClCompile Include="gfx\render_surface.ixx" />
     <ClCompile Include="gfx\root_signature.cpp" />
     <ClCompile Include="gfx\root_signature.ixx" />
     <ClCompile Include="gfx\root_signature_params.ixx" />

@@ -12,6 +12,6 @@ export class ConstantBuffer;
 export class Mesh;
 export struct DescriptorHandle;
 export class DescriptorHeap;
-export class RenderTarget;
+export class RenderSurface;
 export class RenderContext;
 export class GpuResource;
