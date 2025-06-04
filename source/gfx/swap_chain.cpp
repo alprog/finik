@@ -59,7 +59,6 @@ SwapChain::SwapChain(DesktopWindow& window)
         hSwapChainWaitableObject = swapChain->GetFrameLatencyWaitableObject();
     }
 
-    CreateRenderTarget();
     CreateRenderTargets();
     CreateDepthStencil();
 
@@ -93,36 +92,17 @@ void SwapChain::CreateRenderTargets()
 
     for (uint32 i = 0; i < NUM_BACK_BUFFER; i++)
     {
-        auto renderTarget = std::make_shared<RenderSurface>();
+        auto renderTarget = std::make_shared<SwapChainRenderTarget>();
         DescriptorHeap* heap = render_system.getRtvHeap();
-        renderTarget->handle = heap->getNextHandle().getCPU();
+        renderTarget->targetHandle = heap->getNextHandle();
 
         ID3D12Resource* pBackBuffer = nullptr;
         swapChain->GetBuffer(i, IID_PPV_ARGS(&pBackBuffer));
-        render_system.get_device()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle);
-        renderTarget->resource.InternalResource = pBackBuffer;
+        render_system.get_device()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->targetHandle.getCPU());
+        renderTarget->resource = pBackBuffer;
 
         renderTargets.append(renderTarget);
     }
-}
-
-void SwapChain::CreateRenderTarget()
-{
-    renderTarget = std::make_shared<RenderSurface>();
-
-    CD3DX12_RESOURCE_DESC resourceDesc(
-        D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
-        static_cast<uint32>(window.width),
-        static_cast<uint32>(window.height),
-        1, 1, DXGI_FORMAT_R8G8B8A8_UNORM, 1, 0,
-        D3D12_TEXTURE_LAYOUT_UNKNOWN,
-        D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
-
-    RenderSystem& render_system = Single::Get<RenderSystem>();
-
-    D3D12_CLEAR_VALUE clearValue;
-    clearValue.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    renderTarget->resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_RENDER_TARGET, &clearValue);
 }
 
 void SwapChain::CreateDepthStencil()
@@ -220,7 +200,7 @@ void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
     D3D12_RESOURCE_BARRIER barrier = {};
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.InternalResource;
+    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.Get();
     barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
     barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
@@ -229,7 +209,7 @@ void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
     // Render Dear ImGui graphics
     const float clear_color_with_alpha[4] = {0.2f, 0.2f, 0.2f, 1.0f};
 
-    D3D12_CPU_DESCRIPTOR_HANDLE handle = renderTargets[backBufferIdx]->handle;
+    D3D12_CPU_DESCRIPTOR_HANDLE handle = renderTargets[backBufferIdx]->targetHandle.getCPU();
     command_list->ClearRenderTargetView(handle, clear_color_with_alpha, 0, nullptr);
     command_list->ClearDepthStencilView(depthStencilHandle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     command_list->OMSetRenderTargets(1, &handle, FALSE, &depthStencilHandle.getCPU());
@@ -254,7 +234,7 @@ void SwapChain::finish_frame(ID3D12GraphicsCommandList* command_list)
     D3D12_RESOURCE_BARRIER barrier = {};
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.InternalResource;
+    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.Get();
     barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
     barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;

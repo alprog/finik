@@ -46,7 +46,10 @@ void App::handle_input()
             }
         }
 
-        ImGui_ImplSDL2_ProcessEvent(&event);
+        if (ImGui::GetCurrentContext())
+        {
+            ImGui_ImplSDL2_ProcessEvent(&event);
+        }
     }
 }
 

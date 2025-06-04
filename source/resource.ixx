@@ -19,6 +19,9 @@ public:
 
     void transition_to(D3D12_RESOURCE_STATES newState, CommandList& list);
 
+private:
+    void releaseInternal();
+
 public:
     ID3D12Resource* InternalResource = nullptr;
     D3D12_RESOURCE_STATES state;

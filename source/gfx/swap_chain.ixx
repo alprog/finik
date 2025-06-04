@@ -17,13 +17,18 @@ export struct FrameContext
     uint64                  FenceValue;
 };
 
+export struct SwapChainRenderTarget
+{
+    MyPtr<ID3D12Resource> resource;
+    DescriptorHandle targetHandle;
+};
+
 export class SwapChain
 {
 public:
     SwapChain(DesktopWindow& window);
     ~SwapChain();
 
-    void CreateRenderTarget();
     void CreateRenderTargets();
     void CreateDepthStencil();
     void CleanupRenderTarget();
@@ -41,8 +46,7 @@ public:
     MyPtr<IDXGISwapChain3> swapChain;
 
     HANDLE hSwapChainWaitableObject;
-    Array<std::shared_ptr<RenderSurface>> renderTargets;
-    std::shared_ptr<RenderSurface> renderTarget;
+    Array<std::shared_ptr<SwapChainRenderTarget>> renderTargets;
 
     MyPtr<ID3D12Resource> depthStencil;
     DescriptorHandle depthStencilHandle;

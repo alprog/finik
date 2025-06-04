@@ -8,18 +8,12 @@ import command_list;
 
 GpuResource::~GpuResource()
 {
-    int32 Result = InternalResource->Release();
-    ASSERT(Result == 0);
-    InternalResource = nullptr;
+    releaseInternal();
 }
 
 void GpuResource::reinit(D3D12_RESOURCE_DESC desc, D3D12_RESOURCE_STATES initialState, const D3D12_CLEAR_VALUE* clearValue)
 {
-    if (InternalResource)
-    {
-        InternalResource->Release();
-        InternalResource = nullptr;
-    }
+    releaseInternal();
 
     auto device = Single::Get<RenderSystem>().get_device();
     device->CreateCommittedResource(
@@ -39,5 +33,15 @@ void GpuResource::transition_to(D3D12_RESOURCE_STATES newState, CommandList& lis
     {
         list.listImpl->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(InternalResource, state, newState));
         state = newState;
+    }
+}
+
+void GpuResource::releaseInternal()
+{
+    if (InternalResource)
+    {
+        int32 Result = InternalResource->Release();
+        ASSERT(Result == 0);
+        InternalResource = nullptr;
     }
 }
