@@ -4,13 +4,9 @@ import core;
 
 export enum MRT
 {
-    None = 0,
-
-    RT0 = 1,
-    RT1 = 2,
-    RT2 = 3,
-    RT3 = 4,
-    DS = 5,
-
-    Count
+    RT0 = 0,
+    RT1 = 1,
+    RT2 = 2,
+    RT3 = 3,
+    DS = 4,
 };

@@ -152,11 +152,10 @@ void RenderSystem::createCommandQueue()
 
 void RenderSystem::createDescriptorHeap()
 {
-    int count = NUM_BACK_BUFFERS * 2;
-    rtvHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_RTV, count);
+    rtvHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 20);
     rtvHandle = rtvHeap->getCpuHandle(0);
 
-    dsvHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 3);
+    dsvHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 5);
 
     srvCbvUavHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 1000);
 }

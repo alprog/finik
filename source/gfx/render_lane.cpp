@@ -12,7 +12,7 @@ RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize re
     : scene{scene}
     , pass{pass}
     , camera{camera}
-    , frameBuffer{resolution, pass == RenderPass::Shadow ? 0 : 1, true}
+    , frameBuffer{resolution, pass == RenderPass::Shadow ? 0 : 4, true}
 {
 }
 

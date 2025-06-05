@@ -5,6 +5,7 @@ module frame_buffer;
 import render_system;
 
 FrameBuffer::FrameBuffer(IntSize resolution, int32 renderTargetCount, bool depthBufferEnabled)
+    : resolution{resolution}
 {
     for (int i = 0; i < renderTargetCount; i++)
     {
@@ -19,13 +20,17 @@ FrameBuffer::FrameBuffer(IntSize resolution, int32 renderTargetCount, bool depth
 
 void FrameBuffer::resize(IntSize resolution)
 {
-    for (auto& renderTarget : renderTargets)
+    if (this->resolution != resolution)
     {
-        renderTarget->resize(resolution);
-    }
-    if (depthStencil)
-    {
-        depthStencil->resize(resolution);
+        for (auto& renderTarget : renderTargets)
+        {
+            renderTarget->resize(resolution);
+        }
+        if (depthStencil)
+        {
+            depthStencil->resize(resolution);
+        }
+        this->resolution = resolution;
     }
 }
 
@@ -33,12 +38,16 @@ void FrameBuffer::startRendering(CommandList& commandList)
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
 
+    Array<CD3DX12_CPU_DESCRIPTOR_HANDLE> RTHandles;
+
     for (auto& renderTarget : renderTargets)
     {
         commandList.transition(renderTarget->resource, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
         const float clear_color_with_alpha[4] = {0.5f, 0.2f, 0.2f, 1.0f};
         commandList.listImpl->ClearRenderTargetView(renderTarget->handle.getCPU(), clear_color_with_alpha, 0, nullptr);
+    
+        RTHandles.append(renderTarget->handle.getCPU());
     }
     if (depthStencil)
     {
@@ -47,8 +56,8 @@ void FrameBuffer::startRendering(CommandList& commandList)
     }
 
     commandList.listImpl->OMSetRenderTargets(
-        renderTargets.count(),
-        !renderTargets.empty() ? &renderTargets[0]->handle.getCPU() : nullptr,
+        RTHandles.count(),
+        !RTHandles.empty() ? &RTHandles[0] : nullptr,
         FALSE,
         depthStencil ? &depthStencil->handle.getCPU() : nullptr);
 
