@@ -18,16 +18,15 @@ public:
 
 export class RenderTarget : public RenderSurface
 {
-    void resize(IntSize resolution) override
-    {
-
-    }
+public:
+    RenderTarget(IntSize resolution);
+    void resize(IntSize resolution) override;
 };
 
 export class DepthStencil : public RenderSurface
 {
 public:
-    DepthStencil();
+    DepthStencil(IntSize resolution);
 
     void resize(IntSize resolution) override;
 };

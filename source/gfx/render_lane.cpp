@@ -8,24 +8,11 @@ import scene;
 import mrt;
 import enum_bits;
 
-MRT GetMRT(RenderPass pass)
-{
-    switch (pass)
-    {
-    case Main:
-        return MRT::RT0 | MRT::DS;
-    case Shadow:
-        return MRT::DS;
-    default:
-        return MRT::None;
-    }
-}
-
 RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution)
     : scene{scene}
     , pass{pass}
     , camera{camera}
-    , frameBuffer{GetMRT(pass), resolution}
+    , frameBuffer{resolution, pass == RenderPass::Shadow ? 0 : 1, true}
 {
 }
 
