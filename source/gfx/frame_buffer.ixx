@@ -6,11 +6,12 @@ import dx;
 import command_list;
 import gpu_resource;
 import render_surface;
+import mrt;
 
 export class FrameBuffer
 {
 public:
-    void init(IntSize resolution, bool renderTargetEnabled, bool depthStencilEnabled);
+    FrameBuffer(MRT mrt, IntSize resolution);
     void createHandles();
 
     void resize(IntSize resolution);
@@ -23,10 +24,10 @@ public:
     IntSize resolution;
 
     bool renderTargetEnabled;
-    RenderSurface renderTarget;
+    RenderTarget renderTarget;
     
     bool depthStencilEnabled;
-    RenderSurface depthStencil;
+    DepthStencil depthStencil;
 
     D3D12_VIEWPORT viewport = {0};
     D3D12_RECT scissorRect;

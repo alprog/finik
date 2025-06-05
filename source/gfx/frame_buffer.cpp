@@ -3,11 +3,12 @@ module;
 module frame_buffer;
 
 import render_system;
+import enum_bits;
 
-void FrameBuffer::init(IntSize resolution, bool renderTargetEnabled, bool depthStencilEnabled)
+FrameBuffer::FrameBuffer(MRT mrt, IntSize resolution)
 {
-    this->renderTargetEnabled = renderTargetEnabled;
-    this->depthStencilEnabled = depthStencilEnabled;
+    this->renderTargetEnabled = (mrt & MRT::RT0) != MRT::None;
+    this->depthStencilEnabled = (mrt & MRT::DS) != MRT::None;
     createHandles();
     resize(resolution);
 }
@@ -19,11 +20,6 @@ void FrameBuffer::createHandles()
     {
         renderTarget.handle = render_system.getRtvHeap()->getNextHandle();
         renderTarget.textureHandle = render_system.getCommonHeap()->getNextHandle();
-    }
-    if (depthStencilEnabled)
-    {
-        depthStencil.handle = render_system.getDsvHeap()->getNextHandle();
-        depthStencil.textureHandle = render_system.getCommonHeap()->getNextHandle();
     }
 }
 
@@ -62,33 +58,7 @@ void FrameBuffer::recreateRenderTarget()
 
 void FrameBuffer::recreateDepthStencil()
 {
-    CD3DX12_RESOURCE_DESC resourceDesc(
-        D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
-        static_cast<uint32>(resolution.width),
-        static_cast<uint32>(resolution.height),
-        1, 1, DXGI_FORMAT_D32_FLOAT, 1, 0,
-        D3D12_TEXTURE_LAYOUT_UNKNOWN,
-        D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
-
-    D3D12_CLEAR_VALUE clearValue;
-    clearValue.Format = DXGI_FORMAT_D32_FLOAT;
-    clearValue.DepthStencil.Depth = 1.0f;
-    clearValue.DepthStencil.Stencil = 0;
-
-    RenderSystem& render_system = Single::Get<RenderSystem>();
-
-    depthStencil.resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue);
-
-    render_system.get_device()->CreateDepthStencilView(depthStencil.resource.getInternal(), nullptr, depthStencil.handle.getCPU());
-
-    // Create the shader resource view
-    D3D12_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
-    SRVDesc.Format = DXGI_FORMAT_R32_FLOAT;
-    SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-    SRVDesc.Texture2D.MipLevels = 1;
-
-    SRVDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    render_system.get_device()->CreateShaderResourceView(depthStencil.resource.getInternal(), &SRVDesc, depthStencil.textureHandle.getCPU());
+    depthStencil.resize(resolution);
 }
 
 void FrameBuffer::startRendering(CommandList& commandList)

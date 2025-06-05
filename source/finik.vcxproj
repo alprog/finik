@@ -153,8 +153,10 @@
     <ClCompile Include="camera.ixx" />
     <ClCompile Include="camera_controller.cpp" />
     <ClCompile Include="camera_controller.ixx" />
+    <ClCompile Include="core\enum_bits.ixx" />
     <ClCompile Include="gfx\cleaner.cpp" />
     <ClCompile Include="gfx\cleaner.ixx" />
+    <ClCompile Include="gfx\mrt.ixx" />
     <ClCompile Include="gfx\pipeline_state.ixx" />
     <ClCompile Include="gfx\pso_manager.cpp" />
     <ClCompile Include="gfx\pso_manager.ixx" />
