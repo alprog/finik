@@ -69,8 +69,11 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
 
     psoDesc.SampleMask = UINT_MAX;
     psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-    psoDesc.NumRenderTargets = 1;
-    psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+    psoDesc.NumRenderTargets = 4;
+    for (int32 i = 0; i < psoDesc.NumRenderTargets; i++)
+    {
+        psoDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM;
+    }
     psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
     psoDesc.SampleDesc.Count = 1;
 

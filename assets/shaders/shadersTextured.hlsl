@@ -29,15 +29,22 @@ PSInput VSMain(VSInput input)
 	return result;
 }
 
-float4 PSMain(PSInput input) : SV_TARGET
+struct GBufferOuput
 {
-	if (input.position.z == 0)
-		return 1;
+	float4 Albedo : SV_TARGET0;
+	float4 Normals : SV_TARGET1;
+};
+
+GBufferOuput PSMain(PSInput input) 
+{
+	GBufferOuput Out;
+
+	//if (input.position.z == 0)
+	//	return 1;
 
 	float4 color = float4(input.normal, 1);
 	color.rgb = (color.rgb + 1) / 2;
-	
-	return color;
+	Out.Normals = color;
 	
 	Texture2D mainTexture = textures[Materials[MaterialId].TextureA];
 	float4 texColor = mainTexture.Sample(DefaultSampler, input.uv);
@@ -46,5 +53,7 @@ float4 PSMain(PSInput input) : SV_TARGET
 	
 	float diffuse = 0.2 + (dot(input.normal, -LightDirection) + 1) * 0.4;
 	
-	return diffuse * diffuseColor;
+	Out.Albedo = diffuse * diffuseColor;
+	
+	return Out;
 }
