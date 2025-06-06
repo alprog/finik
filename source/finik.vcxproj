@@ -156,6 +156,8 @@
     <ClCompile Include="core\enum_bits.ixx" />
     <ClCompile Include="gfx\cleaner.cpp" />
     <ClCompile Include="gfx\cleaner.ixx" />
+    <ClCompile Include="gfx\depth_stencil.cpp" />
+    <ClCompile Include="gfx\depth_stencil.ixx" />
     <ClCompile Include="gfx\mrt.ixx" />
     <ClCompile Include="gfx\pipeline_state.ixx" />
     <ClCompile Include="gfx\pso_manager.cpp" />
@@ -164,6 +166,8 @@
     <ClCompile Include="gfx\frame_buffer.cpp" />
     <ClCompile Include="gfx\frame_buffer.ixx" />
     <ClCompile Include="gfx\pipeline_state.cpp" />
+    <ClCompile Include="gfx\render_target.cpp" />
+    <ClCompile Include="gfx\render_target.ixx" />
     <ClCompile Include="shadows\shadow_maps.ixx" />
     <ClCompile Include="views\console_view.cpp" />
     <ClCompile Include="views\console_view.ixx" />
@@ -237,7 +241,6 @@
     <ClCompile Include="shaders\effect.ixx" />
     <ClCompile Include="gfx\render_system.cpp" />
     <ClCompile Include="gfx\render_system.ixx" />
-    <ClCompile Include="gfx\render_surface.cpp" />
     <ClCompile Include="gfx\render_surface.ixx" />
     <ClCompile Include="gfx\root_signature.cpp" />
     <ClCompile Include="gfx\root_signature.ixx" />

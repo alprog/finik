@@ -39,7 +39,6 @@ void FrameBuffer::startRendering(CommandList& commandList)
     RenderSystem& render_system = Single::Get<RenderSystem>();
 
     Array<CD3DX12_CPU_DESCRIPTOR_HANDLE> RTHandles;
-
     for (auto& renderTarget : renderTargets)
     {
         commandList.transition(renderTarget->resource, D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -84,4 +83,24 @@ void FrameBuffer::endRendering(CommandList& commandList)
     {
         commandList.transition(depthStencil->resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
     }
+}
+
+RenderSurface* FrameBuffer::gerRenderSurface(MRT type) const
+{
+    if (type == MRT::DS)
+    {
+        if (depthStencil)
+        {
+            return depthStencil.get();
+        }
+    }
+    else
+    {
+        if (type < renderTargets.count())
+        {
+            return renderTargets[type].get();
+        }
+    }
+
+    return nullptr;
 }

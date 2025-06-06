@@ -2,7 +2,9 @@ module;
 class Window;
 export module render_system;
 
-import render_system_fwd;
+export import render_system_fwd;
+
+export import singleton;
 
 import core;
 import dx;

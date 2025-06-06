@@ -51,63 +51,66 @@ void SceneView::draw_content()
 
     std::shared_ptr<RenderLane>& lane = Shadows ? shadowMapLane : renderLane;
 
-    bool UseDepth = Depth || Shadows;
+    MRT TargetType = Depth ? MRT::DS : MRT::RT0;
 
-    D3D12_GPU_DESCRIPTOR_HANDLE handle = UseDepth ? lane->getFrameBuffer().depthStencil->textureHandle.getGPU() : lane->getFrameBuffer().renderTargets[0]->textureHandle.getGPU();
-
-    ImTextureID textureId = (void*)handle.ptr;
-
-    auto imSize = ImGui::GetContentRegionAvail();
-
-    Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y));
-
-    auto imageStartPos = ImGui::GetCursorScreenPos();
-
-    if (UseDepth)
+    auto surface = lane->getFrameBuffer().gerRenderSurface(TargetType);
+    if (surface)
     {
-        auto Callback = [](const ImDrawList* parent_list, const ImDrawCmd* cmd) //
+        D3D12_GPU_DESCRIPTOR_HANDLE handle = surface->textureHandle.getGPU();
+        ImTextureID textureId = (void*)handle.ptr;
+
+        auto imSize = ImGui::GetContentRegionAvail();
+
+        Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y));
+
+        auto imageStartPos = ImGui::GetCursorScreenPos();
+
+        if (Depth)
         {
-            ID3D12GraphicsCommandList* commandList = Single::Get<RenderSystem>().get_command_list();
+            auto Callback = [](const ImDrawList* parent_list, const ImDrawCmd* cmd) //
+            {
+                ID3D12GraphicsCommandList* commandList = Single::Get<RenderSystem>().get_command_list();
 
-            std::shared_ptr effect = EffectManager::GetInstance().get("imgui_custom");
-            commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
-            effect->getPipelineState()->use();
-        };
-        GImGui->CurrentWindow->DrawList->AddCallback(Callback, nullptr);
-    }
-    ImGui::Image(textureId, imSize);
+                std::shared_ptr effect = EffectManager::GetInstance().get("imgui_custom");
+                commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
+                effect->getPipelineState()->use();
+            };
+            GImGui->CurrentWindow->DrawList->AddCallback(Callback, nullptr);
+        }
+        ImGui::Image(textureId, imSize);
 
-    if (UseDepth)
-    {
-        GImGui->CurrentWindow->DrawList->AddCallback((ImDrawCallback)(-8), nullptr);
-    }
-
-    if (ImGui::IsItemHovered())
-    {
-        auto mousePos = ImGui::GetMousePos();
-
-        auto dx = (static_cast<float>(mousePos.x) - imageStartPos.x) / imSize.x;
-        auto dy = (static_cast<float>(mousePos.y) - imageStartPos.y) / imSize.y;
-
-        auto ndcPos = Vector2(dx, 1 - dy) * 2.0f - Vector2::One;
-
-        log("ndc {} {}\n", ndcPos.x, ndcPos.y);
-
-        cameraContoller.HandleInput(DeltaTime);
-        cameraContoller.RefreshCameraPosition();
-
-        auto ray = cameraContoller.Camera.castRay(ndcPos);
-
-        log("ray {} {} {} | {} {} {}\n", ray.Origin.x, ray.Origin.y, ray.Origin.z, ray.Direction.x, ray.Direction.y,
-            ray.Direction.z);
-
-        if (ray.Direction.z != 0)
+        if (Depth)
         {
-            auto distance = ray.Origin.z / -ray.Direction.z;
-            auto position = ray.Origin + ray.Direction * distance;
-            log("pos {} {}\n", position.x, position.y);
+            GImGui->CurrentWindow->DrawList->AddCallback((ImDrawCallback)(-8), nullptr);
+        }
 
-            scene.castedPos = position;
+        if (ImGui::IsItemHovered())
+        {
+            auto mousePos = ImGui::GetMousePos();
+
+            auto dx = (static_cast<float>(mousePos.x) - imageStartPos.x) / imSize.x;
+            auto dy = (static_cast<float>(mousePos.y) - imageStartPos.y) / imSize.y;
+
+            auto ndcPos = Vector2(dx, 1 - dy) * 2.0f - Vector2::One;
+
+            log("ndc {} {}\n", ndcPos.x, ndcPos.y);
+
+            cameraContoller.HandleInput(DeltaTime);
+            cameraContoller.RefreshCameraPosition();
+
+            auto ray = cameraContoller.Camera.castRay(ndcPos);
+
+            log("ray {} {} {} | {} {} {}\n", ray.Origin.x, ray.Origin.y, ray.Origin.z, ray.Direction.x, ray.Direction.y,
+                ray.Direction.z);
+
+            if (ray.Direction.z != 0)
+            {
+                auto distance = ray.Origin.z / -ray.Direction.z;
+                auto position = ray.Origin + ray.Direction * distance;
+                log("pos {} {}\n", position.x, position.y);
+
+                scene.castedPos = position;
+            }
         }
     }
 

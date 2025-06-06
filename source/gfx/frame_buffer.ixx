@@ -6,6 +6,9 @@ import dx;
 import command_list;
 import gpu_resource;
 import render_surface;
+import render_target;
+import depth_stencil;
+import mrt;
 
 export class FrameBuffer
 {
@@ -16,6 +19,8 @@ public:
 
     void startRendering(CommandList& commandList);
     void endRendering(CommandList& commandList);
+
+    RenderSurface* gerRenderSurface(MRT type) const;
 
     IntSize resolution;
 

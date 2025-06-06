@@ -15,18 +15,3 @@ public:
 
     virtual void resize(IntSize resolution) = 0;
 };
-
-export class RenderTarget : public RenderSurface
-{
-public:
-    RenderTarget(IntSize resolution);
-    void resize(IntSize resolution) override;
-};
-
-export class DepthStencil : public RenderSurface
-{
-public:
-    DepthStencil(IntSize resolution);
-
-    void resize(IntSize resolution) override;
-};
