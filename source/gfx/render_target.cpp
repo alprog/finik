@@ -4,15 +4,15 @@ module render_target;
 
 import render_system;
 
-RenderTarget::RenderTarget(IntSize resolution)
+RenderTarget::RenderTarget(IntSize resolution, MSAA msaa)
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     handle = render_system.getRtvHeap()->getNextHandle();
     textureHandle = render_system.getCommonHeap()->getNextHandle();
-    resize(resolution);
+    resize(resolution, msaa);
 }
 
-void RenderTarget::resize(IntSize resolution)
+void RenderTarget::resize(IntSize resolution, MSAA msaa)
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     CD3DX12_RESOURCE_DESC resourceDesc(

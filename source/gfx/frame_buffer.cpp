@@ -4,31 +4,32 @@ module frame_buffer;
 
 import render_system;
 
-FrameBuffer::FrameBuffer(IntSize resolution, int32 renderTargetCount, bool depthBufferEnabled)
+FrameBuffer::FrameBuffer(IntSize resolution, MSAA msaa, int32 renderTargetCount, bool depthBufferEnabled)
     : resolution{resolution}
+    , msaa{msaa}
 {
     for (int i = 0; i < renderTargetCount; i++)
     {
-        renderTargets.emplace_back(std::make_unique<RenderTarget>(resolution));
+        renderTargets.emplace_back(std::make_unique<RenderTarget>(resolution, msaa));
     }
 
     if (depthBufferEnabled)
     {
-        depthStencil = std::make_unique<DepthStencil>(resolution);
+        depthStencil = std::make_unique<DepthStencil>(resolution, msaa);
     }
 }
 
-void FrameBuffer::resize(IntSize resolution)
+void FrameBuffer::resize(IntSize resolution, MSAA msaa)
 {
     if (this->resolution != resolution)
     {
         for (auto& renderTarget : renderTargets)
         {
-            renderTarget->resize(resolution);
+            renderTarget->resize(resolution, msaa);
         }
         if (depthStencil)
         {
-            depthStencil->resize(resolution);
+            depthStencil->resize(resolution, msaa);
         }
         this->resolution = resolution;
     }

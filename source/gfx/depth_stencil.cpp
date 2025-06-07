@@ -4,15 +4,15 @@ module depth_stencil;
 
 import render_system;
 
-DepthStencil::DepthStencil(IntSize resolution)
+DepthStencil::DepthStencil(IntSize resolution, MSAA msaa)
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     handle = render_system.getDsvHeap()->getNextHandle();
     textureHandle = render_system.getCommonHeap()->getNextHandle();
-    resize(resolution);
+    resize(resolution, msaa);
 }
 
-void DepthStencil::resize(IntSize resolution)
+void DepthStencil::resize(IntSize resolution, MSAA msaa)
 {
     CD3DX12_RESOURCE_DESC resourceDesc(
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,

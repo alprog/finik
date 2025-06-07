@@ -16,6 +16,8 @@ import render_context;
 import assets;
 import model;
 
+// for intellisense
+
 Scene::Scene()
     //: shadowMaps{*this}
 {

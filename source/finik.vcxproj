@@ -160,6 +160,7 @@
     <ClCompile Include="gfx\depth_stencil.cpp" />
     <ClCompile Include="gfx\depth_stencil.ixx" />
     <ClCompile Include="gfx\mrt.ixx" />
+    <ClCompile Include="gfx\msaa.ixx" />
     <ClCompile Include="gfx\pipeline_state.ixx" />
     <ClCompile Include="gfx\pso_manager.cpp" />
     <ClCompile Include="gfx\pso_manager.ixx" />
@@ -301,6 +302,8 @@
     <ClCompile Include="scene.ixx" />
     <ClCompile Include="scene_manager.ixx" />
     <ClCompile Include="scene_system_fwd.ixx" />
+    <ClCompile Include="views\quality_view.cpp" />
+    <ClCompile Include="views\quality_view.ixx" />
     <ClCompile Include="views\scene_view.cpp" />
     <ClCompile Include="views\scene_view.ixx" />
     <ClCompile Include="shaders\shader.ixx" />

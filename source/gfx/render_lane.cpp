@@ -8,22 +8,22 @@ import scene;
 import mrt;
 import enum_bits;
 
-RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution)
+RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution, MSAA msaa)
     : scene{scene}
     , pass{pass}
     , camera{camera}
-    , frameBuffer{resolution, pass == RenderPass::Shadow ? 0 : 4, true}
+    , frameBuffer{resolution, msaa, pass == RenderPass::Shadow ? 0 : 4, true}
 {
 }
 
-void RenderLane::resize(IntSize resolution)
+void RenderLane::resize(IntSize resolution, MSAA msaa)
 {
-    if (frameBuffer.resolution != resolution)
+    if (frameBuffer.resolution != resolution || frameBuffer.msaa != msaa)
     {
         RenderSystem& render_system = Single::Get<RenderSystem>();
         render_system.get_command_queue().Flush();
 
-        frameBuffer.resize(resolution);
+        frameBuffer.resize(resolution, msaa);
         camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
         camera.calcProjectionMatrix();
     }

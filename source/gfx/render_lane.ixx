@@ -4,12 +4,13 @@ import core;
 import frame_buffer;
 import scene_system_fwd;
 import render_pass;
+export import msaa;
 
 export class RenderLane
 {
 public:
-    RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution);
-    void resize(IntSize resolution);
+    RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution, MSAA msaa);
+    void resize(IntSize resolution, MSAA msaa);
 
     FrameBuffer& getFrameBuffer();
     void render();

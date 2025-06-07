@@ -3,6 +3,7 @@ export module pipeline_settings;
 import core;
 import render_system_fwd;
 import shader;
+import msaa;
 
 export enum class PipelineType : char
 {
@@ -16,14 +17,6 @@ export enum class CullMode : char
     None,
     Front,
     Back
-};
-
-export enum class MSAA : char
-{
-    Off = 1,
-    x2 = 2,
-    x4 = 4,
-    x8 = 8
 };
 
 export class PipelineSettings

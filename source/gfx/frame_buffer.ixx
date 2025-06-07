@@ -9,13 +9,14 @@ import render_surface;
 import render_target;
 import depth_stencil;
 import mrt;
+import msaa;
 
 export class FrameBuffer
 {
 public:
-    FrameBuffer(IntSize resolution, int32 renderTargetCount, bool depthBufferEnabled);
+    FrameBuffer(IntSize resolution, MSAA msaa, int32 renderTargetCount, bool depthBufferEnabled);
 
-    void resize(IntSize resolution);
+    void resize(IntSize resolution, MSAA msaa);
 
     void startRendering(CommandList& commandList);
     void endRendering(CommandList& commandList);
@@ -23,6 +24,7 @@ public:
     RenderSurface* gerRenderSurface(MRT type) const;
 
     IntSize resolution;
+    MSAA msaa;
 
     Array<std::unique_ptr<RenderTarget>> renderTargets;
     std::unique_ptr<DepthStencil> depthStencil;

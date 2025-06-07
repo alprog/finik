@@ -17,8 +17,8 @@ SceneView::SceneView(const char* name, Scene& scene)
     , shadowCamera{}
     , cameraContoller{camera}
 {
-    shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, IntSize{1024, 1024});
-    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, IntSize{1024, 800});
+    shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, IntSize{1024, 1024}, MSAA::x4);
+    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, IntSize{1024, 800}, MSAA::x4);
 
     // temp code, redo it
     scene.shadowTextureId = shadowMapLane->getFrameBuffer().depthStencil->textureHandle.getIndex();
@@ -118,8 +118,7 @@ void SceneView::draw_content()
         }
     }
 
-    renderLane->resize(Size);
-
+    renderLane->resize(Size, MSAA::x4);
     setupShadowCamera();
 }
 
