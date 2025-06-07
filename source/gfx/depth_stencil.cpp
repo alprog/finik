@@ -18,7 +18,7 @@ void DepthStencil::resize(IntSize resolution, MSAA msaa)
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
         static_cast<uint32>(resolution.width),
         static_cast<uint32>(resolution.height),
-        1, 1, DXGI_FORMAT_D32_FLOAT, 4, 0,
+        1, 1, DXGI_FORMAT_D32_FLOAT, getSampleCount(msaa), 0,
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
  

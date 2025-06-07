@@ -17,8 +17,7 @@ struct PS_INPUT
 	float2 uv  : TEXCOORD0;
 };
 
-SamplerState sampler0 : register(s0);
-Texture2D texture0 : register(t0);
+Texture2DMS<float4> texture0 : register(t0);
 
 PS_INPUT VSMain(VS_INPUT input)
 {
@@ -31,5 +30,12 @@ PS_INPUT VSMain(VS_INPUT input)
 
 float4 PSMain(PS_INPUT input) : SV_Target
 {
-	return input.col * texture0.Sample(sampler0, input.uv);
+	float2 pos = float2(input.uv.x * 930, input.uv.y * 550);
+
+	float4 color = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		color += texture0.Load(pos, i);
+	}
+	return color / 4;
 }

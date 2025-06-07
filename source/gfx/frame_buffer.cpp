@@ -21,7 +21,7 @@ FrameBuffer::FrameBuffer(IntSize resolution, MSAA msaa, int32 renderTargetCount,
 
 void FrameBuffer::resize(IntSize resolution, MSAA msaa)
 {
-    if (this->resolution != resolution)
+    if (this->resolution != resolution || this->msaa != msaa)
     {
         for (auto& renderTarget : renderTargets)
         {
@@ -32,6 +32,7 @@ void FrameBuffer::resize(IntSize resolution, MSAA msaa)
             depthStencil->resize(resolution, msaa);
         }
         this->resolution = resolution;
+        this->msaa = msaa;
     }
 }
 

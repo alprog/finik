@@ -19,13 +19,18 @@ public:
     void setPipelineType(PipelineType type);
     void setVertexShader(std::shared_ptr<Shader> shader);
     void setPixelShader(std::shared_ptr<Shader> shader);
+    
+    PipelineType getPipelineType() const
+    {
+        return type;
+    }
 
-    std::shared_ptr<Shader> getVertexShader()
+    std::shared_ptr<Shader> getVertexShader() const
     {
         return vertexShader;
     }
 
-    std::shared_ptr<Shader> getPixelShader()
+    std::shared_ptr<Shader> getPixelShader() const
     {
         return pixelShader;
     }

@@ -9,6 +9,7 @@ import log;
 import scene;
 import effect_manager;
 import render_pass;
+import quality_manager;
 
 SceneView::SceneView(const char* name, Scene& scene)
     : View{name}
@@ -17,8 +18,9 @@ SceneView::SceneView(const char* name, Scene& scene)
     , shadowCamera{}
     , cameraContoller{camera}
 {
-    shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, IntSize{1024, 1024}, MSAA::x4);
-    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, IntSize{1024, 800}, MSAA::x4);
+    auto& settings = QualityManager::GetInstance().getCurrent();
+    shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, IntSize{1024, 1024}, MSAA::Off);
+    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, IntSize{1024, 800}, settings.msaa);
 
     // temp code, redo it
     scene.shadowTextureId = shadowMapLane->getFrameBuffer().depthStencil->textureHandle.getIndex();
@@ -34,7 +36,6 @@ const CameraController& SceneView::getCameraController() const
 }
 
 static float DeltaTime = 0;
-static IntSize Size{0, 0};
 
 void SceneView::update(float deltaTime)
 {
@@ -57,15 +58,14 @@ void SceneView::draw_content()
 
     bool Depth = SelectedType == MRT::DS;
 
+    auto imSize = ImGui::GetContentRegionAvail();
+    IntSize Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y));
+
     auto surface = lane->getFrameBuffer().gerRenderSurface(static_cast<MRT>(SelectedType));
     if (surface)
     {
         D3D12_GPU_DESCRIPTOR_HANDLE handle = surface->textureHandle.getGPU();
         ImTextureID textureId = (void*)handle.ptr;
-
-        auto imSize = ImGui::GetContentRegionAvail();
-
-        Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y));
 
         auto imageStartPos = ImGui::GetCursorScreenPos();
         Depth = true;
@@ -75,7 +75,7 @@ void SceneView::draw_content()
             {
                 ID3D12GraphicsCommandList* commandList = Single::Get<RenderSystem>().get_command_list();
 
-                std::shared_ptr effect = EffectManager::GetInstance().get("imgui");
+                std::shared_ptr effect = EffectManager::GetInstance().get("imgui_ms");
                 commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
                 effect->getPipelineState()->use();
             };
@@ -118,7 +118,9 @@ void SceneView::draw_content()
         }
     }
 
-    renderLane->resize(Size, MSAA::x4);
+    auto& settings = QualityManager::GetInstance().getCurrent();
+    renderLane->resize(Size, settings.msaa);
+
     setupShadowCamera();
 }
 

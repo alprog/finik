@@ -7,6 +7,8 @@ import shader;
 
 export class EffectManager : public Singleton<EffectManager>
 {
+    friend class QualityManager;
+
 public:
     void init();
 

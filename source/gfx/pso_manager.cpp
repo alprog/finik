@@ -75,7 +75,7 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
         psoDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM;
     }
     psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
-    psoDesc.SampleDesc.Count = 4;
+    psoDesc.SampleDesc.Count = getSampleCount(settings.msaa);
 
     ID3D12PipelineState* pipelineState = nullptr;
     device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pipelineState)) MUST;

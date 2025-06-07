@@ -4,6 +4,7 @@ import render_system;
 import shader;
 import pso_manager;
 import shader_manager;
+import quality_manager;
 
 Effect::Effect(String name)
     : name{name}
@@ -44,6 +45,11 @@ std::shared_ptr<PipelineState> Effect::getPipelineState()
         ShaderByteCode pixelBytecode = pixelShader ? pixelShader->bytecode : ShaderByteCode();
         PipelineSettings settings(vertexShader->bytecode, pixelBytecode);
         settings.type = type;
+        if (type == PipelineType::Geometry)
+        {
+            settings.msaa = QualityManager::GetInstance().getCurrent().msaa;
+        }
+        
         pipelineState = Single::Get<PSOManager>().get_pso(settings);
     }
 

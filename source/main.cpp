@@ -17,6 +17,7 @@ import shaders_view;
 import assets;
 import model;
 import shader_manager;
+import quality_view;
 
 int main(int argc, char* argv[])
 {
@@ -41,6 +42,8 @@ int main(int argc, char* argv[])
 
     window->gui->views.append(std::make_unique<AssetsView>("assetsView"));
     window->gui->views.append(std::make_unique<ShadersView>("shadersView"));
+
+    window->gui->views.append(std::make_unique<QualityView>("qualityView"));
 
     //auto secondWindow = app.desktop_system.create_window(800, 600);
     //secondWindow->scene = &scene;

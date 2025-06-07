@@ -164,6 +164,9 @@
     <ClCompile Include="gfx\pipeline_state.ixx" />
     <ClCompile Include="gfx\pso_manager.cpp" />
     <ClCompile Include="gfx\pso_manager.ixx" />
+    <ClCompile Include="gfx\quality_manager.cpp" />
+    <ClCompile Include="gfx\quality_manager.ixx" />
+    <ClCompile Include="gfx\quality_settings.ixx" />
     <ClCompile Include="gfx\render_pass.ixx" />
     <ClCompile Include="gfx\frame_buffer.cpp" />
     <ClCompile Include="gfx\frame_buffer.ixx" />
