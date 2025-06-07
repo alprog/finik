@@ -59,7 +59,10 @@ void SceneView::draw_content()
     bool Depth = SelectedType == MRT::DS;
 
     auto imSize = ImGui::GetContentRegionAvail();
-    IntSize Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y));
+    static IntSize Size;
+    Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y)); // static hack
+    static int32 sampleCount;
+    sampleCount = getSampleCount(lane->getFrameBuffer().msaa);
 
     auto surface = lane->getFrameBuffer().gerRenderSurface(static_cast<MRT>(SelectedType));
     if (surface)
@@ -78,6 +81,10 @@ void SceneView::draw_content()
                 std::shared_ptr effect = EffectManager::GetInstance().get("imgui_ms");
                 commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
                 effect->getPipelineState()->use();
+            
+                int32 values[3] = {Size.width, Size.height, sampleCount};
+
+                commandList->SetGraphicsRoot32BitConstants(2, 3, &values, 0);    
             };
             GImGui->CurrentWindow->DrawList->AddCallback(Callback, nullptr);
         }
