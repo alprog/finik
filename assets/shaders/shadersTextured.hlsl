@@ -29,15 +29,9 @@ PSInput VSMain(VSInput input)
 	return result;
 }
 
-struct GBufferOuput
+GBufferOutput PSMain(PSInput input) 
 {
-	float4 Albedo : SV_TARGET0;
-	float4 Normals : SV_TARGET1;
-};
-
-GBufferOuput PSMain(PSInput input) 
-{
-	GBufferOuput Out;
+	GBufferOutput Out;
 
 	//if (input.position.z == 0)
 	//	return 1;

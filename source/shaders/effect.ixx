@@ -38,7 +38,7 @@ public:
     std::shared_ptr<PipelineState> getPipelineState();
 
 private:
-    PipelineType type = PipelineType::Standard;
+    PipelineType type = PipelineType::Geometry;
     std::shared_ptr<Shader> vertexShader;
     std::shared_ptr<Shader> pixelShader;
 

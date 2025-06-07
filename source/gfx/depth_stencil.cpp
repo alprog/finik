@@ -18,9 +18,10 @@ void DepthStencil::resize(IntSize resolution)
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
         static_cast<uint32>(resolution.width),
         static_cast<uint32>(resolution.height),
-        1, 1, DXGI_FORMAT_D32_FLOAT, 1, 0,
+        1, 1, DXGI_FORMAT_D32_FLOAT, 4, 0,
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+ 
 
     D3D12_CLEAR_VALUE clearValue;
     clearValue.Format = DXGI_FORMAT_D32_FLOAT;
@@ -40,5 +41,5 @@ void DepthStencil::resize(IntSize resolution)
     SRVDesc.Texture2D.MipLevels = 1;
 
     SRVDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    render_system.get_device()->CreateShaderResourceView(resource.getInternal(), &SRVDesc, textureHandle.getCPU());
+    //render_system.get_device()->CreateShaderResourceView(resource.getInternal(), &SRVDesc, textureHandle.getCPU());
 }

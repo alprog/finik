@@ -19,7 +19,7 @@ void RenderTarget::resize(IntSize resolution)
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
         static_cast<uint32>(resolution.width),
         static_cast<uint32>(resolution.height),
-        1, 1, DXGI_FORMAT_R8G8B8A8_UNORM, 1, 0,
+        1, 1, DXGI_FORMAT_R8G8B8A8_UNORM, 4, 0,
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 

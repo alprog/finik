@@ -154,6 +154,7 @@
     <ClCompile Include="camera_controller.cpp" />
     <ClCompile Include="camera_controller.ixx" />
     <ClCompile Include="core\enum_bits.ixx" />
+    <ClCompile Include="core\hash.ixx" />
     <ClCompile Include="gfx\cleaner.cpp" />
     <ClCompile Include="gfx\cleaner.ixx" />
     <ClCompile Include="gfx\depth_stencil.cpp" />

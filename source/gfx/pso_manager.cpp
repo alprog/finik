@@ -16,7 +16,7 @@ std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& setti
     }
 
     std::shared_ptr<PipelineState> result;
-    if (settings.type == PipelineType::Standard)
+    if (settings.type == PipelineType::Geometry)
     {
         result = standardCompile(settings);
     }
@@ -75,7 +75,7 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
         psoDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM;
     }
     psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
-    psoDesc.SampleDesc.Count = 1;
+    psoDesc.SampleDesc.Count = 4;
 
     ID3D12PipelineState* pipelineState = nullptr;
     device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pipelineState)) MUST;
@@ -92,7 +92,7 @@ std::shared_ptr<PipelineState> PSOManager::imguiCompile(const PipelineSettings& 
 
     psoDesc.VS = CD3DX12_SHADER_BYTECODE(settings.vertexByteCode.Get());
     psoDesc.PS = CD3DX12_SHADER_BYTECODE(settings.pixelByteCode.Get());
-
+    
     ID3D12PipelineState* pipelineState = nullptr;
     device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pipelineState)) MUST;
     return std::make_shared<PipelineState>(pipelineState);

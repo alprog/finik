@@ -45,3 +45,9 @@ cbuffer MaterialConstantBuffer : register(b3)
 SamplerState DefaultSampler : register(s0);
 SamplerState PointSampler : register(s1);
 SamplerState LinearSampler : register(s2);
+
+struct GBufferOutput
+{
+	float4 Albedo : SV_TARGET0;
+	float4 Normals : SV_TARGET1;
+};

@@ -7,6 +7,8 @@ import scene_manager;
 import input_system;
 import desktop_system;
 
+// for intellisense
+
 export class App
 {
 public:

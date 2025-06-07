@@ -16,6 +16,6 @@ float LinearizeDepth(float depth, float nearPlane, float farPlane)
 float4 PSMain(PS_INPUT input) : SV_Target
 {
   float4 out_col = input.col * texture0.Sample(sampler0, input.uv);
-  out_col.r = LinearizeDepth(out_col.r, 0.1f, 400);
+  out_col.rgb = LinearizeDepth(out_col.r, 0.1f, 400);
   return out_col;
 }

@@ -18,12 +18,12 @@ struct PS_INPUT
 };
 
 SamplerState sampler0 : register(s0);
-Texture2D texture0 : register(t0);
+Texture2DMS<float4, 4> texture0 : register(t0);
 
 PS_INPUT VSMain(VS_INPUT input)
 {
-	PS_INPUT output;
-	output.pos = mul( ProjectionMatrix, float4(input.pos.xy, 0.f, 1.f));
+	PS_INPUT output;	
+	output.pos = mul( ProjectionMatrix, float4(input.pos.xy, 0.f, 1.f));	
 	output.col = input.col;
 	output.uv  = input.uv;
 	return output;
@@ -31,5 +31,14 @@ PS_INPUT VSMain(VS_INPUT input)
 
 float4 PSMain(PS_INPUT input) : SV_Target
 {
-  return input.col * texture0.Sample(sampler0, input.uv);
+	float2 pos = float2(input.uv.x * 930, input.uv.y * 550);
+
+	float4 color = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		color += texture0.Load(pos, i);
+	}
+	return color / 4;
+	
+	//return input.col * texture0.Sample(sampler0, input.uv);
 }

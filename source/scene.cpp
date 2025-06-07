@@ -51,7 +51,7 @@ void Scene::render(RenderContext& renderContext, Camera* camera, RenderPass pass
     frameConstants->ViewProjection = V * P;
     frameConstants->LightDirection = light.direction;
 
-    if (pass == RenderPass::Main)
+    if (pass == RenderPass::Geometry)
     {
         // temp code, replace it
         Camera shadowCamera;

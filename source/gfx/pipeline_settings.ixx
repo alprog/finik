@@ -6,7 +6,7 @@ import shader;
 
 export enum class PipelineType : char
 {
-    Standard,
+    Geometry,
     Shadow,
     Imgui
 };
@@ -18,18 +18,27 @@ export enum class CullMode : char
     Back
 };
 
+export enum class MSAA : char
+{
+    Off = 1,
+    x2 = 2,
+    x4 = 4,
+    x8 = 8
+};
+
 export class PipelineSettings
 {
 public:
     PipelineSettings() = default;
     PipelineSettings(ShaderByteCode vertexByteCode, ShaderByteCode pixelByteCode);
 
-    PipelineType type = PipelineType::Standard;
+    PipelineType type = PipelineType::Geometry;
 
     ShaderByteCode vertexByteCode;
     ShaderByteCode pixelByteCode;
 
     CullMode cullMode;
+    MSAA msaa;
 
     inline friend bool operator==(const PipelineSettings& lhs, const PipelineSettings& rhs) = default;
 };
@@ -39,8 +48,6 @@ struct std::hash<PipelineSettings>
 {
     size_t operator()(const PipelineSettings& settings) const
     {
-        size_t h1 = std::hash<void*>()(settings.vertexByteCode.Get());
-        size_t h2 = std::hash<void*>()(settings.pixelByteCode.Get());
-        return h1 ^ (h2 << 1);
+        return Hash::getRawMemoryHash(this);
     }
 };

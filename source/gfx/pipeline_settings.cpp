@@ -1,7 +1,10 @@
 module pipeline_settings;
 
 PipelineSettings::PipelineSettings(ShaderByteCode vertexByteCode, ShaderByteCode pixelByteCode)
-    : vertexByteCode{ vertexByteCode }
-    , pixelByteCode{ pixelByteCode }
+    : type{PipelineType::Geometry}
+    , vertexByteCode{vertexByteCode}
+    , pixelByteCode{pixelByteCode}
+    , cullMode{CullMode::Back}
+    , msaa{MSAA::Off}
 {
 }

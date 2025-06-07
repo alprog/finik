@@ -38,8 +38,10 @@ float LinearizeDepth(float depth, float nearPlane, float farPlane)
     return (2.0 * nearPlane) / (farPlane + nearPlane - depth * (farPlane - nearPlane));
 }
 
-float4 PSMain(PSInput input) : SV_TARGET
+GBufferOutput PSMain(PSInput input)
 {
+	GBufferOutput Out;
+
 	Texture2D shadowTexture = textures[ShadowTextureId];
 	
 	float2 shadowUV = float2(input.shadowPosition.x / 2 + 0.5, 0.5 - input.shadowPosition.y / 2);
@@ -47,10 +49,7 @@ float4 PSMain(PSInput input) : SV_TARGET
 	float shadowValue = shadowTexture.Sample(DefaultSampler, shadowUV).r;
 	shadowValue = LinearizeDepth(shadowValue, 0.1f, 400);
 	
-	return float4(shadowValue, 0, 0, 1);
-
-	if (input.position.z == 0)
-		return 1;
+	Out.Normals = float4(0.5, 0.5, 1, 1);
 		
 	Texture2D cellTexture = textures[Materials[MaterialId].TextureA];
 	Texture2D gridTexture = textures[Materials[MaterialId].TextureB];
@@ -58,5 +57,7 @@ float4 PSMain(PSInput input) : SV_TARGET
 	float3 fillColor = gridTexture.Sample(PointSampler, float2(input.coord) / 256).rgb;
 	float3 borderColor = cellTexture.Sample(DefaultSampler, input.uv).rgb;
 	
-	return float4(fillColor + borderColor, 1);
+	Out.Albedo = float4(fillColor + borderColor, 1);
+	
+	return Out;
 }

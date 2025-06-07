@@ -18,7 +18,7 @@ SceneView::SceneView(const char* name, Scene& scene)
     , cameraContoller{camera}
 {
     shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, IntSize{1024, 1024});
-    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Main, camera, IntSize{1024, 800});
+    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, IntSize{1024, 800});
 
     // temp code, redo it
     scene.shadowTextureId = shadowMapLane->getFrameBuffer().depthStencil->textureHandle.getIndex();
@@ -68,14 +68,14 @@ void SceneView::draw_content()
         Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y));
 
         auto imageStartPos = ImGui::GetCursorScreenPos();
-
+        Depth = true;
         if (Depth)
         {
             auto Callback = [](const ImDrawList* parent_list, const ImDrawCmd* cmd) //
             {
                 ID3D12GraphicsCommandList* commandList = Single::Get<RenderSystem>().get_command_list();
 
-                std::shared_ptr effect = EffectManager::GetInstance().get("imgui_custom");
+                std::shared_ptr effect = EffectManager::GetInstance().get("imgui");
                 commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
                 effect->getPipelineState()->use();
             };
