@@ -241,9 +241,18 @@ static inline void SafeRelease(T*& res)
     res = nullptr;
 }
 
+static ID3D12GraphicsCommandList* currentCommandList = nullptr;
+
+ID3D12GraphicsCommandList* ImGuiGetCurrentCommandList()
+{
+    return currentCommandList;
+}
+
 // Render function
 void ImGui_ImplDX12_RenderDrawData(ImDrawData* draw_data, ID3D12GraphicsCommandList* ctx)
 {
+    currentCommandList = ctx;
+
     // Avoid rendering when minimized
     if (draw_data->DisplaySize.x <= 0.0f || draw_data->DisplaySize.y <= 0.0f)
         return;

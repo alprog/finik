@@ -54,7 +54,11 @@ MainRootSignature::MainRootSignature(RenderSystem& renderSystem)
     parameters.resize(Params::Count);
 
     parameters[Params::UnboundTextureTable].InitAsDescriptorTable(
-        1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0), D3D12_SHADER_VISIBILITY_PIXEL); // t0...
+        1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0, 0), D3D12_SHADER_VISIBILITY_PIXEL); // t0...
+
+    parameters[Params::UnboundTextureMSTable].InitAsDescriptorTable(
+        1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0, 1), D3D12_SHADER_VISIBILITY_PIXEL); // t0...
+
     parameters[Params::MaterialsConstantBufferView].InitAsConstantBufferView(0);                             // b0
 
     parameters[Params::FrameConstantBufferView].InitAsConstantBufferView(1); // b1;

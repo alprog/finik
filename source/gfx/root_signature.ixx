@@ -20,6 +20,7 @@ public:
     {
         // permanent
         UnboundTextureTable,
+        UnboundTextureMSTable,
         MaterialsConstantBufferView,
 
         // per frame

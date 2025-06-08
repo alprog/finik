@@ -4,12 +4,6 @@ cbuffer vertexBuffer : register(b0)
 	float4x4 ProjectionMatrix;
 };
 
-cbuffer custom : register(b1)
-{
-	uint2 resolution;
-	uint sampleCount;
-};
-
 struct VS_INPUT
 {
 	float2 pos : POSITION;
@@ -34,6 +28,10 @@ PS_INPUT VSMain(VS_INPUT input)
 
 float4 PSMain(PS_INPUT input) : SV_Target
 {
+	uint2 resolution;
+	uint sampleCount;
+	texture0.GetDimensions(resolution.x, resolution.y, sampleCount);
+
 	float2 pos = input.uv * resolution;
 
 	float4 color = 0;

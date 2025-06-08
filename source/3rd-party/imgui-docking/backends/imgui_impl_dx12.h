@@ -43,6 +43,8 @@ IMGUI_IMPL_API void ImGui_ImplDX12_RenderDrawData(ImDrawData* draw_data, ID3D12G
 IMGUI_IMPL_API void ImGui_ImplDX12_InvalidateDeviceObjects();
 IMGUI_IMPL_API bool ImGui_ImplDX12_CreateDeviceObjects();
 
+ID3D12GraphicsCommandList* ImGuiGetCurrentCommandList();
+
 void FillImguiPsoDesc(D3D12_GRAPHICS_PIPELINE_STATE_DESC& psoDesc);
 
 #endif // #ifndef IMGUI_DISABLE

@@ -27,6 +27,7 @@ void RenderContext::setupRoot()
 
     CD3DX12_GPU_DESCRIPTOR_HANDLE startHandle = renderSystem.getCommonHeap()->getGpuHandle(0);
     commandList.SetGraphicsRootDescriptorTable(Params::UnboundTextureTable, startHandle);
+    commandList.SetGraphicsRootDescriptorTable(Params::UnboundTextureMSTable, startHandle);
 }
 
 void RenderContext::setFrameConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)
@@ -58,4 +59,9 @@ void RenderContext::drawMesh(Mesh* mesh)
     commandList.IASetIndexBuffer(&mesh->indexBuffer->indexBufferView);
 
     commandList.DrawIndexedInstanced(mesh->indexBuffer->indices.count(), 1, 0, 0, 0);
+}
+
+void RenderContext::drawFullScreenQuad()
+{
+    //
 }

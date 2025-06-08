@@ -13,7 +13,8 @@ struct Material
 };
 
 // permanent
-Texture2D textures[] : register(t0); // t0...
+Texture2D textures[] : register(t0, space0); // t0...
+Texture2DMS<float4> texturesMS[] : register(t0, space1); // t0...
 
 cbuffer MaterialsConstantBuffer : register(b0)
 {
@@ -26,9 +27,10 @@ cbuffer FrameConstantBuffer : register(b1)
 	float4x4 ViewProject;
 	float4x4 View;
 	float4x4 Projection;	
-	float4x4 ShadowViewProjection;
-	float4 LightDirection;
-	uint ShadowTextureId;
+	
+	float4x4 ShadowViewProjection; // temp
+	float4 LightDirection;         // temp
+	uint ShadowTextureId;          // temp
 };
 
 // per draw

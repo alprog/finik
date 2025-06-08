@@ -12,4 +12,5 @@ public:
     IndexBuffer* indexBuffer;
 };
 
+export Mesh* createFullScreenQuad();
 export Mesh* createCubeMesh();

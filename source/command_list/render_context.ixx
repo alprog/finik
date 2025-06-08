@@ -18,6 +18,8 @@ public:
     void setMaterial(const Material& material, RenderPass pass);
     void drawMesh(Mesh* mesh);
 
+    void drawFullScreenQuad();
+
     RenderSystem& renderSystem;
     ID3D12GraphicsCommandList& commandList;
 };

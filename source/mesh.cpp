@@ -25,3 +25,23 @@ Mesh* createCubeMesh()
 
     return builder.Build();
 }
+
+Mesh* createFullScreenQuad()
+{
+    MeshBuilder builder;
+
+    // a       b
+    //  +-----+
+    //  | \   |
+    //  |   \ |
+    //  +-----+
+    // d       c
+
+    auto a = StandardVertex{Vector3(-1, +1, 0), Vector3::Backward, Vector2(0, 0)};
+    auto b = StandardVertex{Vector3(+1, +1, 0), Vector3::Backward, Vector2(1, 0)};
+    auto c = StandardVertex{Vector3(+1, -1, 0), Vector3::Backward, Vector2(1, 1)};
+    auto d = StandardVertex{Vector3(-1, -1, 0), Vector3::Backward, Vector2(0, 1)};
+    builder.addQuad(a, b, c, d);
+
+    return builder.Build();
+}

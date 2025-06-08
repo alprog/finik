@@ -76,15 +76,14 @@ void SceneView::draw_content()
         {
             auto Callback = [](const ImDrawList* parent_list, const ImDrawCmd* cmd) //
             {
-                ID3D12GraphicsCommandList* commandList = Single::Get<RenderSystem>().get_command_list();
+                ID3D12GraphicsCommandList* commandList = ImGuiGetCurrentCommandList();
 
                 std::shared_ptr effect = EffectManager::GetInstance().get("imgui_ms");
                 commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
                 effect->getPipelineState()->use();
             
-                int32 values[3] = {Size.width, Size.height, sampleCount};
-
-                commandList->SetGraphicsRoot32BitConstants(2, 3, &values, 0);    
+                //int32 values[3] = {Size.width, Size.height, sampleCount};
+                //commandList->SetGraphicsRoot32BitConstants(2, 3, &values, 0);    
             };
             GImGui->CurrentWindow->DrawList->AddCallback(Callback, nullptr);
         }

@@ -54,10 +54,14 @@ GBufferOutput PSMain(PSInput input)
 	Texture2D cellTexture = textures[Materials[MaterialId].TextureA];
 	Texture2D gridTexture = textures[Materials[MaterialId].TextureB];
 	
+	Texture2DMS<float4> cellTextureMS = texturesMS[Materials[MaterialId].TextureB];
+	
 	float3 fillColor = gridTexture.Sample(PointSampler, float2(input.coord) / 256).rgb;
 	float3 borderColor = cellTexture.Sample(DefaultSampler, input.uv).rgb;
 	
-	Out.Albedo = float4(fillColor + borderColor, 1);
+	float3 z = cellTextureMS.Load(0, 0, 0).rgb;
+	
+	Out.Albedo = float4(fillColor + z, 1);
 	
 	return Out;
 }
