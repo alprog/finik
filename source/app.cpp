@@ -14,6 +14,8 @@ import shader_manager;
 import gui;
 import cleaner;
 
+// for intellisense
+
 App& App::GetInstance()
 {
     static App instance;

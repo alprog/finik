@@ -8,6 +8,8 @@ import myptr;
 import dx;
 import pipeline_state;
 
+// for intellisense
+
 export class Effect
 {
 public:

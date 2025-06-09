@@ -5,6 +5,8 @@ import render_system_fwd;
 import shader;
 import msaa;
 
+// for intellisense
+
 export enum class PipelineType : char
 {
     Geometry,

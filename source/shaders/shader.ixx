@@ -5,6 +5,8 @@ import dx;
 import asset_path;
 import asset_dependencies;
 
+// for intellisense
+
 export enum ShaderType
 {
     Vertex,

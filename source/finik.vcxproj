@@ -74,7 +74,8 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;d3d12.lib;dxgi.lib;dxcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /i $(SolutionDir)\3rd-party\SDL2-2.30.4\lib\x64\*.dll $(outputpath)</Command>
+      <Command>xcopy /y /i $(SolutionDir)\3rd-party\SDL2-2.30.4\lib\x64\*.dll $(outputpath)
+xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -340,6 +341,7 @@
     <ClCompile Include="views\view.ixx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3rd-party\dx\d3dx12.h" />
     <ClInclude Include="3rd-party\imgui-docking\backends\imgui_impl_dx12.h" />
     <ClInclude Include="3rd-party\imgui-docking\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="3rd-party\imgui-docking\imconfig.h" />

@@ -5,6 +5,8 @@ import texture;
 import texture_id;
 import effect;
 
+// for intellisense
+
 export struct MaterialData
 {
     Color ColorA;
