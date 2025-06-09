@@ -27,6 +27,26 @@ const char* getShaderVersion(ShaderType type)
     }
 }
 
+ShaderCompiler::ShaderCompiler()
+{
+    DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&pDxcInstance));
+    DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&pDxcUtils));
+}
+
+ShaderCompiler::~ShaderCompiler()
+{
+    if (pDxcInstance)
+    {
+        pDxcInstance->Release();
+        pDxcInstance = nullptr;
+    }
+    if (pDxcUtils)
+    {
+        pDxcUtils->Release();
+        pDxcUtils = nullptr;
+    }
+}
+
 ShaderCompiler::Output ShaderCompiler::Compile(ShaderKey key)
 {
     std::shared_ptr<ShaderSourceFile> source_file = Assets::GetInstance().get<ShaderSourceFile>(key.AssetPath);
@@ -40,35 +60,31 @@ ShaderCompiler::Output ShaderCompiler::Compile(ShaderKey key)
 ShaderCompiler::Output ShaderCompiler::Compile(const String& sourceText, ShaderType type, const String& entryPoint)
 {
     Output output;
+    
+    IncludeHandler includeHandler([this, &output](const String& filename) {
+        std::shared_ptr<ShaderSourceFile> sourceFile = Assets::GetInstance().get<ShaderSourceFile>(filename.c_str());
+        output.sourceAssets.add(sourceFile);
 
-    IncludeHandler includeHandler(*this, output.sourceAssets);
-
-    std::wstring wideEntryPoint = std::wstring(entryPoint.begin(), entryPoint.end());
-
-    MyPtr<IDxcCompiler3> dxc;
-    MyPtr<IDxcUtils> utils;
-    DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&utils));
-    DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxc));
-    MyPtr<IDxcBlobEncoding> sourceBlob;
-    utils->CreateBlob(sourceText.c_str(), sourceText.size(), DXC_CP_UTF8, &sourceBlob);
-    DxcBuffer sourceBuffer;
-    sourceBuffer.Ptr = sourceBlob->GetBufferPointer();
-    sourceBuffer.Size = sourceBlob->GetBufferSize();
-    sourceBuffer.Encoding = DXC_CP_UTF8;
-    MyPtr<IDxcResult> result;
+        MyPtr<IDxcBlobEncoding> includeBlob;
+        auto& includeText = sourceFile->GetSourceText();
+        pDxcUtils->CreateBlob(includeText.c_str(), includeText.size(), DXC_CP_UTF8, &includeBlob);
+        return includeBlob.Detach();
+     });
+    
+    DxcBuffer sourceBuffer{&sourceText[0], sourceText.size(), DXC_CP_UTF8};
 
     DxcArgs args;
     args << "-E" << entryPoint;
     args << "-T" << getShaderVersion(type);
     args << "-Wno-conversion";
-
-    dxc->Compile(&sourceBuffer, args.getPtrToPtrs(), args.count(), &includeHandler, IID_PPV_ARGS(&result));
-
-    MyPtr<IDxcBlobUtf8> errors;
-    result->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(&errors), nullptr);
+        
+    MyPtr<IDxcResult> result;
+    pDxcInstance->Compile(&sourceBuffer, args.getPtrToPtrs(), args.count(), &includeHandler, IID_PPV_ARGS(&result));
 
     result->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&output.bytecode), nullptr);
 
+    MyPtr<IDxcBlobUtf8> errors;
+    result->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(&errors), nullptr);
     if (errors && errors->GetStringLength() > 0)
     {
         output.errorMessage = errors->GetStringPointer();

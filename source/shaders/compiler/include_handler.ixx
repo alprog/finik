@@ -4,26 +4,12 @@ module;
 export module include_handler;
 
 import core;
-import dx;
-import assets;
-import shader_source_file;
-import byte_blob;
-import asset_dependencies;
 
 // for intellisense
 
-export class ShaderCompiler;
-
-export class IncludeHandler : public IDxcIncludeHandler
+template <typename T>
+class DefaultQueryInterface : public T
 {
-public:
-    IncludeHandler(ShaderCompiler& compiler, AssetDependencies& sourceAssets)
-        : compiler{compiler}
-        , sourceAssets{sourceAssets}
-    {
-    }
-
-    // IUnknown
     ULONG STDMETHODCALLTYPE AddRef() override
     {
         return 1;
@@ -34,7 +20,7 @@ public:
     }
     HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void** ppvObject) override
     {
-        if (riid == __uuidof(IDxcIncludeHandler) || riid == IID_IUnknown)
+        if (riid == __uuidof(T) || riid == IID_IUnknown)
         {
             *ppvObject = this;
             return S_OK;
@@ -42,30 +28,26 @@ public:
         *ppvObject = nullptr;
         return E_NOINTERFACE;
     }
+};
+
+export class IncludeHandler : public DefaultQueryInterface<IDxcIncludeHandler>
+{
+public:
+    using TCallback = std::function<IDxcBlob*(const String&)>;
+
+    IncludeHandler(TCallback callback)
+        : callback{callback}
+    {
+    }
 
     HRESULT STDMETHODCALLTYPE LoadSource(LPCWSTR pFilename, IDxcBlob** ppIncludeSource) override
     {
-        auto ws = std::wstring(pFilename);
-        const std::string utf8Filename = std::string(ws.begin(), ws.end());
-        std::shared_ptr<ShaderSourceFile> sourceFile = Assets::GetInstance().get<ShaderSourceFile>(utf8Filename);
-        sourceAssets.add(sourceFile);
-
-        MyPtr<IDxcBlobEncoding> blob;
-        MyPtr<IDxcUtils> utils;
-        DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&utils));
-
-        utils->CreateBlob(
-            sourceFile->GetSourceText().c_str(),
-            sourceFile->GetSourceText().size(),
-            DXC_CP_UTF8,
-            &blob);
-
-        *ppIncludeSource = blob.Detach();
-
+        const std::wstring wideFilename = pFilename;
+        const std::string filename = std::string(wideFilename.begin(), wideFilename.end());
+        *ppIncludeSource = callback(filename);
         return S_OK;
     }
 
 private:
-    ShaderCompiler& compiler;
-    AssetDependencies& sourceAssets;
+    TCallback callback;
 };

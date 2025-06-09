@@ -1,3 +1,6 @@
+module;
+class IDxcCompiler3;
+class IDxcUtils;
 export module shader_compiler;
 
 import core;
@@ -9,6 +12,12 @@ import shader;
 
 export class ShaderCompiler
 {
+    friend class Single;
+
+private:
+    ShaderCompiler();
+    ~ShaderCompiler();
+
 public:
     struct Output
     {
@@ -25,7 +34,9 @@ public:
         InlcudeDirectories.append(directory);
     }
 
+private:
     Array<AssetPath> InlcudeDirectories;
-
+    IDxcCompiler3* pDxcInstance;
+    IDxcUtils* pDxcUtils;
     static int32 Counter;
 };
