@@ -154,6 +154,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="camera.ixx" />
     <ClCompile Include="camera_controller.cpp" />
     <ClCompile Include="camera_controller.ixx" />
+    <ClCompile Include="shaders\compiler\include_handler.ixx" />
     <ClCompile Include="core\enum_bits.ixx" />
     <ClCompile Include="core\hash.ixx" />
     <ClCompile Include="gfx\cleaner.cpp" />
@@ -177,7 +178,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="shadows\shadow_maps.ixx" />
     <ClCompile Include="views\console_view.cpp" />
     <ClCompile Include="views\console_view.ixx" />
-    <ClCompile Include="core.ixx" />
+    <ClCompile Include="core\core.ixx" />
     <ClCompile Include="core\color.ixx" />
     <ClCompile Include="core\containers\array.ixx" />
     <ClCompile Include="core\containers\containers.ixx" />
@@ -312,8 +313,8 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="views\scene_view.ixx" />
     <ClCompile Include="shaders\shader.ixx" />
     <ClCompile Include="views\shaders_view.ixx" />
-    <ClCompile Include="shaders\shader_compiler.cpp" />
-    <ClCompile Include="shaders\shader_compiler.ixx" />
+    <ClCompile Include="shaders\compiler\shader_compiler.cpp" />
+    <ClCompile Include="shaders\compiler\shader_compiler.ixx" />
     <ClCompile Include="shaders\shader_manager.cpp" />
     <ClCompile Include="shaders\shader_manager.ixx" />
     <ClCompile Include="shaders\shader_source_file.ixx" />
