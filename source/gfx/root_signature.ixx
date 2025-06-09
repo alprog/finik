@@ -19,8 +19,6 @@ public:
     enum Params
     {
         // permanent
-        UnboundTextureTable,
-        UnboundTextureMSTable,
         MaterialsConstantBufferView,
 
         // per frame

@@ -34,7 +34,8 @@ void RootSignature::init(RenderSystem& renderSystem, Array<CD3DX12_ROOT_PARAMETE
     D3D12_STATIC_SAMPLER_DESC staticSamplers[3] = {defaultSampler, pointSampler, linearSampler};
 
     CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
-    rootSignatureDesc.Init(parameters.count(), &parameters[0], 3, staticSamplers, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+    auto Flags = D3D12_ROOT_SIGNATURE_FLAG_CBV_SRV_UAV_HEAP_DIRECTLY_INDEXED | D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+    rootSignatureDesc.Init(parameters.count(), &parameters[0], 3, staticSamplers, Flags);   
 
     MyPtr<ID3DBlob> signature;
     MyPtr<ID3DBlob> error;
@@ -53,13 +54,7 @@ MainRootSignature::MainRootSignature(RenderSystem& renderSystem)
     Array<CD3DX12_ROOT_PARAMETER> parameters;
     parameters.resize(Params::Count);
 
-    parameters[Params::UnboundTextureTable].InitAsDescriptorTable(
-        1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0, 0), D3D12_SHADER_VISIBILITY_PIXEL); // t0...
-
-    parameters[Params::UnboundTextureMSTable].InitAsDescriptorTable(
-        1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0, 1), D3D12_SHADER_VISIBILITY_PIXEL); // t0...
-
-    parameters[Params::MaterialsConstantBufferView].InitAsConstantBufferView(0);                             // b0
+    parameters[Params::MaterialsConstantBufferView].InitAsConstantBufferView(0); // b0
 
     parameters[Params::FrameConstantBufferView].InitAsConstantBufferView(1); // b1;
 

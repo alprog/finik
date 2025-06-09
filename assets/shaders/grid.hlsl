@@ -42,7 +42,7 @@ GBufferOutput PSMain(PSInput input)
 {
 	GBufferOutput Out;
 
-	Texture2D shadowTexture = textures[ShadowTextureId];
+	Texture2D shadowTexture = ResourceDescriptorHeap[ShadowTextureId];
 	
 	float2 shadowUV = float2(input.shadowPosition.x / 2 + 0.5, 0.5 - input.shadowPosition.y / 2);
 	
@@ -51,17 +51,15 @@ GBufferOutput PSMain(PSInput input)
 	
 	Out.Normals = float4(0.5, 0.5, 1, 1);
 		
-	Texture2D cellTexture = textures[Materials[MaterialId].TextureA];
-	Texture2D gridTexture = textures[Materials[MaterialId].TextureB];
+	Texture2D cellTexture = ResourceDescriptorHeap[Materials[MaterialId].TextureA];
+	Texture2D gridTexture = ResourceDescriptorHeap[Materials[MaterialId].TextureB];
 	
-	Texture2DMS<float4> cellTextureMS = texturesMS[Materials[MaterialId].TextureB];
+	Texture2DMS<float4> cellTextureMS = ResourceDescriptorHeap[Materials[MaterialId].TextureB];
 	
 	float3 fillColor = gridTexture.Sample(PointSampler, float2(input.coord) / 256).rgb;
 	float3 borderColor = cellTexture.Sample(DefaultSampler, input.uv).rgb;
 	
-	float3 z = cellTextureMS.Load(0, 0, 0).rgb;
-	
-	Out.Albedo = float4(fillColor + z, 1);
+	Out.Albedo = float4(fillColor + borderColor, 1);
 	
 	return Out;
 }

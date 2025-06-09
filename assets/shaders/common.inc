@@ -12,10 +12,6 @@ struct Material
     uint TextureD;
 };
 
-// permanent
-Texture2D textures[] : register(t0, space0); // t0...
-Texture2DMS<float4> texturesMS[] : register(t0, space1); // t0...
-
 cbuffer MaterialsConstantBuffer : register(b0)
 {
     Material Materials[80];

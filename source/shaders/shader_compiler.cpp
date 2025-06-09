@@ -159,7 +159,7 @@ ShaderCompiler::Output ShaderCompiler::Compile(const String& sourceText, ShaderT
 
     std::wstring wideEntryPoint = Utf8ToWide(entryPoint.c_str());
 
-    auto ttt = type == ShaderType::Compute ? L"cs_6_0" : ((type == ShaderType::Pixel ? L"ps_6_0" : L"vs_6_0"));
+    auto ttt = type == ShaderType::Compute ? L"cs_6_6" : ((type == ShaderType::Pixel ? L"ps_6_6" : L"vs_6_6"));
 
     {
         MyPtr<IDxcCompiler3> compiler;

@@ -24,10 +24,6 @@ void RenderContext::setupRoot()
     UploadBuffer* uploadBuffer = MaterialManager::GetInstance().ConstantBuffer->uploadBuffer;
     auto address = uploadBuffer->GetGPUVirtualAddress();
     commandList.SetGraphicsRootConstantBufferView(Params::MaterialsConstantBufferView, address);
-
-    CD3DX12_GPU_DESCRIPTOR_HANDLE startHandle = renderSystem.getCommonHeap()->getGpuHandle(0);
-    commandList.SetGraphicsRootDescriptorTable(Params::UnboundTextureTable, startHandle);
-    commandList.SetGraphicsRootDescriptorTable(Params::UnboundTextureMSTable, startHandle);
 }
 
 void RenderContext::setFrameConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)
