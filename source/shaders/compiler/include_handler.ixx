@@ -12,36 +12,6 @@ import asset_dependencies;
 
 // for intellisense
 
-std::string WideToUtf8(LPCWSTR wideStr)
-{
-    if (!wideStr)
-        return {};
-
-    int sizeNeeded = WideCharToMultiByte(
-        CP_UTF8, // кодировка UTF-8
-        0,
-        wideStr,
-        -1, // до нуля-терминатора
-        nullptr,
-        0,
-        nullptr,
-        nullptr);
-
-    std::string result(sizeNeeded, 0);
-
-    WideCharToMultiByte(
-        CP_UTF8,
-        0,
-        wideStr,
-        -1,
-        &result[0],
-        sizeNeeded,
-        nullptr,
-        nullptr);
-
-    return result;
-}
-
 export class ShaderCompiler;
 
 export class IncludeHandler : public IDxcIncludeHandler
@@ -75,8 +45,8 @@ public:
 
     HRESULT STDMETHODCALLTYPE LoadSource(LPCWSTR pFilename, IDxcBlob** ppIncludeSource) override
     {
-        auto ws = WideToUtf8(pFilename);
-        const char* utf8Filename = ws.c_str();
+        auto ws = std::wstring(pFilename);
+        const std::string utf8Filename = std::string(ws.begin(), ws.end());
         std::shared_ptr<ShaderSourceFile> sourceFile = Assets::GetInstance().get<ShaderSourceFile>(utf8Filename);
         sourceAssets.add(sourceFile);
 

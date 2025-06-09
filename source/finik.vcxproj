@@ -154,6 +154,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="camera.ixx" />
     <ClCompile Include="camera_controller.cpp" />
     <ClCompile Include="camera_controller.ixx" />
+    <ClCompile Include="shaders\compiler\dxc_args.ixx" />
     <ClCompile Include="shaders\compiler\include_handler.ixx" />
     <ClCompile Include="core\enum_bits.ixx" />
     <ClCompile Include="core\hash.ixx" />
