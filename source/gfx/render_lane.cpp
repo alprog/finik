@@ -8,58 +8,6 @@ import scene;
 import mrt;
 import enum_bits;
 
-RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, SurfaceSize size)
-    : scene{scene}
-    , pass{pass}
-    , camera{camera}
-    , frameBuffer{size, pass == RenderPass::Shadow ? 0 : 4, true}
-{
-}
-
-void RenderLane::resize(SurfaceSize size)
-{
-    if (frameBuffer.size != size)
-    {
-        RenderSystem& render_system = Single::Get<RenderSystem>();
-        render_system.get_command_queue().Flush();
-
-        frameBuffer.resize(size);
-        camera.AspectRatio = static_cast<float>(size.width) / size.height;
-        camera.calcProjectionMatrix();
-    }
-}
-
-FrameBuffer& RenderLane::getFrameBuffer()
-{
-    return frameBuffer;
-}
-
-void RenderLane::render()
-{
-    RenderSystem& render_system = Single::Get<RenderSystem>();
-    auto& commandQueue = render_system.get_command_queue();
-    {
-        Profile _("wait");
-        commandQueue.fence->WaitForValue(fenceValue);
-    }
-
-    CommandList& commandList = render_system.getFreeCommandList();
-    commandList.startRecording();
-
-    frameBuffer.startRendering(commandList);
-
-    RenderContext context(render_system, *commandList.listImpl.Get());
-    scene.render(context, &camera, pass);
-    frameBuffer.endRendering(commandList);
-
-    commandList.endRecording();
-    commandQueue.execute(commandList);
-
-    fenceValue = commandQueue.fence->SignalNext();
-}
-
-//------------------------------------------------
-
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size)
     : scene{scene}
     , camera{camera}

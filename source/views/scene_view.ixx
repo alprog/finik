@@ -30,6 +30,5 @@ protected:
     Camera camera;
     CameraController cameraContoller;
 
-    std::shared_ptr<RenderLane> shadowMapLane;
-    std::shared_ptr<RenderLane> renderLane;
+    std::shared_ptr<SceneRenderLane> renderLane;
 };

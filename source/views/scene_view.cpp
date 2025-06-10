@@ -11,6 +11,7 @@ import effect_manager;
 import render_pass;
 import quality_manager;
 import surface_size;
+import mrt;
 
 SceneView::SceneView(const char* name, Scene& scene)
     : View{name}
@@ -20,15 +21,9 @@ SceneView::SceneView(const char* name, Scene& scene)
     , cameraContoller{camera}
 {
     auto& settings = QualityManager::GetInstance().getCurrent();
-    shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, SurfaceSize{1024, 1024, 1});
-    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, SurfaceSize{1024, 800, getSampleCount(settings.msaa)});
-
-    // temp code, redo it
-    scene.shadowTextureId = shadowMapLane->getFrameBuffer().depthStencil->textureHandle.getIndex();
-
-    auto& lanes = Single::Get<RenderSystem>().lanes;
-    lanes.append(shadowMapLane);
-    lanes.append(renderLane);
+    SurfaceSize surfaceSize = SurfaceSize{1024, 800, getSampleCount(settings.msaa)};
+    
+    renderLane = std::make_shared<SceneRenderLane>(scene, camera, surfaceSize);
 }
 
 const CameraController& SceneView::getCameraController() const
@@ -46,16 +41,11 @@ void SceneView::update(float deltaTime)
 void SceneView::draw_content()
 {
     static int SelectedType = 0;
-    static bool Shadows = false;
 
-    ImGui::Checkbox("Shadows", &Shadows);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(100);
     static const char* items[]{"RT0", "RT1", "RT2", "RT3", "DS"};
     ImGui::Combo("Surface", &SelectedType, items, 5);
-
-    
-    std::shared_ptr<RenderLane>& lane = Shadows ? shadowMapLane : renderLane;
 
     bool Depth = SelectedType == MRT::DS;
 
@@ -68,10 +58,7 @@ void SceneView::draw_content()
         getSampleCount(msaa)
     });
 
-    static int32 sampleCount;
-    sampleCount = lane->getFrameBuffer().size.sampleCount;
-
-    auto surface = lane->getFrameBuffer().gerRenderSurface(static_cast<MRT>(SelectedType));
+    auto surface = renderLane->getGBuffer().gerRenderSurface(static_cast<MRT>(SelectedType));
     if (surface)
     {
         D3D12_GPU_DESCRIPTOR_HANDLE handle = surface->textureHandle.getGPU();
@@ -130,6 +117,8 @@ void SceneView::draw_content()
             }
         }
     }
+
+    renderLane->render();
 
     setupShadowCamera();
 }

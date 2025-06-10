@@ -7,26 +7,9 @@ import render_pass;
 import surface_size;
 export import msaa;
 
-export class RenderLane
-{
-public:
-    RenderLane(Scene& scene, RenderPass pass, Camera& camera, SurfaceSize size);
-    void resize(SurfaceSize size);
-
-    FrameBuffer& getFrameBuffer();
-    void render();
-
-private:
-    Scene& scene;
-    Camera& camera;
-    FrameBuffer frameBuffer;
-    RenderPass pass;
-
-    uint64 fenceValue = 0;
-};
-
 export class SceneRenderLane
 {
+public:
     SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size);
     void resize(SurfaceSize size);
 

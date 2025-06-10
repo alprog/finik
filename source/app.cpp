@@ -108,13 +108,13 @@ void App::run_game_loop()
             }
         }
 
-        {
-            Profile _("lanes");
-            for (auto& lane : render_system.lanes)
-            {
-                lane->render();
-            }
-        }
+        //{
+        //    Profile _("lanes");
+        //    for (auto& lane : render_system.lanes)
+        //    {
+        //        lane->render();
+        //    }
+        //}
 
         {
             Profile _("render windows");

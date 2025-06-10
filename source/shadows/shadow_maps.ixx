@@ -19,5 +19,4 @@ private:
     Scene& scene;
 
     Camera lightCamera;
-    Array<std::shared_ptr<RenderLane>> lanes;
 };

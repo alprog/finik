@@ -82,7 +82,4 @@ private:
 
     std::unique_ptr<CommandListPool> commandListPool;
     std::unique_ptr<finik::gpumem::OneshotAllocator> oneshotAllocator;
-
-public:
-    Array<std::shared_ptr<RenderLane>> lanes;
 };
