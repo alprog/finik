@@ -35,7 +35,8 @@ public:
     CullMode cullMode;
     MSAA msaa;
 
-    inline friend bool operator==(const PipelineSettings& lhs, const PipelineSettings& rhs) = default;
+    bool operator==(const PipelineSettings& lhs) const = default;
+    bool operator!=(const PipelineSettings& lhs) const = default;
 };
 
 export template <>

@@ -23,3 +23,23 @@ private:
 
     uint64 fenceValue = 0;
 };
+
+export class SceneRenderLane
+{
+    SceneRenderLane(Scene& scene, Camera& camera, IntSize resolution, MSAA msaa);
+    void resize(IntSize resolution, MSAA msaa);
+
+    FrameBuffer& getGBuffer();
+    FrameBuffer& getLightBuffer();
+
+    void render();
+
+private:
+    Scene& scene;
+    Camera& camera;
+
+    FrameBuffer gBuffer;
+    FrameBuffer lightBuffer;
+
+    uint64 fenceValue = 0;
+};

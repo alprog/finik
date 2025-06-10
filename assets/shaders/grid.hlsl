@@ -60,6 +60,8 @@ GBufferOutput PSMain(PSInput input)
 	float3 borderColor = cellTexture.Sample(DefaultSampler, input.uv).rgb;
 	
 	Out.Albedo = float4(fillColor + borderColor, 1);
+	Out.Motion = float4(1, 0, 0, 1);
+	Out.RT4 = float4(1, 1, 0, 1);
 	
 	return Out;
 }

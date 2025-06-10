@@ -48,6 +48,8 @@ GBufferOutput PSMain(PSInput input)
 	float diffuse = 0.2 + (dot(input.normal, -LightDirection) + 1) * 0.4;
 	
 	Out.Albedo = diffuse * diffuseColor;
-	
+	Out.Motion = float4(1, 0, 0, 1);
+	Out.RT4 = float4(1, 1, 0, 1);
+
 	return Out;
 }

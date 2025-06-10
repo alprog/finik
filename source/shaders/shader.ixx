@@ -20,7 +20,8 @@ export struct ShaderKey
     ShaderType Type;
     std::string EntryPoint;
 
-    bool operator==(const ShaderKey& other) const = default;
+    bool operator==(const ShaderKey&) const = default;
+    bool operator!=(const ShaderKey&) const = default;
 };
 
 template <>

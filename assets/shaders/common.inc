@@ -50,4 +50,6 @@ struct GBufferOutput
 {
 	float4 Albedo : SV_TARGET0;
 	float4 Normals : SV_TARGET1;
+	float4 Motion : SV_TARGET2;
+	float4 RT4 : SV_TARGET3;
 };

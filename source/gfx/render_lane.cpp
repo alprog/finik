@@ -57,3 +57,36 @@ void RenderLane::render()
 
     fenceValue = commandQueue.fence->SignalNext();
 }
+
+//------------------------------------------------
+
+SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, IntSize resolution, MSAA msaa)
+    : scene{scene}
+    , camera{camera}
+    , gBuffer{resolution, msaa, 4, true}
+    , lightBuffer{resolution, msaa, 1, false}
+{
+}
+
+void SceneRenderLane::resize(IntSize resolution, MSAA msaa)
+{
+    if (gBuffer.resolution != resolution || gBuffer.msaa != msaa)
+    {
+        RenderSystem& render_system = Single::Get<RenderSystem>();
+        render_system.get_command_queue().Flush();
+
+        gBuffer.resize(resolution, msaa);
+        camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
+        camera.calcProjectionMatrix();
+    }
+}
+
+FrameBuffer& SceneRenderLane::getGBuffer()
+{
+    return gBuffer;
+}
+
+FrameBuffer& SceneRenderLane::getLightBuffer()
+{
+    return lightBuffer;
+}

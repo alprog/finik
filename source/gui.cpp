@@ -49,6 +49,7 @@ void Gui::prepare()
     ImGui_ImplDX12_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+    ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 
     for (auto& view : views)
     {

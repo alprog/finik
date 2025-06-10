@@ -5,14 +5,7 @@ export import msaa;
 export struct QualitySettings
 {
     MSAA msaa = MSAA::Off;
+
+    bool operator==(const QualitySettings&) const = default;
+    bool operator!=(const QualitySettings&) const = default;
 };
-
-export bool operator==(const QualitySettings& lhs, const QualitySettings& rhs)
-{
-    return lhs.msaa == rhs.msaa;
-}
-
-export bool operator!=(const QualitySettings& lhs, const QualitySettings& rhs)
-{
-    return !(lhs == rhs);
-}
