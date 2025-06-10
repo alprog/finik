@@ -63,6 +63,7 @@ void RenderLane::render()
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size)
     : scene{scene}
     , camera{camera}
+    , size{size}
     , gBuffer{size, 4, true}
     , lightBuffer{size, 1, false}
 {
@@ -70,14 +71,18 @@ SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size)
 
 void SceneRenderLane::resize(SurfaceSize size)
 {
-    if (gBuffer.size != size)
+    if (this->size != size)
     {
         RenderSystem& render_system = Single::Get<RenderSystem>();
         render_system.get_command_queue().Flush();
 
         gBuffer.resize(size);
+        lightBuffer.resize(size);
+
         camera.AspectRatio = static_cast<float>(size.width) / size.height;
         camera.calcProjectionMatrix();
+
+        this->size = size;
     }
 }
 
@@ -89,4 +94,27 @@ FrameBuffer& SceneRenderLane::getGBuffer()
 FrameBuffer& SceneRenderLane::getLightBuffer()
 {
     return lightBuffer;
+}
+
+void SceneRenderLane::render()
+{
+    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& commandQueue = render_system.get_command_queue();
+    {
+        Profile _("wait");
+        commandQueue.fence->WaitForValue(fenceValue);
+    }
+
+    CommandList& commandList = render_system.getFreeCommandList();
+    commandList.startRecording();
+
+    gBuffer.startRendering(commandList);
+    RenderContext context(render_system, *commandList.listImpl.Get());
+    scene.render(context, &camera, RenderPass::Geometry);
+    gBuffer.endRendering(commandList);
+
+    commandList.endRecording();
+    commandQueue.execute(commandList);
+
+    fenceValue = commandQueue.fence->SignalNext();
 }

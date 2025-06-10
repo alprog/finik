@@ -2,6 +2,7 @@ export module surface_size;
 
 import core;
 
+// Resolution + MSAA sample count
 export struct SurfaceSize
 {
     IntSize resolution() const { return { width, height }; }

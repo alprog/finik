@@ -38,6 +38,7 @@ export class SceneRenderLane
 private:
     Scene& scene;
     Camera& camera;
+    SurfaceSize size;
 
     FrameBuffer gBuffer;
     FrameBuffer lightBuffer;
