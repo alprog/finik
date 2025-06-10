@@ -4,35 +4,33 @@ module frame_buffer;
 
 import render_system;
 
-FrameBuffer::FrameBuffer(IntSize resolution, MSAA msaa, int32 renderTargetCount, bool depthBufferEnabled)
-    : resolution{resolution}
-    , msaa{msaa}
+FrameBuffer::FrameBuffer(SurfaceSize size, int32 renderTargetCount, bool depthBufferEnabled)
+    : size{size}
 {
     for (int i = 0; i < renderTargetCount; i++)
     {
-        renderTargets.emplace_back(std::make_unique<RenderTarget>(resolution, msaa));
+        renderTargets.emplace_back(std::make_unique<RenderTarget>(size));
     }
 
     if (depthBufferEnabled)
     {
-        depthStencil = std::make_unique<DepthStencil>(resolution, msaa);
+        depthStencil = std::make_unique<DepthStencil>(size);
     }
 }
 
-void FrameBuffer::resize(IntSize resolution, MSAA msaa)
+void FrameBuffer::resize(SurfaceSize size)
 {
-    if (this->resolution != resolution || this->msaa != msaa)
+    if (this->size != size)
     {
         for (auto& renderTarget : renderTargets)
         {
-            renderTarget->resize(resolution, msaa);
+            renderTarget->resize(size);
         }
         if (depthStencil)
         {
-            depthStencil->resize(resolution, msaa);
+            depthStencil->resize(size);
         }
-        this->resolution = resolution;
-        this->msaa = msaa;
+        this->size = size;
     }
 }
 
@@ -65,13 +63,13 @@ void FrameBuffer::startRendering(CommandList& commandList)
     ID3D12DescriptorHeap* a = render_system.getCommonHeap()->get();
     commandList.listImpl->SetDescriptorHeaps(1, &a);
 
-    viewport.Width = static_cast<float>(resolution.width);
-    viewport.Height = static_cast<float>(resolution.height);
+    viewport.Width = static_cast<float>(size.width);
+    viewport.Height = static_cast<float>(size.height);
     viewport.MaxDepth = 1.0f;
     commandList.listImpl->RSSetViewports(1, &viewport);
 
-    scissorRect.right = static_cast<LONG>(resolution.width);
-    scissorRect.bottom = static_cast<LONG>(resolution.height);
+    scissorRect.right = static_cast<LONG>(size.width);
+    scissorRect.bottom = static_cast<LONG>(size.height);
     commandList.listImpl->RSSetScissorRects(1, &scissorRect);
 }
 

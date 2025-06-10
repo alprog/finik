@@ -4,13 +4,14 @@ import core;
 import frame_buffer;
 import scene_system_fwd;
 import render_pass;
+import surface_size;
 export import msaa;
 
 export class RenderLane
 {
 public:
-    RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution, MSAA msaa);
-    void resize(IntSize resolution, MSAA msaa);
+    RenderLane(Scene& scene, RenderPass pass, Camera& camera, SurfaceSize size);
+    void resize(SurfaceSize size);
 
     FrameBuffer& getFrameBuffer();
     void render();
@@ -26,8 +27,8 @@ private:
 
 export class SceneRenderLane
 {
-    SceneRenderLane(Scene& scene, Camera& camera, IntSize resolution, MSAA msaa);
-    void resize(IntSize resolution, MSAA msaa);
+    SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size);
+    void resize(SurfaceSize size);
 
     FrameBuffer& getGBuffer();
     FrameBuffer& getLightBuffer();

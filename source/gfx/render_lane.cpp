@@ -8,23 +8,23 @@ import scene;
 import mrt;
 import enum_bits;
 
-RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, IntSize resolution, MSAA msaa)
+RenderLane::RenderLane(Scene& scene, RenderPass pass, Camera& camera, SurfaceSize size)
     : scene{scene}
     , pass{pass}
     , camera{camera}
-    , frameBuffer{resolution, msaa, pass == RenderPass::Shadow ? 0 : 4, true}
+    , frameBuffer{size, pass == RenderPass::Shadow ? 0 : 4, true}
 {
 }
 
-void RenderLane::resize(IntSize resolution, MSAA msaa)
+void RenderLane::resize(SurfaceSize size)
 {
-    if (frameBuffer.resolution != resolution || frameBuffer.msaa != msaa)
+    if (frameBuffer.size != size)
     {
         RenderSystem& render_system = Single::Get<RenderSystem>();
         render_system.get_command_queue().Flush();
 
-        frameBuffer.resize(resolution, msaa);
-        camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
+        frameBuffer.resize(size);
+        camera.AspectRatio = static_cast<float>(size.width) / size.height;
         camera.calcProjectionMatrix();
     }
 }
@@ -60,23 +60,23 @@ void RenderLane::render()
 
 //------------------------------------------------
 
-SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, IntSize resolution, MSAA msaa)
+SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size)
     : scene{scene}
     , camera{camera}
-    , gBuffer{resolution, msaa, 4, true}
-    , lightBuffer{resolution, msaa, 1, false}
+    , gBuffer{size, 4, true}
+    , lightBuffer{size, 1, false}
 {
 }
 
-void SceneRenderLane::resize(IntSize resolution, MSAA msaa)
+void SceneRenderLane::resize(SurfaceSize size)
 {
-    if (gBuffer.resolution != resolution || gBuffer.msaa != msaa)
+    if (gBuffer.size != size)
     {
         RenderSystem& render_system = Single::Get<RenderSystem>();
         render_system.get_command_queue().Flush();
 
-        gBuffer.resize(resolution, msaa);
-        camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
+        gBuffer.resize(size);
+        camera.AspectRatio = static_cast<float>(size.width) / size.height;
         camera.calcProjectionMatrix();
     }
 }

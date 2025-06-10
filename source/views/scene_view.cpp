@@ -10,6 +10,7 @@ import scene;
 import effect_manager;
 import render_pass;
 import quality_manager;
+import surface_size;
 
 SceneView::SceneView(const char* name, Scene& scene)
     : View{name}
@@ -19,8 +20,8 @@ SceneView::SceneView(const char* name, Scene& scene)
     , cameraContoller{camera}
 {
     auto& settings = QualityManager::GetInstance().getCurrent();
-    shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, IntSize{1024, 1024}, MSAA::Off);
-    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, IntSize{1024, 800}, settings.msaa);
+    shadowMapLane = std::make_shared<RenderLane>(scene, RenderPass::Shadow, shadowCamera, SurfaceSize{1024, 1024, 1});
+    renderLane = std::make_shared<RenderLane>(scene, RenderPass::Geometry, camera, SurfaceSize{1024, 800, getSampleCount(settings.msaa)});
 
     // temp code, redo it
     scene.shadowTextureId = shadowMapLane->getFrameBuffer().depthStencil->textureHandle.getIndex();
@@ -59,10 +60,16 @@ void SceneView::draw_content()
     bool Depth = SelectedType == MRT::DS;
 
     auto imSize = ImGui::GetContentRegionAvail();
-    static IntSize Size;
-    Size = IntSize(static_cast<int>(imSize.x), static_cast<int>(imSize.y)); // static hack
+    auto msaa = QualityManager::GetInstance().getCurrent().msaa;
+
+    renderLane->resize({
+        static_cast<int>(imSize.x),
+        static_cast<int>(imSize.y),
+        getSampleCount(msaa)
+    });
+
     static int32 sampleCount;
-    sampleCount = getSampleCount(lane->getFrameBuffer().msaa);
+    sampleCount = lane->getFrameBuffer().size.sampleCount;
 
     auto surface = lane->getFrameBuffer().gerRenderSurface(static_cast<MRT>(SelectedType));
     if (surface)
@@ -123,9 +130,6 @@ void SceneView::draw_content()
             }
         }
     }
-
-    auto& settings = QualityManager::GetInstance().getCurrent();
-    renderLane->resize(Size, settings.msaa);
 
     setupShadowCamera();
 }
