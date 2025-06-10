@@ -1,5 +1,7 @@
 #pragma pack_matrix( row_major )
 
+#define textures ResourceDescriptorHeap
+
 struct Material
 {
     float4 ColorA;

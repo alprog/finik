@@ -69,10 +69,6 @@ ComputeRootSignature::ComputeRootSignature(RenderSystem& renderSystem)
     Array<CD3DX12_ROOT_PARAMETER> parameters;
     parameters.resize(Params::Count);
 
-    //parameters[Params::ConstantBufferView].InitAsConstantBufferView(0); // b0
-    //parameters[Params::ShaderResourceView].InitAsShaderResourceView(0);   // t0
-    //parameters[Params::UnorderedAccessView].InitAsUnorderedAccessView(0); // u0
-
     parameters[Params::ConstantBufferView].InitAsConstantBufferView(0);                                                                 // b0
     parameters[Params::ShaderResourceView].InitAsDescriptorTable(1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0));  // t0
     parameters[Params::UnorderedAccessView].InitAsDescriptorTable(1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 0)); // u0
