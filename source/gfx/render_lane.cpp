@@ -56,10 +56,15 @@ void SceneRenderLane::render()
     CommandList& commandList = render_system.getFreeCommandList();
     commandList.startRecording();
 
-    gBuffer.startRendering(commandList);
     RenderContext context(render_system, *commandList.listImpl.Get());
+
+    gBuffer.startRendering(commandList);
     scene.render(context, &camera, RenderPass::Geometry);
     gBuffer.endRendering(commandList);
+
+    lightBuffer.startRendering(commandList);
+    // light pass
+    lightBuffer.endRendering(commandList);
 
     commandList.endRecording();
     commandQueue.execute(commandList);

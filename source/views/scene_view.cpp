@@ -13,6 +13,8 @@ import quality_manager;
 import surface_size;
 import mrt;
 
+// for intellisense
+
 SceneView::SceneView(const char* name, Scene& scene)
     : View{name}
     , scene{scene}
@@ -40,12 +42,16 @@ void SceneView::update(float deltaTime)
 
 void SceneView::draw_content()
 {
+    static int BufferType = 0;
     static int SelectedType = 0;
 
+    static const char* items[]{"GBuffer", "LightBuffer"};
+    ImGui::SetNextItemWidth(100);
+    ImGui::Combo("Buffer", &BufferType, items, 2);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(100);
-    static const char* items[]{"RT0", "RT1", "RT2", "RT3", "DS"};
-    ImGui::Combo("Surface", &SelectedType, items, 5);
+    static const char* items2[]{"RT0", "RT1", "RT2", "RT3", "DS"};
+    ImGui::Combo("Surface", &SelectedType, items2, 5);
 
     bool Depth = SelectedType == MRT::DS;
 
@@ -58,7 +64,8 @@ void SceneView::draw_content()
         getSampleCount(msaa)
     });
 
-    auto surface = renderLane->getGBuffer().gerRenderSurface(static_cast<MRT>(SelectedType));
+    auto& buffer = BufferType ? renderLane->getLightBuffer() : renderLane->getGBuffer();
+    auto surface = buffer.gerRenderSurface(static_cast<MRT>(SelectedType));
     if (surface)
     {
         D3D12_GPU_DESCRIPTOR_HANDLE handle = surface->textureHandle.getGPU();
