@@ -5,6 +5,7 @@ import frame_buffer;
 import scene_system_fwd;
 import render_pass;
 import surface_size;
+import mesh;
 export import msaa;
 
 export class SceneRenderLane
@@ -27,4 +28,6 @@ private:
     FrameBuffer lightBuffer;
 
     uint64 fenceValue = 0;
+
+    Mesh* fullscreenQuad;
 };

@@ -7,14 +7,17 @@ import command_list;
 import scene;
 import mrt;
 import enum_bits;
+import root_signature_params;
+import effect_manager;
 
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size)
     : scene{scene}
     , camera{camera}
     , size{size}
     , gBuffer{size, 4, true}
-    , lightBuffer{size, 1, false}
+    , lightBuffer{size, 1, true}
 {
+    fullscreenQuad = createFullScreenQuad();
 }
 
 void SceneRenderLane::resize(SurfaceSize size)
@@ -46,24 +49,33 @@ FrameBuffer& SceneRenderLane::getLightBuffer()
 
 void SceneRenderLane::render()
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
-    auto& commandQueue = render_system.get_command_queue();
+    RenderSystem& renderSystem = Single::Get<RenderSystem>();
+    auto& commandQueue = renderSystem.get_command_queue();
     {
         Profile _("wait");
         commandQueue.fence->WaitForValue(fenceValue);
     }
 
-    CommandList& commandList = render_system.getFreeCommandList();
+    CommandList& commandList = renderSystem.getFreeCommandList();
     commandList.startRecording();
 
-    RenderContext context(render_system, *commandList.listImpl.Get());
+    RenderContext context(renderSystem, *commandList.listImpl.Get());
 
     gBuffer.startRendering(commandList);
     scene.render(context, &camera, RenderPass::Geometry);
     gBuffer.endRendering(commandList);
 
+    auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
+    gBufferConstants->RT0Id = gBuffer.gerRenderSurface(MRT::RT0)->textureHandle.getIndex();
+    gBufferConstants->RT1Id = gBuffer.gerRenderSurface(MRT::RT1)->textureHandle.getIndex();
+    gBufferConstants->RT2Id = gBuffer.gerRenderSurface(MRT::RT2)->textureHandle.getIndex();
+    gBufferConstants->RT3Id = gBuffer.gerRenderSurface(MRT::RT3)->textureHandle.getIndex();
+    gBufferConstants->DSId = gBuffer.gerRenderSurface(MRT::DS)->textureHandle.getIndex();
+    context.setGBufferConstants(gBufferConstants.GpuAddress);
+
     lightBuffer.startRendering(commandList);
-    // light pass
+    context.setEffect(*EffectManager::GetInstance().get("directional_light"));
+    context.drawMesh(fullscreenQuad);
     lightBuffer.endRendering(commandList);
 
     commandList.endRecording();

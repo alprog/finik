@@ -14,6 +14,14 @@ struct Material
     uint TextureD;
 };
 
+struct GBufferOutput
+{
+	float4 Albedo : SV_TARGET0;
+	float4 Normals : SV_TARGET1;
+	float4 Motion : SV_TARGET2;
+	float4 RT4 : SV_TARGET3;
+};
+
 cbuffer MaterialsConstantBuffer : register(b0)
 {
     Material Materials[80];
@@ -25,31 +33,19 @@ cbuffer FrameConstantBuffer : register(b1)
 	float4x4 ViewProject;
 	float4x4 View;
 	float4x4 Projection;	
-	
-	float4x4 ShadowViewProjection; // temp
-	float4 LightDirection;         // temp
-	uint ShadowTextureId;          // temp
+	float2 NearFar;
 };
 
-// per draw
-cbuffer MeshConstantBuffer : register(b2)
+cbuffer GBufferConstants : register(b2)
 {
-	float4x4 Model;
+	uint RT0Id;
+	uint RT1Id;
+	uint RT2Id;
+	uint RT3Id;
+	uint DSId;
 };
 
-cbuffer MaterialConstantBuffer : register(b3)
-{
-    uint MaterialId; 
-};
 
 SamplerState DefaultSampler : register(s0);
 SamplerState PointSampler : register(s1);
 SamplerState LinearSampler : register(s2);
-
-struct GBufferOutput
-{
-	float4 Albedo : SV_TARGET0;
-	float4 Normals : SV_TARGET1;
-	float4 Motion : SV_TARGET2;
-	float4 RT4 : SV_TARGET3;
-};

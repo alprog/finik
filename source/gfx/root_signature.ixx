@@ -22,7 +22,8 @@ public:
         MaterialsConstantBufferView,
 
         // per frame
-        FrameConstantBufferView,
+        FrameConstantBufferView, // Camera?
+        GBufferConstantBufferView,
 
         // per draw
         MeshConstantBufferView,

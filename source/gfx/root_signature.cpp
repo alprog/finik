@@ -56,10 +56,11 @@ MainRootSignature::MainRootSignature(RenderSystem& renderSystem)
 
     parameters[Params::MaterialsConstantBufferView].InitAsConstantBufferView(0); // b0
 
-    parameters[Params::FrameConstantBufferView].InitAsConstantBufferView(1); // b1;
+    parameters[Params::FrameConstantBufferView].InitAsConstantBufferView(1);   // b1;
+    parameters[Params::GBufferConstantBufferView].InitAsConstantBufferView(2); // b2;
 
-    parameters[Params::MeshConstantBufferView].InitAsConstantBufferView(2); // b2
-    parameters[Params::MaterialInlineConstants].InitAsConstants(1, 3);      // b3
+    parameters[Params::MeshConstantBufferView].InitAsConstantBufferView(3); // b3
+    parameters[Params::MaterialInlineConstants].InitAsConstants(1, 4);      // b4
 
     init(renderSystem, parameters);
 }

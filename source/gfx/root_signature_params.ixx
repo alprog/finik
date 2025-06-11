@@ -14,7 +14,21 @@ export struct FrameConstants
     Matrix ViewProjection;
     Matrix View;
     Matrix Projection;
-    Matrix ShadowViewProjection;
+    Vector2 NearFar;
+};
+
+export struct GBufferConstants
+{
+    uint32 RT0Id;
+    uint32 RT1Id;
+    uint32 RT2Id;
+    uint32 RT3Id;
+    uint32 DSId;
+};
+
+export struct LightConstants
+{
     Vector4 LightDirection;
+    Matrix ShadowViewProjection;
     uint32 ShadowTextureId;
 };

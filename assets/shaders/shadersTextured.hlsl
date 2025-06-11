@@ -1,4 +1,5 @@
 #include "shaders/common.inc"
+#include "shaders/geometry.inc"
 
 struct VSInput
 {
@@ -10,7 +11,6 @@ struct VSInput
 struct PSInput
 {
 	float4 position : SV_POSITION;
-	float4 shadowPosition : TEXCOORD2;
 	float3 normal : TEXCOORD0;
 	float2 uv : TEXCOORD1;
 };
@@ -22,7 +22,6 @@ PSInput VSMain(VSInput input)
 	float4 worldPosition = mul(float4(input.position, 1), Model);
 
 	result.position = mul(worldPosition, ViewProject);
-	result.shadowPosition = mul(worldPosition, ShadowViewProjection);
 	result.normal = input.normal;
 	result.uv = input.uv;
 
@@ -45,9 +44,7 @@ GBufferOutput PSMain(PSInput input)
 	
 	float4 diffuseColor = lerp(color, texColor, 1);
 	
-	float diffuse = 0.2 + (dot(input.normal, -LightDirection) + 1) * 0.4;
-	
-	Out.Albedo = diffuse * diffuseColor;
+	Out.Albedo = diffuseColor;
 	Out.Motion = float4(1, 0, 0, 1);
 	Out.RT4 = float4(1, 1, 0, 1);
 

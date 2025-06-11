@@ -24,6 +24,14 @@ void EffectManager::init()
     }
 
     {
+        auto effect = std::make_shared<Effect>("directional_light");
+        AssetPath path = "shaders/directional_light.hlsl";
+        effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
+        Effects[effect->name] = effect;
+    }
+
+    {
         auto effect = std::make_shared<Effect>("imgui");
         AssetPath path = "shaders/imgui.hlsl";
         effect->setPipelineType(PipelineType::Imgui);

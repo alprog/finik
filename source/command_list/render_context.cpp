@@ -5,7 +5,6 @@ import render_system;
 import root_signature_params;
 import root_signature;
 import mesh;
-import effect;
 import material_manager;
 import upload_buffer;
 
@@ -31,6 +30,11 @@ void RenderContext::setFrameConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)
     commandList.SetGraphicsRootConstantBufferView(Params::FrameConstantBufferView, gpuAddress);
 }
 
+void RenderContext::setGBufferConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)
+{
+    commandList.SetGraphicsRootConstantBufferView(Params::GBufferConstantBufferView, gpuAddress);
+}
+
 void RenderContext::setModelMatrix(const Matrix& matrix)
 {
     auto meshConstantBuffer = renderSystem.getOneshotAllocator().Allocate<MeshConstants>();
@@ -42,9 +46,14 @@ void RenderContext::setModelMatrix(const Matrix& matrix)
 void RenderContext::setMaterial(const Material& material, RenderPass pass)
 {
     auto effect = pass == RenderPass::Shadow ? material.ShadowEffect : material.Effect;
-    commandList.SetPipelineState(effect->getPipelineState()->getInternalObject()); // set effect
-    effect->getPipelineState()->use();
+    setEffect(*effect);
     commandList.SetGraphicsRoot32BitConstant(Params::MaterialInlineConstants, material.Index, 0);
+}
+
+void RenderContext::setEffect(Effect& effect)
+{
+    commandList.SetPipelineState(effect.getPipelineState()->getInternalObject()); // set effect
+    effect.getPipelineState()->use();
 }
 
 void RenderContext::drawMesh(Mesh* mesh)
