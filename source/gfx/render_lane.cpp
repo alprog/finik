@@ -61,8 +61,10 @@ void SceneRenderLane::render()
 
     RenderContext context(renderSystem, *commandList.listImpl.Get());
 
+    scene.renderShadowMaps(commandList, context, camera);
+
     gBuffer.startRendering(commandList);
-    scene.render(context, &camera, RenderPass::Geometry);
+    scene.render(context, camera, RenderPass::Geometry);
     gBuffer.endRendering(commandList);
 
     auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();

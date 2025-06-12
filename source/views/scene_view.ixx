@@ -20,13 +20,11 @@ public:
 
 protected:
     void draw_content() override;
-    void setupShadowCamera();
 
 public:
     Scene& scene;
 
 protected:
-    Camera shadowCamera;
     Camera camera;
     CameraController cameraContoller;
 

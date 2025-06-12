@@ -15,11 +15,11 @@ import root_signature_params;
 import render_context;
 import assets;
 import model;
+import surface_size;
 
 // for intellisense
 
 Scene::Scene()
-    //: shadowMaps{*this}
 {
     grid = new Grid();
 
@@ -28,6 +28,7 @@ Scene::Scene()
 
     actors[1]->mesh = Assets::GetInstance().get<Model>("models/airplane.obj")->mesh;
 
+    light.shadowMap = std::make_unique<FrameBuffer>(SurfaceSize(1024, 1024, 1), 0, true);
     light.direction = Vector4(-1, -1, -1, 0).getNormalized();
 }
 
@@ -42,16 +43,31 @@ void Scene::update(float deltaTime)
     actors[1]->transformMatrix = Matrix::Translation(Vector3(32, 32, 5));
 }
 
-void Scene::render(RenderContext& renderContext, Camera* camera, RenderPass pass)
+void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, Camera& camera)
+{
+    light.shadowMap->startRendering(commandList);
+
+    light.shadowCamera.FieldOfView = std::numbers::pi / 4.0f;
+    light.shadowCamera.lookAt = camera.lookAt;
+    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 100;
+    light.shadowCamera.calcViewMatrix();
+    light.shadowCamera.calcProjectionMatrix();
+
+    render(context, camera, RenderPass::Shadow);
+
+    light.shadowMap->endRendering(commandList);
+}
+
+void Scene::render(RenderContext& renderContext, Camera& camera, RenderPass pass)
 {
     renderContext.setupRoot();
 
     RenderSystem& renderSystem = renderContext.renderSystem;
     auto frameConstants = renderSystem.getOneshotAllocator().Allocate<FrameConstants>();
-    auto V = camera->viewMatrix;
-    auto P = camera->projectionMatrix;
+    auto V = camera.viewMatrix;
+    auto P = camera.projectionMatrix;
     frameConstants->ViewProjection = V * P;
-    frameConstants->NearFar = {camera->NearPlane, camera->FarPlane};
+    frameConstants->NearFar = {camera.NearPlane, camera.FarPlane};
     //frameConstants->LightDirection = light.direction;
 
     //if (pass == RenderPass::Geometry)

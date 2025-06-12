@@ -20,10 +20,15 @@ struct PSInput
 	float2 uv : TEXCOORD1;
 };
 
+float4 screenToNDC(float3 pos)
+{
+	return float4(pos.x * 2 - 1, 1 - pos.y * 2, pos.z, 1);
+}
+
 PSInput VSMain(VSInput input)
 {
 	PSInput result;
-	result.position = float4(input.position, 1);
+	result.position = screenToNDC(input.position);
 	result.uv = input.uv;
 	return result;
 }

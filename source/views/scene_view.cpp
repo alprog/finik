@@ -19,7 +19,6 @@ SceneView::SceneView(const char* name, Scene& scene)
     : View{name}
     , scene{scene}
     , camera{}
-    , shadowCamera{}
     , cameraContoller{camera}
 {
     auto& settings = QualityManager::GetInstance().getCurrent();
@@ -126,16 +125,4 @@ void SceneView::draw_content()
     }
 
     renderLane->render();
-
-    setupShadowCamera();
-}
-
-void SceneView::setupShadowCamera()
-{
-    shadowCamera.FieldOfView = std::numbers::pi / 4.0f;
-
-    shadowCamera.lookAt = camera.lookAt;
-    shadowCamera.position = shadowCamera.lookAt - scene.light.direction.xyz() * 100;
-    shadowCamera.calcViewMatrix();
-    shadowCamera.calcProjectionMatrix();
 }

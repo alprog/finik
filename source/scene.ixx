@@ -9,7 +9,6 @@ import grid;
 import texture;
 import light;
 import render_system_fwd;
-import shadow_maps;
 import render_pass;
 
 // for intellisense
@@ -20,7 +19,8 @@ public:
     Scene();
 
     void update(float deltaTime);
-    void render(RenderContext& context, Camera* camera, RenderPass pass);
+    void renderShadowMaps(CommandList& commandList, RenderContext& context, Camera& camera);
+    void render(RenderContext& context, Camera& camera, RenderPass pass);
 
     Grid* grid;
     Array<Actor*> actors;
@@ -32,6 +32,4 @@ public:
     Vector3 castedPos;
 
     Light light;
-    uint32 shadowTextureId;
-    //ShadowMaps shadowMaps;
 };
