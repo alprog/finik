@@ -53,7 +53,7 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     light.shadowCamera.calcViewMatrix();
     light.shadowCamera.calcProjectionMatrix();
 
-    render(context, camera, RenderPass::Shadow);
+    render(context, light.shadowCamera, RenderPass::Shadow);
 
     light.shadowMap->endRendering(commandList);
 }

@@ -12,6 +12,7 @@ import render_pass;
 import quality_manager;
 import surface_size;
 import mrt;
+import frame_buffer;
 
 // for intellisense
 
@@ -39,20 +40,37 @@ void SceneView::update(float deltaTime)
     DeltaTime = deltaTime;
 }
 
+FrameBuffer& getBuffer(SceneRenderLane& renderLane, Scene& scene, int BufferType)
+{
+    if (BufferType == 0)
+    {
+        return renderLane.getGBuffer();
+    }
+    else if (BufferType == 1)
+    {
+        return renderLane.getLightBuffer();
+    }
+    else
+    {
+        return *scene.light.shadowMap;
+    }
+}
+
 void SceneView::draw_content()
 {
     static int BufferType = 0;
     static int SelectedType = 0;
 
-    static const char* items[]{"GBuffer", "LightBuffer"};
+    static const char* items[]{"GBuffer", "LightBuffer", "ShadowMap"};
     ImGui::SetNextItemWidth(100);
-    ImGui::Combo("Buffer", &BufferType, items, 2);
+    ImGui::Combo("Buffer", &BufferType, items, 3);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(100);
     static const char* items2[]{"RT0", "RT1", "RT2", "RT3", "DS"};
     ImGui::Combo("Surface", &SelectedType, items2, 5);
 
-    bool Depth = SelectedType == MRT::DS;
+    static bool Depth;
+    Depth = SelectedType == MRT::DS;
 
     auto imSize = ImGui::GetContentRegionAvail();
     auto msaa = QualityManager::GetInstance().getCurrent().msaa;
@@ -63,7 +81,7 @@ void SceneView::draw_content()
         getSampleCount(msaa)
     });
 
-    auto& buffer = BufferType ? renderLane->getLightBuffer() : renderLane->getGBuffer();
+    auto& buffer = getBuffer(*renderLane, scene, BufferType);
     auto surface = buffer.gerRenderSurface(static_cast<MRT>(SelectedType));
     if (surface)
     {
@@ -71,14 +89,15 @@ void SceneView::draw_content()
         ImTextureID textureId = (void*)handle.ptr;
 
         auto imageStartPos = ImGui::GetCursorScreenPos();
-        Depth = true;
-        if (Depth)
+        bool AdvancedShader = true;
+        if (AdvancedShader)
         {
             auto Callback = [](const ImDrawList* parent_list, const ImDrawCmd* cmd) //
             {
                 ID3D12GraphicsCommandList* commandList = ImGuiGetCurrentCommandList();
 
-                std::shared_ptr effect = EffectManager::GetInstance().get("imgui_ms");
+                String effectName = Depth ? "imgui_ms_depth" : "imgui_ms";
+                std::shared_ptr effect = EffectManager::GetInstance().get(effectName);
                 commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
                 effect->getPipelineState()->use();
             
@@ -89,7 +108,7 @@ void SceneView::draw_content()
         }
         ImGui::Image(textureId, imSize);
 
-        if (Depth)
+        if (AdvancedShader)
         {
             GImGui->CurrentWindow->DrawList->AddCallback((ImDrawCallback)(-8), nullptr);
         }

@@ -41,5 +41,5 @@ void DepthStencil::resize(SurfaceSize size)
     SRVDesc.Texture2D.MipLevels = 1;
 
     SRVDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    //render_system.get_device()->CreateShaderResourceView(resource.getInternal(), &SRVDesc, textureHandle.getCPU());
+    render_system.get_device()->CreateShaderResourceView(resource.getInternal(), &SRVDesc, textureHandle.getCPU());
 }

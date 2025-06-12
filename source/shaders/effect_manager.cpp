@@ -50,6 +50,15 @@ void EffectManager::init()
     }
 
     {
+        auto effect = std::make_shared<Effect>("imgui_ms_depth");
+        AssetPath path = "shaders/imgui_ms_depth.hlsl";
+        effect->setPipelineType(PipelineType::Imgui);
+        effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
+        Effects[effect->name] = effect;
+    }
+
+    {
         auto effect = std::make_shared<Effect>("imgui_custom");
         effect->setPipelineType(PipelineType::Imgui);
         effect->setVertexShader(shaderManager.getVertexShader("shaders/imgui.hlsl", "VSMain"));

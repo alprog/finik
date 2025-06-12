@@ -18,6 +18,11 @@ struct PS_INPUT
 
 Texture2DMS<float4> texture0 : register(t0);
 
+float LinearizeDepth(float depth, float nearPlane, float farPlane)
+{
+    return (2.0 * nearPlane) / (farPlane + nearPlane - depth * (farPlane - nearPlane));
+}
+
 PS_INPUT VSMain(VS_INPUT input)
 {
 	PS_INPUT output;	
@@ -40,5 +45,9 @@ float4 PSMain(PS_INPUT input) : SV_Target
 		color += texture0.Load(pos, i);
 	}
 	
-	return color / sampleCount;
+	float4 result = color / sampleCount;
+	
+	result.x = LinearizeDepth(result.x, 0.1f, 400.0f);
+		
+	return result.x;
 }
