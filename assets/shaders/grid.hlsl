@@ -34,11 +34,6 @@ PSInput VSMain(VSInput input)
 	return result;
 }
 
-//float LinearizeDepth(float depth, float nearPlane, float farPlane)
-//{
-//    return (2.0 * nearPlane) / (farPlane + nearPlane - depth * (farPlane - nearPlane));
-//}
-
 GBufferOutput PSMain(PSInput input)
 {
 	GBufferOutput Out;

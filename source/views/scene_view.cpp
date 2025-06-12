@@ -58,7 +58,7 @@ FrameBuffer& getBuffer(SceneRenderLane& renderLane, Scene& scene, int BufferType
 
 void SceneView::draw_content()
 {
-    static int BufferType = 0;
+    static int BufferType = 1;
     static int SelectedType = 0;
 
     static const char* items[]{"GBuffer", "LightBuffer", "ShadowMap"};

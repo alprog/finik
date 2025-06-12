@@ -25,6 +25,11 @@ float4 screenToNDC(float3 pos)
 	return float4(pos.x * 2 - 1, 1 - pos.y * 2, pos.z, 1);
 }
 
+float LinearizeDepth(float depth, float nearPlane, float farPlane)
+{
+    return (2.0 * nearPlane) / (farPlane + nearPlane - depth * (farPlane - nearPlane));
+}
+
 PSInput VSMain(VSInput input)
 {
 	PSInput result;
