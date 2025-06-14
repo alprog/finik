@@ -19,15 +19,15 @@ public:
     enum Params
     {
         // permanent
-        MaterialsConstantBufferView,
+        MaterialsConstantBufferView, // b0
 
         // per frame
-        FrameConstantBufferView, // Camera?
-        GBufferConstantBufferView,
+        FrameConstantBufferView, // b1 Camera?
+        GBufferConstantBufferView, // b2
 
         // per draw
-        MeshConstantBufferView,
-        MaterialInlineConstants,
+        MeshConstantBufferView, // b3
+        MaterialInlineConstants, // b4
 
         Count
     };

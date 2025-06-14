@@ -11,9 +11,10 @@ export struct MeshConstants
 
 export struct FrameConstants
 {
-    Matrix ViewProjection;
     Matrix View;
     Matrix Projection;
+    Matrix ViewProjection;
+    Matrix InverseViewProjection;
     Vector2 NearFar;
 };
 

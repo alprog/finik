@@ -49,7 +49,7 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
 
     light.shadowCamera.FieldOfView = std::numbers::pi / 4.0f;
     light.shadowCamera.lookAt = camera.lookAt;
-    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 100;
+    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 30;
     light.shadowCamera.calcViewMatrix();
     light.shadowCamera.calcProjectionMatrix();
 
@@ -66,7 +66,10 @@ void Scene::render(RenderContext& renderContext, Camera& camera, RenderPass pass
     auto frameConstants = renderSystem.getOneshotAllocator().Allocate<FrameConstants>();
     auto V = camera.viewMatrix;
     auto P = camera.projectionMatrix;
+    frameConstants->View = V;
+    frameConstants->Projection = P;
     frameConstants->ViewProjection = V * P;
+    frameConstants->InverseViewProjection = frameConstants->ViewProjection.getInverse();
     frameConstants->NearFar = {camera.NearPlane, camera.FarPlane};
     //frameConstants->LightDirection = light.direction;
 

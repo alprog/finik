@@ -76,6 +76,16 @@ void SceneRenderLane::render()
     context.setGBufferConstants(gBufferConstants.GpuAddress);
 
     lightBuffer.startRendering(commandList);
+
+    auto& light = scene.light;
+    auto lightConstants = renderSystem.getOneshotAllocator().Allocate<LightConstants>();
+    lightConstants->LightDirection = light.direction;
+    lightConstants->ShadowViewProjection = light.shadowCamera.viewMatrix * light.shadowCamera.projectionMatrix;
+    lightConstants->ShadowTextureId = light.shadowMap->depthStencil->textureHandle.getIndex();
+
+    commandList.getRenderContext().commandList.SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
+
+
     context.setEffect(*EffectManager::GetInstance().get("directional_light"));
     context.drawMesh(fullscreenQuad);
     lightBuffer.endRendering(commandList);

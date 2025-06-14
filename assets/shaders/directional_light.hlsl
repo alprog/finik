@@ -38,18 +38,47 @@ PSInput VSMain(VSInput input)
 	return result;
 }
 
+float4 sampleTex(uint textureId, float2 uv)
+{
+	Texture2D texture = textures[textureId];
+	return texture.Sample(PointSampler, uv);
+}
+
+float4 restoreWorldPosition(float2 uv)
+{
+	float x = uv.x * 2 - 1;
+    float y = 1 - uv.y * 2;
+    float z = sampleTex(DSId, uv).r;
+    float4 ndcPos = float4(x, y, z, 1);
+    float4 worldPos = mul(ndcPos, InverseViewProjection);
+    return worldPos / worldPos.w;
+}
+
 float4 PSMain(PSInput input) : SV_TARGET
 {
-	Texture2D albedoTex = textures[RT0Id];
-	Texture2D normalTex = textures[RT1Id];
+	float4 albedo = sampleTex(RT0Id, input.uv);
+	float3 normal = sampleTex(RT1Id, input.uv).rgb;
+
+	normal = normalize(normal * 2 - 1);
+
+	float4 ambient = float4(0.2, 0.2, 0.2, 1);
+
+	float diffuse = dot(normal, -LightDirection.xyz);	
+
+	float4 worldPos = restoreWorldPosition(input.uv);
+	worldPos = worldPos / worldPos.w;
+		
+	float4 shadowPos = mul(worldPos, ShadowViewProjection);
+	shadowPos = shadowPos / shadowPos.w;
+	float2 shadowUV = float2(shadowPos.x / 2 + 0.5, 0.5 - shadowPos.y / 2);
+	float shadowValue = sampleTex(ShadowTextureId, shadowUV).r;
 	
-	float4 albedo = albedoTex.Sample(PointSampler, input.uv);
-	float3 normal = normalTex.Sample(PointSampler, input.uv).rgb;
-
-	normal = normal * 2 - 1;
-
-	float3 lightDirection = float3(-1, -1, -1);
-	float diffuse = dot(normal, -lightDirection);
-
-	return diffuse * albedo;
+	float linearShadowValue = LinearizeDepth(shadowValue, 0.1, 400);
+	
+	if (shadowPos.z > shadowValue + 0.00016)
+	{
+		diffuse = 0.1;
+	}
+	
+	return ambient + diffuse * albedo;
 }
