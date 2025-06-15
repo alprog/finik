@@ -43,7 +43,7 @@ void FrameBuffer::startRendering(CommandList& commandList)
     {
         commandList.transition(renderTarget->resource, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-        const float clear_color_with_alpha[4] = {0.5f, 0.2f, 0.2f, 1.0f};
+        const float clear_color_with_alpha[4] = {0, 0, 0, 0};
         commandList.listImpl->ClearRenderTargetView(renderTarget->handle.getCPU(), clear_color_with_alpha, 0, nullptr);
     
         RTHandles.append(renderTarget->handle.getCPU());
