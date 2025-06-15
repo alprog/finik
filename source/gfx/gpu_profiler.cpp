@@ -128,7 +128,7 @@ void GpuProfiler::grabReadyStamps(int completedValue)
                     timebox.startTimestamp = microseconds;
                     timebox.endTimestamp = microseconds + 100;
 
-                    lane.timeboxes.append(timebox);
+                    lane.timeboxes.emplace_next(timebox);
                 }
             }
         };

@@ -1,5 +1,6 @@
 module profiler_view;
 
+import core;
 import app;
 import imgui;
 import flamegraph;
@@ -13,12 +14,12 @@ void ProfilerView::draw_content()
 
     auto& cpuTimeboxes = profiler.GetCpuLane().timeboxes;
 
-    int start = 0;
-    int end = 0;
+    int32 start = 0;
+    int32 end = 0;
 
-    int frameCount = 10;
+    int32 frameCount = 10;
 
-    for (int i = cpuTimeboxes.count() - 1; i >= 0; i--)
+    for (int32 i = cpuTimeboxes.count() - 1; i >= 0; i--)
     {
         if (!strcmp(cpuTimeboxes[i].label, "frame"))
         {
@@ -43,7 +44,7 @@ void ProfilerView::draw_content()
     const uint64 startTime = cpuTimeboxes[start].startTimestamp;
     const uint64 endTime = cpuTimeboxes[end - 1].endTimestamp;
 
-    finik::drawFlamegraph(&cpuTimeboxes[start], end - start, startTime, endTime, Vector2(900, 30));
+    finik::drawFlamegraph(cpuTimeboxes, start, end, startTime, endTime, Vector2(900, 30));
 
     auto& gpuTimeboxes = profiler.GetGpuLane().timeboxes;
 
@@ -58,5 +59,5 @@ void ProfilerView::draw_content()
             break;
     }
 
-    finik::drawFlamegraph(&gpuTimeboxes[start], end - start, startTime, endTime, Vector2(900, 30));
+    finik::drawFlamegraph(gpuTimeboxes, start, end, startTime, endTime, Vector2(900, 30));
 }

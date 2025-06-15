@@ -6,13 +6,13 @@ using namespace finik::profiler;
 
 Lane::Lane()
     : level { 0 }
+    , timeboxes{ 1000 }
 {
-    timeboxes.reserve(100'000);
 }
 
 Timebox& Lane::startTimebox(const char* label)
 {
-    return timeboxes.emplace_back(Timebox(label, level++));
+    return timeboxes.emplace_next(label, level++);
 }
 
 void Lane::endTimebox(Timebox& timebox)

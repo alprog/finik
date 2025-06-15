@@ -4,7 +4,7 @@ import imgui;
 
 namespace finik
 {
-    void drawFlamegraph(profiler::Timebox* timeboxes, int count, uint64 startTime, uint64 endTime, Vector2 size)
+void drawFlamegraph(RingBuffer<profiler::Timebox>& timeboxes, int startIndex, int endIndex, uint64 startTime, uint64 endTime, Vector2 size)
     {
         ImGuiWindow* window = ImGui::GetCurrentWindow();
 
@@ -17,7 +17,7 @@ namespace finik
         const ImU32 fillColor = ImGui::GetColorU32(ImGuiCol_PlotHistogram);
         const ImU32 borderColor = ImGui::GetColorU32(ImGuiCol_PlotLines);
 
-        for (int i = 0; i < count; i++)
+        for (int i = startIndex; i < endIndex; i++)
         {
             auto& timebox = timeboxes[i];
 
