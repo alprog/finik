@@ -44,11 +44,22 @@ float4 sampleTex(uint textureId, float2 uv)
 	return texture.Sample(PointSampler, uv);
 }
 
+float4 sampleGTex(uint textureId, float2 uv)
+{
+	Texture2DMS<float4> texture = textures[textureId];
+	uint2 resolution;
+	uint sampleCount;
+	texture.GetDimensions(resolution.x, resolution.y, sampleCount);
+
+	float2 pos = uv * resolution;
+	return texture.Load(pos, 0);
+}
+
 float4 restoreWorldPosition(float2 uv)
 {
 	float x = uv.x * 2 - 1;
     float y = 1 - uv.y * 2;
-    float z = sampleTex(DSId, uv).r;
+    float z = sampleGTex(DSId, uv).r;
     float4 ndcPos = float4(x, y, z, 1);
     float4 worldPos = mul(ndcPos, InverseViewProjection);
     return worldPos / worldPos.w;
@@ -68,8 +79,8 @@ float getShadow(float2 shadowUV, float refDepth)
 
 float4 PSMain(PSInput input) : SV_TARGET
 {
-	float4 albedo = sampleTex(RT0Id, input.uv);
-	float3 normal = sampleTex(RT1Id, input.uv).rgb;
+	float4 albedo = sampleGTex(RT0Id, input.uv);
+	float3 normal = sampleGTex(RT1Id, input.uv).rgb;
 
 	normal = normalize(normal * 2 - 1);
 

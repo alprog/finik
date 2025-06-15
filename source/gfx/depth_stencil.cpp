@@ -37,8 +37,8 @@ void DepthStencil::resize(SurfaceSize size)
     // Create the shader resource view
     D3D12_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
     SRVDesc.Format = DXGI_FORMAT_R32_FLOAT;
-    SRVDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-    SRVDesc.Texture2D.MipLevels = 1;
+    SRVDesc.ViewDimension = size.sampleCount > 1 ? D3D12_SRV_DIMENSION_TEXTURE2DMS : D3D12_SRV_DIMENSION_TEXTURE2D;
+    SRVDesc.Texture2D.MipLevels = 1;    
 
     SRVDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
     render_system.get_device()->CreateShaderResourceView(resource.getInternal(), &SRVDesc, textureHandle.getCPU());
