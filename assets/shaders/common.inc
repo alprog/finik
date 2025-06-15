@@ -39,6 +39,8 @@ cbuffer FrameConstantBuffer : register(b1)
 
 cbuffer GBufferConstants : register(b2)
 {
+	uint2 Resolution;
+	uint SampleCount;
 	uint RT0Id;
 	uint RT1Id;
 	uint RT2Id;

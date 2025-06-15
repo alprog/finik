@@ -47,11 +47,7 @@ float4 sampleTex(uint textureId, float2 uv)
 float4 sampleGTex(uint textureId, float2 uv, uint sampleIndex)
 {
 	Texture2DMS<float4> texture = textures[textureId];
-	uint2 resolution;
-	uint sampleCount;
-	texture.GetDimensions(resolution.x, resolution.y, sampleCount);
-
-	float2 pos = uv * resolution;
+	float2 pos = uv * Resolution;
 	return texture.Load(pos, sampleIndex);
 }
 
@@ -105,24 +101,13 @@ float4 calcLighting(float2 uv, uint sampleIndex)
 	return ambient + diffuse * albedo;
 }
 
-uint getSampleCount() // temp
-{
-	Texture2DMS<float4> texture = textures[RT0Id];
-	uint2 resolution;
-	uint sampleCount;
-	texture.GetDimensions(resolution.x, resolution.y, sampleCount);
-	return sampleCount;
-}
-
 float4 PSMain(PSInput input) : SV_TARGET
 {
-	uint sampleCount = getSampleCount();
-
 	float4 color = 0;
-	for (int i = 0; i < sampleCount; i++)
+	for (int i = 0; i < SampleCount; i++)
 	{
 		color += calcLighting(input.uv, i);
 	}	
-	color /= sampleCount;
+	color /= SampleCount;
 	return color;
 }

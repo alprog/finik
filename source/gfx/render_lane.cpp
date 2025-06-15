@@ -68,6 +68,7 @@ void SceneRenderLane::render()
     gBuffer.endRendering(commandList);
 
     auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
+    gBufferConstants->SurfaceSize = gBuffer.size;
     gBufferConstants->RT0Id = gBuffer.gerRenderSurface(MRT::RT0)->textureHandle.getIndex();
     gBufferConstants->RT1Id = gBuffer.gerRenderSurface(MRT::RT1)->textureHandle.getIndex();
     gBufferConstants->RT2Id = gBuffer.gerRenderSurface(MRT::RT2)->textureHandle.getIndex();

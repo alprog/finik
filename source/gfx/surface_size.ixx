@@ -14,3 +14,5 @@ export struct SurfaceSize
     bool operator==(const SurfaceSize&) const = default;
     bool operator!=(const SurfaceSize&) const = default;
 };
+
+static_assert(sizeof(SurfaceSize) == 12);

@@ -1,6 +1,7 @@
 export module root_signature_params;
 
 import core;
+import surface_size;
 
 // for intellisense
 
@@ -20,12 +21,15 @@ export struct FrameConstants
 
 export struct GBufferConstants
 {
+    SurfaceSize SurfaceSize;
     uint32 RT0Id;
     uint32 RT1Id;
     uint32 RT2Id;
     uint32 RT3Id;
     uint32 DSId;
 };
+
+static_assert(sizeof(GBufferConstants) == 32);
 
 export struct LightConstants
 {
