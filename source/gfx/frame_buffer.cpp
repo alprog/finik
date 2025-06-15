@@ -85,7 +85,7 @@ void FrameBuffer::endRendering(CommandList& commandList)
     }
 }
 
-RenderSurface* FrameBuffer::gerRenderSurface(MRT type) const
+RenderSurface* FrameBuffer::getRenderSurface(MRT type) const
 {
     if (type == MRT::DS)
     {

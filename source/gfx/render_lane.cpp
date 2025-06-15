@@ -69,11 +69,11 @@ void SceneRenderLane::render()
 
     auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
     gBufferConstants->SurfaceSize = gBuffer.size;
-    gBufferConstants->RT0Id = gBuffer.gerRenderSurface(MRT::RT0)->textureHandle.getIndex();
-    gBufferConstants->RT1Id = gBuffer.gerRenderSurface(MRT::RT1)->textureHandle.getIndex();
-    gBufferConstants->RT2Id = gBuffer.gerRenderSurface(MRT::RT2)->textureHandle.getIndex();
-    gBufferConstants->RT3Id = gBuffer.gerRenderSurface(MRT::RT3)->textureHandle.getIndex();
-    gBufferConstants->DSId = gBuffer.gerRenderSurface(MRT::DS)->textureHandle.getIndex();
+    gBufferConstants->RT0Id = gBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
+    gBufferConstants->RT1Id = gBuffer.getRenderSurface(MRT::RT1)->textureHandle.getIndex();
+    gBufferConstants->RT2Id = gBuffer.getRenderSurface(MRT::RT2)->textureHandle.getIndex();
+    gBufferConstants->RT3Id = gBuffer.getRenderSurface(MRT::RT3)->textureHandle.getIndex();
+    gBufferConstants->DSId = gBuffer.getRenderSurface(MRT::DS)->textureHandle.getIndex();
     context.setGBufferConstants(gBufferConstants.GpuAddress);
 
     lightBuffer.startRendering(commandList);

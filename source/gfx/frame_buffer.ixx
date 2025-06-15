@@ -21,7 +21,7 @@ public:
     void startRendering(CommandList& commandList);
     void endRendering(CommandList& commandList);
 
-    RenderSurface* gerRenderSurface(MRT type) const;
+    RenderSurface* getRenderSurface(MRT type) const;
 
     SurfaceSize size;
 

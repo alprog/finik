@@ -82,7 +82,7 @@ void SceneView::draw_content()
     });
 
     auto& buffer = getBuffer(*renderLane, scene, BufferType);
-    auto surface = buffer.gerRenderSurface(static_cast<MRT>(SelectedType));
+    auto surface = buffer.getRenderSurface(static_cast<MRT>(SelectedType));
     if (surface)
     {
         D3D12_GPU_DESCRIPTOR_HANDLE handle = surface->textureHandle.getGPU();
