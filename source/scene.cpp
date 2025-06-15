@@ -28,7 +28,7 @@ Scene::Scene()
 
     actors[1]->mesh = Assets::GetInstance().get<Model>("models/airplane.obj")->mesh;
 
-    light.shadowMap = std::make_unique<FrameBuffer>(SurfaceSize(1024, 1024, 1), 0, true);
+    light.shadowMap = std::make_unique<FrameBuffer>(SurfaceSize(2048, 2048, 1), 0, true);
     light.direction = Vector4(-1, -1, -1, 0).getNormalized();
 }
 
@@ -47,7 +47,8 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
 {
     light.shadowMap->startRendering(commandList);
 
-    light.shadowCamera.FieldOfView = std::numbers::pi / 4.0f;
+    light.shadowCamera.OrthoSize = 30;
+    light.shadowCamera.FieldOfView = 0;
     light.shadowCamera.lookAt = camera.lookAt;
     light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 30;
     light.shadowCamera.calcViewMatrix();
@@ -71,20 +72,6 @@ void Scene::render(RenderContext& renderContext, Camera& camera, RenderPass pass
     frameConstants->ViewProjection = V * P;
     frameConstants->InverseViewProjection = frameConstants->ViewProjection.getInverse();
     frameConstants->NearFar = {camera.NearPlane, camera.FarPlane};
-    //frameConstants->LightDirection = light.direction;
-
-    //if (pass == RenderPass::Geometry)
-    //{
-    //    // temp code, replace it
-    //    Camera shadowCamera;
-    //    shadowCamera.FieldOfView = std::numbers::pi / 4.0f;
-    //    shadowCamera.lookAt = camera->lookAt;
-    //    shadowCamera.position = shadowCamera.lookAt - light.direction.xyz() * 100;
-    //    shadowCamera.calcViewMatrix();
-    //    shadowCamera.calcProjectionMatrix();
-    //    frameConstants->ShadowViewProjection = shadowCamera.viewMatrix * shadowCamera.projectionMatrix;
-    //    frameConstants->ShadowTextureId = this->shadowTextureId;
-    //}
 
     renderContext.setFrameConstants(frameConstants.GpuAddress);
 

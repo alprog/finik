@@ -46,15 +46,28 @@ void Camera::calcProjectionMatrix()
             scaleX, 0, 0, 0,
             0, scaleY, 0, 0,
             0, 0, m22, 1,
-            0, 0, m32, 0};
+            0, 0, m32, 0
+        };
     }
     else
     {
         // orthogonal
         auto height = OrthoSize;
         auto width = height * AspectRatio;
-        auto depth = 1500.0f;
-        projectionMatrix = Matrix::Scaling({2.0f / width, 2.0f / height, 1.0f / depth});
+        auto depth = FarPlane - NearPlane;
+
+        float scaleX = 2.0f / width;
+        float scaleY = 2.0f / height;
+        float scaleZ = 1.0f / depth;
+
+        float m32 = -NearPlane / depth;
+
+        projectionMatrix = Matrix{
+            scaleX, 0, 0, 0,
+            0, scaleY, 0, 0,
+            0, 0, scaleZ, 0,
+            0, 0, m32, 1
+        };
     }
 }
 

@@ -54,6 +54,18 @@ float4 restoreWorldPosition(float2 uv)
     return worldPos / worldPos.w;
 }
 
+float getShadow(float2 shadowUV, float refDepth)
+{
+	if (shadowUV.x < 0 || shadowUV.x > 1 || shadowUV.y < 0 || shadowUV.y > 1)
+	{
+		return 0;
+	}
+
+	float shadowValue = sampleTex(ShadowTextureId, shadowUV).r;
+	float bias = 0.0016;
+	return refDepth > shadowValue + bias ? 1 : 0;
+}
+
 float4 PSMain(PSInput input) : SV_TARGET
 {
 	float4 albedo = sampleTex(RT0Id, input.uv);
@@ -71,11 +83,10 @@ float4 PSMain(PSInput input) : SV_TARGET
 	float4 shadowPos = mul(worldPos, ShadowViewProjection);
 	shadowPos = shadowPos / shadowPos.w;
 	float2 shadowUV = float2(shadowPos.x / 2 + 0.5, 0.5 - shadowPos.y / 2);
-	float shadowValue = sampleTex(ShadowTextureId, shadowUV).r;
 	
-	float linearShadowValue = LinearizeDepth(shadowValue, 0.1, 400);
+	float shadow = getShadow(shadowUV, shadowPos.z);
 	
-	if (shadowPos.z > shadowValue + 0.00016)
+	if (shadow > 0)
 	{
 		diffuse = 0.1;
 	}
