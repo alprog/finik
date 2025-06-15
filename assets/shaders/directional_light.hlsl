@@ -62,7 +62,7 @@ float getShadow(float2 shadowUV, float refDepth)
 	}
 
 	float shadowValue = sampleTex(ShadowTextureId, shadowUV).r;
-	float bias = 0.0016;
+	float bias = 0.001;
 	return refDepth > shadowValue + bias ? 1 : 0;
 }
 
