@@ -44,7 +44,7 @@ float4 sampleTex(uint textureId, float2 uv)
 	return texture.Sample(PointSampler, uv);
 }
 
-float4 sampleGTex(uint textureId, float2 uv)
+float4 sampleGTex(uint textureId, float2 uv, uint sampleIndex)
 {
 	Texture2DMS<float4> texture = textures[textureId];
 	uint2 resolution;
@@ -52,14 +52,14 @@ float4 sampleGTex(uint textureId, float2 uv)
 	texture.GetDimensions(resolution.x, resolution.y, sampleCount);
 
 	float2 pos = uv * resolution;
-	return texture.Load(pos, 0);
+	return texture.Load(pos, sampleIndex);
 }
 
-float4 restoreWorldPosition(float2 uv)
+float4 restoreWorldPosition(float2 uv, uint sampleIndex)
 {
 	float x = uv.x * 2 - 1;
     float y = 1 - uv.y * 2;
-    float z = sampleGTex(DSId, uv).r;
+    float z = sampleGTex(DSId, uv, sampleIndex).r;
     float4 ndcPos = float4(x, y, z, 1);
     float4 worldPos = mul(ndcPos, InverseViewProjection);
     return worldPos / worldPos.w;
@@ -77,10 +77,10 @@ float getShadow(float2 shadowUV, float refDepth)
 	return refDepth > shadowValue + bias ? 1 : 0;
 }
 
-float4 PSMain(PSInput input) : SV_TARGET
+float4 calcLighting(float2 uv, uint sampleIndex)
 {
-	float4 albedo = sampleGTex(RT0Id, input.uv);
-	float3 normal = sampleGTex(RT1Id, input.uv).rgb;
+	float4 albedo = sampleGTex(RT0Id, uv, sampleIndex);
+	float3 normal = sampleGTex(RT1Id, uv, sampleIndex).rgb;
 
 	normal = normalize(normal * 2 - 1);
 
@@ -88,7 +88,7 @@ float4 PSMain(PSInput input) : SV_TARGET
 
 	float diffuse = dot(normal, -LightDirection.xyz);	
 
-	float4 worldPos = restoreWorldPosition(input.uv);
+	float4 worldPos = restoreWorldPosition(uv, sampleIndex);
 	worldPos = worldPos / worldPos.w;
 		
 	float4 shadowPos = mul(worldPos, ShadowViewProjection);
@@ -103,4 +103,26 @@ float4 PSMain(PSInput input) : SV_TARGET
 	}
 	
 	return ambient + diffuse * albedo;
+}
+
+uint getSampleCount() // temp
+{
+	Texture2DMS<float4> texture = textures[RT0Id];
+	uint2 resolution;
+	uint sampleCount;
+	texture.GetDimensions(resolution.x, resolution.y, sampleCount);
+	return sampleCount;
+}
+
+float4 PSMain(PSInput input) : SV_TARGET
+{
+	uint sampleCount = getSampleCount();
+
+	float4 color = 0;
+	for (int i = 0; i < sampleCount; i++)
+	{
+		color += calcLighting(input.uv, i);
+	}	
+	color /= sampleCount;
+	return color;
 }
