@@ -68,9 +68,20 @@ float getShadow(float2 shadowUV, float refDepth)
 		return 0;
 	}
 
-	float shadowValue = sampleTex(ShadowTextureId, shadowUV).r;
 	float bias = 0.001;
-	return refDepth > shadowValue + bias ? 1 : 0;
+	Texture2D texture = textures[ShadowTextureId];
+	
+	float result = 0;
+	for (int x = -1; x <= 1; x++)
+	{
+		for (int y = -1; y <= 1; y++)
+		{
+			float shadowValue = texture.Sample(PointSampler, shadowUV + float2(x, y) / 2048).r;
+			result += refDepth > shadowValue + bias ? 1 : 0;
+		}
+	}
+
+	return result / 9;
 }
 
 float4 calcLighting(float2 uv, uint sampleIndex)
@@ -93,10 +104,7 @@ float4 calcLighting(float2 uv, uint sampleIndex)
 	
 	float shadow = getShadow(shadowUV, shadowPos.z);
 	
-	if (shadow > 0)
-	{
-		diffuse = 0.1;
-	}
+	diffuse = lerp(diffuse, 0.1, shadow);
 	
 	return ambient + diffuse * albedo;
 }
