@@ -30,7 +30,7 @@ public:
 
     static constexpr float MinFov = std::numbers::pi / 30.0f;
     static constexpr float MaxFov = std::numbers::pi / 3.0f;
-    float FovK = 0.5f;
+    float FovK = 0.16f;
 
     static constexpr float MinAngle = std::numbers::pi * 0.200f;
     static constexpr float MaxAngle = std::numbers::pi * 0.499f;
