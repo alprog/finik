@@ -72,16 +72,16 @@ float getShadow(float2 shadowUV, float refDepth)
 	Texture2D texture = textures[ShadowTextureId];
 	
 	float result = 0;
-	for (int x = -1; x <= 1; x++)
+	for (int x = -2; x <= 2; x++)
 	{
-		for (int y = -1; y <= 1; y++)
+		for (int y = -2; y <= 2; y++)
 		{
 			float shadowValue = texture.Sample(PointSampler, shadowUV + float2(x, y) / 2048).r;
 			result += refDepth > shadowValue + bias ? 1 : 0;
 		}
 	}
 
-	return result / 9;
+	return result / 25;
 }
 
 float4 calcLighting(float2 uv, uint sampleIndex)
@@ -93,7 +93,7 @@ float4 calcLighting(float2 uv, uint sampleIndex)
 
 	float4 ambient = float4(0.2, 0.2, 0.2, 1);
 
-	float diffuse = dot(normal, -LightDirection.xyz);	
+	float diffuse = saturate(dot(normal, -LightDirection.xyz));	
 
 	float4 worldPos = restoreWorldPosition(uv, sampleIndex);
 	worldPos = worldPos / worldPos.w;
@@ -104,9 +104,9 @@ float4 calcLighting(float2 uv, uint sampleIndex)
 	
 	float shadow = getShadow(shadowUV, shadowPos.z);
 	
-	diffuse = lerp(diffuse, 0.1, shadow);
+	diffuse = lerp(diffuse, 0, shadow);
 	
-	return ambient + diffuse * albedo;
+	return (ambient + diffuse) * albedo;
 }
 
 float4 PSMain(PSInput input) : SV_TARGET

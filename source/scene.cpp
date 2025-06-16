@@ -26,6 +26,10 @@ Scene::Scene()
     actors.append(new Actor());
     actors.append(new Actor());
 
+    characters.append(new Character());
+
+    characters[0]->transformMatrix = Matrix::RotationZ(std::numbers::pi / 2) * Matrix::Translation({14.5f, 14.5f, 0});
+
     actors[1]->mesh = Assets::GetInstance().get<Model>("models/airplane.obj")->mesh;
 
     light.shadowMap = std::make_unique<FrameBuffer>(SurfaceSize(2048, 2048, 1), 0, true);
@@ -34,10 +38,7 @@ Scene::Scene()
 
 void Scene::update(float deltaTime)
 {
-    static float angle = 0;
-    angle += deltaTime;
-
-    light.direction = light.direction * Matrix::RotationZ(deltaTime);
+    light.direction = light.direction * Matrix::RotationZ(deltaTime / 50);
 
     actors[0]->transformMatrix = Matrix::Translation(Vector3(castedPos.x, castedPos.y, 0.0f));
     actors[1]->transformMatrix = Matrix::Translation(Vector3(32, 32, 5));
@@ -82,6 +83,15 @@ void Scene::render(RenderContext& renderContext, Camera& camera, RenderPass pass
         renderContext.setModelMatrix(actor->transformMatrix);
         renderContext.setMaterial(*actor->material, pass);
         renderContext.drawMesh(actor->mesh);
+    }
+
+    //----------------------
+
+    for (auto& character : characters)
+    {
+        renderContext.setModelMatrix(character->transformMatrix);
+        renderContext.setMaterial(*character->material, pass);
+        renderContext.drawMesh(character->bodyMesh);
     }
 
     //----------------------

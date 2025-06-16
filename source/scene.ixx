@@ -10,6 +10,7 @@ import texture;
 import light;
 import render_system_fwd;
 import render_pass;
+import character;
 
 // for intellisense
 
@@ -24,6 +25,7 @@ public:
 
     Grid* grid;
     Array<Actor*> actors;
+    Array<Character*> characters;
 
     Effect renderState;
     Effect renderState2;

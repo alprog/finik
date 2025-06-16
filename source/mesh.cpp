@@ -45,3 +45,42 @@ Mesh* createFullScreenQuad()
 
     return builder.Build();
 }
+
+Mesh* createBodyMesh()
+{
+    MeshBuilder builder;
+
+    float bodyHeight = 1.5f;
+    int32 segmentCount = 5;
+
+    std::vector<StandardVertex> vertices;
+    vertices.reserve((segmentCount + 1) * 2);
+
+    float baseWidth = 0.25f;
+    float offsets[6] = {0.25f, 0.35f, 0.42f, 0.44f, 0.3f, 0.25f};
+
+    for (int32 i = 0; i <= segmentCount; i++)
+    {
+        auto portion = static_cast<float>(i) / segmentCount;
+
+        auto altitude = Vector3::Up * bodyHeight * portion;
+
+        auto offset = offsets[i];
+
+        auto texOffset = 0.5f * offset / baseWidth; 
+
+        float V = 1.0f - portion;
+
+        vertices.emplace_back(altitude + Vector3::Right * offset, Vector3::Forward, Vector2(0.5f - texOffset, V));
+        vertices.emplace_back(altitude - Vector3::Right * offset, Vector3::Forward, Vector2(0.5f + texOffset, V));
+    }
+
+    for (int32 i = 0; i < segmentCount; i++)
+    {
+        auto* v = &vertices[i * 2];
+        builder.addTriangle(v[0], v[2], v[1]);
+        builder.addTriangle(v[1], v[2], v[3]);
+    }
+
+    return builder.Build();
+}

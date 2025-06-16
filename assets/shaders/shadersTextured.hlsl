@@ -22,7 +22,7 @@ PSInput VSMain(VSInput input)
 	float4 worldPosition = mul(float4(input.position, 1), Model);
 
 	result.position = mul(worldPosition, ViewProject);
-	result.normal = input.normal;
+	result.normal = normalize(mul(input.normal, Model));
 	result.uv = input.uv;
 
 	return result;
