@@ -1,9 +1,11 @@
 export module math:BoundBox;
 
 import :Vector2;
+import :Vector3;
 import std;
 
-export struct BoundBox
+export template<typename TVector> 
+struct BoundBox
 {
     BoundBox::BoundBox(Vector2 pos)
         : min{pos}
@@ -12,28 +14,28 @@ export struct BoundBox
     }
 
     template <typename... Args>
-    BoundBox::BoundBox(Vector2 pos, Args... args)
+    BoundBox::BoundBox(TVector pos, Args... args)
         : BoundBox{pos}
     {
         (growToInclude(args), ...);
     }
 
-    Vector2 center() const
+    TVector center() const
     {
         return min + size() / 2.0f;
     }
 
-    Vector2 size() const
+    TVector size() const
     {
         return max - min;
     }
 
-    void growToInclude(Vector2 pos)
+    void growToInclude(TVector pos)
     {
         min = Vector2::min(min, pos);
         max = Vector2::max(max, pos);
     }
 
-    Vector2 min;
-    Vector2 max;
+    TVector min;
+    TVector max;
 };

@@ -52,7 +52,7 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     auto b = camera.castRay({+1, +1}).castToGroundPlane().xy();
     auto c = camera.castRay({-1, -1}).castToGroundPlane().xy();
     auto d = camera.castRay({+1, -1}).castToGroundPlane().xy();
-    BoundBox boundBox(a, b, c, d);
+    BoundBox<Vector2> boundBox(a, b, c, d);
 
     auto diagonalLength = boundBox.size().length();
 
