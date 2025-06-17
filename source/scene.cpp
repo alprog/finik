@@ -48,23 +48,36 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
 {
     light.shadowMap->startRendering(commandList);
 
-    auto a = camera.castRay({-1, +1}).castToGroundPlane().xy();
-    auto b = camera.castRay({+1, +1}).castToGroundPlane().xy();
-    auto c = camera.castRay({-1, -1}).castToGroundPlane().xy();
-    auto d = camera.castRay({+1, -1}).castToGroundPlane().xy();
-    BoundBox<Vector2> boundBox(a, b, c, d);
+    light.shadowCamera.lookAt = camera.lookAt;
+    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 1000;
+    light.shadowCamera.calcViewMatrix();
+
+    auto minHeight = -1;
+    auto maxHeight = +15;
+    
+    auto calcLightPos = [this, &camera](Vector2 ndcPos, float height) {
+
+        Vector3 worldPos = camera.castRay(ndcPos).castToHorizontalPlane(height);
+        return light.shadowCamera.viewMatrix.MultiplyPoint(worldPos);
+    };
+
+    auto a = calcLightPos({-1, +1}, minHeight);
+    auto b = calcLightPos({+1, +1}, minHeight);
+    auto c = calcLightPos({-1, -1}, minHeight);
+    auto d = calcLightPos({+1, -1}, minHeight);
+    auto e = calcLightPos({-1, +1}, maxHeight);
+    auto f = calcLightPos({+1, +1}, maxHeight);
+    auto g = calcLightPos({-1, -1}, maxHeight);
+    auto h = calcLightPos({+1, -1}, maxHeight);
+    BoundBox<Vector3> boundBox(a, b, c, d, e, f, g, h);
 
     auto diagonalLength = boundBox.size().length();
 
 
-    light.shadowCamera.lookAt = Vector3(boundBox.center(), 1);
-
-    light.shadowCamera.OrthoSize = diagonalLength;
+    light.shadowCamera.OrthoSize = boundBox.size().xy().length();
     light.shadowCamera.FieldOfView = 0;
-    light.shadowCamera.NearPlane = 800;
-    light.shadowCamera.FarPlane = 1200;    
-    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 1000;
-    light.shadowCamera.calcViewMatrix();
+    light.shadowCamera.NearPlane = boundBox.min.z;
+    light.shadowCamera.FarPlane = boundBox.max.z;    
     light.shadowCamera.calcProjectionMatrix();
 
     render(context, light.shadowCamera, RenderPass::Shadow);

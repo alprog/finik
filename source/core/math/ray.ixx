@@ -7,6 +7,7 @@ export struct Ray
     Ray() = default;
     Ray(Vector3 origin, Vector3 direction);
 
+    Vector3 castToHorizontalPlane(float planeAltitude) const;
     Vector3 castToGroundPlane() const;
 
     Vector3 Origin;

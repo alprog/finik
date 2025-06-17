@@ -1,3 +1,5 @@
+module;
+#include <asserts.h>
 module math:Ray;
 
 import std;
@@ -8,12 +10,15 @@ Ray::Ray(Vector3 origin, Vector3 direction)
 {
 }
 
+Vector3 Ray::castToHorizontalPlane(float planeAltitude) const
+{
+    ASSERT(Direction.z != 0);
+
+    auto travelDistance = (planeAltitude - Origin.z) / Direction.z;
+    return Origin + Direction * travelDistance;
+}
+
 Vector3 Ray::castToGroundPlane() const
 {
-    if (Direction.z != 0)
-    {
-        auto distance = Origin.z / -Direction.z;
-        return Origin + Direction * distance;
-    }
-    throw;
+    return castToHorizontalPlane(0);
 }

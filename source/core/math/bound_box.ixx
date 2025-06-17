@@ -15,7 +15,8 @@ struct BoundBox
 
     template <typename... Args>
     BoundBox::BoundBox(TVector pos, Args... args)
-        : BoundBox{pos}
+        : min{pos}
+        , max{pos}
     {
         (growToInclude(args), ...);
     }
@@ -32,8 +33,8 @@ struct BoundBox
 
     void growToInclude(TVector pos)
     {
-        min = Vector2::min(min, pos);
-        max = Vector2::max(max, pos);
+        min = TVector::min(min, pos);
+        max = TVector::max(max, pos);
     }
 
     TVector min;

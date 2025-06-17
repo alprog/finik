@@ -111,6 +111,16 @@ Vector3 operator/(const Vector3& vector, const float& value)
         vector.z / value};
 }
 
+Vector3 Vector3::min(const Vector3& a, const Vector3& b)
+{
+    return {std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z)};
+}
+
+Vector3 Vector3::max(const Vector3& a, const Vector3& b)
+{
+    return {std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z)};
+}
+
 Vector3 Vector3::cross(const Vector3& a, const Vector3& b)
 {
     auto z = a.x * b.y - a.y * b.x; // XY

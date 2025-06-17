@@ -68,7 +68,7 @@ float getShadow(float2 shadowUV, float refDepth)
 		return 0;
 	}
 
-	float bias = 0.001;
+	float bias = 0.01;
 	Texture2D texture = textures[ShadowTextureId];
 	
 	float result = 0;

@@ -37,6 +37,9 @@ export struct Vector3
     friend Vector3 operator*(const Vector3& vector, const float& value);
     friend Vector3 operator/(const Vector3& vector, const float& value);
 
+    static Vector3 min(const Vector3& a, const Vector3& b);
+    static Vector3 max(const Vector3& a, const Vector3& b);
+
     static Vector3 cross(const Vector3& a, const Vector3& b);
     static float dot(const Vector3& a, const Vector3& b);
 

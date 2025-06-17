@@ -47,7 +47,7 @@ float4 PSMain(PS_INPUT input) : SV_Target
 	
 	float4 result = color / sampleCount;
 	
-	result.x = LinearizeDepth(result.x, 0.1f, 400.0f);	
+	//result.x = LinearizeDepth(result.x, 0.1f, 400.0f);	
 		
 	return result.x;
 }
