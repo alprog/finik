@@ -17,6 +17,10 @@ export struct Vector2
     friend Vector2 operator-(const Vector2& lhs, const Vector2& rhs);
 
     friend Vector2 operator*(const Vector2& vector, const float& value);
+    friend Vector2 operator/(const Vector2& vector, const float& value);
+
+    static Vector2 min(const Vector2& a, const Vector2& b);
+    static Vector2 max(const Vector2& a, const Vector2& b);
 
     float x, y;
 };

@@ -157,6 +157,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="characters\character.cpp" />
     <ClCompile Include="characters\character.ixx" />
     <ClCompile Include="core\containers\ring_buffer.ixx" />
+    <ClCompile Include="core\math\bound_box.ixx" />
     <ClCompile Include="gfx\surface_size.ixx" />
     <ClCompile Include="shaders\compiler\dxc_args.ixx" />
     <ClCompile Include="shaders\compiler\include_handler.ixx" />

@@ -57,8 +57,8 @@ Mesh* createBodyMesh()
     vertices.reserve((segmentCount + 1) * 2);
 
     float baseWidth = 0.25f;
-    //float offsets[6] = {0.25f, 0.35f, 0.42f, 0.44f, 0.3f, 0.25f};
-    float offsets[6] = {0.25f, 0.25f, 0.25f, 0.25f, 0.3f, 0.25f};
+    float offsets[6] = {0.25f, 0.35f, 0.42f, 0.44f, 0.3f, 0.25f};
+    //float offsets[6] = {0.25f, 0.25f, 0.25f, 0.25f, 0.3f, 0.25f};
 
     for (int32 i = 0; i <= segmentCount; i++)
     {

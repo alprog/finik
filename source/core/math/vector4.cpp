@@ -29,6 +29,11 @@ Vector4::Vector4(float x, float y, float z, float w)
 {
 }
 
+Vector3 Vector4::xyz()
+{
+    return Vector3(x, y, z);
+}
+
 float Vector4::length()
 {
     return std::sqrt(x * x + y * y + z * z);
@@ -51,11 +56,6 @@ void Vector4::homoNormalize()
     {
         *this /= w;
     }
-}
-
-Vector3 Vector4::xyz()
-{
-    return Vector3(x, y, z);
 }
 
 Vector4 operator-(const Vector4& vector)

@@ -13,13 +13,13 @@ export struct Vector4
     Vector4(Vector3 vector, float w);
     Vector4(float x, float y, float z, float w);
 
+    Vector3 xyz();
+
     float length();
     float squaredLength();
     Vector4 getNormalized();
 
     void homoNormalize();
-
-    Vector3 xyz();
 
     friend Vector4 operator-(const Vector4& vector);
     friend Vector4 operator+(const Vector4& lhs, const Vector4& rhs);

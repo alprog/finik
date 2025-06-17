@@ -1,5 +1,7 @@
 export module math:Vector3;
 
+import :Vector2;
+
 export struct Vector3
 {
     static const Vector3 Zero;
@@ -16,7 +18,10 @@ export struct Vector3
     static const Vector3 South;
 
     Vector3() = default;
+    Vector3(Vector2 vector, float z);
     Vector3(float x, float y, float z);
+
+    Vector2 xy() const;
 
     float length() const;
     float squaredLength() const;

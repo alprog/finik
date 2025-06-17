@@ -23,6 +23,18 @@ Vector3::Vector3(float x, float y, float z)
 {
 }
 
+Vector3::Vector3(Vector2 vector, float z)
+    : x{ vector.x }
+    , y{ vector.y }
+    , z{ z }
+{
+}
+
+Vector2 Vector3::xy() const
+{
+    return Vector2(x, y);
+}
+
 float Vector3::length() const
 {
     return std::sqrt(x * x + y * y + z * z);

@@ -48,9 +48,20 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
 {
     light.shadowMap->startRendering(commandList);
 
-    light.shadowCamera.OrthoSize = 60;
+    auto a = camera.castRay({-1, +1}).castToGroundPlane().xy();
+    auto b = camera.castRay({+1, +1}).castToGroundPlane().xy();
+    auto c = camera.castRay({-1, -1}).castToGroundPlane().xy();
+    auto d = camera.castRay({+1, -1}).castToGroundPlane().xy();
+    BoundBox boundBox(a, b, c, d);
+
+    auto diagonalLength = boundBox.size().length();
+
+
+    light.shadowCamera.lookAt = Vector3(boundBox.center(), 1);
+
+    light.shadowCamera.OrthoSize = diagonalLength;
     light.shadowCamera.FieldOfView = 0;
-    light.shadowCamera.lookAt = camera.lookAt;
+    
     light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 100;
     light.shadowCamera.calcViewMatrix();
     light.shadowCamera.calcProjectionMatrix();
