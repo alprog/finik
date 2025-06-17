@@ -61,8 +61,9 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
 
     light.shadowCamera.OrthoSize = diagonalLength;
     light.shadowCamera.FieldOfView = 0;
-    
-    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 100;
+    light.shadowCamera.NearPlane = 800;
+    light.shadowCamera.FarPlane = 1200;    
+    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 1000;
     light.shadowCamera.calcViewMatrix();
     light.shadowCamera.calcProjectionMatrix();
 
