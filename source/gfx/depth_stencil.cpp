@@ -5,6 +5,7 @@ module depth_stencil;
 import render_system;
 
 DepthStencil::DepthStencil(SurfaceResolution resolution)
+    : RenderSurface{TextureFormat::DXGI_FORMAT_D24_UNORM_S8_UINT}
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     handle = render_system.getDsvHeap()->getNextHandle();
@@ -18,13 +19,12 @@ void DepthStencil::resize(SurfaceResolution resolution)
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
         static_cast<uint32>(resolution.width),
         static_cast<uint32>(resolution.height),
-        1, 1, DXGI_FORMAT_D24_UNORM_S8_UINT, resolution.sampleCount, 0,
+        1, 1, format, resolution.sampleCount, 0,
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
  
-
     D3D12_CLEAR_VALUE clearValue;
-    clearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    clearValue.Format = format;
     clearValue.DepthStencil.Depth = 1.0f;
     clearValue.DepthStencil.Stencil = 0;
 

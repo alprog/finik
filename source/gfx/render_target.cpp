@@ -5,6 +5,7 @@ module render_target;
 import render_system;
 
 RenderTarget::RenderTarget(SurfaceResolution resolution)
+    : RenderSurface{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     handle = render_system.getRtvHeap()->getNextHandle();
@@ -19,12 +20,12 @@ void RenderTarget::resize(SurfaceResolution resolution)
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
         static_cast<uint32>(resolution.width),
         static_cast<uint32>(resolution.height),
-        1, 1, DXGI_FORMAT_R8G8B8A8_UNORM, resolution.sampleCount, 0,
+        1, 1, format, resolution.sampleCount, 0,
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
     D3D12_CLEAR_VALUE clearValue;
-    clearValue.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    clearValue.Format = format;
 
     resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);
 
