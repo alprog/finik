@@ -51,7 +51,6 @@ export D3D12_RESOURCE_DESC;
 export D3D12_CLEAR_VALUE;
 export IUnknown;
 
-export using TextureFormat = DXGI_FORMAT;
-
+export import texture_format;
 export import d3dx;
 export import myptr;

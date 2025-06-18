@@ -10,5 +10,5 @@ export class DepthStencil : public RenderSurface
 public:
     DepthStencil(SurfaceResolution resolution);
 
-    void resize(SurfaceResolution siresolutionze) override;
+    void resize(SurfaceResolution resolution) override;
 };

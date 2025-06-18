@@ -16,7 +16,7 @@ import msaa;
 export class FrameBuffer
 {
 public:
-    FrameBuffer(SurfaceResolution resolution, int32 renderTargetCount, bool depthBufferEnabled);
+    FrameBuffer(SurfaceResolution resolution, Array<TextureFormat> formats, bool depthBufferEnabled);
 
     void resize(SurfaceResolution resolution);
 

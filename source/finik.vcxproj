@@ -160,6 +160,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="core\math\bound_box.ixx" />
     <ClCompile Include="gfx\g_buffer.ixx" />
     <ClCompile Include="gfx\surface_resolution.ixx" />
+    <ClCompile Include="gfx\texture_format.ixx" />
     <ClCompile Include="shaders\compiler\dxc_args.ixx" />
     <ClCompile Include="shaders\compiler\include_handler.ixx" />
     <ClCompile Include="core\enum_bits.ixx" />

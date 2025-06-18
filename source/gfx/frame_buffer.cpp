@@ -4,12 +4,12 @@ module frame_buffer;
 
 import render_system;
 
-FrameBuffer::FrameBuffer(SurfaceResolution resolution, int32 renderTargetCount, bool depthBufferEnabled)
+FrameBuffer::FrameBuffer(SurfaceResolution resolution, Array<TextureFormat> formats, bool depthBufferEnabled)
     : resolution{resolution}
 {
-    for (int i = 0; i < renderTargetCount; i++)
+    for (auto& format : formats)
     {
-        renderTargets.emplace_back(std::make_unique<RenderTarget>(resolution));
+        renderTargets.emplace_back(std::make_unique<RenderTarget>(format, resolution));
     }
 
     if (depthBufferEnabled)

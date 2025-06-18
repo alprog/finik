@@ -4,8 +4,8 @@ module render_target;
 
 import render_system;
 
-RenderTarget::RenderTarget(SurfaceResolution resolution)
-    : RenderSurface{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}
+RenderTarget::RenderTarget(TextureFormat format, SurfaceResolution resolution)
+    : RenderSurface{format}
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     handle = render_system.getRtvHeap()->getNextHandle();
