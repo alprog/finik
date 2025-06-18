@@ -10,30 +10,30 @@ import enum_bits;
 import root_signature_params;
 import effect_manager;
 
-SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceSize size)
+SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution resolution)
     : scene{scene}
     , camera{camera}
-    , size{size}
-    , gBuffer{size, 4, true}
-    , lightBuffer{size, 1, true}
+    , resolution{resolution}
+    , gBuffer{resolution, 4, true}
+    , lightBuffer{resolution, 1, true}
 {
     fullscreenQuad = createFullScreenQuad();
 }
 
-void SceneRenderLane::resize(SurfaceSize size)
+void SceneRenderLane::resize(SurfaceResolution resolution)
 {
-    if (this->size != size)
+    if (this->resolution != resolution)
     {
         RenderSystem& render_system = Single::Get<RenderSystem>();
         render_system.get_command_queue().Flush();
 
-        gBuffer.resize(size);
-        lightBuffer.resize(size);
+        gBuffer.resize(resolution);
+        lightBuffer.resize(resolution);
 
-        camera.AspectRatio = static_cast<float>(size.width) / size.height;
+        camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
         camera.calcProjectionMatrix();
 
-        this->size = size;
+        this->resolution = resolution;
     }
 }
 
@@ -68,7 +68,7 @@ void SceneRenderLane::render()
     gBuffer.endRendering(commandList);
 
     auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
-    gBufferConstants->SurfaceSize = gBuffer.size;
+    gBufferConstants->Resolution = gBuffer.resolution;
     gBufferConstants->RT0Id = gBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
     gBufferConstants->RT1Id = gBuffer.getRenderSurface(MRT::RT1)->textureHandle.getIndex();
     gBufferConstants->RT2Id = gBuffer.getRenderSurface(MRT::RT2)->textureHandle.getIndex();

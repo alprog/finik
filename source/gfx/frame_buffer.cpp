@@ -4,33 +4,33 @@ module frame_buffer;
 
 import render_system;
 
-FrameBuffer::FrameBuffer(SurfaceSize size, int32 renderTargetCount, bool depthBufferEnabled)
-    : size{size}
+FrameBuffer::FrameBuffer(SurfaceResolution resolution, int32 renderTargetCount, bool depthBufferEnabled)
+    : resolution{resolution}
 {
     for (int i = 0; i < renderTargetCount; i++)
     {
-        renderTargets.emplace_back(std::make_unique<RenderTarget>(size));
+        renderTargets.emplace_back(std::make_unique<RenderTarget>(resolution));
     }
 
     if (depthBufferEnabled)
     {
-        depthStencil = std::make_unique<DepthStencil>(size);
+        depthStencil = std::make_unique<DepthStencil>(resolution);
     }
 }
 
-void FrameBuffer::resize(SurfaceSize size)
+void FrameBuffer::resize(SurfaceResolution resolution)
 {
-    if (this->size != size)
+    if (this->resolution != resolution)
     {
         for (auto& renderTarget : renderTargets)
         {
-            renderTarget->resize(size);
+            renderTarget->resize(resolution);
         }
         if (depthStencil)
         {
-            depthStencil->resize(size);
+            depthStencil->resize(resolution);
         }
-        this->size = size;
+        this->resolution = resolution;
     }
 }
 
@@ -63,13 +63,13 @@ void FrameBuffer::startRendering(CommandList& commandList)
     ID3D12DescriptorHeap* a = render_system.getCommonHeap()->get();
     commandList.listImpl->SetDescriptorHeaps(1, &a);
 
-    viewport.Width = static_cast<float>(size.width);
-    viewport.Height = static_cast<float>(size.height);
+    viewport.Width = static_cast<float>(resolution.width);
+    viewport.Height = static_cast<float>(resolution.height);
     viewport.MaxDepth = 1.0f;
     commandList.listImpl->RSSetViewports(1, &viewport);
 
-    scissorRect.right = static_cast<LONG>(size.width);
-    scissorRect.bottom = static_cast<LONG>(size.height);
+    scissorRect.right = static_cast<LONG>(resolution.width);
+    scissorRect.bottom = static_cast<LONG>(resolution.height);
     commandList.listImpl->RSSetScissorRects(1, &scissorRect);
 }
 

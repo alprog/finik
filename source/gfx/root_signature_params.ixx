@@ -1,7 +1,7 @@
 export module root_signature_params;
 
 import core;
-import surface_size;
+import surface_resolution;
 
 // for intellisense
 
@@ -21,7 +21,7 @@ export struct FrameConstants
 
 export struct GBufferConstants
 {
-    SurfaceSize SurfaceSize;
+    SurfaceResolution Resolution;
     uint32 RT0Id;
     uint32 RT1Id;
     uint32 RT2Id;

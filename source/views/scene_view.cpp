@@ -10,7 +10,7 @@ import scene;
 import effect_manager;
 import render_pass;
 import quality_manager;
-import surface_size;
+import surface_resolution;
 import mrt;
 import frame_buffer;
 
@@ -23,9 +23,9 @@ SceneView::SceneView(const char* name, Scene& scene)
     , cameraContoller{camera}
 {
     auto& settings = QualityManager::GetInstance().getCurrent();
-    SurfaceSize surfaceSize = SurfaceSize{1024, 800, getSampleCount(settings.msaa)};
+    SurfaceResolution surfaceResolution = SurfaceResolution{1024, 800, getSampleCount(settings.msaa)};
     
-    renderLane = std::make_shared<SceneRenderLane>(scene, camera, surfaceSize);
+    renderLane = std::make_shared<SceneRenderLane>(scene, camera, surfaceResolution);
 }
 
 const CameraController& SceneView::getCameraController() const

@@ -5,7 +5,7 @@ import render_surface;
 export class DepthStencil : public RenderSurface
 {
 public:
-    DepthStencil(SurfaceSize size);
+    DepthStencil(SurfaceResolution resolution);
 
-    void resize(SurfaceSize size) override;
+    void resize(SurfaceResolution siresolutionze) override;
 };

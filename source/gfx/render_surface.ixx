@@ -6,7 +6,7 @@ import dx;
 import gpu_resource;
 import descriptor_handle;
 import msaa;
-export import surface_size;
+export import surface_resolution;
 
 export class RenderSurface
 {
@@ -15,5 +15,5 @@ public:
     DescriptorHandle handle;
     DescriptorHandle textureHandle;
 
-    virtual void resize(SurfaceSize size) = 0;
+    virtual void resize(SurfaceResolution resolution) = 0;
 };

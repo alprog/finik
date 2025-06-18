@@ -4,22 +4,22 @@ module render_target;
 
 import render_system;
 
-RenderTarget::RenderTarget(SurfaceSize size)
+RenderTarget::RenderTarget(SurfaceResolution resolution)
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     handle = render_system.getRtvHeap()->getNextHandle();
     textureHandle = render_system.getCommonHeap()->getNextHandle();
-    resize(size);
+    resize(resolution);
 }
 
-void RenderTarget::resize(SurfaceSize size)
+void RenderTarget::resize(SurfaceResolution resolution)
 {
     RenderSystem& render_system = Single::Get<RenderSystem>();
     CD3DX12_RESOURCE_DESC resourceDesc(
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
-        static_cast<uint32>(size.width),
-        static_cast<uint32>(size.height),
-        1, 1, DXGI_FORMAT_R8G8B8A8_UNORM, size.sampleCount, 0,
+        static_cast<uint32>(resolution.width),
+        static_cast<uint32>(resolution.height),
+        1, 1, DXGI_FORMAT_R8G8B8A8_UNORM, resolution.sampleCount, 0,
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 

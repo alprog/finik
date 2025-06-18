@@ -14,16 +14,16 @@ import msaa;
 export class FrameBuffer
 {
 public:
-    FrameBuffer(SurfaceSize size, int32 renderTargetCount, bool depthBufferEnabled);
+    FrameBuffer(SurfaceResolution resolution, int32 renderTargetCount, bool depthBufferEnabled);
 
-    void resize(SurfaceSize size);
+    void resize(SurfaceResolution resolution);
 
     void startRendering(CommandList& commandList);
     void endRendering(CommandList& commandList);
 
     RenderSurface* getRenderSurface(MRT type) const;
 
-    SurfaceSize size;
+    SurfaceResolution resolution;
 
     Array<std::unique_ptr<RenderTarget>> renderTargets;
     std::unique_ptr<DepthStencil> depthStencil;

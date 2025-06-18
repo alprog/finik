@@ -6,6 +6,6 @@ import render_surface;
 export class RenderTarget : public RenderSurface
 {
 public:
-    RenderTarget(SurfaceSize size);
-    void resize(SurfaceSize size) override;
+    RenderTarget(SurfaceResolution resolution);
+    void resize(SurfaceResolution resolution) override;
 };
