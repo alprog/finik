@@ -6,6 +6,7 @@ module pso_manager;
 
 import render_system;
 import root_signature;
+import g_buffer;
 
 std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
 {
@@ -70,9 +71,11 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     psoDesc.SampleMask = UINT_MAX;
     psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     psoDesc.NumRenderTargets = 4;
+
+    const auto& RTFormats = GBuffer::GetRTFormats();
     for (int32 i = 0; i < psoDesc.NumRenderTargets; i++)
     {
-        psoDesc.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM;
+        psoDesc.RTVFormats[i] = RTFormats[i];
     }
     psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
     psoDesc.SampleDesc.Count = getSampleCount(settings.msaa);

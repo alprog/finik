@@ -4,6 +4,8 @@ import core;
 import dx;
 import frame_buffer;
 
+// for intellisense
+
 export class GBuffer : public FrameBuffer
 {
 public:
@@ -18,7 +20,7 @@ public:
         {
             TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM,
             TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM,
-            TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM,
+            TextureFormat::DXGI_FORMAT_R16G16_SNORM,
             TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM
         };
         return formats;
