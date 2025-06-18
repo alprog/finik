@@ -26,7 +26,7 @@ void FrameBuffer::resize(SurfaceResolution resolution)
         {
             renderTarget->resize(resolution);
         }
-        if (depthStencil)
+        if (depthStencil) 
         {
             depthStencil->resize(resolution);
         }

@@ -14,7 +14,7 @@ SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution
     : scene{scene}
     , camera{camera}
     , resolution{resolution}
-    , gBuffer{resolution, 4, true}
+    , gBuffer{resolution}
     , lightBuffer{resolution, 1, true}
 {
     fullscreenQuad = createFullScreenQuad();

@@ -2,6 +2,7 @@ export module render_lane;
 
 import core;
 import frame_buffer;
+import g_buffer;
 import scene_system_fwd;
 import render_pass;
 import surface_resolution;
@@ -26,7 +27,7 @@ private:
     Camera& camera;
     SurfaceResolution resolution;
 
-    FrameBuffer gBuffer;
+    GBuffer gBuffer;
     FrameBuffer lightBuffer;
 
     uint64 fenceValue = 0;
