@@ -18,13 +18,13 @@ void DepthStencil::resize(SurfaceResolution resolution)
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
         static_cast<uint32>(resolution.width),
         static_cast<uint32>(resolution.height),
-        1, 1, DXGI_FORMAT_D32_FLOAT, resolution.sampleCount, 0,
+        1, 1, DXGI_FORMAT_D24_UNORM_S8_UINT, resolution.sampleCount, 0,
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
  
 
     D3D12_CLEAR_VALUE clearValue;
-    clearValue.Format = DXGI_FORMAT_D32_FLOAT;
+    clearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
     clearValue.DepthStencil.Depth = 1.0f;
     clearValue.DepthStencil.Stencil = 0;
 
@@ -36,7 +36,7 @@ void DepthStencil::resize(SurfaceResolution resolution)
 
     // Create the shader resource view
     D3D12_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
-    SRVDesc.Format = DXGI_FORMAT_R32_FLOAT;
+    SRVDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
     SRVDesc.ViewDimension = resolution.sampleCount > 1 ? D3D12_SRV_DIMENSION_TEXTURE2DMS : D3D12_SRV_DIMENSION_TEXTURE2D;
     SRVDesc.Texture2D.MipLevels = 1;    
 

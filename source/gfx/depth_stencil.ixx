@@ -2,6 +2,8 @@ export module depth_stencil;
 
 import render_surface;
 
+// for intellisense
+
 export class DepthStencil : public RenderSurface
 {
 public:
