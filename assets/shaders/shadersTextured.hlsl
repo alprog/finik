@@ -45,7 +45,7 @@ GBufferOutput PSMain(PSInput input)
 	float4 diffuseColor = lerp(color, texColor, 1);
 	
 	Out.Albedo = diffuseColor;
-	Out.Motion = float4(1, 0, 0, 1);
+	Out.Motion = float2(1, 1);
 	Out.RT4 = float4(1, 1, 0, 1);
 
 	return Out;
