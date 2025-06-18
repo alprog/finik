@@ -18,6 +18,8 @@ import oneshot_allocator;
 import root_signature;
 import descriptor_heap;
 
+// for intellisense
+
 export class RenderSystem
 {
     friend class Single;

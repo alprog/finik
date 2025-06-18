@@ -8,6 +8,8 @@ import constant_buffer;
 import render_pass;
 import effect;
 
+// for intellisense
+
 export class RenderContext
 {
 public:
