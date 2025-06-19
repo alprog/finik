@@ -8,6 +8,7 @@ import swap_chain;
 import scene;
 import camera;
 import gui;
+import images;
 
 DesktopWindow::DesktopWindow(int width, int height)
     : width{width}
@@ -26,6 +27,23 @@ DesktopWindow::DesktopWindow(int width, int height)
 
     swap_chain = new SwapChain(*this);
     gui = new Gui(*this);
+
+    setIcon();
+}
+
+void DesktopWindow::setIcon()
+{
+    Image* image = Images::loadPng("assets/icon.png");
+    int32 w = image->width;
+    int32 h = image->height;
+    SDL_Surface* icon = SDL_CreateRGBSurfaceFrom(image->data, w, h, 32, w * 4,
+        0x000000FF, // Rmask
+        0x0000FF00, // Gmask
+        0x00FF0000, // Bmask
+        0xFF000000  // Amask
+    );
+
+    SDL_SetWindowIcon(impl, icon);
 }
 
 DesktopWindow::~DesktopWindow()

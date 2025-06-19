@@ -16,6 +16,7 @@ public:
     ~DesktopWindow();
 
     void renderScene();
+    void setIcon();
 
     WindowImpl* get_impl()
     {
