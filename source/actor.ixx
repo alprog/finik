@@ -12,6 +12,7 @@ public:
     void render();
 
     Matrix transformMatrix;
+    Matrix oldTransformMatrix;
     Mesh* mesh;
     Material* material;
 };

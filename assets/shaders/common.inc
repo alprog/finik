@@ -34,6 +34,7 @@ cbuffer FrameConstantBuffer : register(b1)
 	float4x4 Projection;	
 	float4x4 ViewProject;
 	float4x4 InverseViewProjection;
+	float4x4 PrevViewProject;
 	float2 NearFar;
 };
 

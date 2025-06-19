@@ -10,6 +10,7 @@ Actor::Actor()
 {
     mesh = createCubeMesh();
     transformMatrix = Matrix::Identity;
+    oldTransformMatrix = transformMatrix;
 
     auto texture = Assets::GetInstance().get<Texture>("textures/skullbox.png");
     material = new Material("actor");

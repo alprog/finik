@@ -8,6 +8,7 @@ import surface_resolution;
 export struct MeshConstants
 {
     Matrix Model;
+    Matrix PrevModel;
 };
 
 export struct FrameConstants
@@ -16,6 +17,7 @@ export struct FrameConstants
     Matrix Projection;
     Matrix ViewProjection;
     Matrix InverseViewProjection;
+    Matrix PrevViewProjection;
     Vector2 NearFar;
 };
 

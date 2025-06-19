@@ -37,9 +37,14 @@ void RenderContext::setGBufferConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)
 
 void RenderContext::setModelMatrix(const Matrix& matrix)
 {
-    auto meshConstantBuffer = renderSystem.getOneshotAllocator().Allocate<MeshConstants>();
-    meshConstantBuffer.Data->Model = matrix;
+    setModelMatrix(matrix, matrix);
+}
 
+void RenderContext::setModelMatrix(const Matrix& currentMatrix, const Matrix& prevMatrix)
+{
+    auto meshConstantBuffer = renderSystem.getOneshotAllocator().Allocate<MeshConstants>();
+    meshConstantBuffer.Data->Model = currentMatrix;
+    meshConstantBuffer.Data->PrevModel = prevMatrix;
     commandList.SetGraphicsRootConstantBufferView(Params::MeshConstantBufferView, meshConstantBuffer.GpuAddress);
 }
 
