@@ -65,6 +65,6 @@ void DesktopWindow::renderScene()
     if (scene != nullptr)
     {
         auto context = Single::Get<RenderSystem>().getRenderContext();
-        scene->render(*context, camera, RenderPass::Geometry);
+        scene->render(*context, camera, Matrix::Identity, RenderPass::Geometry);
     }
 }

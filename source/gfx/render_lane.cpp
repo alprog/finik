@@ -16,6 +16,7 @@ SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution
     , resolution{resolution}
     , gBuffer{resolution}
     , lightBuffer{resolution, {TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true}
+    , prevViewProjection{Matrix::Identity}
 {
     fullscreenQuad = createFullScreenQuad();
 }
@@ -64,8 +65,10 @@ void SceneRenderLane::render()
     scene.renderShadowMaps(commandList, context, camera);
 
     gBuffer.startRendering(commandList);
-    scene.render(context, camera, RenderPass::Geometry);
+    scene.render(context, camera, prevViewProjection, RenderPass::Geometry);
     gBuffer.endRendering(commandList);
+
+    prevViewProjection = camera.viewMatrix * camera.projectionMatrix;
 
     auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
     gBufferConstants->Resolution = gBuffer.resolution;

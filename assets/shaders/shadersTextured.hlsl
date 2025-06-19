@@ -11,8 +11,9 @@ struct VSInput
 struct PSInput
 {
 	float4 position : SV_POSITION;
-	float3 normal : TEXCOORD0;
-	float2 uv : TEXCOORD1;
+	float4 prevPosition : TEXCOORD0;
+	float3 normal : TEXCOORD1;
+	float2 uv : TEXCOORD2;
 };
 
 PSInput VSMain(VSInput input)
@@ -20,8 +21,10 @@ PSInput VSMain(VSInput input)
 	PSInput result;
 	
 	float4 worldPosition = mul(float4(input.position, 1), Model);
+	float4 prevWorldPosition = mul(float4(input.position, 1), PrevModel);
 
 	result.position = mul(worldPosition, ViewProject);
+	result.prevPosition = mul(prevWorldPosition, PrevViewProject);
 	result.normal = normalize(mul(input.normal, Model));
 	result.uv = input.uv;
 
@@ -45,7 +48,10 @@ GBufferOutput PSMain(PSInput input)
 	float4 diffuseColor = lerp(color, texColor, 1);
 	
 	Out.Albedo = diffuseColor;
-	Out.Motion = float2(1, 1);
+	
+	float4 delta = normalize(input.position) - normalize(input.prevPosition);
+	
+	Out.Motion = delta.xy;
 	Out.RT4 = float4(1, 1, 0, 1);
 
 	return Out;

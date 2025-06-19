@@ -25,6 +25,7 @@ public:
 private:
     Scene& scene;
     Camera& camera;
+    Matrix prevViewProjection;
     SurfaceResolution resolution;
 
     GBuffer gBuffer;
