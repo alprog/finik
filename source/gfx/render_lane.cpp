@@ -67,8 +67,9 @@ void SceneRenderLane::render()
     gBuffer.startRendering(commandList);
     scene.render(context, camera, prevViewProjection, RenderPass::Geometry);
     gBuffer.endRendering(commandList);
-
+ 
     prevViewProjection = camera.viewMatrix * camera.projectionMatrix;
+
 
     auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
     gBufferConstants->Resolution = gBuffer.resolution;
