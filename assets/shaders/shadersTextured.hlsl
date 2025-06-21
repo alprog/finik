@@ -11,10 +11,10 @@ struct VSInput
 struct PSInput
 {
 	float4 position : SV_POSITION;
-	float4 prevPosition : TEXCOORD0;
-	float4 newPosition : TEXCOORD3;
-	float3 normal : TEXCOORD1;
-	float2 uv : TEXCOORD2;
+	float4 prevPosition : TEXCOORD1;
+	float4 newPosition : TEXCOORD2;
+	float3 normal : TEXCOORD3;
+	float2 uv : TEXCOORD4;
 };
 
 PSInput VSMain(VSInput input)

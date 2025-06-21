@@ -12,10 +12,11 @@ struct VSInput
 struct PSInput
 {
 	float4 position : SV_POSITION;
-	//float4 shadowPosition : TEXCOORD3;
-	float3 normal : TEXCOORD0;
-	float2 uv : TEXCOORD1;
-	uint2 coord : TEXCOORD2;
+	float4 prevPosition : TEXCOORD0;
+	float4 newPosition : TEXCOORD1;
+	float3 normal : TEXCOORD2;
+	float2 uv : TEXCOORD3;
+	uint2 coord : TEXCOORD4;
 };
 
 PSInput VSMain(VSInput input)
@@ -23,10 +24,12 @@ PSInput VSMain(VSInput input)
 	PSInput result;
 
 	float4 worldPosition = mul(float4(input.position, 1), Model);
-
+	float4 prevWorldPosition = mul(float4(input.position, 1), PrevModel);
+	
 	result.position = mul(worldPosition, ViewProject);
-	//result.shadowPosition = mul(worldPosition, ShadowViewProjection);
-	//result.shadowPosition /= result.shadowPosition.w;
+	result.prevPosition = mul(prevWorldPosition, PrevViewProject);
+	result.newPosition = mul(worldPosition, ViewProject);
+	
 	result.normal = input.normal;
 	result.uv = input.uv;
 	result.coord = input.coord;
@@ -54,9 +57,11 @@ GBufferOutput PSMain(PSInput input)
 	
 	float3 fillColor = gridTexture.Sample(PointSampler, float2(input.coord) / 256).rgb;
 	float3 borderColor = cellTexture.Sample(DefaultSampler, input.uv).rgb;
+
+	float4 delta = (input.newPosition / input.newPosition.w) - (input.prevPosition / input.prevPosition.w);
 	
 	Out.Albedo = float4(fillColor + borderColor, 1);
-	Out.Motion = float2(0, 0);
+	Out.Motion = delta.xy;
 	Out.RT4 = float4(1, 1, 0, 1);
 	
 	return Out;
