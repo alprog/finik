@@ -25,7 +25,8 @@ public:
     float OrthoSize;
     float FarPlane = 400.0f;
     float NearPlane = 0.1f;
-    float AspectRatio = 16.0f / 9.0f;
+    float AspectRatio = 1.0f;
+    Vector2 Jitter;
 
     Matrix viewMatrix;
     Matrix projectionMatrix;

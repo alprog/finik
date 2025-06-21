@@ -33,6 +33,9 @@ void Camera::calcViewMatrix()
 
 void Camera::calcProjectionMatrix()
 {
+    float jx = Jitter.x;
+    float jy = Jitter.y;
+
     if (FieldOfView)
     {
         // perspective
@@ -45,8 +48,8 @@ void Camera::calcProjectionMatrix()
         projectionMatrix = Matrix{
             scaleX, 0, 0, 0,
             0, scaleY, 0, 0,
-            0, 0, m22, 1,
-            0, 0, m32, 0
+            jx, jy, m22, 1,
+            0,  0,  m32, 0
         };
     }
     else
@@ -66,7 +69,7 @@ void Camera::calcProjectionMatrix()
             scaleX, 0, 0, 0,
             0, scaleY, 0, 0,
             0, 0, scaleZ, 0,
-            0, 0, m32, 1
+            jx, jy, m32, 1
         };
     }
 }

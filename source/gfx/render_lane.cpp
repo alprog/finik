@@ -9,6 +9,8 @@ import mrt;
 import enum_bits;
 import root_signature_params;
 import effect_manager;
+import app;
+import jitter;
 
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution resolution)
     : scene{scene}
@@ -50,6 +52,10 @@ FrameBuffer& SceneRenderLane::getLightBuffer()
 
 void SceneRenderLane::render()
 {
+    auto frameIndex = App::GetInstance().getFrameIndex();
+    camera.Jitter = GetJitter(resolution.resolution(), frameIndex);
+    camera.calcProjectionMatrix();
+
     RenderSystem& renderSystem = Single::Get<RenderSystem>();
     auto& commandQueue = renderSystem.get_command_queue();
     {
