@@ -59,6 +59,7 @@ GBufferOutput PSMain(PSInput input)
 	float3 borderColor = cellTexture.Sample(DefaultSampler, input.uv).rgb;
 
 	float4 delta = (input.newPosition / input.newPosition.w) - (input.prevPosition / input.prevPosition.w);
+	delta.xy = delta.xy - Jitter + PrevJitter;
 	
 	Out.Albedo = float4(fillColor + borderColor, 1);
 	Out.Motion = delta.xy;

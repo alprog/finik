@@ -88,10 +88,11 @@ void SceneRenderLane::render()
 
     {
         gBuffer.startRendering(commandList);
-        scene.render(context, camera, prevViewProjection, RenderPass::Geometry);
+        scene.render(context, camera, prevViewProjection, prevJitter, RenderPass::Geometry);
         gBuffer.endRendering(commandList);
 
         prevViewProjection = camera.viewMatrix * camera.projectionMatrix;
+        prevJitter = camera.Jitter;
     }
 
     {

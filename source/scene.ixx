@@ -21,7 +21,7 @@ public:
 
     void update(float deltaTime);
     void renderShadowMaps(CommandList& commandList, RenderContext& context, Camera& camera);
-    void render(RenderContext& context, const Camera& camera, const Matrix& prevViewProjection, RenderPass pass);
+    void render(RenderContext& context, const Camera& camera, const Matrix& prevViewProjection, const Vector2& prevJitter, RenderPass pass);
 
     Grid* grid;
     Array<Actor*> actors;

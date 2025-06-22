@@ -19,6 +19,8 @@ export struct FrameConstants
     Matrix InverseViewProjection;
     Matrix PrevViewProjection;
     Vector2 NearFar;
+    Vector2 Jitter;
+    Vector2 PrevJitter;
 };
 
 export struct GBufferConstants

@@ -28,6 +28,7 @@ private:
     Scene& scene;
     Camera& camera;
     Matrix prevViewProjection;
+    Vector2 prevJitter;
     SurfaceResolution resolution;
 
     GBuffer gBuffer;

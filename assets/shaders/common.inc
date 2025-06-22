@@ -36,6 +36,8 @@ cbuffer FrameConstantBuffer : register(b1)
 	float4x4 InverseViewProjection;
 	float4x4 PrevViewProject;
 	float2 NearFar;
+	float2 Jitter;
+	float2 PrevJitter;
 };
 
 cbuffer GBufferConstants : register(b2)

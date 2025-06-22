@@ -53,6 +53,7 @@ GBufferOutput PSMain(PSInput input)
 	Out.Albedo = diffuseColor;
 	
 	float4 delta = (input.newPosition / input.newPosition.w) - (input.prevPosition / input.prevPosition.w);
+	delta.xy = delta.xy - Jitter + PrevJitter;
 	
 	Out.Motion = delta.xy;
 	Out.RT4 = float4(1, 1, 0, 1);

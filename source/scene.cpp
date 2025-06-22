@@ -81,12 +81,12 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     light.shadowCamera.FarPlane = boundBox.max.z;    
     light.shadowCamera.calcProjectionMatrix();
 
-    render(context, light.shadowCamera, Matrix::Identity, RenderPass::Shadow);
+    render(context, light.shadowCamera, Matrix::Identity, Vector2::Zero, RenderPass::Shadow);
 
     light.shadowMap->endRendering(commandList);
 }
 
-void Scene::render(RenderContext& renderContext, const Camera& camera, const Matrix& prevViewProjection, RenderPass pass)
+void Scene::render(RenderContext& renderContext, const Camera& camera, const Matrix& prevViewProjection, const Vector2& prevJitter, RenderPass pass)
 {
     renderContext.setupRoot();
 
@@ -100,6 +100,8 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
     frameConstants->InverseViewProjection = frameConstants->ViewProjection.getInverse();
     frameConstants->PrevViewProjection = prevViewProjection;
     frameConstants->NearFar = {camera.NearPlane, camera.FarPlane};
+    frameConstants->Jitter = camera.Jitter;
+    frameConstants->PrevJitter = prevJitter;
 
     renderContext.setFrameConstants(frameConstants.GpuAddress);
 

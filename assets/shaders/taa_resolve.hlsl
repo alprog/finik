@@ -35,7 +35,7 @@ PSInput VSMain(VSInput input)
 float4 sampleTex(uint textureId, float2 uv)
 {
 	Texture2D texture = textures[textureId];
-	return texture.Sample(PointSampler, uv);
+	return texture.Sample(LinearSampler, uv);
 }
 
 float4 PSMain(PSInput input) : SV_TARGET
@@ -45,11 +45,17 @@ float4 PSMain(PSInput input) : SV_TARGET
 	float2 offset = sampleTex(RT2Id, input.uv).xy;
 	float2 screenOffset = float2(offset.x / 2, -offset.y / 2);
 		
-	float historyFactor = 0.9;
-
-		
 	float4 historyColor = sampleTex(HistoryBufferId, input.uv - screenOffset);
 	
+	float3 NearColor0 = sampleTex(LightBufferId, input.uv + float2(+1, 0) / Resolution).rgb;
+    float3 NearColor1 = sampleTex(LightBufferId, input.uv + float2(-1, 0) / Resolution).rgb;
+    float3 NearColor2 = sampleTex(LightBufferId, input.uv + float2(0, -1) / Resolution).rgb;
+    float3 NearColor3 = sampleTex(LightBufferId, input.uv + float2(0, +1) / Resolution).rgb;
+	float3 BoxMin = min(currentColor, min(NearColor0, min(NearColor1, min(NearColor2, NearColor3))));
+    float3 BoxMax = max(currentColor, max(NearColor0, max(NearColor1, max(NearColor2, NearColor3))));
+		
+	historyColor.rgb = clamp(historyColor.rgb, BoxMin, BoxMax);
 	
+	float historyFactor = 0.9;
 	return lerp(currentColor, historyColor, historyFactor);
 }
