@@ -21,13 +21,25 @@ std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& setti
     {
         result = standardCompile(settings);
     }
+    else if (settings.type == PipelineType::Lighting)
+    {
+        result = standardCompile(settings);
+    }
     else if (settings.type == PipelineType::Shadow)
+    {
+        result = standardCompile(settings);
+    }
+    else if (settings.type == PipelineType::ScreenSpace)
     {
         result = standardCompile(settings);
     }
     else if (settings.type == PipelineType::Imgui)
     {
         result = imguiCompile(settings);
+    }
+    else
+    {
+        throw;
     }
     states[settings] = result;
     return result;
@@ -62,7 +74,7 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 
     CD3DX12_DEPTH_STENCIL_DESC depthStencilDesc(D3D12_DEFAULT);
-    depthStencilDesc.DepthEnable = true;
+    depthStencilDesc.DepthEnable = settings.type != PipelineType::ScreenSpace;
     depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
     depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
     depthStencilDesc.StencilEnable = FALSE;

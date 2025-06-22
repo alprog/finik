@@ -19,6 +19,8 @@ SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution
     , gBuffer{resolution}
     , lightBuffer{resolution, {TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true}
     , prevViewProjection{Matrix::Identity}
+    , historyBuffer{resolution, {TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, false}
+    , resolvedBuffer{resolution, {TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, false}
 {
     fullscreenQuad = createFullScreenQuad();
 }
@@ -32,6 +34,8 @@ void SceneRenderLane::resize(SurfaceResolution resolution)
 
         gBuffer.resize(resolution);
         lightBuffer.resize(resolution);
+        historyBuffer.resize(resolution);
+        resolvedBuffer.resize(resolution);
 
         camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
         camera.calcProjectionMatrix();
@@ -50,8 +54,20 @@ FrameBuffer& SceneRenderLane::getLightBuffer()
     return lightBuffer;
 }
 
+FrameBuffer& SceneRenderLane::getHistoryBuffer()
+{
+    return historyBuffer;
+}
+
+FrameBuffer& SceneRenderLane::getResolveBuffer()
+{
+    return resolvedBuffer;
+}
+
 void SceneRenderLane::render()
 {
+    std::swap(resolvedBuffer, historyBuffer);
+
     auto frameIndex = App::GetInstance().getFrameIndex();
     camera.Jitter = GetJitter(resolution.resolution(), frameIndex);
     camera.calcProjectionMatrix();
@@ -70,36 +86,50 @@ void SceneRenderLane::render()
 
     scene.renderShadowMaps(commandList, context, camera);
 
-    gBuffer.startRendering(commandList);
-    scene.render(context, camera, prevViewProjection, RenderPass::Geometry);
-    gBuffer.endRendering(commandList);
- 
-    prevViewProjection = camera.viewMatrix * camera.projectionMatrix;
+    {
+        gBuffer.startRendering(commandList);
+        scene.render(context, camera, prevViewProjection, RenderPass::Geometry);
+        gBuffer.endRendering(commandList);
 
+        prevViewProjection = camera.viewMatrix * camera.projectionMatrix;
+    }
 
-    auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
-    gBufferConstants->Resolution = gBuffer.resolution;
-    gBufferConstants->RT0Id = gBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
-    gBufferConstants->RT1Id = gBuffer.getRenderSurface(MRT::RT1)->textureHandle.getIndex();
-    gBufferConstants->RT2Id = gBuffer.getRenderSurface(MRT::RT2)->textureHandle.getIndex();
-    gBufferConstants->RT3Id = gBuffer.getRenderSurface(MRT::RT3)->textureHandle.getIndex();
-    gBufferConstants->DSId = gBuffer.getRenderSurface(MRT::DS)->textureHandle.getIndex();
-    context.setGBufferConstants(gBufferConstants.GpuAddress);
+    {
+        auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
+        gBufferConstants->Resolution = gBuffer.resolution;
+        gBufferConstants->RT0Id = gBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
+        gBufferConstants->RT1Id = gBuffer.getRenderSurface(MRT::RT1)->textureHandle.getIndex();
+        gBufferConstants->RT2Id = gBuffer.getRenderSurface(MRT::RT2)->textureHandle.getIndex();
+        gBufferConstants->RT3Id = gBuffer.getRenderSurface(MRT::RT3)->textureHandle.getIndex();
+        gBufferConstants->DSId = gBuffer.getRenderSurface(MRT::DS)->textureHandle.getIndex();
+        context.setGBufferConstants(gBufferConstants.GpuAddress);
 
-    lightBuffer.startRendering(commandList);
+        lightBuffer.startRendering(commandList);
 
-    auto& light = scene.light;
-    auto lightConstants = renderSystem.getOneshotAllocator().Allocate<LightConstants>();
-    lightConstants->LightDirection = light.direction;
-    lightConstants->ShadowViewProjection = light.shadowCamera.viewMatrix * light.shadowCamera.projectionMatrix;
-    lightConstants->ShadowTextureId = light.shadowMap->depthStencil->textureHandle.getIndex();
+        auto& light = scene.light;
+        auto lightConstants = renderSystem.getOneshotAllocator().Allocate<LightConstants>();
+        lightConstants->LightDirection = light.direction;
+        lightConstants->ShadowViewProjection = light.shadowCamera.viewMatrix * light.shadowCamera.projectionMatrix;
+        lightConstants->ShadowTextureId = light.shadowMap->depthStencil->textureHandle.getIndex();
 
-    commandList.getRenderContext().commandList.SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
+        commandList.getRenderContext().commandList.SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
+        
+        context.setEffect(*EffectManager::GetInstance().get("directional_light"));
+        context.drawMesh(fullscreenQuad);
+        lightBuffer.endRendering(commandList);
+    }
 
-
-    context.setEffect(*EffectManager::GetInstance().get("directional_light"));
-    context.drawMesh(fullscreenQuad);
-    lightBuffer.endRendering(commandList);
+    {
+        auto taaConstants = renderSystem.getOneshotAllocator().Allocate<TAAConstants>();
+        taaConstants->LightBufferId = lightBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
+        taaConstants->HistoryBufferId = historyBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
+        commandList.getRenderContext().commandList.SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, taaConstants.GpuAddress);
+        
+        resolvedBuffer.startRendering(commandList);
+        context.setEffect(*EffectManager::GetInstance().get("taa_resolve"));
+        context.drawMesh(fullscreenQuad);
+        resolvedBuffer.endRendering(commandList);
+    }
 
     commandList.endRecording();
     commandQueue.execute(commandList);

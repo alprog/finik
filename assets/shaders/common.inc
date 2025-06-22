@@ -49,7 +49,6 @@ cbuffer GBufferConstants : register(b2)
 	uint DSId;
 };
 
-
 SamplerState DefaultSampler : register(s0);
 SamplerState PointSampler : register(s1);
 SamplerState LinearSampler : register(s2);

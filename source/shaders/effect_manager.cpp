@@ -26,6 +26,16 @@ void EffectManager::init()
     {
         auto effect = std::make_shared<Effect>("directional_light");
         AssetPath path = "shaders/directional_light.hlsl";
+        effect->setPipelineType(PipelineType::Lighting);
+        effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
+        Effects[effect->name] = effect;
+    }
+
+    {
+        auto effect = std::make_shared<Effect>("taa_resolve");
+        AssetPath path = "shaders/taa_resolve.hlsl";
+        effect->setPipelineType(PipelineType::ScreenSpace);
         effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
         effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
         Effects[effect->name] = effect;

@@ -39,3 +39,9 @@ export struct LightConstants
     Matrix ShadowViewProjection;
     uint32 ShadowTextureId;
 };
+
+export struct TAAConstants
+{
+    uint32 LightBufferId;
+    uint32 HistoryBufferId;
+};

@@ -19,6 +19,8 @@ public:
 
     FrameBuffer& getGBuffer();
     FrameBuffer& getLightBuffer();
+    FrameBuffer& getHistoryBuffer();
+    FrameBuffer& getResolveBuffer();
 
     void render();
 
@@ -30,6 +32,11 @@ private:
 
     GBuffer gBuffer;
     FrameBuffer lightBuffer;
+    
+    // TAA
+    FrameBuffer historyBuffer;
+    FrameBuffer resolvedBuffer;
+
 
     uint64 fenceValue = 0;
 
