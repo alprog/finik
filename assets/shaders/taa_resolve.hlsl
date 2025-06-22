@@ -54,7 +54,9 @@ float4 PSMain(PSInput input) : SV_TARGET
 	float3 BoxMin = min(currentColor, min(NearColor0, min(NearColor1, min(NearColor2, NearColor3))));
     float3 BoxMax = max(currentColor, max(NearColor0, max(NearColor1, max(NearColor2, NearColor3))));
 		
-	historyColor.rgb = clamp(historyColor.rgb, BoxMin, BoxMax);
+	float3 clamped = clamp(historyColor.rgb, BoxMin, BoxMax);
+
+	historyColor.rgb = clamped;
 	
 	float historyFactor = 0.9;
 	return lerp(currentColor, historyColor, historyFactor);
