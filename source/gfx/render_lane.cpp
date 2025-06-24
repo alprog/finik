@@ -22,6 +22,7 @@ SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution
     , prevViewProjection{Matrix::Identity}
     , historyBuffer{resolution, {TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, false}
     , resolvedBuffer{resolution, {TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, false}
+    , debugBuffer{resolution, {TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, false}
 {
     fullscreenQuad = createFullScreenQuad();
 }
@@ -39,6 +40,7 @@ void SceneRenderLane::resize(SurfaceResolution resolution)
         lightBuffer.resize(colorResolution);
         historyBuffer.resize(colorResolution);
         resolvedBuffer.resize(colorResolution);
+        debugBuffer.resize(colorResolution);
 
         camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
         camera.calcProjectionMatrix();
@@ -65,6 +67,11 @@ FrameBuffer& SceneRenderLane::getHistoryBuffer()
 FrameBuffer& SceneRenderLane::getResolveBuffer()
 {
     return resolvedBuffer;
+}
+
+FrameBuffer& SceneRenderLane::getDebugBuffer()
+{
+    return debugBuffer;
 }
 
 void SceneRenderLane::render()
@@ -135,6 +142,11 @@ void SceneRenderLane::render()
         context.setEffect(*EffectManager::GetInstance().get("taa_resolve"));
         context.drawMesh(fullscreenQuad);
         resolvedBuffer.endRendering(commandList);
+
+        debugBuffer.startRendering(commandList);
+        context.setEffect(*EffectManager::GetInstance().get("taa_resolve_debug"));
+        context.drawMesh(fullscreenQuad);
+        debugBuffer.endRendering(commandList);
     }
 
     commandList.endRecording();

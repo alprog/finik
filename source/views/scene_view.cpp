@@ -54,20 +54,24 @@ FrameBuffer& getBuffer(SceneRenderLane& renderLane, Scene& scene, int BufferType
     {
         return *scene.light.shadowMap;
     }
-    else
+    else if (BufferType == 3)
     {
         return renderLane.getResolveBuffer();
+    }
+    else
+    {
+        return renderLane.getDebugBuffer();
     }
 }
 
 void SceneView::draw_content()
 {
-    static int BufferType = 1;
+    static int BufferType = 3;
     static int SelectedType = 0;
 
-    static const char* items[]{"GBuffer", "LightBuffer", "ShadowMap", "ResolveBuffer"};
+    static const char* items[]{"GBuffer", "LightBuffer", "ShadowMap", "ResolveBuffer", "DebugBuffer"};
     ImGui::SetNextItemWidth(100);
-    ImGui::Combo("Buffer", &BufferType, items, 4);
+    ImGui::Combo("Buffer", &BufferType, items, 5);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(100);
     static const char* items2[]{"RT0", "RT1", "RT2", "RT3", "DS"};

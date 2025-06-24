@@ -23,6 +23,6 @@ export Vector2 GetJitter(IntSize resolution, int32 frameIndex)
         {0.0313f, 0.5926f}
     };
 
-    Vector2 value = HaltonSequence[frameIndex % HaltonSequence.count()] - Vector2(0.5f, 0.5f);
+    Vector2 value = HaltonSequence[frameIndex % HaltonSequence.count()] - Vector2(0.5f, 0.5f); // -0.5..0.5
     return Vector2{value.x / resolution.width, value.y / resolution.height};
 }

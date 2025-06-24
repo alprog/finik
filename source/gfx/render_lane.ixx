@@ -21,6 +21,7 @@ public:
     FrameBuffer& getLightBuffer();
     FrameBuffer& getHistoryBuffer();
     FrameBuffer& getResolveBuffer();
+    FrameBuffer& getDebugBuffer();
 
     void render();
 
@@ -37,6 +38,7 @@ private:
     // TAA
     FrameBuffer historyBuffer;
     FrameBuffer resolvedBuffer;
+    FrameBuffer debugBuffer;
 
 
     uint64 fenceValue = 0;

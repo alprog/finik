@@ -42,6 +42,15 @@ void EffectManager::init()
     }
 
     {
+        auto effect = std::make_shared<Effect>("taa_resolve_debug");
+        AssetPath path = "shaders/taa_resolve.hlsl";
+        effect->setPipelineType(PipelineType::ScreenSpace);
+        effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMainDebug"));
+        Effects[effect->name] = effect;
+    }
+
+    {
         auto effect = std::make_shared<Effect>("imgui");
         AssetPath path = "shaders/imgui.hlsl";
         effect->setPipelineType(PipelineType::Imgui);
