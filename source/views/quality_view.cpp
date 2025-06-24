@@ -30,6 +30,8 @@ void QualityView::draw_content()
     ImGui::Combo("Surface", &selectedMsaaType, items, 4);
     settings.msaa = static_cast<MSAA>(selectedMsaaType);
 
+    ImGui::Checkbox("TAA", &settings.taa);
+
     bool IsSame = QualityManager::GetInstance().getCurrent() == settings;
 
     ImGui::BeginDisabled(IsSame);

@@ -38,11 +38,18 @@ float4 sampleTex(uint textureId, float2 uv)
 	return texture.Sample(LinearSampler, uv);
 }
 
+float4 sampleGTex(uint textureId, float2 uv, uint sampleIndex)
+{
+	Texture2DMS<float4> texture = textures[textureId];
+	float2 pos = uv * Resolution;
+	return texture.Load(pos, sampleIndex);
+}
+
 float4 PSMain(PSInput input) : SV_TARGET
 {
 	float4 currentColor = sampleTex(LightBufferId, input.uv);
 	
-	float2 offset = sampleTex(RT2Id, input.uv).xy;
+	float2 offset = sampleGTex(RT2Id, input.uv, 1).xy;
 	float2 screenOffset = float2(offset.x / 2, -offset.y / 2);
 		
 	float4 historyColor = sampleTex(HistoryBufferId, input.uv - screenOffset);

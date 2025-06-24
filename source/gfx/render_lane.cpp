@@ -11,6 +11,7 @@ import root_signature_params;
 import effect_manager;
 import app;
 import jitter;
+import quality_manager;
 
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution resolution)
     : scene{scene}
@@ -33,9 +34,11 @@ void SceneRenderLane::resize(SurfaceResolution resolution)
         render_system.get_command_queue().Flush();
 
         gBuffer.resize(resolution);
-        lightBuffer.resize(resolution);
-        historyBuffer.resize(resolution);
-        resolvedBuffer.resize(resolution);
+
+        SurfaceResolution colorResolution{resolution.width, resolution.height, 1};
+        lightBuffer.resize(colorResolution);
+        historyBuffer.resize(colorResolution);
+        resolvedBuffer.resize(colorResolution);
 
         camera.AspectRatio = static_cast<float>(resolution.width) / resolution.height;
         camera.calcProjectionMatrix();
@@ -69,7 +72,8 @@ void SceneRenderLane::render()
     std::swap(resolvedBuffer, historyBuffer);
 
     auto frameIndex = App::GetInstance().getFrameIndex();
-    camera.Jitter = GetJitter(resolution.resolution(), frameIndex);
+    bool taaEnabled = QualityManager::GetInstance().getCurrent().taa;
+    camera.Jitter = taaEnabled ? GetJitter(resolution.resolution(), frameIndex) : Vector2::Zero;
     camera.calcProjectionMatrix();
 
     RenderSystem& renderSystem = Single::Get<RenderSystem>();
@@ -120,6 +124,7 @@ void SceneRenderLane::render()
         lightBuffer.endRendering(commandList);
     }
 
+    if (QualityManager::GetInstance().getCurrent().taa)
     {
         auto taaConstants = renderSystem.getOneshotAllocator().Allocate<TAAConstants>();
         taaConstants->LightBufferId = lightBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
