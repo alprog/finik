@@ -58,5 +58,7 @@ GBufferOutput PSMain(PSInput input)
 	Out.Motion = delta.xy;
 	Out.RT4 = float4(1, 1, 0, 1);
 
+	Out.Depth = input.position.z;
+
 	return Out;
 }

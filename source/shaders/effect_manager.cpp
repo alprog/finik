@@ -106,6 +106,7 @@ std::shared_ptr<Effect> EffectManager::getShadowEffect(Effect& baseEffect)
     auto effect = std::make_shared<Effect>(shadowEffectName);
     effect->setPipelineType(PipelineType::Shadow);
     effect->setVertexShader(baseEffect.getVertexShader());
+    effect->setPixelShader(baseEffect.getPixelShader()); // TODO: not always
     Effects[effect->name] = effect;
 
     return effect;

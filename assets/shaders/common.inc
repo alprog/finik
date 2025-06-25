@@ -20,6 +20,7 @@ struct GBufferOutput
 	float4 Normals : SV_TARGET1;
 	float2 Motion : SV_TARGET2;
 	float4 RT4 : SV_TARGET3;
+	float Depth : SV_Depth;
 };
 
 cbuffer MaterialsConstantBuffer : register(b0)
