@@ -71,7 +71,21 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     // natural for left-handed. front face normals to the viewer (a^b = n)
     psoDesc.RasterizerState.FrontCounterClockwise = false;
 
-    psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+    if (settings.type == PipelineType::Geometry)
+    {
+        D3D12_BLEND_DESC blendDesc = {};
+        blendDesc.AlphaToCoverageEnable = TRUE;
+        blendDesc.IndependentBlendEnable = FALSE;
+        D3D12_RENDER_TARGET_BLEND_DESC rtBlend = {};
+        rtBlend.BlendEnable = FALSE;
+        rtBlend.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+        blendDesc.RenderTarget[0] = rtBlend;
+        psoDesc.BlendState = blendDesc;
+    }
+    else
+    {
+        psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+    }
 
     CD3DX12_DEPTH_STENCIL_DESC depthStencilDesc(D3D12_DEFAULT);
     depthStencilDesc.DepthEnable = settings.type != PipelineType::ScreenSpace;

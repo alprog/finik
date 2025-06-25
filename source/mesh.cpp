@@ -46,6 +46,20 @@ Mesh* createFullScreenQuad()
     return builder.Build();
 }
 
+Mesh* createBodyQuad()
+{
+    MeshBuilder builder;
+
+    float bodyHeight = 2.0f;
+    auto a = StandardVertex{Vector3(0, +0.5f, bodyHeight), Vector3::Forward, Vector2(0, 0)};
+    auto b = StandardVertex{Vector3(0, -0.5f, bodyHeight), Vector3::Forward, Vector2(1, 0)};
+    auto c = StandardVertex{Vector3(0, -0.5f, 0), Vector3::Forward, Vector2(1, 1)};
+    auto d = StandardVertex{Vector3(0, +0.5f, 0), Vector3::Forward, Vector2(0, 1)};
+    builder.addQuad(a, b, c, d);
+
+    return builder.Build();
+}
+
 Mesh* createBodyMesh()
 {
     MeshBuilder builder;

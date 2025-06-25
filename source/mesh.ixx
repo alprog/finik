@@ -14,4 +14,5 @@ public:
 
 export Mesh* createCubeMesh();
 export Mesh* createFullScreenQuad();
+export Mesh* createBodyQuad();
 export Mesh* createBodyMesh();
