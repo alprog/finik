@@ -14,7 +14,7 @@ Grid::Grid()
 
 	material = new Material("grid_material");
 	material->Textures.append(cellTexture);
-	material->Textures.append(tileMap->Texture);
+	material->Textures.append(tileMap->texture);
 	material->Effect = EffectManager::GetInstance().get("grid");
     material->ShadowEffect = EffectManager::GetInstance().getShadowEffect(*material->Effect);
 	material->RefreshBuffer();
@@ -24,8 +24,8 @@ Mesh* Grid::CreateMesh()
 {
 	MeshBuilder builder;
 
-	int width = tileMap->Image->width;
-	int heigth = tileMap->Image->height;
+	int width = tileMap->image->width;
+    int heigth = tileMap->image->height;
 
 	for (int y = 0; y < heigth; y++)
 	{

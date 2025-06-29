@@ -5,11 +5,8 @@ import images;
 
 TileMap::TileMap()
 {
-    Image = new ::Image();
-    Image->width = 256;
-    Image->height = 256;
-    Image->data = new Texel[Image->width * Image->height];
-    Image->generateChessboard();
+    image = std::make_shared<Image>(256, 256);
+    image->generateChessboard();
 
-    Texture = std::make_shared<::Texture>(*Image);
+    texture = std::make_shared<Texture>(*image);
 }

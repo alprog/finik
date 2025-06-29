@@ -9,7 +9,7 @@ export class TileMap
 public:
     TileMap();
 
-    Image* Image;
-    std::shared_ptr<Texture> Texture;
-    bool Changed;
+    std::shared_ptr<Image> image;
+    std::shared_ptr<Texture> texture;
+    bool changed;
 };

@@ -6,6 +6,18 @@ import byte_blob;
 
 #define PNGSIGSIZE 8
 
+Image::Image(int width, int height)
+    : width{width}
+    , height{height}
+{
+    data = new Texel[width * height];
+}
+
+Image::~Image()
+{
+    delete[] data;
+}
+
 Texel& Image::getTexel(int x, int y)
 {
     return data[y * width + x];
@@ -54,13 +66,13 @@ void readData(png_structp pngPtr, png_bytep data, png_size_t length)
     stream->read((char*)data, length);
 }
 
-Image* Images::loadPng(Path path)
+std::shared_ptr<Image> Images::loadPng(Path path)
 {
     ByteBlob blob(path);
     return loadPng(blob);
 }
 
-Image* Images::loadPng(ByteBlob& blob)
+std::shared_ptr<Image> Images::loadPng(ByteBlob& blob)
 {
     std::istringstream inputStream(blob.asString());
     if (validate(inputStream))
@@ -90,10 +102,7 @@ Image* Images::loadPng(ByteBlob& blob)
 
         const unsigned int stride = imgWidth * bitdepth * channels / 8;
 
-        auto image = new Image();
-        image->width = imgWidth;
-        image->height = imgHeight;
-        image->data = new Texel[imgWidth * imgHeight];
+        auto image = std::make_shared<Image>(imgWidth, imgHeight);
 
         auto rowPtrs = new png_bytep[imgHeight];
         for (size_t i = 0; i < imgHeight; i++)

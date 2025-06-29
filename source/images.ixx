@@ -7,6 +7,9 @@ import byte_blob;
 export class Image
 {
 public:
+    Image(int width, int height);
+    ~Image();
+
     int width;
     int height;
     Texel* data;
@@ -20,6 +23,6 @@ public:
 
 export namespace Images
 {
-    Image* loadPng(Path path);
-    Image* loadPng(ByteBlob& blob);
+    std::shared_ptr<Image> loadPng(Path path);
+    std::shared_ptr<Image> loadPng(ByteBlob& blob);
 }
