@@ -31,11 +31,11 @@ public:
 
     void AddIncludeDirectory(AssetPath directory)
     {
-        InlcudeDirectories.append(directory);
+        IncludeDirectories.append(directory);
     }
 
 private:
-    Array<AssetPath> InlcudeDirectories;
+    Array<AssetPath> IncludeDirectories;
     IDxcCompiler3* pDxcInstance;
     IDxcUtils* pDxcUtils;
     static int32 Counter;
