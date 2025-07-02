@@ -35,6 +35,16 @@ export struct AssetDependencies
         }
     }
 
+    int32 count() const
+    {
+        return dependencies.count();
+    }
+
+    const auto& getDependency(int32 index) const 
+    { 
+        return dependencies[index];
+    }
+
 private:
     Array<std::pair<std::shared_ptr<Asset>, int32>> dependencies;
 };

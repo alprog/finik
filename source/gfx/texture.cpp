@@ -7,6 +7,7 @@ import upload_buffer;
 import images;
 import command_list;
 import mipmap_generator;
+import sdf_manager;
 
 static const uint32 TexturePixelSize = 4;
 
@@ -79,6 +80,8 @@ void Texture::hot_reload(ByteBlob& blob)
     std::shared_ptr image = Images::loadPng(blob);
     resize(image->width, image->height);
     setData(*image);
+
+    SDFManager::GetInstance().onTextureFileChanged();
 }
 
 void Texture::setData(Image& image)

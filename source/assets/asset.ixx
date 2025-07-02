@@ -19,6 +19,8 @@ public:
         this->version = version;
     }
 
+    AssetPath getPath() const { return assetPath; }
+
     int32 get_version() const { return version; }
 
 protected:

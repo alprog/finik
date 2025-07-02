@@ -13,6 +13,7 @@ import assets;
 import shader_manager;
 import gui;
 import cleaner;
+import sdf_manager;
 
 // for intellisense
 
@@ -69,6 +70,7 @@ void App::run_game_loop()
 
         Assets::GetInstance().update();
         ShaderManager::GetInstance().update();
+        SDFManager::GetInstance().update();
         Cleaner::GetInstance().update();
 
         auto completedValue = render_system.get_command_queue().fence->GetCompletedValue();
