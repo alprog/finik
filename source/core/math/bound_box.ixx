@@ -7,6 +7,9 @@ import std;
 export template<typename TVector> 
 struct BoundBox
 {
+    TVector min;
+    TVector max;
+
     BoundBox::BoundBox(Vector2 pos)
         : min{pos}
         , max{pos}
@@ -36,7 +39,4 @@ struct BoundBox
         min = TVector::min(min, pos);
         max = TVector::max(max, pos);
     }
-
-    TVector min;
-    TVector max;
 };

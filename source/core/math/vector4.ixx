@@ -5,6 +5,8 @@ import :Vector3;
 
 export struct Vector4
 {
+    float x, y, z, w;
+
     static const Vector4 Zero;
     static const Vector4 One;
 
@@ -32,6 +34,4 @@ export struct Vector4
 
     static Vector4 cross(const Vector4& a, const Vector4& b);
     static float dot(const Vector4& a, const Vector4& b);
-
-    float x, y, z, w;
 };

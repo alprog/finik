@@ -14,8 +14,15 @@ export struct Texel
     static const Texel Magenta;
     static const Texel Cyan;
 
-    unsigned char R;
-    unsigned char G;
-    unsigned char B;
-    unsigned char A;
+    union
+    {
+        struct
+        {
+            unsigned char R;
+            unsigned char G;
+            unsigned char B;
+            unsigned char A;
+        };
+        unsigned char m[4];
+    };
 };

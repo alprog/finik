@@ -18,6 +18,11 @@ Image::~Image()
     delete[] data;
 }
 
+Texel& Image::getTexel(int32 index)
+{
+    return data[index];
+}
+
 Texel& Image::getTexel(int x, int y)
 {
     return data[y * width + x];

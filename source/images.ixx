@@ -14,6 +14,7 @@ public:
     int height;
     Texel* data;
 
+    Texel& getTexel(int32 index);
     Texel& getTexel(int x, int y);
 
     void generateChessboard();

@@ -2,6 +2,8 @@ export module math:Vector2;
 
 export struct Vector2
 {
+    float x, y;
+
     static const Vector2 Zero;
 
     static const Vector2 One;
@@ -21,6 +23,4 @@ export struct Vector2
 
     static Vector2 min(const Vector2& a, const Vector2& b);
     static Vector2 max(const Vector2& a, const Vector2& b);
-
-    float x, y;
 };
