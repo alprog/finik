@@ -9,6 +9,4 @@ export import :Matrix3x3;
 export import :Matrix;
 export import :BoundBox;
 export import :LineSegment;
-export import :Polygon;
-
 export import :IntSize;

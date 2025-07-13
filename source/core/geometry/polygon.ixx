@@ -1,7 +1,6 @@
-export module math:Polygon;
+export module geometry:Polygon;
 
-import :Vector2;
-import :LineSegment;
+import math;
 import containers;
 
 export struct Polygon
