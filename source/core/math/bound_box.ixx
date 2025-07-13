@@ -1,4 +1,4 @@
-export module math:BoundBox;
+export module Math:BoundBox;
 
 import :Vector2;
 import :Vector3;

@@ -1,6 +1,6 @@
 export module geometry:Polygon;
 
-import math;
+import Math;
 import containers;
 
 export struct Polygon

@@ -1,4 +1,4 @@
-export module math:Quaternion;
+export module Math:Quaternion;
 
 import :Vector3;
 

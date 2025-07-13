@@ -2,7 +2,7 @@ export module core;
 
 export import std;
 export import primitive_types;
-export import math;
+export import Math;
 export import containers;
 export import utils;
 export import path;

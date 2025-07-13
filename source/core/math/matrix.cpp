@@ -1,4 +1,4 @@
-module math:Matrix;
+module Math:Matrix;
 
 import std;
 

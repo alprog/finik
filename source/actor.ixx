@@ -1,6 +1,6 @@
 export module actor;
 
-import math;
+import Math;
 import mesh;
 import material;
 

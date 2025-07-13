@@ -1,4 +1,4 @@
-export module math;
+export module Math;
 
 export import :Vector2;
 export import :Vector3;

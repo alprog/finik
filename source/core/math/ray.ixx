@@ -1,4 +1,4 @@
-export module math:Ray;
+export module Math:Ray;
 
 import :Vector3;
 

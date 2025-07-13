@@ -1,4 +1,4 @@
-export module math:LineSegment;
+export module Math:LineSegment;
 
 import :Vector2;
 

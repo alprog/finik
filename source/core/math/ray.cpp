@@ -1,6 +1,6 @@
 module;
 #include <asserts.h>
-module math:Ray;
+module Math:Ray;
 
 import std;
 

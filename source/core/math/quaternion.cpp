@@ -1,4 +1,4 @@
-module math:Quaternion;
+module Math:Quaternion;
 
 import std;
 

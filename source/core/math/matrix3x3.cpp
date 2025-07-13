@@ -1,4 +1,4 @@
-module math:Matrix3x3;
+module Math:Matrix3x3;
 
 float Matrix3x3::determinant() const
 {

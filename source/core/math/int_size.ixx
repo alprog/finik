@@ -1,4 +1,4 @@
-export module math:IntSize;
+export module Math:IntSize;
 
 import primitive_types;
 
