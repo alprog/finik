@@ -1,6 +1,6 @@
 export module byte_blob;
 
-import core;
+import Finik.Core;
 
 export class ByteBlob
 {

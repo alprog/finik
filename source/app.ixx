@@ -1,6 +1,6 @@
 export module app;
 
-import core;
+import Finik.Core;
 import render_system;
 import profiler;
 import scene_manager;

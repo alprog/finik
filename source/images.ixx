@@ -1,6 +1,6 @@
 export module images;
 
-import core;
+import Finik.Core;
 import texel;
 import byte_blob;
 

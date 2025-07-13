@@ -1,6 +1,6 @@
 export module assets;
 
-import core;
+import Finik.Core;
 import texture;
 import asset_path;
 import shader_source_file;

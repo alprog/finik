@@ -5,7 +5,7 @@ using GuiImpl = ImGuiContext;
 struct ID3D12GraphicsCommandList;
 export module gui;
 
-import core;
+import Finik.Core;
 import view;
 
 export class Gui

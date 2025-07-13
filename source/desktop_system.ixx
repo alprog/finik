@@ -1,6 +1,6 @@
 export module desktop_system;
 
-import core;
+import Finik.Core;
 import desktop_window;
 
 export class DesktopSystem

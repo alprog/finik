@@ -1,6 +1,6 @@
 module assets_view;
 
-import core;
+import Finik.Core;
 import imgui;
 import assets;
 

@@ -1,6 +1,6 @@
 export module material;
 
-import core;
+import Finik.Core;
 import texture;
 import texture_id;
 import effect;

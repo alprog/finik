@@ -1,6 +1,6 @@
 export module command_queue;
 
-import core;
+import Finik.Core;
 import dx;
 import fence;
 import render_system_fwd;

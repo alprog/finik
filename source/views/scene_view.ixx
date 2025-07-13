@@ -1,6 +1,6 @@
 export module scene_view;
 
-import core;
+import Finik.Core;
 import render_lane;
 import view;
 import camera;

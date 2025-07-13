@@ -1,4 +1,4 @@
-module Math:Matrix;
+module Finik.Core.Math:Matrix;
 
 import std;
 

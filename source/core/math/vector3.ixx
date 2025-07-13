@@ -1,4 +1,4 @@
-export module Math:Vector3;
+export module Finik.Core.Math:Vector3;
 
 import :Vector2;
 

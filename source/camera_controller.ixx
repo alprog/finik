@@ -1,6 +1,6 @@
 export module camera_controller;
 
-import core;
+import Finik.Core;
 import camera;
 
 export class CameraController

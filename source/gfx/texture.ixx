@@ -1,6 +1,6 @@
 export module texture;
 
-import core;
+import Finik.Core;
 import dx;
 import descriptor_handle;
 import images;

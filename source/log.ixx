@@ -1,6 +1,6 @@
 export module log;
 
-import core;
+import Finik.Core;
 
 export void log_impl(std::string text);
 

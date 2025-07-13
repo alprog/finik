@@ -1,6 +1,6 @@
 export module shader_source_file;
 
-import core;
+import Finik.Core;
 import asset;
 import shader_manager;
 

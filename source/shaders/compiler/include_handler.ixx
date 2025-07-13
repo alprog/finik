@@ -3,7 +3,7 @@ module;
 #include "dxcapi.h"
 export module include_handler;
 
-import core;
+import Finik.Core;
 
 // for intellisense
 

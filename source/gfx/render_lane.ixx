@@ -1,6 +1,6 @@
 export module render_lane;
 
-import core;
+import Finik.Core;
 import frame_buffer;
 import g_buffer;
 import scene_system_fwd;

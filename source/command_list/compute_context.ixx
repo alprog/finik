@@ -1,6 +1,6 @@
 export module compute_context;
 
-import core;
+import Finik.Core;
 import dx;
 import render_system_fwd;
 import constant_buffer;

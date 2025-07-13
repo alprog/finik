@@ -1,6 +1,6 @@
 export module gpu_profiler;
 
-import core;
+import Finik.Core;
 import render_system_fwd;
 import dx;
 

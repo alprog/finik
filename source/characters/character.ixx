@@ -1,7 +1,7 @@
 module;
 export module character;
 
-import core;
+import Finik.Core;
 import mesh;
 import material;
 

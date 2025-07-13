@@ -1,6 +1,6 @@
 export module root_signature;
 
-import core;
+import Finik.Core;
 import dx;
 import render_system_fwd;
 

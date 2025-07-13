@@ -1,4 +1,4 @@
-export module Math:IntSize;
+export module Finik.Core.Math:IntSize;
 
 import primitive_types;
 

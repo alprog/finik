@@ -1,6 +1,6 @@
 export module mipmap_generator;
 
-import core;
+import Finik.Core;
 
 import dx;
 import command_list;

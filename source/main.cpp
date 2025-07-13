@@ -1,6 +1,6 @@
 #include "SDL.h"
 
-import core;
+import Finik.Core;
 import app;
 import timer;
 import scene_view;

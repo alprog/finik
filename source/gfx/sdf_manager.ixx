@@ -1,6 +1,6 @@
 export module sdf_manager;
 
-import core;
+import Finik.Core;
 import assets;
 import asset_path;
 import texture;

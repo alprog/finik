@@ -1,6 +1,6 @@
 module profiler_view;
 
-import core;
+import Finik.Core;
 import app;
 import imgui;
 import flamegraph;

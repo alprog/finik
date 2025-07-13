@@ -1,6 +1,6 @@
-export module geometry:Polygon;
+export module Finik.Core.Geometry:Polygon;
 
-import Math;
+import Finik.Core.Math;
 import containers;
 
 export struct Polygon

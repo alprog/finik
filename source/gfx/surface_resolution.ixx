@@ -1,6 +1,6 @@
 export module surface_resolution;
 
-import core;
+import Finik.Core;
 
 // Resolution + MSAA sample count
 export struct SurfaceResolution

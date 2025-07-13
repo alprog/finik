@@ -1,6 +1,6 @@
 export module render_context;
 
-import core;
+import Finik.Core;
 import dx;
 import render_system_fwd;
 import material;

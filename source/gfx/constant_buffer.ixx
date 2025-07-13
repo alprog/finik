@@ -1,6 +1,6 @@
 export module constant_buffer;
 
-import core;
+import Finik.Core;
 import descriptor_handle;
 import render_system_fwd;
 import root_signature_params;

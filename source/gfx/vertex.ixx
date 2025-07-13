@@ -1,6 +1,6 @@
 export module vertex;
 
-import core;
+import Finik.Core;
 
 export struct StandardVertex
 {

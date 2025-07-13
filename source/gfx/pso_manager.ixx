@@ -1,6 +1,6 @@
 export module pso_manager;
 
-import core;
+import Finik.Core;
 import dx;
 import pipeline_settings;
 import pipeline_state;

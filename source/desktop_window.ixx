@@ -4,7 +4,7 @@ struct SDL_Window;
 using WindowImpl = SDL_Window;
 export module desktop_window;
 
-import core;
+import Finik.Core;
 import swap_chain;
 import gui;
 import scene;

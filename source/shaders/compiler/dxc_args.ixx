@@ -1,6 +1,6 @@
 export module dxc_args;
 
-import core;
+import Finik.Core;
 
 export struct DxcArgs
 {

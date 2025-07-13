@@ -1,6 +1,6 @@
 export module obj_loader;
 
-import core;
+import Finik.Core;
 
 struct VertexIndices
 {

@@ -1,4 +1,4 @@
-export module Math:Quaternion;
+export module Finik.Core.Math:Quaternion;
 
 import :Vector3;
 

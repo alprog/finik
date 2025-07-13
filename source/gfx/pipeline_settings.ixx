@@ -1,6 +1,6 @@
 export module pipeline_settings;
 
-import core;
+import Finik.Core;
 import render_system_fwd;
 import shader;
 import msaa;

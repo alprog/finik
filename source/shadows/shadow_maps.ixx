@@ -1,6 +1,6 @@
 export module shadow_maps;
 
-import core;
+import Finik.Core;
 import render_lane;
 import camera;
 

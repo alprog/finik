@@ -1,4 +1,4 @@
-export module Math:Matrix;
+export module Finik.Core.Math:Matrix;
 
 import :Vector4;
 import :Quaternion;

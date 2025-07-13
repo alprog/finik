@@ -1,6 +1,6 @@
 export module mesh_builder;
 
-import core;
+import Finik.Core;
 import vertex;
 import mesh;
 

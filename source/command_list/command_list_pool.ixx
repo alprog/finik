@@ -1,6 +1,6 @@
 export module command_list_pool;
 
-import core;
+import Finik.Core;
 import render_system_fwd;
 import command_list;
 

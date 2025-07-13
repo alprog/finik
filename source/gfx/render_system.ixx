@@ -6,7 +6,7 @@ export import render_system_fwd;
 
 export import singleton;
 
-import core;
+import Finik.Core;
 import dx;
 import command_queue;
 import command_list_pool;

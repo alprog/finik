@@ -1,6 +1,6 @@
 export module model;
 
-import core;
+import Finik.Core;
 import asset;
 import obj_loader;
 import mesh;

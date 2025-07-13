@@ -1,6 +1,6 @@
 export module asset_desc;
 
-import core;
+import Finik.Core;
 import asset;
 import asset_path;
 import asset_bundle;

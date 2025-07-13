@@ -1,6 +1,6 @@
 export module flamegraph;
 
-import core;
+import Finik.Core;
 import timebox;
 
 export namespace finik

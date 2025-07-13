@@ -1,6 +1,6 @@
 export module g_buffer;
 
-import core;
+import Finik.Core;
 import dx;
 import frame_buffer;
 

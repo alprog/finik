@@ -1,4 +1,4 @@
-export module geometry;
+export module Finik.Core.Geometry;
 
 export import :Polygon;
-export import :marching_squares;
+export import :MarchingSquares;

@@ -1,6 +1,6 @@
 export module index_buffer;
 
-import core;
+import Finik.Core;
 import dx;
 
 export class IndexBuffer

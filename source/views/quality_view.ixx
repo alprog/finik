@@ -1,6 +1,6 @@
 export module quality_view;
 
-import core;
+import Finik.Core;
 import view;
 import quality_settings;
 

@@ -1,6 +1,6 @@
 export module vertex_buffer;
 
-import core;
+import Finik.Core;
 import dx;
 import vertex;
 

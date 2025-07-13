@@ -1,6 +1,6 @@
 export module render_surface;
 
-import core;
+import Finik.Core;
 import dx;
 
 import gpu_resource;

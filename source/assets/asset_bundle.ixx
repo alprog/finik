@@ -1,6 +1,6 @@
 export module asset_bundle;
 
-import core;
+import Finik.Core;
 import asset_path;
 import byte_blob;
 

@@ -1,6 +1,6 @@
 export module timer;
 
-import core;
+import Finik.Core;
 
 export
 {

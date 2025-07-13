@@ -3,7 +3,7 @@ export module scene;
 import effect;
 import scene_system_fwd;
 
-import core;
+import Finik.Core;
 import actor;
 import grid;
 import texture;

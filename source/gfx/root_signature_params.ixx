@@ -1,6 +1,6 @@
 export module root_signature_params;
 
-import core;
+import Finik.Core;
 import surface_resolution;
 
 // for intellisense

@@ -1,6 +1,6 @@
 export module pipeline_state;
 
-import core;
+import Finik.Core;
 import dx;
 
 export class PipelineState

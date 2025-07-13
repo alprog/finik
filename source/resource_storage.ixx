@@ -1,6 +1,6 @@
 export module resource_storage;
 
-import core;
+import Finik.Core;
 import gpu_resource;
 import descriptor_heap;
 

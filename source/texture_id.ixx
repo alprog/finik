@@ -1,6 +1,6 @@
 export module texture_id;
 
-import core;
+import Finik.Core;
 
 class Texture;
 

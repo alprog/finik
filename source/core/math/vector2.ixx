@@ -1,4 +1,4 @@
-export module Math:Vector2;
+export module Finik.Core.Math:Vector2;
 
 export struct Vector2
 {

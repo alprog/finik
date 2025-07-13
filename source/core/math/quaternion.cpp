@@ -1,4 +1,4 @@
-module Math:Quaternion;
+module Finik.Core.Math:Quaternion;
 
 import std;
 

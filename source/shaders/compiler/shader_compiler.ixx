@@ -3,7 +3,7 @@ class IDxcCompiler3;
 class IDxcUtils;
 export module shader_compiler;
 
-import core;
+import Finik.Core;
 import asset_dependencies;
 import asset_path;
 import shader;

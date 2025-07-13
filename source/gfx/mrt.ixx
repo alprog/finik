@@ -1,6 +1,6 @@
 export module mrt;
 
-import core;
+import Finik.Core;
 
 export enum MRT
 {

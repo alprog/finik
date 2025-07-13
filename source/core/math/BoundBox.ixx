@@ -1,4 +1,4 @@
-export module Math:BoundBox;
+export module Finik.Core.Math:BoundBox;
 
 import :Vector2;
 import :Vector3;

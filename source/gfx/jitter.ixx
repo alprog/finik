@@ -1,6 +1,6 @@
 export module jitter;
 
-import core;
+import Finik.Core;
 
 export Vector2 GetJitter(IntSize resolution, int32 frameIndex)
 {

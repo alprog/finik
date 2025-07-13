@@ -1,6 +1,6 @@
 export module oneshot_allocator;
 
-import core;
+import Finik.Core;
 import memory_page;
 import render_system_fwd;
 import allocation;

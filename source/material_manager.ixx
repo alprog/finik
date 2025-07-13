@@ -1,6 +1,6 @@
 export module material_manager;
 
-import core;
+import Finik.Core;
 import constant_buffer;
 import material;
 

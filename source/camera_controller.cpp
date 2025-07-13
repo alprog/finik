@@ -1,6 +1,6 @@
 module camera_controller;
 
-import core;
+import Finik.Core;
 import imgui;
 
 CameraController::CameraController(::Camera& camera)

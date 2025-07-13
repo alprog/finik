@@ -2,7 +2,7 @@ module;
 class DesktopWindow;
 export module swap_chain;
 
-import core;
+import Finik.Core;
 import dx;
 import descriptor_handle;
 import render_system_fwd;

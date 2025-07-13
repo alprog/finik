@@ -1,6 +1,6 @@
 module;
 #include <asserts.h>
-module Math:Ray;
+module Finik.Core.Math:Ray;
 
 import std;
 

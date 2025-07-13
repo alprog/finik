@@ -1,4 +1,4 @@
-module Math:Vector2;
+module Finik.Core.Math:Vector2;
 
 import std;
 

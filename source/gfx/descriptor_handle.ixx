@@ -1,6 +1,6 @@
 export module descriptor_handle;
 
-import core;
+import Finik.Core;
 import dx;
 import render_system_fwd;
 

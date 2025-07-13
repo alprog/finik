@@ -2,7 +2,7 @@ module;
 #include "asserts.h"
 export module shader_manager;
 
-import core;
+import Finik.Core;
 import shader;
 import asset_path;
 import effect_manager;

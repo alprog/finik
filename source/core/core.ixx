@@ -1,8 +1,8 @@
-export module core;
+export module Finik.Core;
 
 export import std;
 export import primitive_types;
-export import Math;
+export import Finik.Core.Math;
 export import containers;
 export import utils;
 export import path;

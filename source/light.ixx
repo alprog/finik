@@ -1,6 +1,6 @@
 export module light;
 
-import core;
+import Finik.Core;
 import frame_buffer;
 import camera;
 

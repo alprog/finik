@@ -1,6 +1,6 @@
 export module frame_buffer;
 
-import core;
+import Finik.Core;
 import descriptor_handle;
 import dx;
 import command_list;

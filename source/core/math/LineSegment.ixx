@@ -1,4 +1,4 @@
-export module Math:LineSegment;
+export module Finik.Core.Math:LineSegment;
 
 import :Vector2;
 

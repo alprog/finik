@@ -1,6 +1,6 @@
 export module allocation;
 
-import core;
+import Finik.Core;
 import dx;
 
 export namespace finik::gpumem

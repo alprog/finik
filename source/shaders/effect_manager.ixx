@@ -1,6 +1,6 @@
 export module effect_manager;
 
-import core;
+import Finik.Core;
 import singleton;
 import effect;
 import shader;

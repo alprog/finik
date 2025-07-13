@@ -1,6 +1,6 @@
 export module asset_path;
 
-import core;
+import Finik.Core;
 
 export class AssetPath : public Path
 {

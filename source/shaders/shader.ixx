@@ -1,6 +1,6 @@
 export module shader;
 
-import core;
+import Finik.Core;
 import dx;
 import asset_path;
 import asset_dependencies;

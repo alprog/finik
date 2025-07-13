@@ -1,4 +1,4 @@
-export module Math:Ray;
+export module Finik.Core.Math:Ray;
 
 import :Vector3;
 
