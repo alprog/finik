@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{1047d56a-e5cd-4e84-ab3c-501f90c60396}</ProjectGuid>
+    <RootNamespace>finik</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\..\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\..\build\obj\$(Configuration)\</IntDir>
+    <IncludePath>
+    </IncludePath>
+    <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\..\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\..\build\obj\$(Configuration)\</IntDir>
+    <IncludePath>
+    </IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnableModules>true</EnableModules>
+      <BuildStlModules>false</BuildStlModules>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3rd-party\SDL2-2.30.4\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;d3d12.lib;dxgi.lib;dxcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /i $(SolutionDir)\3rd-party\SDL2-2.30.4\lib\x64\*.dll $(outputpath)
+xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3rd-party\SDL2-2.30.4\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;d3d12.lib;dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /i $(SolutionDir)\3rd-party\SDL2-2.30.4\lib\x64\*.dll $(outputpath)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="3rd-Party\imgui-docking\backends\imgui_impl_dx12.cpp" />
+    <ClCompile Include="3rd-Party\imgui-docking\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="3rd-Party\imgui-docking\imgui.cpp" />
+    <ClCompile Include="3rd-Party\imgui-docking\imgui_demo.cpp" />
+    <ClCompile Include="3rd-Party\imgui-docking\imgui_draw.cpp" />
+    <ClCompile Include="3rd-Party\imgui-docking\imgui_tables.cpp" />
+    <ClCompile Include="3rd-Party\imgui-docking\imgui_widgets.cpp" />
+    <ClCompile Include="3rd-Party\libpng\png.c" />
+    <ClCompile Include="3rd-Party\libpng\pngerror.c" />
+    <ClCompile Include="3rd-Party\libpng\pngget.c" />
+    <ClCompile Include="3rd-Party\libpng\pngmem.c" />
+    <ClCompile Include="3rd-Party\libpng\pngpread.c" />
+    <ClCompile Include="3rd-Party\libpng\pngread.c" />
+    <ClCompile Include="3rd-Party\libpng\pngrio.c" />
+    <ClCompile Include="3rd-Party\libpng\pngrtran.c" />
+    <ClCompile Include="3rd-Party\libpng\pngrutil.c" />
+    <ClCompile Include="3rd-Party\libpng\pngset.c" />
+    <ClCompile Include="3rd-Party\libpng\pngtrans.c" />
+    <ClCompile Include="3rd-Party\libpng\pngwio.c" />
+    <ClCompile Include="3rd-Party\libpng\pngwrite.c" />
+    <ClCompile Include="3rd-Party\libpng\pngwtran.c" />
+    <ClCompile Include="3rd-Party\libpng\pngwutil.c" />
+    <ClCompile Include="3rd-Party\zlib\adler32.c" />
+    <ClCompile Include="3rd-Party\zlib\compress.c" />
+    <ClCompile Include="3rd-Party\zlib\crc32.c" />
+    <ClCompile Include="3rd-Party\zlib\deflate.c" />
+    <ClCompile Include="3rd-Party\zlib\infback.c" />
+    <ClCompile Include="3rd-Party\zlib\inffast.c" />
+    <ClCompile Include="3rd-Party\zlib\inflate.c" />
+    <ClCompile Include="3rd-Party\zlib\inftrees.c" />
+    <ClCompile Include="3rd-Party\zlib\trees.c" />
+    <ClCompile Include="3rd-Party\zlib\uncompr.c" />
+    <ClCompile Include="3rd-Party\zlib\zutil.c" />
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Actor.ixx" />
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="App.ixx" />
+    <ClCompile Include="Assets\Asset.ixx" />
+    <ClCompile Include="Assets\AssetsView.cpp" />
+    <ClCompile Include="Assets\AssetsView.ixx" />
+    <ClCompile Include="Assets\AssetBundle.ixx" />
+    <ClCompile Include="Assets\AssetDependencies.ixx" />
+    <ClCompile Include="Assets\AssetDesc.cpp" />
+    <ClCompile Include="Assets\AssetFolder.ixx" />
+    <ClCompile Include="Assets\AssetDesc.ixx" />
+    <ClCompile Include="Assets\AssetPath.ixx" />
+    <ClCompile Include="ByteBlob.cpp" />
+    <ClCompile Include="ByteBlob.ixx" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Camera.ixx" />
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="CameraController.ixx" />
+    <ClCompile Include="Characters\Character.cpp" />
+    <ClCompile Include="Characters\Character.ixx" />
+    <ClCompile Include="Core\Containers\RingBuffer.ixx" />
+    <ClCompile Include="Core\Geometry\_Geometry.ixx" />
+    <ClCompile Include="Core\Geometry\MarchingSquares.ixx" />
+    <ClCompile Include="Core\Math\BoundBox.ixx" />
+    <ClCompile Include="Core\Math\LineSegment.ixx" />
+    <ClCompile Include="Core\Geometry\Polygon.ixx" />
+    <ClCompile Include="Gfx\GbUffer.ixx" />
+    <ClCompile Include="Gfx\Jitter.ixx" />
+    <ClCompile Include="Gfx\Sdf.cpp" />
+    <ClCompile Include="Gfx\SdfManager.ixx" />
+    <ClCompile Include="Gfx\Sdf.ixx" />
+    <ClCompile Include="Gfx\SurfaceResolution.ixx" />
+    <ClCompile Include="Gfx\TextureFormat.ixx" />
+    <ClCompile Include="Shaders\Compiler\DxcArgs.ixx" />
+    <ClCompile Include="Shaders\Compiler\IncludeHandler.ixx" />
+    <ClCompile Include="Core\EnumBits.ixx" />
+    <ClCompile Include="Core\Hash.ixx" />
+    <ClCompile Include="Gfx\Cleaner.cpp" />
+    <ClCompile Include="Gfx\Cleaner.ixx" />
+    <ClCompile Include="Gfx\DepthStencil.cpp" />
+    <ClCompile Include="Gfx\DepthStencil.ixx" />
+    <ClCompile Include="Gfx\Mrt.ixx" />
+    <ClCompile Include="Gfx\Msaa.ixx" />
+    <ClCompile Include="Gfx\PipelineState.ixx" />
+    <ClCompile Include="Gfx\PsoManager.cpp" />
+    <ClCompile Include="Gfx\PsoManager.ixx" />
+    <ClCompile Include="Gfx\QualityManager.cpp" />
+    <ClCompile Include="Gfx\QualityManager.ixx" />
+    <ClCompile Include="Gfx\QualitySettings.ixx" />
+    <ClCompile Include="Gfx\RenderPass.ixx" />
+    <ClCompile Include="Gfx\FrameBuffer.cpp" />
+    <ClCompile Include="Gfx\FrameBuffer.ixx" />
+    <ClCompile Include="Gfx\PipelineState.cpp" />
+    <ClCompile Include="Gfx\RenderTarget.cpp" />
+    <ClCompile Include="Gfx\RenderTarget.ixx" />
+    <ClCompile Include="Shadows\ShadowMaps.ixx" />
+    <ClCompile Include="Views\ConsoleView.cpp" />
+    <ClCompile Include="Views\ConsoleView.ixx" />
+    <ClCompile Include="Core\_Core.ixx" />
+    <ClCompile Include="Core\Color.ixx" />
+    <ClCompile Include="Core\Containers\Array.ixx" />
+    <ClCompile Include="Core\Containers\_Containers.ixx" />
+    <ClCompile Include="Core\Containers\HashMap.ixx" />
+    <ClCompile Include="Core\Containers\HashSet.ixx" />
+    <ClCompile Include="Core\Containers\SortedArray.ixx" />
+    <ClCompile Include="Core\Containers\String.ixx" />
+    <ClCompile Include="Core\Math\IntSize.ixx" />
+    <ClCompile Include="Core\Math\_Math.ixx" />
+    <ClCompile Include="Core\Math\Matrix.cpp" />
+    <ClCompile Include="Core\Math\Matrix.ixx" />
+    <ClCompile Include="Core\Math\Matrix3X3.cpp" />
+    <ClCompile Include="Core\Math\Matrix3X3.ixx" />
+    <ClCompile Include="Core\Math\Quaternion.cpp" />
+    <ClCompile Include="Core\Math\Quaternion.ixx" />
+    <ClCompile Include="Core\Math\Ray.cpp" />
+    <ClCompile Include="Core\Math\Ray.ixx" />
+    <ClCompile Include="Core\Math\Vector2.cpp" />
+    <ClCompile Include="Core\Math\Vector2.ixx" />
+    <ClCompile Include="Core\Math\Vector3.cpp" />
+    <ClCompile Include="Core\Math\Vector3.ixx" />
+    <ClCompile Include="Core\Math\Vector4.cpp" />
+    <ClCompile Include="Core\Math\Vector4.ixx" />
+    <ClCompile Include="Core\Path.cpp" />
+    <ClCompile Include="Core\Path.ixx" />
+    <ClCompile Include="Core\Singleton.ixx" />
+    <ClCompile Include="Core\PrimitiveTypes.ixx" />
+    <ClCompile Include="Core\Utils.ixx" />
+    <ClCompile Include="D3DX.ixx" />
+    <ClCompile Include="DesktopSystem.cpp" />
+    <ClCompile Include="DesktopSystem.ixx" />
+    <ClCompile Include="DesktopWindow.ixx" />
+    <ClCompile Include="DX.ixx" />
+    <ClCompile Include="Assets\Assets.ixx" />
+    <ClCompile Include="Shaders\EffectManager.cpp" />
+    <ClCompile Include="Shaders\EffectManager.ixx" />
+    <ClCompile Include="Flamegraph.cpp" />
+    <ClCompile Include="Flamegraph.ixx" />
+    <ClCompile Include="CommandList\CommandList.cpp" />
+    <ClCompile Include="CommandList\CommandList.ixx" />
+    <ClCompile Include="CommandList\CommandListPool.cpp" />
+    <ClCompile Include="CommandList\CommandListPool.ixx" />
+    <ClCompile Include="Gfx\CommandQueue.cpp" />
+    <ClCompile Include="Gfx\CommandQueue.ixx" />
+    <ClCompile Include="CommandList\ComputeContext.cpp" />
+    <ClCompile Include="CommandList\ComputeContext.ixx" />
+    <ClCompile Include="Gfx\ConstantBuffer.cpp" />
+    <ClCompile Include="Gfx\ConstantBuffer.ixx" />
+    <ClCompile Include="Gfx\DescriptorHandle.cpp" />
+    <ClCompile Include="Gfx\DescriptorHandle.ixx" />
+    <ClCompile Include="Gfx\DescriptorHeap.cpp" />
+    <ClCompile Include="Gfx\DescriptorHeap.ixx" />
+    <ClCompile Include="Gfx\Fence.cpp" />
+    <ClCompile Include="Gfx\Fence.ixx" />
+    <ClCompile Include="Gfx\GpuProfiler.cpp" />
+    <ClCompile Include="Gfx\GpuProfiler.ixx" />
+    <ClCompile Include="Gfx\IndexBuffer.cpp" />
+    <ClCompile Include="Gfx\IndexBuffer.ixx" />
+    <ClCompile Include="Gfx\MipmapGenerator.cpp" />
+    <ClCompile Include="Gfx\PipelineSettings.cpp" />
+    <ClCompile Include="Gfx\PipelineSettings.ixx" />
+    <ClCompile Include="CommandList\RenderContext.cpp" />
+    <ClCompile Include="CommandList\RenderContext.ixx" />
+    <ClCompile Include="Gfx\RenderLane.cpp" />
+    <ClCompile Include="Gfx\RenderLane.ixx" />
+    <ClCompile Include="Shaders\Effect.cpp" />
+    <ClCompile Include="Shaders\Effect.ixx" />
+    <ClCompile Include="Gfx\RenderSystem.cpp" />
+    <ClCompile Include="Gfx\RenderSystem.ixx" />
+    <ClCompile Include="Gfx\RenderSurface.ixx" />
+    <ClCompile Include="Gfx\RootSignature.cpp" />
+    <ClCompile Include="Gfx\RootSignature.ixx" />
+    <ClCompile Include="Gfx\RootSignatureParams.ixx" />
+    <ClCompile Include="Gfx\SwapChain.cpp" />
+    <ClCompile Include="Gfx\SwapChain.ixx" />
+    <ClCompile Include="Gfx\Texture.cpp" />
+    <ClCompile Include="Gfx\Texture.ixx" />
+    <ClCompile Include="Gfx\UploadBuffer.cpp" />
+    <ClCompile Include="Gfx\UploadBuffer.ixx" />
+    <ClCompile Include="Gfx\Vertex.cpp" />
+    <ClCompile Include="Gfx\Vertex.ixx" />
+    <ClCompile Include="Gfx\VertexBuffer.cpp" />
+    <ClCompile Include="Gfx\VertexBuffer.ixx" />
+    <ClCompile Include="Gpumem\Allocation.ixx" />
+    <ClCompile Include="Gpumem\MemoryPage.ixx" />
+    <ClCompile Include="Gpumem\OneshotAllocator.cpp" />
+    <ClCompile Include="Gpumem\MemoryPage.cpp" />
+    <ClCompile Include="Gpumem\OneshotAllocator.ixx" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Grid.ixx" />
+    <ClCompile Include="Gui.cpp" />
+    <ClCompile Include="Gui.ixx" />
+    <ClCompile Include="Images.cpp" />
+    <ClCompile Include="Images.ixx" />
+    <ClCompile Include="Imgui.ixx" />
+    <ClCompile Include="InputSystem.ixx" />
+    <ClCompile Include="Light.ixx" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Log.ixx" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Material.ixx" />
+    <ClCompile Include="MaterialManager.cpp" />
+    <ClCompile Include="MaterialManager.ixx" />
+    <ClCompile Include="Mesh.ixx" />
+    <ClCompile Include="MeshBuilder.cpp" />
+    <ClCompile Include="MeshBuilder.ixx" />
+    <ClCompile Include="Gfx\MipmapGenerator.ixx" />
+    <ClCompile Include="Myptr.ixx" />
+    <ClCompile Include="Model.ixx" />
+    <ClCompile Include="Obj\ObjLoader.ixx" />
+    <ClCompile Include="Profiler\Lane.cpp" />
+    <ClCompile Include="Profiler\Lane.ixx" />
+    <ClCompile Include="Profiler\Profiler.cpp" />
+    <ClCompile Include="Profiler\Profiler.ixx" />
+    <ClCompile Include="Profiler\Timebox.cpp" />
+    <ClCompile Include="Profiler\Timebox.ixx" />
+    <ClCompile Include="Profiler\TimeboxTracker.cpp" />
+    <ClCompile Include="Profiler\TimeboxTracker.ixx" />
+    <ClCompile Include="Views\ProfilerView.cpp" />
+    <ClCompile Include="Views\ProfilerView.ixx" />
+    <ClCompile Include="RenderSystemFwd.ixx" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="Resource.ixx" />
+    <ClCompile Include="ResourceStorage.cpp" />
+    <ClCompile Include="ResourceStorage.ixx" />
+    <ClCompile Include="Scene.ixx" />
+    <ClCompile Include="SceneManager.ixx" />
+    <ClCompile Include="SceneSystemFwd.ixx" />
+    <ClCompile Include="Views\QualityView.cpp" />
+    <ClCompile Include="Views\QualityView.ixx" />
+    <ClCompile Include="Views\SceneView.cpp" />
+    <ClCompile Include="Views\SceneView.ixx" />
+    <ClCompile Include="Shaders\Shader.ixx" />
+    <ClCompile Include="Views\ShadersView.ixx" />
+    <ClCompile Include="Shaders\Compiler\ShaderCompiler.cpp" />
+    <ClCompile Include="Shaders\Compiler\ShaderCompiler.ixx" />
+    <ClCompile Include="Shaders\ShaderManager.cpp" />
+    <ClCompile Include="Shaders\ShaderManager.ixx" />
+    <ClCompile Include="Shaders\ShaderSourceFile.ixx" />
+    <ClCompile Include="SortedMap.ixx" />
+    <ClCompile Include="Views\StatsView.cpp" />
+    <ClCompile Include="Views\StatsView.ixx" />
+    <ClCompile Include="Texel.cpp" />
+    <ClCompile Include="Texel.ixx" />
+    <ClCompile Include="TextureId.ixx" />
+    <ClCompile Include="TextureId.cpp" />
+    <ClCompile Include="Views\TextureView.cpp" />
+    <ClCompile Include="Views\TextureView.ixx" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileMap.ixx" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Timer.ixx" />
+    <ClCompile Include="Views\View.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Shaders\Shader.cpp" />
+    <ClCompile Include="DesktopWindow.cpp" />
+    <ClCompile Include="Views\View.ixx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3rd-Party\dx\d3dx12.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\imconfig.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\imgui.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\imgui_internal.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\imstb_rectpack.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\imstb_textedit.h" />
+    <ClInclude Include="3rd-Party\imgui-docking\imstb_truetype.h" />
+    <ClInclude Include="3rd-Party\libpng\png.h" />
+    <ClInclude Include="3rd-Party\libpng\pngconf.h" />
+    <ClInclude Include="3rd-Party\libpng\pngdebug.h" />
+    <ClInclude Include="3rd-Party\libpng\pnginfo.h" />
+    <ClInclude Include="3rd-Party\libpng\pnglibconf.h" />
+    <ClInclude Include="3rd-Party\libpng\pngpriv.h" />
+    <ClInclude Include="3rd-Party\libpng\pngstruct.h" />
+    <ClInclude Include="3rd-Party\zlib\crc32.h" />
+    <ClInclude Include="3rd-Party\zlib\deflate.h" />
+    <ClInclude Include="3rd-Party\zlib\inffast.h" />
+    <ClInclude Include="3rd-Party\zlib\inffixed.h" />
+    <ClInclude Include="3rd-Party\zlib\inflate.h" />
+    <ClInclude Include="3rd-Party\zlib\inftrees.h" />
+    <ClInclude Include="3rd-Party\zlib\trees.h" />
+    <ClInclude Include="3rd-Party\zlib\zconf.h" />
+    <ClInclude Include="3rd-Party\zlib\zlib.h" />
+    <ClInclude Include="3rd-Party\zlib\zutil.h" />
+    <ClInclude Include="Asserts.h" />
+    <ClInclude Include="Gfx\DX.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="debug.natvis" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
