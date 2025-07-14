@@ -1,4 +1,4 @@
-export module input_system;
+export module InputSystem;
 
 export class InputSystem
 {

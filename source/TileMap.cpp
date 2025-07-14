@@ -1,7 +1,7 @@
-module tile_map;
+module TileMap;
 
-import texture;
-import images;
+import Texture;
+import Images;
 
 TileMap::TileMap()
 {

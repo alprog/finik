@@ -1,4 +1,4 @@
-export module byte_blob;
+export module ByteBlob;
 
 import Finik.Core;
 

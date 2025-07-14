@@ -1,7 +1,7 @@
-module shader;
+module Shader;
 
-import shader_compiler;
-import shader_manager;
+import ShaderCompiler;
+import ShaderManager;
 
 Shader::Shader(ShaderKey key)
     : key{key}

@@ -1,11 +1,11 @@
-export module scene_view;
+export module SceneView;
 
 import Finik.Core;
-import render_lane;
-import view;
-import camera;
-import camera_controller;
-import scene;
+import RenderLane;
+import View;
+import Camera;
+import CameraController;
+import Scene;
 
 // for intellisense
 

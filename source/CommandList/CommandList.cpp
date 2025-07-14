@@ -1,12 +1,12 @@
 module;
 #include "gfx/dx.h"
 
-module command_list;
+module CommandList;
 
-import render_system;
-import command_list_pool;
-import gpu_profiler;
-import gpu_resource;
+import RenderSystem;
+import CommandListPool;
+import GpuProfiler;
+import GpuResource;
 
 CommandList::CommandList(RenderSystem& renderSystem, CommandListPool& pool, const int frameIndex)
     : renderSystem{renderSystem}

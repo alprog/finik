@@ -1,6 +1,6 @@
-export module containers:ring_buffer;
+export module Containers:RingBuffer;
 
-import primitive_types;
+import PrimitiveTypes;
 import std;
 
 export template <typename T>

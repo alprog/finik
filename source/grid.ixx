@@ -1,8 +1,8 @@
-export module grid;
+export module Grid;
 
-import tile_map;
-import mesh;
-import material;
+import TileMap;
+import Mesh;
+import Material;
 
 export class Grid
 {

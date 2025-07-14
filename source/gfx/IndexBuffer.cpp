@@ -1,8 +1,8 @@
 module;
 #include "dx.h"
-module index_buffer;
+module IndexBuffer;
 
-import render_system;
+import RenderSystem;
 
 void IndexBuffer::Load()
 {

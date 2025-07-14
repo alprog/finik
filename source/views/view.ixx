@@ -1,4 +1,4 @@
-export module view;
+export module View;
 
 export class View
 {

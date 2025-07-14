@@ -1,23 +1,23 @@
 #include "SDL.h"
 
 import Finik.Core;
-import app;
-import timer;
-import scene_view;
-import console_view;
-import texture_view;
-import stats_view;
-import profiler_view;
-import scene;
-import gui;
-import desktop_window;
-import desktop_system;
-import assets_view;
-import shaders_view;
-import assets;
-import model;
-import shader_manager;
-import quality_view;
+import App;
+import Timer;
+import SceneView;
+import ConsoleView;
+import TextureView;
+import StatsView;
+import ProfilerView;
+import Scene;
+import Gui;
+import DesktopWindow;
+import DesktopSystem;
+import AssetsView;
+import ShadersView;
+import Assets;
+import Model;
+import ShaderManager;
+import QualityView;
 
 int main(int argc, char* argv[])
 {

@@ -1,7 +1,7 @@
-module profiler;
+module Profiler;
 
-import log;
-import timer;
+import Log;
+import Timer;
 
 using namespace finik::profiler;
 

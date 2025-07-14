@@ -1,8 +1,8 @@
-export module scene_manager;
+export module SceneManager;
 
 import Finik.Core;
 
-import scene_system_fwd;
+import SceneSystemFwd;
 
 export class SceneManager
 {

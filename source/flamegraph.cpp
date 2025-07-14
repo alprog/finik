@@ -1,6 +1,6 @@
-module flamegraph;
+module Flamegraph;
 
-import imgui;
+import Imgui;
 
 namespace finik
 {

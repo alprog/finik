@@ -1,12 +1,12 @@
 module;
 #include "asserts.h"
-export module shader_manager;
+export module ShaderManager;
 
 import Finik.Core;
-import shader;
-import asset_path;
-import effect_manager;
-import shader_compiler;
+import Shader;
+import AssetPath;
+import EffectManager;
+import ShaderCompiler;
 
 export class ShaderManager : public Singleton<ShaderManager>
 {

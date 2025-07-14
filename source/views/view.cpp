@@ -1,6 +1,6 @@
-module view;
+module View;
 
-import imgui;
+import Imgui;
 
 View::View(const char* name)
     : name{name}

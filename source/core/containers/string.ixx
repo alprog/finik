@@ -1,8 +1,8 @@
-export module containers:string;
+export module Containers:String;
 
 import std;
-import primitive_types;
-import :array;
+import PrimitiveTypes;
+import :Array;
 
 export class String
 {

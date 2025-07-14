@@ -1,4 +1,4 @@
-export module surface_resolution;
+export module SurfaceResolution;
 
 import Finik.Core;
 

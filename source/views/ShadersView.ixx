@@ -1,8 +1,8 @@
-export module shaders_view;
+export module ShadersView;
 
-import view;
-import imgui;
-import shader_manager;
+import View;
+import Imgui;
+import ShaderManager;
 
 export class ShadersView : public View
 {

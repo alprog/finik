@@ -1,6 +1,6 @@
 module;
 #include <Windows.h>
-module timer;
+module Timer;
 
 uint64 startTimestamp;
 uint64 cpuFrequency;

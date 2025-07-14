@@ -1,22 +1,22 @@
-module scene;
+module Scene;
 
-import texture_format;
-import render_system;
-import effect;
-import mesh;
-import texture;
-import actor;
-import shader;
-import grid;
-import camera;
-import oneshot_allocator;
-import allocation;
-import effect_manager;
-import root_signature_params;
-import render_context;
-import assets;
-import model;
-import surface_resolution;
+import TextureFormat;
+import RenderSystem;
+import Effect;
+import Mesh;
+import Texture;
+import Actor;
+import Shader;
+import Grid;
+import Camera;
+import OneshotAllocator;
+import Allocation;
+import EffectManager;
+import RootSignatureParams;
+import RenderContext;
+import Assets;
+import Model;
+import SurfaceResolution;
 
 // for intellisense
 

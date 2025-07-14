@@ -1,4 +1,4 @@
-export module timebox;
+export module Timebox;
 
 import Finik.Core;
 

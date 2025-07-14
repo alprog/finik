@@ -1,4 +1,4 @@
-module byte_blob;
+module ByteBlob;
 
 ByteBlob::ByteBlob(Path path)
 {

@@ -1,4 +1,4 @@
-export module scene_system_fwd;
+export module SceneSystemFwd;
 
 export class Scene;
 export class Camera;

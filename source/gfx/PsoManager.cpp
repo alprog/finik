@@ -2,11 +2,11 @@ module;
 #include "backends/imgui_impl_dx12.h"
 #include "dx.h"
 
-module pso_manager;
+module PsoManager;
 
-import render_system;
-import root_signature;
-import g_buffer;
+import RenderSystem;
+import RootSignature;
+import GBuffer;
 
 std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
 {

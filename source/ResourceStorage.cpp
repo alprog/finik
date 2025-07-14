@@ -1,2 +1,2 @@
-module resource_storage;
+module ResourceStorage;
 

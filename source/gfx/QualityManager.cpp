@@ -1,6 +1,6 @@
-module quality_manager;
+module QualityManager;
 
-import effect_manager;
+import EffectManager;
 
 void QualityManager::apply(QualitySettings settings)
 {

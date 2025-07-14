@@ -1,7 +1,7 @@
-export module cleaner;
+export module Cleaner;
 
 import Finik.Core;
-import dx;
+import DX;
 
 export class Cleaner : public Singleton<Cleaner>
 {

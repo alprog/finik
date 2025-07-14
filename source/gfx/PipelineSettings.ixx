@@ -1,9 +1,9 @@
-export module pipeline_settings;
+export module PipelineSettings;
 
 import Finik.Core;
-import render_system_fwd;
-import shader;
-import msaa;
+import RenderSystemFwd;
+import Shader;
+import Msaa;
 
 // for intellisense
 

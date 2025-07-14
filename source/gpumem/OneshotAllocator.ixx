@@ -1,9 +1,9 @@
-export module oneshot_allocator;
+export module OneshotAllocator;
 
 import Finik.Core;
-import memory_page;
-import render_system_fwd;
-import allocation;
+import MemoryPage;
+import RenderSystemFwd;
+import Allocation;
 
 export namespace finik::gpumem
 {

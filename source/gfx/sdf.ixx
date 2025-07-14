@@ -1,10 +1,10 @@
-export module sdf;
+export module Sdf;
 
 import Finik.Core;
-import texture;
-import asset;
-import asset_dependencies;
-import images;
+import Texture;
+import Asset;
+import AssetDependencies;
+import Images;
 
 export class SDF
 {

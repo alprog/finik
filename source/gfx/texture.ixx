@@ -1,13 +1,13 @@
-export module texture;
+export module Texture;
 
 import Finik.Core;
-import dx;
-import descriptor_handle;
-import images;
-import gpu_resource;
-import byte_blob;
-import asset;
-import asset_path;
+import DX;
+import DescriptorHandle;
+import Images;
+import GpuResource;
+import ByteBlob;
+import Asset;
+import AssetPath;
 
 // for intellisense
 

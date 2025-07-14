@@ -1,10 +1,10 @@
-module actor;
+module Actor;
 
-import mesh;
-import material;
-import texture;
-import assets;
-import effect_manager;
+import Mesh;
+import Material;
+import Texture;
+import Assets;
+import EffectManager;
 
 Actor::Actor()
 {

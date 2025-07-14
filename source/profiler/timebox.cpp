@@ -1,6 +1,6 @@
-module timebox;
+module Timebox;
 
-import timer;
+import Timer;
 
 using namespace finik::profiler;
 

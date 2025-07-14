@@ -1,6 +1,6 @@
-module texture_id;
+module TextureId;
 
-import texture;
+import Texture;
 
 Texture* TextureId::Get()
 {

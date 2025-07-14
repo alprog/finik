@@ -1,10 +1,10 @@
 module;
 #include "dx.h"
 #include <asserts.h>
-module upload_buffer;
+module UploadBuffer;
 
-import imgui;
-import render_system;
+import Imgui;
+import RenderSystem;
 
 UploadBuffer::UploadBuffer(RenderSystem& renderSystem, int size)
     : Size{size}

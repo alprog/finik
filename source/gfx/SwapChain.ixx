@@ -1,12 +1,12 @@
 module;
 class DesktopWindow;
-export module swap_chain;
+export module SwapChain;
 
 import Finik.Core;
-import dx;
-import descriptor_handle;
-import render_system_fwd;
-import render_surface;
+import DX;
+import DescriptorHandle;
+import RenderSystemFwd;
+import RenderSurface;
 
 export constexpr int NUM_BACK_BUFFER = 3;
 export constexpr int NUM_FRAMES_IN_FLIGHT = 3;

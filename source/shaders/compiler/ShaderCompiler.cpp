@@ -1,14 +1,14 @@
 module;
 #include "gfx/dx.h"
 #include "dxcapi.h"
-module shader_compiler;
+module ShaderCompiler;
 
-import assets;
-import shader_source_file;
-import byte_blob;
-import asset_dependencies;
-import include_handler;
-import dxc_args;
+import Assets;
+import ShaderSourceFile;
+import ByteBlob;
+import AssetDependencies;
+import IncludeHandler;
+import DxcArgs;
 
 // for intellisense
 

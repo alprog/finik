@@ -1,7 +1,7 @@
-export module lane;
+export module Lane;
 
 import Finik.Core;
-import timebox;
+import Timebox;
 
 export namespace finik::profiler
 {

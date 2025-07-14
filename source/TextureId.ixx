@@ -1,4 +1,4 @@
-export module texture_id;
+export module TextureId;
 
 import Finik.Core;
 

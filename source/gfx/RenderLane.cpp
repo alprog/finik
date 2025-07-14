@@ -1,17 +1,17 @@
-module render_lane;
+module RenderLane;
 
-import render_system;
-import camera;
-import timebox_tracker;
-import command_list;
-import scene;
-import mrt;
-import enum_bits;
-import root_signature_params;
-import effect_manager;
-import app;
-import jitter;
-import quality_manager;
+import RenderSystem;
+import Camera;
+import TimeboxTracker;
+import CommandList;
+import Scene;
+import Mrt;
+import EnumBits;
+import RootSignatureParams;
+import EffectManager;
+import App;
+import Jitter;
+import QualityManager;
 
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution resolution)
     : scene{scene}

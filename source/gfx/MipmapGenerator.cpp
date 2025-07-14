@@ -1,14 +1,14 @@
 module;
 #include "assert.h"
 #include "dx.h"
-module mipmap_generator;
+module MipmapGenerator;
 
-import render_system;
-import assets;
-import shader;
-import shader_manager;
-import descriptor_handle;
-import oneshot_allocator;
+import RenderSystem;
+import Assets;
+import Shader;
+import ShaderManager;
+import DescriptorHandle;
+import OneshotAllocator;
 
 struct ConstantData
 {

@@ -1,8 +1,8 @@
-module assets_view;
+module AssetsView;
 
 import Finik.Core;
-import imgui;
-import assets;
+import Imgui;
+import Assets;
 
 AssetsView::AssetsView(const char* name)
     : View{ name }

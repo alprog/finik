@@ -1,8 +1,8 @@
-export module gpu_profiler;
+export module GpuProfiler;
 
 import Finik.Core;
-import render_system_fwd;
-import dx;
+import RenderSystemFwd;
+import DX;
 
 export struct StampRange
 {

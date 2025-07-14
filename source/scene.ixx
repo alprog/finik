@@ -1,16 +1,16 @@
-export module scene;
+export module Scene;
 
-import effect;
-import scene_system_fwd;
+import Effect;
+import SceneSystemFwd;
 
 import Finik.Core;
-import actor;
-import grid;
-import texture;
-import light;
-import render_system_fwd;
-import render_pass;
-import character;
+import Actor;
+import Grid;
+import Texture;
+import Light;
+import RenderSystemFwd;
+import RenderPass;
+import Character;
 
 // for intellisense
 

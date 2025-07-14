@@ -1,6 +1,6 @@
-module lane;
+module Lane;
 
-import timer;
+import Timer;
 
 using namespace finik::profiler;
 

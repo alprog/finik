@@ -1,8 +1,8 @@
-export module shader_source_file;
+export module ShaderSourceFile;
 
 import Finik.Core;
-import asset;
-import shader_manager;
+import Asset;
+import ShaderManager;
 
 // for intellisence
 

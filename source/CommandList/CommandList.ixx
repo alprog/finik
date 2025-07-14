@@ -1,9 +1,9 @@
-export module command_list;
+export module CommandList;
 
-import dx;
-import render_system_fwd;
-import render_context;
-import compute_context;
+import DX;
+import RenderSystemFwd;
+import RenderContext;
+import ComputeContext;
 
 // for intellisense
 

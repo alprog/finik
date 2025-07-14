@@ -2,12 +2,14 @@ module;
 #include "windows.h"
 struct SDL_Window;
 using WindowImpl = SDL_Window;
-export module desktop_window;
+export module DesktopWindow;
 
 import Finik.Core;
-import swap_chain;
-import gui;
-import scene;
+import SwapChain;
+import Gui;
+import Scene;
+
+// for intellisense
 
 export class DesktopWindow
 {

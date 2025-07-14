@@ -1,4 +1,4 @@
-export module vertex;
+export module Vertex;
 
 import Finik.Core;
 

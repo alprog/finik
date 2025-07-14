@@ -1,7 +1,7 @@
-export module containers:sorted_map;
+export module Containers:SortedMap;
 
 import std;
-import primitive_types;
+import PrimitiveTypes;
 
 export template <typename TKey, typename TValue>
 class SortedMap

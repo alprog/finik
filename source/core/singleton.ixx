@@ -1,4 +1,4 @@
-export module singleton;
+export module Singleton;
 
 import std;
 

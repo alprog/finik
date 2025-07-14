@@ -1,8 +1,8 @@
 module;
 #include "gfx/dx.h"
-module memory_page;
+module MemoryPage;
 
-import render_system;
+import RenderSystem;
 
 using namespace finik::gpumem;
 

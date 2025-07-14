@@ -1,11 +1,11 @@
-export module model;
+export module Model;
 
 import Finik.Core;
-import asset;
-import obj_loader;
-import mesh;
-import mesh_builder;
-import vertex;
+import Asset;
+import ObjLoader;
+import Mesh;
+import MeshBuilder;
+import Vertex;
 
 export class Model : public Asset
 {

@@ -1,6 +1,6 @@
-module mesh;
+module Mesh;
 
-import mesh_builder;
+import MeshBuilder;
 
 Mesh* createCubeMesh()
 {

@@ -1,9 +1,9 @@
-export module pso_manager;
+export module PsoManager;
 
 import Finik.Core;
-import dx;
-import pipeline_settings;
-import pipeline_state;
+import DX;
+import PipelineSettings;
+import PipelineState;
 
 // for intellisense
 

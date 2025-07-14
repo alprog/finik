@@ -2,7 +2,7 @@ export module Finik.Core.Math:Matrix;
 
 import :Vector4;
 import :Quaternion;
-import :Matrix3x3;
+import :Matrix3X3;
 
 export struct Matrix
 {

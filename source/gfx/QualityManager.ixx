@@ -1,7 +1,7 @@
-export module quality_manager;
+export module QualityManager;
 
-import singleton;
-export import quality_settings;
+import Singleton;
+export import QualitySettings;
 
 export class QualityManager : public Singleton<QualityManager>
 {

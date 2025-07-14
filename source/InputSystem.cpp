@@ -1,6 +1,6 @@
 module;
 #include "SDL.h"
-module input_system;
+module InputSystem;
 
 InputSystem::InputSystem()
 {

@@ -1,6 +1,6 @@
-module scene_manager;
+module SceneManager;
 
-import scene;
+import Scene;
 
 SceneManager::SceneManager()
 {

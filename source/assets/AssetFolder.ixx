@@ -1,10 +1,10 @@
 module;
 #include "Windows.h"
-export module asset_folder;
+export module AssetFolder;
 
 import Finik.Core;
-import asset_bundle;
-import asset_path;
+import AssetBundle;
+import AssetPath;
 
 struct DirectoryChangeWatcher
 {

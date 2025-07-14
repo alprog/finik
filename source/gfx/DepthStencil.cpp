@@ -1,8 +1,8 @@
 module;
 #include "dx.h"
-module depth_stencil;
+module DepthStencil;
 
-import render_system;
+import RenderSystem;
 
 DepthStencil::DepthStencil(SurfaceResolution resolution)
     : RenderSurface{TextureFormat::DXGI_FORMAT_D24_UNORM_S8_UINT}

@@ -1,7 +1,7 @@
-module pipeline_state;
+module PipelineState;
 
-import app;
-import cleaner;
+import App;
+import Cleaner;
 
 PipelineState::PipelineState(ID3D12PipelineState* internalObject)
     : internalObject{internalObject}

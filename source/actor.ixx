@@ -1,8 +1,8 @@
-export module actor;
+export module Actor;
 
 import Finik.Core.Math;
-import mesh;
-import material;
+import Mesh;
+import Material;
 
 export class Actor
 {

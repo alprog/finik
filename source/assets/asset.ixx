@@ -1,8 +1,8 @@
-export module asset;
+export module Asset;
 
 import Finik.Core;
-import asset_path;
-import byte_blob;
+import AssetPath;
+import ByteBlob;
 
 export class Asset
 {

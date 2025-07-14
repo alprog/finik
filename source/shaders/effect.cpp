@@ -1,10 +1,10 @@
-module effect;
+module Effect;
 
-import render_system;
-import shader;
-import pso_manager;
-import shader_manager;
-import quality_manager;
+import RenderSystem;
+import Shader;
+import PsoManager;
+import ShaderManager;
+import QualityManager;
 
 Effect::Effect(String name)
     : name{name}

@@ -1,7 +1,7 @@
-module quality_view;
+module QualityView;
 
-import imgui;
-import quality_manager;
+import Imgui;
+import QualityManager;
 
 QualityView::QualityView(const char* name)
     : View{name}

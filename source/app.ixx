@@ -1,11 +1,11 @@
-export module app;
+export module App;
 
 import Finik.Core;
-import render_system;
-import profiler;
-import scene_manager;
-import input_system;
-import desktop_system;
+import RenderSystem;
+import Profiler;
+import SceneManager;
+import InputSystem;
+import DesktopSystem;
 
 // for intellisense
 

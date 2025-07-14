@@ -1,4 +1,4 @@
-export module timer;
+export module Timer;
 
 import Finik.Core;
 

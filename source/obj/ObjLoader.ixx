@@ -1,4 +1,4 @@
-export module obj_loader;
+export module ObjLoader;
 
 import Finik.Core;
 

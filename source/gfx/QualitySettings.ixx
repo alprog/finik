@@ -1,6 +1,6 @@
-export module quality_settings;
+export module QualitySettings;
 
-export import msaa;
+export import Msaa;
 
 export struct QualitySettings
 {

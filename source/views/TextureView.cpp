@@ -1,12 +1,12 @@
 module;
 #include "gfx/dx.h"
-module texture_view;
+module TextureView;
 
-import texture;
-import imgui;
-import grid;
-import tile_map;
-import scene;
+import Texture;
+import Imgui;
+import Grid;
+import TileMap;
+import Scene;
 
 TextureView::TextureView(const char* name, Scene& scene)
     : View {name}

@@ -1,4 +1,4 @@
-export module asset_path;
+export module AssetPath;
 
 import Finik.Core;
 

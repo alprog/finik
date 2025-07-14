@@ -1,9 +1,9 @@
 module;
-export module character;
+export module Character;
 
 import Finik.Core;
-import mesh;
-import material;
+import Mesh;
+import Material;
 
 export class Character
 {

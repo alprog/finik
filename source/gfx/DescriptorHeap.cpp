@@ -2,9 +2,9 @@ module;
 #include <stdio.h>
 #include <asserts.h>
 #include "dx.h"
-module descriptor_heap;
+module DescriptorHeap;
 
-import descriptor_handle;
+import DescriptorHandle;
 
 DescriptorHeap::DescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int maxCount)
 {

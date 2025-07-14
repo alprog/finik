@@ -1,13 +1,13 @@
 module;
 #include "dx.h"
-module texture;
+module Texture;
 
-import render_system;
-import upload_buffer;
-import images;
-import command_list;
-import mipmap_generator;
-import sdf_manager;
+import RenderSystem;
+import UploadBuffer;
+import Images;
+import CommandList;
+import MipmapGenerator;
+import SdfManager;
 
 static const uint32 TexturePixelSize = 4;
 

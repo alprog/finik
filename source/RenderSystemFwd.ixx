@@ -1,4 +1,4 @@
-export module render_system_fwd;
+export module RenderSystemFwd;
 
 export class RenderSystem;
 

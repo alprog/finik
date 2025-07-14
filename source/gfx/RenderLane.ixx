@@ -1,13 +1,13 @@
-export module render_lane;
+export module RenderLane;
 
 import Finik.Core;
-import frame_buffer;
-import g_buffer;
-import scene_system_fwd;
-import render_pass;
-import surface_resolution;
-import mesh;
-export import msaa;
+import FrameBuffer;
+import GBuffer;
+import SceneSystemFwd;
+import RenderPass;
+import SurfaceResolution;
+import Mesh;
+export import Msaa;
 
 // for intellisense
 

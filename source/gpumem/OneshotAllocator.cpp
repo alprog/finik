@@ -1,7 +1,7 @@
-module oneshot_allocator;
+module OneshotAllocator;
 
-import render_system;
-import app;
+import RenderSystem;
+import App;
 
 using namespace finik::gpumem;
 

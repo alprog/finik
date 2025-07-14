@@ -1,4 +1,4 @@
-export module render_pass;
+export module RenderPass;
 
 export enum RenderPass
 {

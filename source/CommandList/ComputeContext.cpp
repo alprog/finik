@@ -1,7 +1,7 @@
-module compute_context;
+module ComputeContext;
 
-import render_system;
-import root_signature;
+import RenderSystem;
+import RootSignature;
 
 using Params = ComputeRootSignature::Params;
 

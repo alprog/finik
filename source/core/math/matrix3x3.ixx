@@ -1,4 +1,4 @@
-export module Finik.Core.Math:Matrix3x3;
+export module Finik.Core.Math:Matrix3X3;
 
 import :Vector3;
 

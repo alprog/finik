@@ -1,7 +1,7 @@
 module;
 #include "gfx/dx.h"
 #include "dxcapi.h"
-export module include_handler;
+export module IncludeHandler;
 
 import Finik.Core;
 

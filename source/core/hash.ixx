@@ -1,6 +1,6 @@
-export module hash;
+export module Hash;
 
-import primitive_types;
+import PrimitiveTypes;
 
 export namespace Hash
 {

@@ -1,4 +1,4 @@
-module shader_manager;
+module ShaderManager;
 
 const char* ShaderManager::getFallbackVertexShaderText()
 {

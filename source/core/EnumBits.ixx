@@ -1,4 +1,4 @@
-export module enum_bits;
+export module EnumBits;
 
 import std;
 

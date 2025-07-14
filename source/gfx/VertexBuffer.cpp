@@ -1,8 +1,8 @@
 module;
 #include "dx.h"
-module vertex_buffer;
+module VertexBuffer;
 
-import render_system;
+import RenderSystem;
 
 void VertexBuffer::Load()
 {

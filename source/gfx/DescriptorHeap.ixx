@@ -1,8 +1,8 @@
-export module descriptor_heap;
+export module DescriptorHeap;
 
-import dx;
-import render_system_fwd;
-import descriptor_handle;
+import DX;
+import RenderSystemFwd;
+import DescriptorHandle;
 
 export class DescriptorHeap
 {

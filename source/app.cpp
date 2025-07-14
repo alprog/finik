@@ -1,19 +1,19 @@
 module;
 #include <SDL.h>
 #include <SDL_syswm.h>
-module app;
+module App;
 
-import render_system;
-import swap_chain;
-import render_lane;
-import imgui;
-import timebox_tracker;
-import desktop_window;
-import assets;
-import shader_manager;
-import gui;
-import cleaner;
-import sdf_manager;
+import RenderSystem;
+import SwapChain;
+import RenderLane;
+import Imgui;
+import TimeboxTracker;
+import DesktopWindow;
+import Assets;
+import ShaderManager;
+import Gui;
+import Cleaner;
+import SdfManager;
 
 // for intellisense
 

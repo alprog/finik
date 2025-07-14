@@ -1,7 +1,7 @@
-export module index_buffer;
+export module IndexBuffer;
 
 import Finik.Core;
-import dx;
+import DX;
 
 export class IndexBuffer
 {

@@ -1,9 +1,9 @@
-export module compute_context;
+export module ComputeContext;
 
 import Finik.Core;
-import dx;
-import render_system_fwd;
-import constant_buffer;
+import DX;
+import RenderSystemFwd;
+import ConstantBuffer;
 
 export class ComputeContext
 {

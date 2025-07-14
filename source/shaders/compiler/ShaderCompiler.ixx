@@ -1,12 +1,12 @@
 module;
 class IDxcCompiler3;
 class IDxcUtils;
-export module shader_compiler;
+export module ShaderCompiler;
 
 import Finik.Core;
-import asset_dependencies;
-import asset_path;
-import shader;
+import AssetDependencies;
+import AssetPath;
+import Shader;
 
 // for intellisense
 

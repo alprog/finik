@@ -1,12 +1,12 @@
-export module effect;
+export module Effect;
 
 import Finik.Core;
-import render_system_fwd;
-import pipeline_settings;
-import constant_buffer;
-import myptr;
-import dx;
-import pipeline_state;
+import RenderSystemFwd;
+import PipelineSettings;
+import ConstantBuffer;
+import Myptr;
+import DX;
+import PipelineState;
 
 // for intellisense
 

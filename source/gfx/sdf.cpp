@@ -1,7 +1,7 @@
-module sdf;
+module Sdf;
 
-import assets;
-import images;
+import Assets;
+import Images;
 
 SDF::SDF(std::shared_ptr<Asset> asset)
 {

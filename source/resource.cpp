@@ -1,10 +1,10 @@
 module;
 #include "asserts.h"
 #include "gfx/dx.h"
-module gpu_resource;
+module GpuResource;
 
-import render_system;
-import command_list;
+import RenderSystem;
+import CommandList;
 
 GpuResource::~GpuResource()
 {

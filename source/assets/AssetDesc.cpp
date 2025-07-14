@@ -1,8 +1,8 @@
-module asset_desc;
+module AssetDesc;
 
-import texture;
-import shader_source_file;
-import model;
+import Texture;
+import ShaderSourceFile;
+import Model;
 
 void AssetDesc::create_asset()
 {

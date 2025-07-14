@@ -1,8 +1,8 @@
-module character;
+module Character;
 
-import assets;
-import texture;
-import effect_manager;
+import Assets;
+import Texture;
+import EffectManager;
 
 Character::Character()
 {

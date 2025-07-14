@@ -1,10 +1,10 @@
-export module mipmap_generator;
+export module MipmapGenerator;
 
 import Finik.Core;
 
-import dx;
-import command_list;
-import texture;
+import DX;
+import CommandList;
+import Texture;
 
 export class MipMapGenerator : public Singleton<MipMapGenerator>
 {

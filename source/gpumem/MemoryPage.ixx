@@ -1,9 +1,9 @@
-export module memory_page;
+export module MemoryPage;
 
 import Finik.Core;
-import dx;
-import render_system_fwd;
-import allocation;
+import DX;
+import RenderSystemFwd;
+import Allocation;
 
 export namespace finik::gpumem
 {   

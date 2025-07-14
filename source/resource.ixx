@@ -1,8 +1,8 @@
-export module gpu_resource;
+export module GpuResource;
 
 import Finik.Core;
-import dx;
-import render_system_fwd;
+import DX;
+import RenderSystemFwd;
 
 export class GpuResource
 {

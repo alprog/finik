@@ -1,7 +1,7 @@
-module command_list_pool;
+module CommandListPool;
 
 import Finik.Core;
-import app;
+import App;
 
 CommandListPool::CommandListPool(RenderSystem& renderSystem)
     : renderSystem{ renderSystem }

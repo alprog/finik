@@ -1,7 +1,7 @@
 module;
 #include <d3d12.h>
 #include <dxgi1_4.h>
-export module dx;
+export module DX;
 
 export ID3D12Resource;
 export ID3D12CommandQueue;
@@ -51,6 +51,6 @@ export D3D12_RESOURCE_DESC;
 export D3D12_CLEAR_VALUE;
 export IUnknown;
 
-export import texture_format;
-export import d3dx;
-export import myptr;
+export import TextureFormat;
+export import D3DX;
+export import Myptr;

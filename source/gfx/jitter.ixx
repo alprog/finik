@@ -1,4 +1,4 @@
-export module jitter;
+export module Jitter;
 
 import Finik.Core;
 

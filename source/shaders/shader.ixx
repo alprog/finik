@@ -1,9 +1,9 @@
-export module shader;
+export module Shader;
 
 import Finik.Core;
-import dx;
-import asset_path;
-import asset_dependencies;
+import DX;
+import AssetPath;
+import AssetDependencies;
 
 // for intellisense
 

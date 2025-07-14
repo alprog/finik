@@ -1,8 +1,8 @@
-export module g_buffer;
+export module GBuffer;
 
 import Finik.Core;
-import dx;
-import frame_buffer;
+import DX;
+import FrameBuffer;
 
 // for intellisense
 

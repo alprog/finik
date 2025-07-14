@@ -1,7 +1,7 @@
-export module pipeline_state;
+export module PipelineState;
 
 import Finik.Core;
-import dx;
+import DX;
 
 export class PipelineState
 {

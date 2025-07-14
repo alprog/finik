@@ -1,8 +1,8 @@
-export module material_manager;
+export module MaterialManager;
 
 import Finik.Core;
-import constant_buffer;
-import material;
+import ConstantBuffer;
+import Material;
 
 export using GpuMaterialsConstantBuffer = GpuBuffer<MaterialsConstantBuffer>;
 

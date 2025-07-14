@@ -1,7 +1,7 @@
-module material_manager;
+module MaterialManager;
 
-import app;
-import render_system;
+import App;
+import RenderSystem;
 
 static int32 Counter = 0;
 

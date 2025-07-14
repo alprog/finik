@@ -1,22 +1,22 @@
 module;
 class Window;
-export module render_system;
+export module RenderSystem;
 
-export import render_system_fwd;
+export import RenderSystemFwd;
 
-export import singleton;
+export import Singleton;
 
 import Finik.Core;
-import dx;
-import command_queue;
-import command_list_pool;
-import render_lane;
-import render_context;
-import gpu_profiler;
-import myptr;
-import oneshot_allocator;
-import root_signature;
-import descriptor_heap;
+import DX;
+import CommandQueue;
+import CommandListPool;
+import RenderLane;
+import RenderContext;
+import GpuProfiler;
+import Myptr;
+import OneshotAllocator;
+import RootSignature;
+import DescriptorHeap;
 
 // for intellisense
 

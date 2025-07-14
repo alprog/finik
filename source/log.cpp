@@ -1,6 +1,6 @@
 module;
 #include "Windows.h"
-module log;
+module Log;
 
 import Finik.Core;
 

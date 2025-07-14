@@ -1,8 +1,8 @@
-export module descriptor_handle;
+export module DescriptorHandle;
 
 import Finik.Core;
-import dx;
-import render_system_fwd;
+import DX;
+import RenderSystemFwd;
 
 export struct DescriptorHandle
 {

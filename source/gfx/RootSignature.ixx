@@ -1,8 +1,8 @@
-export module root_signature;
+export module RootSignature;
 
 import Finik.Core;
-import dx;
-import render_system_fwd;
+import DX;
+import RenderSystemFwd;
 
 export class RootSignature
 {

@@ -1,18 +1,18 @@
 module;
 #include "gfx/dx.h"
-module scene_view;
+module SceneView;
 
-import imgui;
-import render_system;
-import descriptor_handle;
-import log;
-import scene;
-import effect_manager;
-import render_pass;
-import quality_manager;
-import surface_resolution;
-import mrt;
-import frame_buffer;
+import Imgui;
+import RenderSystem;
+import DescriptorHandle;
+import Log;
+import Scene;
+import EffectManager;
+import RenderPass;
+import QualityManager;
+import SurfaceResolution;
+import Mrt;
+import FrameBuffer;
 
 // for intellisense
 

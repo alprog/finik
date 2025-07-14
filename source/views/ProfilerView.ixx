@@ -1,6 +1,6 @@
-export module profiler_view;
+export module ProfilerView;
 
-import view;
+import View;
 
 export class ProfilerView : public View
 {

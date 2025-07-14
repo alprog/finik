@@ -1,10 +1,10 @@
-export module sdf_manager;
+export module SdfManager;
 
 import Finik.Core;
-import assets;
-import asset_path;
-import texture;
-import sdf;
+import Assets;
+import AssetPath;
+import Texture;
+import Sdf;
 
 export class SDFManager : public Singleton<SDFManager>
 {

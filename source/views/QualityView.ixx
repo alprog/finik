@@ -1,8 +1,8 @@
-export module quality_view;
+export module QualityView;
 
 import Finik.Core;
-import view;
-import quality_settings;
+import View;
+import QualitySettings;
 
 // for intellisense
 

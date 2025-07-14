@@ -1,6 +1,6 @@
-export module assets_view;
+export module AssetsView;
 
-import view;
+import View;
 
 export class AssetsView : public View
 {

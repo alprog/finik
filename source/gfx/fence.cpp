@@ -1,10 +1,10 @@
 module;
 #include "dx.h"
-module fence;
+module Fence;
 
-import log;
-import timer;
-import render_system;
+import Log;
+import Timer;
+import RenderSystem;
 
 Fence::Fence(RenderSystem& renderSystem, ID3D12CommandQueue& queue)
     : Queue { queue }

@@ -1,8 +1,8 @@
-module gui;
+module Gui;
 
-import imgui;
-import render_system;
-import desktop_window;
+import Imgui;
+import RenderSystem;
+import DesktopWindow;
 
 Gui::Gui(DesktopWindow& window)
     : window{window}

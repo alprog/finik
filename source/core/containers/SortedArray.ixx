@@ -1,7 +1,7 @@
-export module containers:sorted_array;
+export module Containers:SortedArray;
 
 import std;
-import primitive_types;
+import PrimitiveTypes;
 
 export template <typename T>
 class SortedArray

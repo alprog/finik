@@ -1,8 +1,8 @@
 module;
 #include "dx.h"
-module frame_buffer;
+module FrameBuffer;
 
-import render_system;
+import RenderSystem;
 
 FrameBuffer::FrameBuffer(SurfaceResolution resolution, Array<TextureFormat> formats, bool depthBufferEnabled)
     : resolution{resolution}

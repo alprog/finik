@@ -1,14 +1,14 @@
 module;
 #include <SDL.h>
 #include <SDL_syswm.h>
-module desktop_window;
+module DesktopWindow;
 
-import render_system;
-import swap_chain;
-import scene;
-import camera;
-import gui;
-import images;
+import RenderSystem;
+import SwapChain;
+import Scene;
+import Camera;
+import Gui;
+import Images;
 
 DesktopWindow::DesktopWindow(int width, int height)
     : width{width}

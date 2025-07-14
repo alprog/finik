@@ -1,9 +1,9 @@
 module;
 #include "dx.h"
-module command_queue;
+module CommandQueue;
 
-import render_system;
-import command_list;
+import RenderSystem;
+import CommandList;
 
 CommandQueue::CommandQueue(RenderSystem& renderSystem)
 {

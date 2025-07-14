@@ -1,4 +1,4 @@
-module camera;
+module Camera;
 
 Camera::Camera()
 {

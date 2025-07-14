@@ -1,10 +1,10 @@
 module;
 #include "dx.h"
-module root_signature;
+module RootSignature;
 
-import render_system;
-import root_signature_params;
-import shader;
+import RenderSystem;
+import RootSignatureParams;
+import Shader;
 
 D3D12_STATIC_SAMPLER_DESC getSamplerDesc(int32 shaderRegister, D3D12_FILTER filter)
 {

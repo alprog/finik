@@ -1,4 +1,4 @@
-export module timebox_tracker;
+export module TimeboxTracker;
 
 import Finik.Core;
 

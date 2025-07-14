@@ -1,6 +1,6 @@
-module console_view;
+module ConsoleView;
 
-import imgui;
+import Imgui;
 
 ConsoleView::ConsoleView(const char* name)
     : View{ name }

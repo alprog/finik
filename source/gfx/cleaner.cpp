@@ -1,8 +1,8 @@
 module;
 #include "asserts.h"
-module cleaner;
+module Cleaner;
 
-import app;
+import App;
 
 void Cleaner::add(IUnknown* object, int32 lastUseFrameIndex)
 {

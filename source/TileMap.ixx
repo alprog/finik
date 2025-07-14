@@ -1,8 +1,8 @@
-export module tile_map;
+export module TileMap;
 
 import Finik.Core;
-import texture;
-import images;
+import Texture;
+import Images;
 
 export class TileMap
 {

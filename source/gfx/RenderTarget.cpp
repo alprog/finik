@@ -1,8 +1,8 @@
 module;
 #include "dx.h"
-module render_target;
+module RenderTarget;
 
-import render_system;
+import RenderSystem;
 
 RenderTarget::RenderTarget(TextureFormat format, SurfaceResolution resolution)
     : RenderSurface{format}

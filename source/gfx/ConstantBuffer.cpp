@@ -1,9 +1,9 @@
 module;
 #include "dx.h"
-module constant_buffer;
+module ConstantBuffer;
 
-import render_system;
-import upload_buffer;
+import RenderSystem;
+import UploadBuffer;
 
 GpuDataBuffer::GpuDataBuffer(int32 size, RenderSystem& renderSystem)
     : size{size}

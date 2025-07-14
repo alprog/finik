@@ -1,8 +1,8 @@
-export module camera;
+export module Camera;
 
 import Finik.Core;
-import scene_system_fwd;
-import render_system_fwd;
+import SceneSystemFwd;
+import RenderSystemFwd;
 
 // for intellisense
 

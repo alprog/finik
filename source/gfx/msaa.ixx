@@ -1,4 +1,4 @@
-export module msaa;
+export module Msaa;
 
 export enum class MSAA : char
 {

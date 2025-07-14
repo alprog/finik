@@ -1,12 +1,12 @@
-module render_context;
+module RenderContext;
 
-import constant_buffer;
-import render_system;
-import root_signature_params;
-import root_signature;
-import mesh;
-import material_manager;
-import upload_buffer;
+import ConstantBuffer;
+import RenderSystem;
+import RootSignatureParams;
+import RootSignature;
+import Mesh;
+import MaterialManager;
+import UploadBuffer;
 
 using Params = MainRootSignature::Params;
 

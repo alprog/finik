@@ -1,4 +1,4 @@
-export module imgui;
+export module Imgui;
 
 export import <imgui.h>;
 export import <imgui_internal.h>;

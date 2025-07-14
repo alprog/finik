@@ -1,4 +1,4 @@
-module pipeline_settings;
+module PipelineSettings;
 
 PipelineSettings::PipelineSettings(ShaderByteCode vertexByteCode, ShaderByteCode pixelByteCode)
     : type{PipelineType::Geometry}

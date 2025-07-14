@@ -1,7 +1,7 @@
-export module asset_dependencies;
+export module AssetDependencies;
 
 import Finik.Core;
-import asset;
+import Asset;
 
 export struct AssetDependencies
 {

@@ -1,6 +1,6 @@
-export module console_view;
+export module ConsoleView;
 
-import view;
+import View;
 
 export class ConsoleView : public View
 {

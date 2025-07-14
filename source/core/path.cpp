@@ -1,7 +1,7 @@
-module path;
+module Path;
 
-import utils;
-import containers;
+import Utils;
+import Containers;
 
 // absolute - "C:/path" or "/path"
 // relative - "path" or "./path" or "../path"

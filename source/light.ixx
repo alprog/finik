@@ -1,8 +1,8 @@
-export module light;
+export module Light;
 
 import Finik.Core;
-import frame_buffer;
-import camera;
+import FrameBuffer;
+import Camera;
 
 export struct Light
 {

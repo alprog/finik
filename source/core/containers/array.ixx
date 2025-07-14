@@ -1,7 +1,7 @@
-export module containers:array;
+export module Containers:Array;
 
 import std;
-import primitive_types;
+import PrimitiveTypes;
 
 export template <typename T>
 class Array

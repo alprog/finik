@@ -1,8 +1,8 @@
-export module fence;
+export module Fence;
 
-import myptr;
-import dx;
-import render_system_fwd;
+import Myptr;
+import DX;
+import RenderSystemFwd;
 
 export class Fence
 {

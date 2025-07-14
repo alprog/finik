@@ -1,7 +1,7 @@
-export module containers:hash_set;
+export module Containers:HashSet;
 
 import std;
-import primitive_types;
+import PrimitiveTypes;
 
 export template <typename T>
 class HashSet

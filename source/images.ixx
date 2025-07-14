@@ -1,8 +1,8 @@
-export module images;
+export module Images;
 
 import Finik.Core;
-import texel;
-import byte_blob;
+import Texel;
+import ByteBlob;
 
 export class Image
 {

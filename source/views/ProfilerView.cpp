@@ -1,9 +1,9 @@
-module profiler_view;
+module ProfilerView;
 
 import Finik.Core;
-import app;
-import imgui;
-import flamegraph;
+import App;
+import Imgui;
+import Flamegraph;
 
 void ProfilerView::draw_content()
 {

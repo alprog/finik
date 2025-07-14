@@ -1,8 +1,8 @@
-export module command_list_pool;
+export module CommandListPool;
 
 import Finik.Core;
-import render_system_fwd;
-import command_list;
+import RenderSystemFwd;
+import CommandList;
 
 export class CommandListPool
 {

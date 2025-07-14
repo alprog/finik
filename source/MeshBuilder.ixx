@@ -1,8 +1,8 @@
-export module mesh_builder;
+export module MeshBuilder;
 
 import Finik.Core;
-import vertex;
-import mesh;
+import Vertex;
+import Mesh;
 
 export class MeshBuilder
 {

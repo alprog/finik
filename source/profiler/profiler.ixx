@@ -1,7 +1,7 @@
-export module profiler;
+export module Profiler;
 
 import Finik.Core;
-import lane;
+import Lane;
 
 export namespace finik::profiler
 {

@@ -1,12 +1,12 @@
 module;
 #include "dx.h"
-module gpu_profiler;
+module GpuProfiler;
 
-import timebox_tracker;
-import render_system;
-import log;
-import timer;
-import app;
+import TimeboxTracker;
+import RenderSystem;
+import Log;
+import Timer;
+import App;
 
 int constexpr MAX_TIMESTAMP = 100;
 int constexpr readBackRecordSize = sizeof(uint64);

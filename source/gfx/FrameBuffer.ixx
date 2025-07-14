@@ -1,15 +1,15 @@
-export module frame_buffer;
+export module FrameBuffer;
 
 import Finik.Core;
-import descriptor_handle;
-import dx;
-import command_list;
-import gpu_resource;
-import render_surface;
-import render_target;
-import depth_stencil;
-import mrt;
-import msaa;
+import DescriptorHandle;
+import DX;
+import CommandList;
+import GpuResource;
+import RenderSurface;
+import RenderTarget;
+import DepthStencil;
+import Mrt;
+import Msaa;
 
 // for intellisense
 

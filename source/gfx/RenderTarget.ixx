@@ -1,7 +1,7 @@
-export module render_target;
+export module RenderTarget;
 
-import dx;
-import render_surface;
+import DX;
+import RenderSurface;
 
 export class RenderTarget : public RenderSurface
 {

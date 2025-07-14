@@ -1,10 +1,10 @@
-export module asset_desc;
+export module AssetDesc;
 
 import Finik.Core;
-import asset;
-import asset_path;
-import asset_bundle;
-import byte_blob;
+import Asset;
+import AssetPath;
+import AssetBundle;
+import ByteBlob;
 
 export struct AssetDesc
 {

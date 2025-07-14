@@ -1,8 +1,8 @@
-export module vertex_buffer;
+export module VertexBuffer;
 
 import Finik.Core;
-import dx;
-import vertex;
+import DX;
+import Vertex;
 
 export class VertexBuffer
 {

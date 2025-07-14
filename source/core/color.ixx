@@ -1,4 +1,4 @@
-export module color;
+export module Color;
 
 export struct Color
 {

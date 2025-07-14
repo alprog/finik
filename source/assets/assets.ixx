@@ -1,14 +1,14 @@
-export module assets;
+export module Assets;
 
 import Finik.Core;
-import texture;
-import asset_path;
-import shader_source_file;
-import asset_bundle;
-import asset_folder;
-import asset_desc;
-import byte_blob;
-import asset;
+import Texture;
+import AssetPath;
+import ShaderSourceFile;
+import AssetBundle;
+import AssetFolder;
+import AssetDesc;
+import ByteBlob;
+import Asset;
 
 export class Assets : public Singleton<Assets>
 {

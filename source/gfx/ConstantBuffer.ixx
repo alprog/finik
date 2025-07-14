@@ -1,9 +1,9 @@
-export module constant_buffer;
+export module ConstantBuffer;
 
 import Finik.Core;
-import descriptor_handle;
-import render_system_fwd;
-import root_signature_params;
+import DescriptorHandle;
+import RenderSystemFwd;
+import RootSignatureParams;
 
 export class GpuDataBuffer
 {

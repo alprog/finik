@@ -1,9 +1,9 @@
-module grid;
+module Grid;
 
-import mesh_builder;
-import images;
-import assets;
-import effect_manager;
+import MeshBuilder;
+import Images;
+import Assets;
+import EffectManager;
 
 Grid::Grid()
 {

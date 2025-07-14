@@ -1,7 +1,7 @@
-export module containers:hash_map;
+export module Containers:HashMap;
 
 import std;
-import primitive_types;
+import PrimitiveTypes;
 
 export template <typename TKey, typename TValue>
 class HashMap

@@ -1,4 +1,4 @@
-export module dxc_args;
+export module DxcArgs;
 
 import Finik.Core;
 

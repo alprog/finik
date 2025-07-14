@@ -1,12 +1,12 @@
-export module render_context;
+export module RenderContext;
 
 import Finik.Core;
-import dx;
-import render_system_fwd;
-import material;
-import constant_buffer;
-import render_pass;
-import effect;
+import DX;
+import RenderSystemFwd;
+import Material;
+import ConstantBuffer;
+import RenderPass;
+import Effect;
 
 // for intellisense
 

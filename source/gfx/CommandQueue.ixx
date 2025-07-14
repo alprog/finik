@@ -1,9 +1,9 @@
-export module command_queue;
+export module CommandQueue;
 
 import Finik.Core;
-import dx;
-import fence;
-import render_system_fwd;
+import DX;
+import Fence;
+import RenderSystemFwd;
 
 export class CommandQueue
 {

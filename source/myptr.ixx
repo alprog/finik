@@ -1,4 +1,4 @@
-export module myptr;
+export module Myptr;
 
 import std;
 

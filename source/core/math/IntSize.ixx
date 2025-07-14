@@ -1,6 +1,6 @@
 export module Finik.Core.Math:IntSize;
 
-import primitive_types;
+import PrimitiveTypes;
 
 export struct IntSize
 {

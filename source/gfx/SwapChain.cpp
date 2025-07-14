@@ -1,13 +1,13 @@
 module;
 #include "dx.h"
 #include <dxgi.h>
-module swap_chain;
+module SwapChain;
 
-import render_system;
-import gpu_profiler;
-import log;
-import timer;
-import desktop_window;
+import RenderSystem;
+import GpuProfiler;
+import Log;
+import Timer;
+import DesktopWindow;
 
 D3D12_VIEWPORT viewport;
 D3D12_RECT scissorRect;

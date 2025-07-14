@@ -11,13 +11,13 @@ module;
 #include <dxgidebug.h>
 #pragma comment(lib, "dxguid.lib")
 #endif
-module render_system;
+module RenderSystem;
 
-import app;
-import imgui;
-import command_queue;
-import descriptor_handle;
-import desktop_window;
+import App;
+import Imgui;
+import CommandQueue;
+import DescriptorHandle;
+import DesktopWindow;
 
 class ResultChecker
 {

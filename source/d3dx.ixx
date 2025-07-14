@@ -11,7 +11,7 @@ module;
 #define D3DX12_COM_PTR_GET(x) x.p
 #define D3DX12_COM_PTR_ADDRESSOF(x) &x.p
 #endif
-export module d3dx;
+export module D3DX;
 
 import std;
 

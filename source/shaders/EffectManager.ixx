@@ -1,9 +1,9 @@
-export module effect_manager;
+export module EffectManager;
 
 import Finik.Core;
-import singleton;
-import effect;
-import shader;
+import Singleton;
+import Effect;
+import Shader;
 
 export class EffectManager : public Singleton<EffectManager>
 {

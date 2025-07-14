@@ -1,7 +1,7 @@
-export module stats_view;
+export module StatsView;
 
-import view;
-import scene_view;
+import View;
+import SceneView;
 
 export class StatsView : public View
 {

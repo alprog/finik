@@ -1,4 +1,4 @@
-export module log;
+export module Log;
 
 import Finik.Core;
 

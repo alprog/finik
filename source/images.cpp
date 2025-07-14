@@ -1,8 +1,8 @@
 module;
 #include "png.h"
-module images;
+module Images;
 
-import byte_blob;
+import ByteBlob;
 
 #define PNGSIGSIZE 8
 

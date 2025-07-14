@@ -1,8 +1,8 @@
-module mesh_builder;
+module MeshBuilder;
 
-import mesh;
-import vertex_buffer;
-import index_buffer;
+import Mesh;
+import VertexBuffer;
+import IndexBuffer;
 
 int32 MeshBuilder::addVertex(const StandardVertex& vertex)
 {

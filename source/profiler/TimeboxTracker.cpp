@@ -1,8 +1,8 @@
-module timebox_tracker;
+module TimeboxTracker;
 
-import profiler;
-import app;
-import timer;
+import Profiler;
+import App;
+import Timer;
 
 using namespace finik::profiler;
 

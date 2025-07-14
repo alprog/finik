@@ -1,7 +1,7 @@
-module effect_manager;
+module EffectManager;
 
-import shader_manager;
-import asset_path;
+import ShaderManager;
+import AssetPath;
 
 void EffectManager::init()
 {

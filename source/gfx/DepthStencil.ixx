@@ -1,7 +1,7 @@
-export module depth_stencil;
+export module DepthStencil;
 
-import dx;
-import render_surface;
+import DX;
+import RenderSurface;
 
 // for intellisense
 

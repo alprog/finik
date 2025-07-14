@@ -1,4 +1,4 @@
-export module path;
+export module Path;
 
 import std;
 

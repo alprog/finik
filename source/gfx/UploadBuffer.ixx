@@ -1,8 +1,8 @@
-export module upload_buffer;
+export module UploadBuffer;
 
 import Finik.Core;
-import dx;
-import render_system_fwd;
+import DX;
+import RenderSystemFwd;
 
 export class UploadBuffer
 {

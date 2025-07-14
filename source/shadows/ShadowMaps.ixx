@@ -1,8 +1,8 @@
-export module shadow_maps;
+export module ShadowMaps;
 
 import Finik.Core;
-import render_lane;
-import camera;
+import RenderLane;
+import Camera;
 
 export class Scene;
 

@@ -1,9 +1,9 @@
-export module mesh;
+export module Mesh;
 
 import Finik.Core;
-import vertex;
-import vertex_buffer;
-import index_buffer;
+import Vertex;
+import VertexBuffer;
+import IndexBuffer;
 
 export class Mesh
 {

@@ -3,10 +3,10 @@ class DesktopWindow;
 struct ImGuiContext;
 using GuiImpl = ImGuiContext;
 struct ID3D12GraphicsCommandList;
-export module gui;
+export module Gui;
 
 import Finik.Core;
-import view;
+import View;
 
 export class Gui
 {

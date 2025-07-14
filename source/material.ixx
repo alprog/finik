@@ -1,9 +1,9 @@
-export module material;
+export module Material;
 
 import Finik.Core;
-import texture;
-import texture_id;
-import effect;
+import Texture;
+import TextureId;
+import Effect;
 
 // for intellisense
 

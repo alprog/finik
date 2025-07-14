@@ -1,6 +1,6 @@
-module material;
+module Material;
 
-import material_manager;
+import MaterialManager;
 
 Material::Material(std::string name)
     : Name{name}
