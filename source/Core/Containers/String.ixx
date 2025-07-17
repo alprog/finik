@@ -1,7 +1,7 @@
-export module Containers:String;
+export module Finik.Core.Containers:String;
 
 import std;
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 import :Array;
 
 export class String

@@ -1,4 +1,4 @@
-export module Color;
+export module Finik.Core.Color;
 
 export struct Color
 {

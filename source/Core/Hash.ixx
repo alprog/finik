@@ -1,6 +1,6 @@
-export module Hash;
+export module Finik.Core.Hash;
 
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 
 export namespace Hash
 {

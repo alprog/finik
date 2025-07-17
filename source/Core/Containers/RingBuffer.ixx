@@ -1,6 +1,6 @@
-export module Containers:RingBuffer;
+export module Finik.Core.Containers:RingBuffer;
 
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 import std;
 
 export template <typename T>

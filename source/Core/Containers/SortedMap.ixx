@@ -1,7 +1,7 @@
-export module Containers:SortedMap;
+export module Finik.Core.Containers:SortedMap;
 
 import std;
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 
 export template <typename TKey, typename TValue>
 class SortedMap

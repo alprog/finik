@@ -1,4 +1,4 @@
-export module PrimitiveTypes;
+export module Finik.Core.PrimitiveTypes;
 
 constexpr int BIT_COUNT = 8;
 

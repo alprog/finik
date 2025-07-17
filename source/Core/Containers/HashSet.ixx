@@ -1,7 +1,7 @@
-export module Containers:HashSet;
+export module Finik.Core.Containers:HashSet;
 
 import std;
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 
 export template <typename T>
 class HashSet

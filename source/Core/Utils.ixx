@@ -1,4 +1,4 @@
-export module Utils;
+export module Finik.Core.Utils;
 
 import std;
 

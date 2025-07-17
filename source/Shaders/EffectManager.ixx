@@ -1,7 +1,7 @@
 export module EffectManager;
 
 import Finik.Core;
-import Singleton;
+import Finik.Core.Singleton;
 import Effect;
 import Shader;
 

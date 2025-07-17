@@ -1,6 +1,6 @@
 export module QualityManager;
 
-import Singleton;
+import Finik.Core.Singleton;
 export import QualitySettings;
 
 export class QualityManager : public Singleton<QualityManager>

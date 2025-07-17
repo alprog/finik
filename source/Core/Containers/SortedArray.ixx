@@ -1,7 +1,7 @@
-export module Containers:SortedArray;
+export module Finik.Core.Containers:SortedArray;
 
 import std;
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 
 export template <typename T>
 class SortedArray

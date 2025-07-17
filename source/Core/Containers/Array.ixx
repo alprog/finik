@@ -1,7 +1,7 @@
-export module Containers:Array;
+export module Finik.Core.Containers:Array;
 
 import std;
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 
 export template <typename T>
 class Array

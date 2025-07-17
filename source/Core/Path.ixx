@@ -1,4 +1,4 @@
-export module Path;
+export module Finik.Core.Path;
 
 import std;
 

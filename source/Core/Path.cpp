@@ -1,7 +1,7 @@
-module Path;
+module Finik.Core.Path;
 
-import Utils;
-import Containers;
+import Finik.Core.Utils;
+import Finik.Core.Containers;
 
 // absolute - "C:/path" or "/path"
 // relative - "path" or "./path" or "../path"

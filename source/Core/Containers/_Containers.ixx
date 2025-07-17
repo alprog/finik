@@ -1,4 +1,4 @@
-export module Containers;
+export module Finik.Core.Containers;
 
 export import :Array;
 export import :HashMap;

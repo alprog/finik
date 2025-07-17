@@ -1,4 +1,4 @@
-export module EnumBits;
+export module Finik.Core.EnumBits;
 
 import std;
 

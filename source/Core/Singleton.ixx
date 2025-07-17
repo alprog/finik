@@ -1,4 +1,4 @@
-export module Singleton;
+export module Finik.Core.Singleton;
 
 import std;
 

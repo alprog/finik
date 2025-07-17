@@ -157,6 +157,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Characters\Character.cpp" />
     <ClCompile Include="Characters\Character.ixx" />
     <ClCompile Include="Core\Containers\RingBuffer.ixx" />
+    <ClCompile Include="Core\Containers\SortedMap.ixx" />
     <ClCompile Include="Core\Geometry\_Geometry.ixx" />
     <ClCompile Include="Core\Geometry\MarchingSquares.ixx" />
     <ClCompile Include="Core\Math\BoundBox.ixx" />
@@ -334,7 +335,6 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Shaders\ShaderManager.cpp" />
     <ClCompile Include="Shaders\ShaderManager.ixx" />
     <ClCompile Include="Shaders\ShaderSourceFile.ixx" />
-    <ClCompile Include="SortedMap.ixx" />
     <ClCompile Include="Views\StatsView.cpp" />
     <ClCompile Include="Views\StatsView.ixx" />
     <ClCompile Include="Texel.cpp" />

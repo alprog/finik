@@ -6,7 +6,7 @@ import TimeboxTracker;
 import CommandList;
 import Scene;
 import Mrt;
-import EnumBits;
+import Finik.Core.EnumBits;
 import RootSignatureParams;
 import EffectManager;
 import App;

@@ -1,7 +1,7 @@
-export module Containers:HashMap;
+export module Finik.Core.Containers:HashMap;
 
 import std;
-import PrimitiveTypes;
+import Finik.Core.PrimitiveTypes;
 
 export template <typename TKey, typename TValue>
 class HashMap

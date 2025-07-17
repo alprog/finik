@@ -1,7 +1,7 @@
 export module Finik.Core.Geometry:Polygon;
 
 import Finik.Core.Math;
-import Containers;
+import Finik.Core.Containers;
 
 export struct Polygon
 {

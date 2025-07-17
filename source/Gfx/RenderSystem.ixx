@@ -4,7 +4,7 @@ export module RenderSystem;
 
 export import RenderSystemFwd;
 
-export import Singleton;
+export import Finik.Core.Singleton;
 
 import Finik.Core;
 import DX;
