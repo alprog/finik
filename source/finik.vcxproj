@@ -165,7 +165,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Geometry\Polygon.ixx" />
     <ClCompile Include="Gfx\GbUffer.ixx" />
     <ClCompile Include="Gfx\Jitter.ixx" />
-    <ClCompile Include="Gfx\LineRenderer.ixx" />
+    <ClCompile Include="Gfx\LineBuilder.ixx" />
     <ClCompile Include="Gfx\Sdf.cpp" />
     <ClCompile Include="Gfx\SdfManager.ixx" />
     <ClCompile Include="Gfx\Sdf.ixx" />

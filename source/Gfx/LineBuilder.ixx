@@ -1,9 +1,10 @@
-export module LineRenderer;
+export module LineBuilder;
 
 import Finik.Core;
 import Vertex;
+import VertexBuffer;
 
-export class LineRenderer
+export class LineBuilder
 {
 public:
     void setColor(Color color)
@@ -15,6 +16,14 @@ public:
     {
         vertices.append({start, currentColor});
         vertices.append({end, currentColor});
+    }
+
+    LineVertexBuffer* build()
+    {
+        auto vertexBuffer = new LineVertexBuffer();
+        vertexBuffer->vertices = vertices;
+        vertexBuffer->Load();
+        return vertexBuffer;
     }
 
 private:
