@@ -29,6 +29,9 @@ Character::Character()
 
     LineBuilder builder;
     builder.setColor(Color::Red);
-    builder.line({0, 0, 0}, {0, 0, 2});
+    builder.line({0, -0.5, 0}, {0, 0.5, 0});
+    builder.line({0, -0.5, 2}, {0, 0.5, 2});
+    builder.line({0, -0.5, 0}, {0, -0.5, 2});
+    builder.line({0, 0.5, 0}, {0, 0.5, 2});
     debugLines = builder.build();
 }
