@@ -10,3 +10,9 @@ export struct StandardVertex
     int x;
     int y;
 };
+
+export struct LineVertex
+{
+    Vector3 position;
+    Color color;
+};

@@ -4,5 +4,8 @@ import :Polygon;
 
 export class MarchingSquares
 {
+    Polygon Calculate()
+    {
 
+    }
 };

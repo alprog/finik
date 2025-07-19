@@ -51,7 +51,7 @@ public:
         return data.size();
     }
 
-    void clear()
+    void Ñlear()
     {
         data.clear();
     }

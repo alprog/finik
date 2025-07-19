@@ -71,6 +71,13 @@ void RenderContext::drawMesh(Mesh* mesh)
     commandList.DrawIndexedInstanced(mesh->indexBuffer->indices.count(), 1, 0, 0, 0);
 }
 
+void RenderContext::drawLines(LineVertexBuffer* linesVertexBuffer)
+{
+    commandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+    commandList.IASetVertexBuffers(0, 1, &linesVertexBuffer->vertexBufferView);
+    commandList.DrawInstanced(1, 0, 0, 0);
+}
+
 void RenderContext::drawFullScreenQuad()
 {
     //

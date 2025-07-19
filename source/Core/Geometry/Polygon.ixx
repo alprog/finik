@@ -9,22 +9,22 @@ export struct Polygon
 
     int32 count() const { return points.count(); }
 
-    LineSegment GetSegment(int32 index) const
+    LineSegment getSegment(int32 index) const
     {
         return {points[index], points[(index + 1) % count()]};
     }
 
-    bool IsPositiveRotation() const
+    bool isPositiveRotation() const
     {
-        return CalcSignedArea() > 0;
+        return calcSignedArea() > 0;
     }
 
-    float CalcSignedArea() const
+    float calcSignedArea() const
     {
         float result = 0;
         for (int32 i = 0; i < count(); i++)
         {
-            result += GetSegment(i).CalcSignedAreaUnderSegment();
+            result += getSegment(i).calcSignedAreaUnderSegment();
         }
         return result;
     }

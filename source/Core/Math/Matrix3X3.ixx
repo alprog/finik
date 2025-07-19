@@ -4,8 +4,6 @@ import :Vector3;
 
 export struct Matrix3x3
 {
-    float determinant() const;
-
     union
     {
         struct // row-major
@@ -26,4 +24,9 @@ export struct Matrix3x3
 
         Vector3 rows[3];
     };
+
+    float determinant() const
+    {
+        return a * e * i + b * f * g + c * d * h - c * e * g - b * d * i - a * f * h;
+    }
 };

@@ -7,6 +7,7 @@ import Material;
 import ConstantBuffer;
 import RenderPass;
 import Effect;
+import VertexBuffer;
 
 // for intellisense
 
@@ -23,6 +24,7 @@ public:
     void setMaterial(const Material& material, RenderPass pass);
     void setEffect(Effect& effect);
     void drawMesh(Mesh* mesh);
+    void drawLines(LineVertexBuffer* linesVertexBuffer);
 
     void drawFullScreenQuad();
 

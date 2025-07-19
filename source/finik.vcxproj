@@ -165,11 +165,13 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Geometry\Polygon.ixx" />
     <ClCompile Include="Gfx\GbUffer.ixx" />
     <ClCompile Include="Gfx\Jitter.ixx" />
+    <ClCompile Include="Gfx\LineRenderer.ixx" />
     <ClCompile Include="Gfx\Sdf.cpp" />
     <ClCompile Include="Gfx\SdfManager.ixx" />
     <ClCompile Include="Gfx\Sdf.ixx" />
     <ClCompile Include="Gfx\SurfaceResolution.ixx" />
     <ClCompile Include="Gfx\TextureFormat.ixx" />
+    <ClCompile Include="Gfx\VertexBuffer.cpp" />
     <ClCompile Include="Shaders\Compiler\DxcArgs.ixx" />
     <ClCompile Include="Shaders\Compiler\IncludeHandler.ixx" />
     <ClCompile Include="Core\EnumBits.ixx" />
@@ -207,7 +209,6 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Math\_Math.ixx" />
     <ClCompile Include="Core\Math\Matrix.cpp" />
     <ClCompile Include="Core\Math\Matrix.ixx" />
-    <ClCompile Include="Core\Math\Matrix3X3.cpp" />
     <ClCompile Include="Core\Math\Matrix3X3.ixx" />
     <ClCompile Include="Core\Math\Quaternion.cpp" />
     <ClCompile Include="Core\Math\Quaternion.ixx" />
@@ -277,7 +278,6 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Gfx\UploadBuffer.ixx" />
     <ClCompile Include="Gfx\Vertex.cpp" />
     <ClCompile Include="Gfx\Vertex.ixx" />
-    <ClCompile Include="Gfx\VertexBuffer.cpp" />
     <ClCompile Include="Gfx\VertexBuffer.ixx" />
     <ClCompile Include="Gpumem\Allocation.ixx" />
     <ClCompile Include="Gpumem\MemoryPage.ixx" />

@@ -8,7 +8,7 @@ import IndexBuffer;
 export class Mesh
 {
 public:
-    VertexBuffer* vertexBuffer;
+    StandardVertexBuffer* vertexBuffer;
     IndexBuffer* indexBuffer;
 };
 
