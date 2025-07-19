@@ -12,6 +12,7 @@ export enum class PipelineType : char
     Geometry,
     Shadow,
     Lighting,
+    DebugLines,
     ScreenSpace,
     Imgui
 };

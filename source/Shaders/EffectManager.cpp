@@ -18,6 +18,7 @@ void EffectManager::init()
     {
         auto effect = std::make_shared<Effect>("lines");
         AssetPath path = "shaders/lines.hlsl";
+        effect->setPipelineType(PipelineType::DebugLines);
         effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
         effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
         Effects[effect->name] = effect;

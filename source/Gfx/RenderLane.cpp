@@ -128,6 +128,7 @@ void SceneRenderLane::render()
         
         context.setEffect(*EffectManager::GetInstance().get("directional_light"));
         context.drawMesh(fullscreenQuad);
+        scene.debugRender(context, camera, prevViewProjection, prevJitter);
         lightBuffer.endRendering(commandList);
     }
 

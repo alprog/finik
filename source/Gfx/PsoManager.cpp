@@ -21,11 +21,15 @@ std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& setti
     {
         result = standardCompile(settings);
     }
+    else if (settings.type == PipelineType::Shadow)
+    {
+        result = standardCompile(settings);
+    }
     else if (settings.type == PipelineType::Lighting)
     {
         result = standardCompile(settings);
     }
-    else if (settings.type == PipelineType::Shadow)
+    else if (settings.type == PipelineType::DebugLines)
     {
         result = standardCompile(settings);
     }
@@ -50,14 +54,21 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     auto& renderSystem = Single::Get<RenderSystem>();
     auto device = renderSystem.get_device();
 
-    D3D12_INPUT_ELEMENT_DESC inputElementDescs[] = {
+    Array<D3D12_INPUT_ELEMENT_DESC> inputElementDescs = {
         {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
         {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
         {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
         {"TEXCOORD", 1, DXGI_FORMAT_R32G32_UINT, 0, 32, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}};
 
+    if (settings.type == PipelineType::DebugLines)
+    {
+        inputElementDescs = {
+            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+            {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}};
+    }
+
     D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
-    psoDesc.InputLayout = {inputElementDescs, _countof(inputElementDescs)};
+    psoDesc.InputLayout = {&inputElementDescs[0], (uint32)inputElementDescs.count()};
     psoDesc.pRootSignature = renderSystem.getRootSignature().signatureImpl.Get();
 
     psoDesc.VS = CD3DX12_SHADER_BYTECODE(settings.vertexByteCode.Get());
@@ -88,7 +99,7 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     }
 
     CD3DX12_DEPTH_STENCIL_DESC depthStencilDesc(D3D12_DEFAULT);
-    depthStencilDesc.DepthEnable = settings.type != PipelineType::ScreenSpace;
+    depthStencilDesc.DepthEnable = settings.type != PipelineType::ScreenSpace && settings.type != PipelineType::DebugLines;
     depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
     depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
     depthStencilDesc.StencilEnable = FALSE;
@@ -96,6 +107,11 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
 
     psoDesc.SampleMask = UINT_MAX;
     psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+    if (settings.type == PipelineType::DebugLines)
+    {
+        psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
+    }
+
     psoDesc.NumRenderTargets = 4;
 
     const auto& RTFormats = GBuffer::GetRTFormats();

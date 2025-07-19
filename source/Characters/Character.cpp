@@ -3,6 +3,7 @@ module Character;
 import Assets;
 import Texture;
 import EffectManager;
+import LineBuilder;
 
 Character::Character()
 {
@@ -26,5 +27,8 @@ Character::Character()
     material->Textures.append(texture);
     material->RefreshBuffer();
 
-    debugLines = nullptr;
+    LineBuilder builder;
+    builder.setColor(Color::Red);
+    builder.line({0, 0, 0}, {0, 0, 2});
+    debugLines = builder.build();
 }

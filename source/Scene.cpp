@@ -122,12 +122,6 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
         renderContext.setModelMatrix(character->transformMatrix);
         renderContext.setMaterial(*character->material, pass);
         renderContext.drawMesh(character->bodyMesh);
-
-        if (character->debugLines)
-        {
-            renderContext.setEffect(*EffectManager::GetInstance().get("lines"));
-            renderContext.drawLines(character->debugLines);
-        }
     }
 
     //----------------------
@@ -136,3 +130,26 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
     renderContext.setMaterial(*grid->material, pass);
     renderContext.drawMesh(grid->mesh);
 }
+
+void Scene::debugRender(RenderContext& renderContext, const Camera& camera, const Matrix& prevViewProjection, const Vector2& prevJitter)
+{
+    RenderSystem& renderSystem = renderContext.renderSystem;
+    auto frameConstants = renderSystem.getOneshotAllocator().Allocate<FrameConstants>();
+    auto V = camera.viewMatrix;
+    auto P = camera.projectionMatrix;
+    frameConstants->View = V;
+    frameConstants->Projection = P;
+    frameConstants->ViewProjection = V * P;
+    renderContext.setFrameConstants(frameConstants.GpuAddress);
+
+    renderContext.setEffect(*EffectManager::GetInstance().get("lines"));
+    for (auto& character : characters)
+    {
+        if (character->debugLines)
+        {
+            renderContext.setModelMatrix(character->transformMatrix);
+            renderContext.drawLines(character->debugLines);
+        }
+    }
+}
+
