@@ -4,12 +4,12 @@ import Finik.Core.Math;
 import Mesh;
 import Material;
 
+// for intellisense
+
 export class Actor
 {
 public:
     Actor();
-
-    void render();
 
     Matrix transformMatrix;
     Matrix oldTransformMatrix;

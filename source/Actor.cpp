@@ -19,3 +19,4 @@ Actor::Actor()
     material->Textures.append(texture);
     material->RefreshBuffer();
 }
+

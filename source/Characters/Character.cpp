@@ -25,4 +25,6 @@ Character::Character()
     material->ShadowEffect = EffectManager::GetInstance().getShadowEffect(*material->Effect);
     material->Textures.append(texture);
     material->RefreshBuffer();
+
+    debugLines = nullptr;
 }

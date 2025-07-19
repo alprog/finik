@@ -16,6 +16,14 @@ void EffectManager::init()
     }
 
     {
+        auto effect = std::make_shared<Effect>("lines");
+        AssetPath path = "shaders/lines.hlsl";
+        effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
+        Effects[effect->name] = effect;
+    }
+
+    {
         auto effect = std::make_shared<Effect>("3dsprite");
         AssetPath path = "shaders/3dsprite.hlsl";
         effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));

@@ -17,6 +17,7 @@ import RenderContext;
 import Assets;
 import Model;
 import SurfaceResolution;
+import EffectManager;
 
 // for intellisense
 
@@ -121,6 +122,12 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
         renderContext.setModelMatrix(character->transformMatrix);
         renderContext.setMaterial(*character->material, pass);
         renderContext.drawMesh(character->bodyMesh);
+
+        if (character->debugLines)
+        {
+            renderContext.setEffect(*EffectManager::GetInstance().get("lines"));
+            renderContext.drawLines(character->debugLines);
+        }
     }
 
     //----------------------
