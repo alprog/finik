@@ -13,8 +13,8 @@ const Vector3 Vector3::Down{0, 0, -1};
 
 const Vector3 Vector3::East{1, 0, 0};
 const Vector3 Vector3::West{-1, 0, 0};
-const Vector3 Vector3::North{0, 1, 0};
-const Vector3 Vector3::South{0, -1, 0};
+const Vector3 Vector3::North{0, -1, 0};
+const Vector3 Vector3::South{0, 1, 0};
 
 Vector3::Vector3(float x, float y, float z)
     : x{x}

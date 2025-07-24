@@ -16,10 +16,11 @@ public:
 
     Texel& getTexel(int32 index);
     Texel& getTexel(int x, int y);
-
+    
     void generateChessboard();
 
-    size_t getByteSize() { return width * height * 4; };
+    int getTexelCount() const { return width * height; }
+    size_t getByteSize() const { return getTexelCount() * sizeof(Texel); };
 };
 
 export namespace Images

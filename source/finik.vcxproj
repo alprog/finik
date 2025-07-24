@@ -156,10 +156,13 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="CameraController.ixx" />
     <ClCompile Include="Characters\Character.cpp" />
     <ClCompile Include="Characters\Character.ixx" />
+    <ClCompile Include="Core\Containers\Table.ixx" />
     <ClCompile Include="Core\Containers\RingBuffer.ixx" />
     <ClCompile Include="Core\Containers\SortedMap.ixx" />
+    <ClCompile Include="Core\Geometry\TableIterator.ixx" />
     <ClCompile Include="Core\Geometry\_Geometry.ixx" />
     <ClCompile Include="Core\Geometry\MarchingSquares.ixx" />
+    <ClCompile Include="Core\Math\CardinalDirection.ixx" />
     <ClCompile Include="Core\Math\BoundBox.ixx" />
     <ClCompile Include="Core\Math\LineSegment.ixx" />
     <ClCompile Include="Core\Geometry\Polygon.ixx" />

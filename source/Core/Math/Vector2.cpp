@@ -5,6 +5,11 @@ import std;
 const Vector2 Vector2::Zero {0, 0};
 const Vector2 Vector2::One {1, 1};
 
+const Vector2 Vector2::East{1, 0};
+const Vector2 Vector2::West{-1, 0};
+const Vector2 Vector2::North{0, -1};
+const Vector2 Vector2::South{0, 1};
+
 Vector2::Vector2()
 {
 

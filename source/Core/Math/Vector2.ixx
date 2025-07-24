@@ -5,8 +5,12 @@ export struct Vector2
     float x, y;
 
     static const Vector2 Zero;
-
     static const Vector2 One;
+
+    static const Vector2 East;
+    static const Vector2 West;
+    static const Vector2 North;
+    static const Vector2 South;
 
     Vector2();
     Vector2(float x, float y);

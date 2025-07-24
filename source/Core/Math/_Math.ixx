@@ -10,3 +10,4 @@ export import :Matrix;
 export import :BoundBox;
 export import :LineSegment;
 export import :IntSize;
+export import :CardinalDirection;

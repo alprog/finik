@@ -7,3 +7,4 @@ export import :SortedArray;
 export import :SortedMap;
 export import :String;
 export import :RingBuffer;
+export import :Table;

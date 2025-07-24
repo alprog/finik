@@ -1,6 +1,7 @@
 export module Finik.Core.Utils;
 
 import std;
+import Finik.Core.Math;
 
 export
 {
@@ -76,6 +77,11 @@ export
     }
 
     float lerp(float a, float b, float k)
+    {
+        return a * (1.0f - k) + b * k;
+    }
+
+    Vector2 lerp(Vector2 a, Vector2 b, float k)
     {
         return a * (1.0f - k) + b * k;
     }
