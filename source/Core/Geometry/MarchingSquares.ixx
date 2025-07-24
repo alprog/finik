@@ -171,7 +171,7 @@ private:
 
     void findContours()
     {
-        int count = cells.count();
+        int count = edges.count();
         for (int index = 1; index < count; index += 2)
         {
             if (edges.get(index).goTo > 0)
