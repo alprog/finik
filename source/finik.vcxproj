@@ -160,6 +160,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Containers\Table.ixx" />
     <ClCompile Include="Core\Containers\RingBuffer.ixx" />
     <ClCompile Include="Core\Containers\SortedMap.ixx" />
+    <ClCompile Include="Core\Geometry\PolygonSimplifier.ixx" />
     <ClCompile Include="Core\Geometry\_Geometry.ixx" />
     <ClCompile Include="Core\Geometry\MarchingSquares.ixx" />
     <ClCompile Include="Core\Math\CardinalDirection.ixx" />

@@ -49,12 +49,19 @@ Character::Character()
 
     for (auto& contour : squares.getContours())
     {
-        auto count = contour.points.count();
+        PolygonSimplifier simplifier(contour);
+        simplifier.run();
+
+        auto& simplePolygon = simplifier.getResult();
+        
+        auto count = simplePolygon.points.count();
         for (int i = 0; i < count; i++)
         {
-            auto a = contour.points[i];
-            auto b = contour.points[(i + 1) % count];
+            auto a = simplePolygon.points[i];
+            auto b = simplePolygon.points[(i + 1) % count];
             builder.line(mult(a), mult(b));
+
+            builder.line(mult(a), {0, 0, 1});
         }
     }
 

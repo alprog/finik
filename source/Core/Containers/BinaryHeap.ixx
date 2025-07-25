@@ -76,7 +76,6 @@ public:
         }
     }
 
-private:
     int getIndexOf(T& value)
     {
         int count = data.size();
@@ -103,13 +102,13 @@ private:
     void heapifyDown(int index)
     {
         int leftIndex = index * 2 + 1;
-        if (leftIndex > count())
+        if (leftIndex >= count())
         {
             return;
         }
 
         int rightIndex = index * 2 + 2;
-        int bestChildIndex = (rightIndex < count() && isHigherPriority(rightIndex, leftIndex)) ? rightIndex : leftIndex;
+        int bestChildIndex = (rightIndex < count() - 1 && isHigherPriority(rightIndex, leftIndex)) ? rightIndex : leftIndex;
         if (isHigherPriority(bestChildIndex, index))
         {
             std::swap(data[index], data[bestChildIndex]);
