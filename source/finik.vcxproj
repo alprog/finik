@@ -62,7 +62,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch;$(SolutionDir)\3rd-party\CDT\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <BuildStlModules>false</BuildStlModules>
@@ -86,7 +86,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch;$(SolutionDir)\3rd-party\CDT\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -102,6 +102,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="3rd-Party\CDT\src\CDT.cpp" />
     <ClCompile Include="3rd-Party\imgui-docking\backends\imgui_impl_dx12.cpp" />
     <ClCompile Include="3rd-Party\imgui-docking\backends\imgui_impl_sdl2.cpp" />
     <ClCompile Include="3rd-Party\imgui-docking\imgui.cpp" />
@@ -161,6 +162,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Containers\RingBuffer.ixx" />
     <ClCompile Include="Core\Containers\SortedMap.ixx" />
     <ClCompile Include="Core\Geometry\PolygonSimplifier.ixx" />
+    <ClCompile Include="Core\Geometry\Triangulator.ixx" />
     <ClCompile Include="Core\Geometry\_Geometry.ixx" />
     <ClCompile Include="Core\Geometry\MarchingSquares.ixx" />
     <ClCompile Include="Core\Math\CardinalDirection.ixx" />
@@ -362,6 +364,17 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Views\View.ixx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3rd-Party\CDT\include\CDT.h" />
+    <ClInclude Include="3rd-Party\CDT\include\CDT.hpp" />
+    <ClInclude Include="3rd-Party\CDT\include\CDTUtils.h" />
+    <ClInclude Include="3rd-Party\CDT\include\CDTUtils.hpp" />
+    <ClInclude Include="3rd-Party\CDT\include\KDTree.h" />
+    <ClInclude Include="3rd-Party\CDT\include\LocatorKDTree.h" />
+    <ClInclude Include="3rd-Party\CDT\include\portable_nth_element.hpp" />
+    <ClInclude Include="3rd-Party\CDT\include\predicates.h" />
+    <ClInclude Include="3rd-Party\CDT\include\remove_at.hpp" />
+    <ClInclude Include="3rd-Party\CDT\include\Triangulation.h" />
+    <ClInclude Include="3rd-Party\CDT\include\Triangulation.hpp" />
     <ClInclude Include="3rd-Party\dx\d3dx12.h" />
     <ClInclude Include="3rd-Party\imgui-docking\backends\imgui_impl_dx12.h" />
     <ClInclude Include="3rd-Party\imgui-docking\backends\imgui_impl_sdl2.h" />

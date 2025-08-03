@@ -7,11 +7,12 @@ export struct Polygon
 {
     Array<Vector2> points;
 
-    int32 count() const { return points.count(); }
+    int32 pointCount() const { return points.count(); }
+    int32 edgeCount() const {return points.count(); }
 
     LineSegment getSegment(int32 index) const
     {
-        return {points[index], points[(index + 1) % count()]};
+        return {points[index], points[(index + 1) % pointCount()]};
     }
 
     bool isPositiveRotation() const
@@ -22,7 +23,7 @@ export struct Polygon
     float calcSignedArea() const
     {
         float result = 0;
-        for (int32 i = 0; i < count(); i++)
+        for (int32 i = 0; i < pointCount(); i++)
         {
             result += getSegment(i).calcSignedAreaUnderSegment();
         }

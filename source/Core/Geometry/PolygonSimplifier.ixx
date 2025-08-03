@@ -49,7 +49,7 @@ export class PolygonSimplifier
 public:
     PolygonSimplifier(Polygon& polygon)
     {
-        int count = polygon.count();
+        int count = polygon.pointCount();
         points.resize(count);
 
         for (int i = 0; i < count; i++)
