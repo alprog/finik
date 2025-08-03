@@ -1,3 +1,5 @@
+module;
+#include "CDT.h"
 module Character;
 
 import Assets;
@@ -47,21 +49,42 @@ Character::Character()
         return Vector3(0, 0.5 - p.x, p.y * 2);
     };
 
+    Array<Polygon> simplePolygons;
     for (auto& contour : squares.getContours())
     {
         PolygonSimplifier simplifier(contour);
         simplifier.run();
+        simplePolygons.append(simplifier.getResult());
+    }
 
-        auto& simplePolygon = simplifier.getResult();
-        
+    Triangulator triangulator;
+    for (auto& simplePolygon : simplePolygons)
+    {
+        triangulator.addPolygon(simplePolygon);
+    }
+    triangulator.run();
+
+    auto& vertices = triangulator.getVertices();
+    builder.setColor(Color::Blue);
+    for (auto& triangle : triangulator.getTriangles())
+    {
+        auto a = vertices[triangle.vertices[0]];
+        auto b = vertices[triangle.vertices[1]];
+        auto c = vertices[triangle.vertices[2]];
+        builder.line(mult(a), mult(b));
+        builder.line(mult(b), mult(c));
+        builder.line(mult(c), mult(a));
+    }    
+
+    builder.setColor(Color::Red);
+    for (auto& simplePolygon : simplePolygons)
+    {       
         auto count = simplePolygon.points.count();
         for (int i = 0; i < count; i++)
         {
             auto a = simplePolygon.points[i];
             auto b = simplePolygon.points[(i + 1) % count];
             builder.line(mult(a), mult(b));
-
-            builder.line(mult(a), {0, 0, 1});
         }
     }
 

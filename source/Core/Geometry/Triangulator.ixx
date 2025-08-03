@@ -8,52 +8,55 @@ import :Polygon;
 export class Triangulator
 {
 public:
+    void addPolygon(const Polygon& polygon)
+    {
+        unsigned int startIndex = vertices.count();
+        for (auto& point : polygon.points)
+        {
+            vertices.append(point);
+        }
 
+        unsigned int lastIndex = vertices.count() - 1;
+        for (unsigned int i = startIndex; i < lastIndex; i++)
+        {
+            edges.append({i, i + 1});
+        }
+        edges.append({lastIndex, startIndex});
+    }
 
     void run()
     {
-        std::vector<CDT::V2d<float>> vertices;
-        std::vector<CDT::Edge> edges;
- 
-        int totalCount = getPointCount();
-        vertices.reserve(totalCount);
-        edges.reserve(totalCount);
-        
-        for (auto& polygon : polygons)
-        {
-            unsigned int startIndex = vertices.size();
-            for (auto& point : polygon.points)
-            {
-                vertices.push_back({point.x, point.y});
-            }
-
-            unsigned int lastIndex = vertices.size() - 1;
-            for (unsigned int i = startIndex; i < lastIndex; i++)
-            {
-                edges.push_back({i, i + 1});
-            }
-            edges.push_back({lastIndex, startIndex});
-        }
-
         CDT::Triangulation<float> cdt;
-        cdt.insertVertices(vertices);
-        cdt.insertEdges(edges);
+
+        cdt.insertVertices(
+            vertices.begin(), 
+            vertices.end(),
+            [](const Vector2& p) { return p.x; },
+            [](const Vector2& p) { return p.y; }
+        );
+
+        cdt.insertEdges(
+            edges.begin(),
+            edges.end(),
+            [](const CDT::Edge& e) { return e.v1(); },
+            [](const CDT::Edge& e) { return e.v2(); }
+        );
+
         cdt.eraseOuterTrianglesAndHoles();
-
-
-    }
-
-private:
-    int getPointCount()
-    {
-        int count = 0;
-        for (auto& polygon : polygons)
+        
+        triangles.reserve(cdt.triangles.size());
+        for (auto& t : cdt.triangles)
         {
-            count += polygon.pointCount();
+            triangles.append(t);
         }
-        return count;
     }
 
+    auto& getVertices() const { return vertices; }
+    auto& getEdges() const { return edges; }
+    auto& getTriangles() const { return triangles; }
+
 private:
-    Array<Polygon> polygons;
+    Array<Vector2> vertices;
+    Array<CDT::Edge> edges;
+    Array<CDT::Triangle> triangles;
 };
