@@ -162,6 +162,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Containers\RingBuffer.ixx" />
     <ClCompile Include="Core\Containers\SortedMap.ixx" />
     <ClCompile Include="Core\Geometry\PolygonSimplifier.ixx" />
+    <ClCompile Include="Core\Geometry\Triangulator.cpp" />
     <ClCompile Include="Core\Geometry\Triangulator.ixx" />
     <ClCompile Include="Core\Geometry\_Geometry.ixx" />
     <ClCompile Include="Core\Geometry\MarchingSquares.ixx" />
@@ -172,9 +173,9 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Gfx\GbUffer.ixx" />
     <ClCompile Include="Gfx\Jitter.ixx" />
     <ClCompile Include="Gfx\LineBuilder.ixx" />
-    <ClCompile Include="Gfx\Sdf.cpp" />
-    <ClCompile Include="Gfx\SdfManager.ixx" />
-    <ClCompile Include="Gfx\Sdf.ixx" />
+    <ClCompile Include="Gfx\Sprite3D.cpp" />
+    <ClCompile Include="Gfx\SpriteManager.ixx" />
+    <ClCompile Include="Gfx\Sprite3D.ixx" />
     <ClCompile Include="Gfx\SurfaceResolution.ixx" />
     <ClCompile Include="Gfx\TextureFormat.ixx" />
     <ClCompile Include="Gfx\VertexBuffer.cpp" />

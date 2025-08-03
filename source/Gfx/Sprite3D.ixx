@@ -1,22 +1,25 @@
-export module Sdf;
+export module Sprite3D;
 
 import Finik.Core;
 import Texture;
 import Asset;
 import AssetDependencies;
 import Images;
+import Mesh;
 
-export class SDF
+export class Sprite3D
 {
 public:
-    SDF(std::shared_ptr<Asset> asset);
+    Sprite3D(std::shared_ptr<Asset> asset);
     void rebuild();
 
 private:
-    void calcSDF(std::shared_ptr<Image> image);
+    void createMesh(std::shared_ptr<Image> image);
 
 public:
+    std::shared_ptr<Mesh> mesh;
     std::shared_ptr<Texture> texture;
+
     AssetDependencies hotreloadDependencies;
 };
 

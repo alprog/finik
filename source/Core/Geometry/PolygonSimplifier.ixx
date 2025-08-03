@@ -43,11 +43,26 @@ struct PointComparator
     }
 };
 
- // Visvalingam–Whyatt
 export class PolygonSimplifier
 {
 public:
-    PolygonSimplifier(Polygon& polygon)
+    void simplify(Array<Polygon>& polygons, int maxCount)
+    {
+        for (auto& polygon : polygons)
+        {
+            simplify(polygon, maxCount);
+        }
+    }
+
+    void simplify(Polygon& polygon, int maxCount)
+    {
+        initPoints(polygon);
+        runSimplification(maxCount);
+        polygon = buildResultPolygon();
+    }
+
+private:
+    void initPoints(const Polygon& polygon)
     {
         int count = polygon.pointCount();
         points.resize(count);
@@ -66,7 +81,7 @@ public:
         }
     }
 
-    void run()
+    void runSimplification(int maxCount) // Visvalingam–Whyatt
     {
         BinaryHeap<Point*, PointComparator> heap;
         for (auto& p : points)
@@ -91,7 +106,7 @@ public:
         }
     }
 
-    Polygon getResult()
+    Polygon buildResultPolygon()
     {
         Polygon result;
         for (auto& point : points)
@@ -104,7 +119,6 @@ public:
         return result;
     }
 
-private:
     int wrapIndex(int index)
     {
         int count = points.count();

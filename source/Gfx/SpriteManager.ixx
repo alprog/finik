@@ -1,20 +1,20 @@
-export module SdfManager;
+export module SpriteManager;
 
 import Finik.Core;
 import Assets;
 import AssetPath;
 import Texture;
-import Sdf;
+import Sprite3D;
 
-export class SDFManager : public Singleton<SDFManager>
+export class SpriteManager : public Singleton<SpriteManager>
 {
 public:
-    std::shared_ptr<Texture> get(AssetPath path)
+    std::shared_ptr<Sprite3D> get(AssetPath path)
     {
-        auto ptr = sdfs.find_value(path);
+        auto ptr = sprites.find_value(path);
         if (ptr)
         {
-            return ptr->get()->texture;
+            return *ptr;
         }
 
         std::shared_ptr asset = Assets::GetInstance().get_asset(path); 
@@ -23,9 +23,9 @@ public:
             return nullptr;
         }
 
-        auto sdf = std::make_shared<SDF>(asset);
-        sdfs[path] = sdf;
-        return sdf->texture;
+        auto sprite = std::make_shared<Sprite3D>(asset);
+        sprites[path] = sprite;
+        return sprite;
     }
 
     void update()
@@ -46,7 +46,7 @@ private:
     int32 hotReloadOutdated()
     {
         int32 count = 0;
-        for (auto& [_, sdf] : sdfs)
+        for (auto& [_, sdf] : sprites)
         {
             if (sdf->hotreloadDependencies.isOutdated())
             {
@@ -58,6 +58,6 @@ private:
     }
 
 private:
-    HashMap<AssetPath, std::shared_ptr<SDF>> sdfs;
+    HashMap<AssetPath, std::shared_ptr<Sprite3D>> sprites;
     bool hotReloadNeeded = false;
 };
