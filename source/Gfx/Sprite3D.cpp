@@ -55,7 +55,7 @@ void Sprite3D::createMesh(std::shared_ptr<Image> image)
         StandardVertex vertex;
         vertex.position = mult(vertex2D);
         vertex.texCoord = vertex2D / 64.0f;
-        vertex.normal = Vector3::South;        
+        vertex.normal = Vector3::Forward;        
         builder.addVertex(vertex);
     }
 
@@ -67,6 +67,11 @@ void Sprite3D::createMesh(std::shared_ptr<Image> image)
         {
             builder.addIndex(i);
         }
+
+        // back-face:
+        builder.addIndex(triangle.vertices[0]);
+        builder.addIndex(triangle.vertices[2]);
+        builder.addIndex(triangle.vertices[1]);
     }
 
     mesh = std::shared_ptr<Mesh>( builder.Build() );

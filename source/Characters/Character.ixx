@@ -15,7 +15,6 @@ public:
     Character();
 
     Matrix transformMatrix;
-    Mesh* bodyMesh;
     Material* material;
 
     LineVertexBuffer* debugLines;

@@ -121,7 +121,7 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
     {
         renderContext.setModelMatrix(character->transformMatrix);
         renderContext.setMaterial(*character->material, pass);
-        renderContext.drawMesh(character->bodyMesh);
+        renderContext.drawMesh(character->sprite->mesh.get());
     }
 
     //----------------------

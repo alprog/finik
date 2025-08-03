@@ -7,7 +7,7 @@ import UploadBuffer;
 import Images;
 import CommandList;
 import MipmapGenerator;
-import SdfManager;
+import SpriteManager;
 
 static const uint32 TexturePixelSize = 4;
 
@@ -81,7 +81,7 @@ void Texture::hot_reload(ByteBlob& blob)
     resize(image->width, image->height);
     setData(*image);
 
-    SDFManager::GetInstance().onTextureFileChanged();
+    SpriteManager::GetInstance().onTextureFileChanged();
 }
 
 void Texture::setData(Image& image)

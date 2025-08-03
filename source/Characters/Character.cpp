@@ -12,13 +12,11 @@ Character::Character()
 {
     String texturePath = "textures/body.png";
     String effectName = "standard";
-    bodyMesh = createBodyMesh();
     
     if (true)
     {
         texturePath = "textures/test1.png";
         effectName = "3dsprite";
-        bodyMesh = createBodyQuad();
     }
      
     transformMatrix = Matrix::Identity;
@@ -32,8 +30,7 @@ Character::Character()
 
     
     sprite = SpriteManager::GetInstance().get(texture->getPath());
-    bodyMesh = sprite->mesh.get();
-
+    
     /*std::shared_ptr image = Images::loadPng(Path::combine("C:/finik/assets", texturePath));
     MarchingSquares squares(*image, 128);
     squares.run();
