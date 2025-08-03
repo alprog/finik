@@ -5,6 +5,7 @@ import Finik.Core;
 import Mesh;
 import Material;
 import VertexBuffer;
+import Sprite3D;
 
 // for intellisense
 
@@ -18,6 +19,8 @@ public:
     Material* material;
 
     LineVertexBuffer* debugLines;
+
+    std::shared_ptr<Sprite3D> sprite;
 };
 
 

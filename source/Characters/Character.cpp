@@ -6,6 +6,7 @@ import EffectManager;
 import LineBuilder;
 import Images;
 import Finik.Core.Geometry;
+import SpriteManager;
 
 Character::Character()
 {
@@ -30,7 +31,10 @@ Character::Character()
     material->RefreshBuffer();
 
     
-    std::shared_ptr image = Images::loadPng(Path::combine("C:/finik/assets", texturePath));
+    sprite = SpriteManager::GetInstance().get(texture->getPath());
+    bodyMesh = sprite->mesh.get();
+
+    /*std::shared_ptr image = Images::loadPng(Path::combine("C:/finik/assets", texturePath));
     MarchingSquares squares(*image, 128);
     squares.run();
 
@@ -69,6 +73,7 @@ Character::Character()
         builder.line(mult(a), mult(b));
         builder.line(mult(b), mult(c));
         builder.line(mult(c), mult(a));
+        break;
     }    
 
     builder.setColor(Color::Red);
@@ -83,5 +88,5 @@ Character::Character()
         }
     }
 
-    debugLines = builder.build();
+    debugLines = builder.build();*/
 }

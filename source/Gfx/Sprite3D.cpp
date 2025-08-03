@@ -14,7 +14,7 @@ Sprite3D::Sprite3D(std::shared_ptr<Asset> asset)
 void Sprite3D::rebuild()
 {
     auto path = hotreloadDependencies.getDependency(0).first->getPath();
-    std::shared_ptr image = Images::loadPng(path);
+    std::shared_ptr image = Images::loadPng(Path::combine("C:/finik/assets", path));
     createMesh(image);
 }
 
@@ -40,4 +40,34 @@ void Sprite3D::createMesh(std::shared_ptr<Image> image)
 
     // BuildMesh
     MeshBuilder builder;
+
+    auto vertexCount = triangulator.getVertices().count();
+    builder.Vertices.reserve(vertexCount);
+
+    auto mult = [](Vector2 p) {
+        p = p / 64.0f;
+        p.y = 1 - p.y;
+        return Vector3(0, 0.5 - p.x, p.y * 2);
+    };
+
+    for (auto& vertex2D : triangulator.getVertices())
+    {
+        StandardVertex vertex;
+        vertex.position = mult(vertex2D);
+        vertex.texCoord = vertex2D / 64.0f;
+        vertex.normal = Vector3::South;        
+        builder.addVertex(vertex);
+    }
+
+    auto triangleCount = triangulator.getTriangles().count();
+    builder.Indices.reserve(triangleCount * 3);
+    for (auto& triangle : triangulator.getTriangles())
+    {
+        for (auto i : triangle.vertices)
+        {
+            builder.addIndex(i);
+        }
+    }
+
+    mesh = std::shared_ptr<Mesh>( builder.Build() );
 }
