@@ -76,10 +76,13 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     auto diagonalLength = boundBox.size().length();
 
 
-    light.shadowCamera.OrthoSize = boundBox.size().xy().length();
+    auto size = boundBox.size();
+    size.y = 0;
+
+    light.shadowCamera.OrthoSize = size.length();
     light.shadowCamera.FieldOfView = 0;
-    light.shadowCamera.NearPlane = boundBox.min.z;
-    light.shadowCamera.FarPlane = boundBox.max.z;    
+    light.shadowCamera.NearPlane = boundBox.min.y;
+    light.shadowCamera.FarPlane = boundBox.max.y;   
     light.shadowCamera.calcProjectionMatrix();
 
     render(context, light.shadowCamera, Matrix::Identity, Vector2::Zero, RenderPass::Shadow);

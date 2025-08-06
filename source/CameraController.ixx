@@ -20,7 +20,7 @@ public:
     Vector3 FocusPosition = Vector3::Zero;
 
     bool IsOrthogonal = false;
-    float Rotation = -std::numbers::pi / 2;
+    float Rotation = 0;
 
     static constexpr float MinCellCount = 10.0f;
     static constexpr float MaxCellCount = 160.0f;

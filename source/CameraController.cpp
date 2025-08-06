@@ -108,7 +108,7 @@ void CameraController::HandleInput(float deltaTime)
 
 void CameraController::RefreshCameraPosition()
 {
-    auto lookDirection = Vector2(std::cos(Rotation), std::sin(Rotation));
+    auto lookDirection = Matrix::RotationZ(Rotation).MultiplyDirection(Vector3::Forward);
 
     auto angle = GetAngle();
     auto x = -lookDirection.x * std::cos(angle);
