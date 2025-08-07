@@ -15,7 +15,7 @@ export struct Polygon
         return {points[index], points[(index + 1) % pointCount()]};
     }
 
-    bool isPositiveRotation() const
+    bool isCCW() const
     {
         return calcSignedArea() > 0;
     }

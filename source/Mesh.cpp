@@ -14,13 +14,13 @@ Mesh* createCubeMesh()
         builder.addQuad(a, b, c, d);
     };
 
-    add(Vector3::Left, Vector3::Down, Vector3::Forward, Vector2(0, 0));
-    add(Vector3::Forward, Vector3::Down, Vector3::Right, Vector2(0.33f, 0));
-    add(Vector3::Left, Vector3::Forward, Vector3::Up, Vector2(0.66f, 0));
+    add(Vector3::Left, Vector3::Up, Vector3::Forward, Vector2(0, 0.5f));
+    add(Vector3::Forward, Vector3::Up, Vector3::Right, Vector2(0.33f, 0.5f));
+    add(Vector3::Left, Vector3::Forward, Vector3::Up, Vector2(0.66f, 0.5f));
 
-    add(Vector3::Right, Vector3::Down, Vector3::Backward, Vector2(0, 0.5f));
-    add(Vector3::Backward, Vector3::Down, Vector3::Left, Vector2(0.33f, 0.5f));
-    add(Vector3::Right, Vector3::Forward, Vector3::Down, Vector2(0.66f, 0.5f));
+    add(Vector3::Right, Vector3::Up, Vector3::Backward, Vector2(0, 0));
+    add(Vector3::Backward, Vector3::Up, Vector3::Left, Vector2(0.33f, 0));
+    add(Vector3::Right, Vector3::Forward, Vector3::Down, Vector2(0.66f, 0));
 
 
     return builder.Build();
