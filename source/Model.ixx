@@ -12,9 +12,9 @@ export class Model : public Asset
 public:
     using Asset::Asset;
 
-    Vector3 rub_to_fru(const Vector3 v)
+    Vector3 rub_to_rfu(const Vector3 v)
     {
-        return {-v.z, v.x, v.y};
+        return {v.x, -v.z, v.y};
     }
 
     void hot_reload(ByteBlob& blob) override
@@ -31,8 +31,8 @@ public:
             for (auto& desc : face)
             {
                 StandardVertex& vertex = vertices[--index];
-                vertex.position = rub_to_fru(loader.positions[desc.pi]);
-                vertex.normal = rub_to_fru(loader.normals[desc.ni]);
+                vertex.position = rub_to_rfu(loader.positions[desc.pi]);
+                vertex.normal = rub_to_rfu(loader.normals[desc.ni]);
                 vertex.texCoord = loader.tex_coords[desc.ti];
             }
             builder.addTriangleFan(vertices);

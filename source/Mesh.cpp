@@ -16,11 +16,11 @@ Mesh* createCubeMesh()
 
     add(Vector3::Left, Vector3::Up, Vector3::Forward, Vector2(0, 0.5f));
     add(Vector3::Forward, Vector3::Up, Vector3::Right, Vector2(0.33f, 0.5f));
-    add(Vector3::Left, Vector3::Forward, Vector3::Up, Vector2(0.66f, 0.5f));
+    add(Vector3::Left, Vector3::Backward, Vector3::Up, Vector2(0.66f, 0.5f));
 
     add(Vector3::Right, Vector3::Up, Vector3::Backward, Vector2(0, 0));
     add(Vector3::Backward, Vector3::Up, Vector3::Left, Vector2(0.33f, 0));
-    add(Vector3::Right, Vector3::Forward, Vector3::Down, Vector2(0.66f, 0));
+    add(Vector3::Right, Vector3::Backward, Vector3::Down, Vector2(0.66f, 0));
 
 
     return builder.Build();
@@ -51,10 +51,10 @@ Mesh* createBodyQuad()
     MeshBuilder builder;
 
     float bodyHeight = 2.0f;
-    auto a = StandardVertex{Vector3(0, +0.5f, bodyHeight), Vector3::Forward, Vector2(0, 0)};
-    auto b = StandardVertex{Vector3(0, -0.5f, bodyHeight), Vector3::Forward, Vector2(1, 0)};
-    auto c = StandardVertex{Vector3(0, -0.5f, 0), Vector3::Forward, Vector2(1, 1)};
-    auto d = StandardVertex{Vector3(0, +0.5f, 0), Vector3::Forward, Vector2(0, 1)};
+    auto a = StandardVertex{Vector3(+0.5f, 0, 0), Vector3::Forward, Vector2(0, 0)};
+    auto b = StandardVertex{Vector3(-0.5f, 0, 0), Vector3::Forward, Vector2(1, 0)};
+    auto c = StandardVertex{Vector3(-0.5f, 0, bodyHeight), Vector3::Forward, Vector2(1, 1)};
+    auto d = StandardVertex{Vector3(+0.5f, 0, bodyHeight), Vector3::Forward, Vector2(0, 1)};
     builder.addQuad(a, b, c, d);
 
     return builder.Build();

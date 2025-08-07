@@ -46,8 +46,7 @@ void Sprite3D::createMesh(std::shared_ptr<Image> image)
 
     auto mult = [](Vector2 p) {
         p = p / 64.0f;
-        p.y = 1 - p.y;
-        return Vector3(0, 0.5 - p.x, p.y * 2);
+        return Vector3(0.5 - p.x, 0, p.y * 2);
     };
 
     for (auto& vertex2D : triangulator.getVertices())
@@ -67,11 +66,6 @@ void Sprite3D::createMesh(std::shared_ptr<Image> image)
         {
             builder.addIndex(i);
         }
-
-        // back-face:
-        builder.addIndex(triangle.vertices[0]);
-        builder.addIndex(triangle.vertices[2]);
-        builder.addIndex(triangle.vertices[1]);
     }
 
     mesh = std::shared_ptr<Mesh>( builder.Build() );

@@ -77,7 +77,7 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
         psoDesc.PS = CD3DX12_SHADER_BYTECODE(settings.pixelByteCode.Get());
     }
     psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
-    psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+    psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
 
     // natural for left-handed. front face normals to the viewer (a^b = n)
     psoDesc.RasterizerState.FrontCounterClockwise = true;
