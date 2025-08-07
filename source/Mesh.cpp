@@ -30,12 +30,12 @@ Mesh* createFullScreenQuad()
 {
     MeshBuilder builder;
 
-    // a       b
-    //  +-----+
-    //  | \   |
-    //  |   \ |
-    //  +-----+
     // d       c
+    //  +-----+
+    //  |   / |
+    //  | /   |
+    //  +-----+
+    // a       b
 
     auto a = StandardVertex{Vector3(0, 0, 0), Vector3::Backward, Vector2(0, 0)};
     auto b = StandardVertex{Vector3(1, 0, 0), Vector3::Backward, Vector2(1, 0)};

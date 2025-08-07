@@ -45,8 +45,7 @@ GBufferOutput PSMain(PSInput input)
 	color.rgb = (color.rgb + 1) / 2;
 	Out.Normals = color;
 	
-	Texture2D mainTexture = textures[Materials[MaterialId].TextureA];
-	float4 texColor = mainTexture.Sample(DefaultSampler, input.uv);
+    float4 texColor = sampleTex(Materials[MaterialId].TextureA, input.uv);
 	
 	float4 diffuseColor = lerp(color, texColor, 1);
 	

@@ -50,13 +50,11 @@ GBufferOutput PSMain(PSInput input)
 	
 	Out.Normals = float4(0.5, 0.5, 1, 1);
 		
-	Texture2D cellTexture = textures[Materials[MaterialId].TextureA];
-	Texture2D gridTexture = textures[Materials[MaterialId].TextureB];
+	int cellTextureId = Materials[MaterialId].TextureA;
+	int gridTextureId = Materials[MaterialId].TextureB;
 	
-	Texture2DMS<float4> cellTextureMS = textures[Materials[MaterialId].TextureB];
-	
-	float3 fillColor = gridTexture.Sample(PointSampler, float2(input.coord) / 256).rgb;
-	float3 borderColor = cellTexture.Sample(DefaultSampler, input.uv).rgb;
+    float3 fillColor = sampleTex(gridTextureId, float2(input.coord) / 256, PointSampler).rgb;
+    float3 borderColor = sampleTex(cellTextureId, input.uv).rgb;
 
 	float4 delta = (input.newPosition / input.newPosition.w) - (input.prevPosition / input.prevPosition.w);
 	delta.xy = delta.xy - Jitter + PrevJitter;

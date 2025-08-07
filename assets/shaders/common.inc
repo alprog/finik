@@ -55,3 +55,21 @@ cbuffer GBufferConstants : register(b2)
 SamplerState DefaultSampler : register(s0);
 SamplerState PointSampler : register(s1);
 SamplerState LinearSampler : register(s2);
+
+float4 sampleTex(uint textureId, float2 uv, SamplerState sampler)
+{
+	Texture2D texture = textures[textureId];
+	return texture.Sample(sampler, float2(uv.x, 1 - uv.y));
+}
+
+float4 sampleTex(uint textureId, float2 uv)
+{
+	return sampleTex(textureId, uv, LinearSampler);
+}
+
+float4 sampleGTex(uint textureId, float2 uv, uint sampleIndex)
+{
+	Texture2DMS<float4> texture = textures[textureId];
+	float2 pos = float2(uv.x, 1 - uv.y) * Resolution;
+	return texture.Load(pos, sampleIndex);
+}

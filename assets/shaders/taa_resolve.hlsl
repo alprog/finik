@@ -21,7 +21,7 @@ struct PSInput
 
 float4 screenToNDC(float3 pos)
 {
-	return float4(pos.x * 2 - 1, 1 - pos.y * 2, pos.z, 1);
+	return float4(pos.x * 2 - 1, pos.y * 2 - 1, pos.z, 1);
 }
 
 PSInput VSMain(VSInput input)
@@ -30,19 +30,6 @@ PSInput VSMain(VSInput input)
 	result.position = screenToNDC(input.position);
 	result.uv = input.uv;
 	return result;
-}
-
-float4 sampleTex(uint textureId, float2 uv)
-{
-	Texture2D texture = textures[textureId];
-	return texture.Sample(LinearSampler, uv);
-}
-
-float4 sampleGTex(uint textureId, float2 uv, uint sampleIndex)
-{
-	Texture2DMS<float4> texture = textures[textureId];
-	float2 pos = uv * Resolution;
-	return texture.Load(pos, sampleIndex);
 }
 
 float4 PSMain(PSInput input) : SV_TARGET
@@ -54,7 +41,7 @@ float4 PSMain(PSInput input) : SV_TARGET
 		
 	float4 historyColor = sampleTex(HistoryBufferId, input.uv - screenOffset);
 	
-	float3 NearColor0 = sampleTex(LightBufferId, input.uv + float2(+1, 0) / Resolution).rgb;
+    float3 NearColor0 = sampleTex(LightBufferId, input.uv + float2(+1, 0) / Resolution).rgb;
     float3 NearColor1 = sampleTex(LightBufferId, input.uv + float2(-1, 0) / Resolution).rgb;
     float3 NearColor2 = sampleTex(LightBufferId, input.uv + float2(0, -1) / Resolution).rgb;
     float3 NearColor3 = sampleTex(LightBufferId, input.uv + float2(0, +1) / Resolution).rgb;

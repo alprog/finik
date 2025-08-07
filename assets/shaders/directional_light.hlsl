@@ -22,7 +22,7 @@ struct PSInput
 
 float4 screenToNDC(float3 pos)
 {
-	return float4(pos.x * 2 - 1, 1 - pos.y * 2, pos.z, 1);
+	return float4(pos.x * 2 - 1, pos.y * 2 - 1, pos.z, 1);
 }
 
 float LinearizeDepth(float depth, float nearPlane, float farPlane)
@@ -38,23 +38,10 @@ PSInput VSMain(VSInput input)
 	return result;
 }
 
-float4 sampleTex(uint textureId, float2 uv)
-{
-	Texture2D texture = textures[textureId];
-	return texture.Sample(PointSampler, uv);
-}
-
-float4 sampleGTex(uint textureId, float2 uv, uint sampleIndex)
-{
-	Texture2DMS<float4> texture = textures[textureId];
-	float2 pos = uv * Resolution;
-	return texture.Load(pos, sampleIndex);
-}
-
 float4 restoreWorldPosition(float2 uv, uint sampleIndex)
 {
 	float x = uv.x * 2 - 1;
-    float y = 1 - uv.y * 2;
+    float y = uv.y * 2 - 1;
     float z = sampleGTex(DSId, uv, sampleIndex).r;
     float4 ndcPos = float4(x, y, z, 1);
     float4 worldPos = mul(ndcPos, InverseViewProjection);
@@ -69,14 +56,13 @@ float getShadow(float2 shadowUV, float refDepth)
 	}
 
 	float bias = 0.005;
-	Texture2D texture = textures[ShadowTextureId];
 	
 	float result = 0;
 	for (int x = -2; x <= 2; x++)
 	{
 		for (int y = -2; y <= 2; y++)
 		{
-			float shadowValue = texture.Sample(PointSampler, shadowUV + float2(x, y) / 2048).r;
+            float shadowValue = sampleTex(ShadowTextureId, shadowUV + float2(x, y) / 2048, PointSampler).r;
 			result += refDepth > shadowValue + bias ? 1 : 0;
 		}
 	}
@@ -100,7 +86,7 @@ float4 calcLighting(float2 uv, uint sampleIndex)
 		
 	float4 shadowPos = mul(worldPos, ShadowViewProjection);
 	shadowPos = shadowPos / shadowPos.w;
-	float2 shadowUV = float2(shadowPos.x / 2 + 0.5, 0.5 - shadowPos.y / 2);
+	float2 shadowUV = float2(shadowPos.x / 2 + 0.5, shadowPos.y / 2 + 0.5);
 	
 	float shadow = getShadow(shadowUV, shadowPos.z);
 	
