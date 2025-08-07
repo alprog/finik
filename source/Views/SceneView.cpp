@@ -114,8 +114,7 @@ void SceneView::draw_content()
             };
             GImGui->CurrentWindow->DrawList->AddCallback(Callback, nullptr);
         }
-
-        ImGui::Image(textureId, imSize, ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::Image(textureId, imSize);
 
         if (AdvancedShader)
         {
@@ -129,7 +128,7 @@ void SceneView::draw_content()
             auto dx = (static_cast<float>(mousePos.x) - imageStartPos.x) / imSize.x;
             auto dy = (static_cast<float>(mousePos.y) - imageStartPos.y) / imSize.y;
 
-            auto ndcPos = Vector2(dx, dy) * 2.0f - Vector2::One;
+            auto ndcPos = Vector2(dx, 1 - dy) * 2.0f - Vector2::One;
 
             log("ndc {} {}\n", ndcPos.x, ndcPos.y);
 
