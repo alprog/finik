@@ -80,7 +80,7 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
 
     // natural for left-handed. front face normals to the viewer (a^b = n)
-    psoDesc.RasterizerState.FrontCounterClockwise = true;
+    psoDesc.RasterizerState.FrontCounterClockwise = false;
 
     if (settings.type == PipelineType::Geometry)
     {

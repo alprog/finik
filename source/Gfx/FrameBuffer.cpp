@@ -63,11 +63,16 @@ void FrameBuffer::startRendering(CommandList& commandList)
     ID3D12DescriptorHeap* a = render_system.getCommonHeap()->get();
     commandList.listImpl->SetDescriptorHeaps(1, &a);
 
-    viewport.Width = static_cast<float>(resolution.width);
-    viewport.Height = static_cast<float>(resolution.height);
+    viewport.TopLeftX = 0;
+    viewport.TopLeftY = resolution.height;
+    viewport.Width = resolution.width;
+    viewport.Height = -resolution.height;
+    viewport.MinDepth = 0.0f;
     viewport.MaxDepth = 1.0f;
     commandList.listImpl->RSSetViewports(1, &viewport);
 
+    scissorRect.left = static_cast<LONG>(0);
+    scissorRect.top = static_cast<LONG>(0);
     scissorRect.right = static_cast<LONG>(resolution.width);
     scissorRect.bottom = static_cast<LONG>(resolution.height);
     commandList.listImpl->RSSetScissorRects(1, &scissorRect);

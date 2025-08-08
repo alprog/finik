@@ -13,7 +13,6 @@ void StatsView::draw_content()
 {
     auto& controller = sceneView.getCameraController();
 
-
     constexpr float radToDegree = 180 / std::numbers::pi;
 
     ImGui::Text("focus: %f %f", controller.FocusPosition.x, controller.FocusPosition.y);

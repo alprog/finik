@@ -114,7 +114,7 @@ void SceneView::draw_content()
             };
             GImGui->CurrentWindow->DrawList->AddCallback(Callback, nullptr);
         }
-        ImGui::Image(textureId, imSize);
+        ImGui::Image(textureId, imSize, ImVec2(0, 1), ImVec2(1, 0));
 
         if (AdvancedShader)
         {

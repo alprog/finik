@@ -112,7 +112,8 @@ std::shared_ptr<Image> Images::loadPng(ByteBlob& blob)
         auto rowPtrs = new png_bytep[imgHeight];
         for (size_t i = 0; i < imgHeight; i++)
         {
-            rowPtrs[i] = (png_bytep)image->data + i * stride;
+            int reversedIndex = imgHeight - 1 - i;
+            rowPtrs[i] = (png_bytep)image->data + reversedIndex * stride;
         }
 
         png_read_image(pngPtr, rowPtrs);
