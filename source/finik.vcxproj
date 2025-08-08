@@ -179,6 +179,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Gfx\SurfaceResolution.ixx" />
     <ClCompile Include="Gfx\TextureFormat.ixx" />
     <ClCompile Include="Gfx\VertexBuffer.cpp" />
+    <ClCompile Include="Gfx\WindingOrder.ixx" />
     <ClCompile Include="Shaders\Compiler\DxcArgs.ixx" />
     <ClCompile Include="Shaders\Compiler\IncludeHandler.ixx" />
     <ClCompile Include="Core\EnumBits.ixx" />

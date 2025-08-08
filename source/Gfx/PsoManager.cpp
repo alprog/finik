@@ -79,8 +79,9 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
     psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
     psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
 
-    // natural for left-handed. front face normals to the viewer (a^b = n)
-    psoDesc.RasterizerState.FrontCounterClockwise = false;
+    auto frontOrder = WindingOrder::CCW; // natural for right-handed. front face normals to the viewer (a^b = n)
+    auto gapiFrontOrder = reverse(frontOrder); // but we use flipped viewport, so reverse it
+    psoDesc.RasterizerState.FrontCounterClockwise = gapiFrontOrder == WindingOrder::CCW;
 
     if (settings.type == PipelineType::Geometry)
     {
@@ -142,3 +143,4 @@ std::shared_ptr<PipelineState> PSOManager::imguiCompile(const PipelineSettings& 
     device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pipelineState)) MUST;
     return std::make_shared<PipelineState>(pipelineState);
 }
+
