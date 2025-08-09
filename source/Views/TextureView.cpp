@@ -22,5 +22,5 @@ void TextureView::draw_content()
     ImTextureID textureId = (void*)handle.ptr;
     
     auto size = ImVec2(texture->Width, texture->Height);
-    ImGui::Image(textureId, size);
+    ImGui::Image(textureId, size, ImVec2(0, 1), ImVec2(1, 0));
 }

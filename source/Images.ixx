@@ -23,8 +23,14 @@ public:
     size_t getByteSize() const { return getTexelCount() * sizeof(Texel); };
 };
 
+export enum class ImageOrigin
+{
+    BottomLeft = 0,
+    TopLeft = 1
+};
+
 export namespace Images
 {
     std::shared_ptr<Image> loadPng(Path path);
-    std::shared_ptr<Image> loadPng(ByteBlob& blob);
+    std::shared_ptr<Image> loadPng(ByteBlob& blob, ImageOrigin origin = ImageOrigin::BottomLeft);
 }
