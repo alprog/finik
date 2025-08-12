@@ -6,15 +6,9 @@ import Material;
 
 export using GpuMaterialsConstantBuffer = GpuBuffer<MaterialsConstantBuffer>;
 
-export class MaterialManager
+export class MaterialManager : public Singleton<MaterialManager>
 {
 public:
-    static MaterialManager& GetInstance()
-    {
-        static MaterialManager instance;
-        return instance;
-    }
-
     MaterialManager();
 
     int32 Register(Material* material);

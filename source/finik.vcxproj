@@ -170,6 +170,8 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Math\BoundBox.ixx" />
     <ClCompile Include="Core\Math\LineSegment.ixx" />
     <ClCompile Include="Core\Geometry\Polygon.ixx" />
+    <ClCompile Include="Gfx\Brushes\Brush.ixx" />
+    <ClCompile Include="Gfx\Brushes\BrushManager.ixx" />
     <ClCompile Include="Gfx\GbUffer.ixx" />
     <ClCompile Include="Gfx\Jitter.ixx" />
     <ClCompile Include="Gfx\LineBuilder.ixx" />

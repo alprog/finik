@@ -19,6 +19,16 @@ struct PSInput
 	uint2 coord : TEXCOORD4;
 };
 
+struct TileDesc
+{
+	uint TextureId;
+};
+
+cbuffer MapConstantBuffer : register(b4)
+{
+    TileDesc Map[100];
+};
+
 PSInput VSMain(VSInput input)
 {
 	PSInput result;
