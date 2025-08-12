@@ -31,6 +31,6 @@ export enum class ImageOrigin
 
 export namespace Images
 {
-    std::shared_ptr<Image> loadPng(Path path);
-    std::shared_ptr<Image> loadPng(ByteBlob& blob, ImageOrigin origin = ImageOrigin::BottomLeft);
+    Ptr<Image> loadPng(Path path);
+    Ptr<Image> loadPng(ByteBlob& blob, ImageOrigin origin = ImageOrigin::BottomLeft);
 }

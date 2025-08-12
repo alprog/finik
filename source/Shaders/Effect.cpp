@@ -20,7 +20,7 @@ void Effect::setPipelineType(PipelineType type)
     }
 }
 
-void Effect::setVertexShader(std::shared_ptr<Shader> shader)
+void Effect::setVertexShader(Ptr<Shader> shader)
 {
     if (vertexShader != shader)
     {
@@ -29,7 +29,7 @@ void Effect::setVertexShader(std::shared_ptr<Shader> shader)
     }
 }
 
-void Effect::setPixelShader(std::shared_ptr<Shader> shader)
+void Effect::setPixelShader(Ptr<Shader> shader)
 {
     if (pixelShader != shader)
     {
@@ -38,7 +38,7 @@ void Effect::setPixelShader(std::shared_ptr<Shader> shader)
     }
 }
 
-std::shared_ptr<PipelineState> Effect::getPipelineState()
+Ptr<PipelineState> Effect::getPipelineState()
 {
     if (pipelineState == nullptr)
     {

@@ -30,20 +30,20 @@ int main(int argc, char* argv[])
 
     window->scene = &scene;
 
-    window->gui->views.append(std::make_unique<ConsoleView>("consoleView"));
-    window->gui->views.append(std::make_unique<SceneView>("sceneView1", scene));
-    //window->gui->views.append(std::make_unique<SceneView>("sceneView2", scene));
-    window->gui->views.append(std::make_unique<TextureView>("textureView", scene));
+    window->gui->views.append(MakeUnique<ConsoleView>("consoleView"));
+    window->gui->views.append(MakeUnique<SceneView>("sceneView1", scene));
+    //window->gui->views.append(MakeUnique<SceneView>("sceneView2", scene));
+    window->gui->views.append(MakeUnique<TextureView>("textureView", scene));
 
     SceneView* sceneView = (SceneView*)window->gui->views[1].get();
-    window->gui->views.append(std::make_unique<StatsView>("statsView", *sceneView));
+    window->gui->views.append(MakeUnique<StatsView>("statsView", *sceneView));
 
-    window->gui->views.append(std::make_unique<ProfilerView>("profilerView"));
+    window->gui->views.append(MakeUnique<ProfilerView>("profilerView"));
 
-    window->gui->views.append(std::make_unique<AssetsView>("assetsView"));
-    window->gui->views.append(std::make_unique<ShadersView>("shadersView"));
+    window->gui->views.append(MakeUnique<AssetsView>("assetsView"));
+    window->gui->views.append(MakeUnique<ShadersView>("shadersView"));
 
-    window->gui->views.append(std::make_unique<QualityView>("qualityView"));
+    window->gui->views.append(MakeUnique<QualityView>("qualityView"));
 
     //auto secondWindow = app.desktop_system.create_window(800, 600);
     //secondWindow->scene = &scene;

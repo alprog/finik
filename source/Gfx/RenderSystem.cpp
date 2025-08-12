@@ -152,17 +152,17 @@ void RenderSystem::createCommandQueue()
 
 void RenderSystem::createDescriptorHeap()
 {
-    rtvHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 20);
+    rtvHeap = MakeUnique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 20);
     rtvHandle = rtvHeap->getCpuHandle(0);
 
-    dsvHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 5);
+    dsvHeap = MakeUnique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 5);
 
-    srvCbvUavHeap = std::make_unique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 1000);
+    srvCbvUavHeap = MakeUnique<DescriptorHeap>(device.Get(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 1000);
 }
 
 void RenderSystem::createCommandListPool()
 {
-    commandListPool = std::make_unique<CommandListPool>(*this);
+    commandListPool = MakeUnique<CommandListPool>(*this);
 }
 
 void RenderSystem::createCommandAllocators()
@@ -177,7 +177,7 @@ void RenderSystem::createCommandAllocators()
 
 void RenderSystem::createOneshotAllocator()
 {
-    oneshotAllocator = std::make_unique<finik::gpumem::OneshotAllocator>(*this);
+    oneshotAllocator = MakeUnique<finik::gpumem::OneshotAllocator>(*this);
 }
 
 void RenderSystem::createCommandList()
@@ -193,7 +193,7 @@ void RenderSystem::createCommandList()
 
 void RenderSystem::createRenderContext()
 {
-    renderContext = std::make_unique<RenderContext>(*this, *commandList.Get());
+    renderContext = MakeUnique<RenderContext>(*this, *commandList.Get());
 }
 
 void RenderSystem::createProfiler()
@@ -203,8 +203,8 @@ void RenderSystem::createProfiler()
 
 void RenderSystem::createRootSignature()
 {
-    mainRootSignature = std::make_unique<MainRootSignature>(*this);
-    computeRootSignature = std::make_unique<ComputeRootSignature>(*this);
+    mainRootSignature = MakeUnique<MainRootSignature>(*this);
+    computeRootSignature = MakeUnique<ComputeRootSignature>(*this);
 }
 
 void RenderSystem::scheduleQueryResolving()

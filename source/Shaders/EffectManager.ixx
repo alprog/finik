@@ -12,7 +12,7 @@ export class EffectManager : public Singleton<EffectManager>
 public:
     void init();
 
-    std::shared_ptr<Effect> get(String key)
+    Ptr<Effect> get(String key)
     {
         if (Effects.empty())
         {
@@ -21,9 +21,9 @@ public:
         return Effects[key];
     }
 
-    std::shared_ptr<Effect> getShadowEffect(Effect& baseEffect);
+    Ptr<Effect> getShadowEffect(Effect& baseEffect);
 
-    void onShaderChanged(std::shared_ptr<Shader> shader)
+    void onShaderChanged(Ptr<Shader> shader)
     {
         for (auto [_, effect] : Effects)
         {
@@ -35,5 +35,5 @@ public:
     };
 
 private:
-    HashMap<String, std::shared_ptr<Effect>> Effects;
+    HashMap<String, Ptr<Effect>> Effects;
 };

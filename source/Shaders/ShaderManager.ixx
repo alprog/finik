@@ -31,22 +31,22 @@ public:
         }
     }
 
-    std::shared_ptr<Shader> getVertexShader(AssetPath assetPath, const std::string& entryName)
+    Ptr<Shader> getVertexShader(AssetPath assetPath, const std::string& entryName)
     {
         return getShader({assetPath, ShaderType::Vertex, entryName});
     }
 
-    std::shared_ptr<Shader> getPixelShader(AssetPath assetPath, const std::string& entryName)
+    Ptr<Shader> getPixelShader(AssetPath assetPath, const std::string& entryName)
     {
         return getShader({assetPath, ShaderType::Pixel, entryName});
     }
 
-    std::shared_ptr<Shader> getComputeShader(AssetPath assetPath, const std::string& entryName)
+    Ptr<Shader> getComputeShader(AssetPath assetPath, const std::string& entryName)
     {
         return getShader({assetPath, ShaderType::Compute, entryName});
     }
 
-    std::shared_ptr<Shader> getShader(const ShaderKey& key)
+    Ptr<Shader> getShader(const ShaderKey& key)
     {
         auto it = Shaders.find_value(key);
         if (it)
@@ -54,7 +54,7 @@ public:
             return *it;
         }
 
-        auto shader = std::make_shared<Shader>(key);
+        auto shader = MakePtr<Shader>(key);
         Shaders[key] = shader;
         return shader;
     }
@@ -109,6 +109,6 @@ private:
     ShaderByteCode fallbackPixelByteCode;
     ShaderByteCode fallbackComputeByteCode;
 
-    HashMap<ShaderKey, std::shared_ptr<Shader>> Shaders;
+    HashMap<ShaderKey, Ptr<Shader>> Shaders;
     bool hotReloadNeeded = false;
 };

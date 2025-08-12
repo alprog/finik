@@ -158,6 +158,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Characters\Character.cpp" />
     <ClCompile Include="Characters\Character.ixx" />
     <ClCompile Include="Core\Containers\BinaryHeap.ixx" />
+    <ClCompile Include="Core\Containers\Ptr.ixx" />
     <ClCompile Include="Core\Containers\Table.ixx" />
     <ClCompile Include="Core\Containers\RingBuffer.ixx" />
     <ClCompile Include="Core\Containers\SortedMap.ixx" />

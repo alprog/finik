@@ -5,7 +5,7 @@ import Images;
 import Finik.Core.Geometry;
 import MeshBuilder;
 
-Sprite3D::Sprite3D(std::shared_ptr<Asset> asset)
+Sprite3D::Sprite3D(Ptr<Asset> asset)
 {
     hotreloadDependencies.add(asset);
     rebuild();
@@ -14,11 +14,11 @@ Sprite3D::Sprite3D(std::shared_ptr<Asset> asset)
 void Sprite3D::rebuild()
 {
     auto path = hotreloadDependencies.getDependency(0).first->getPath();
-    std::shared_ptr image = Images::loadPng(Path::combine("C:/finik/assets", path));
+    Ptr image = Images::loadPng(Path::combine("C:/finik/assets", path));
     createMesh(image);
 }
 
-void Sprite3D::createMesh(std::shared_ptr<Image> image)
+void Sprite3D::createMesh(Ptr<Image> image)
 {
     // FindContours
     constexpr int alphaThreashold = 128;
@@ -68,5 +68,5 @@ void Sprite3D::createMesh(std::shared_ptr<Image> image)
         }
     }
 
-    mesh = std::shared_ptr<Mesh>( builder.Build() );
+    mesh = Ptr<Mesh>(builder.Build());
 }

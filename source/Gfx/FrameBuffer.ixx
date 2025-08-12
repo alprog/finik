@@ -27,8 +27,8 @@ public:
 
     SurfaceResolution resolution;
 
-    Array<std::unique_ptr<RenderTarget>> renderTargets;
-    std::unique_ptr<DepthStencil> depthStencil;
+    Array<UniquePtr<RenderTarget>> renderTargets;
+    UniquePtr<DepthStencil> depthStencil;
 
     D3D12_VIEWPORT viewport = {0};
     D3D12_RECT scissorRect;

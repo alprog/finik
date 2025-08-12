@@ -9,12 +9,12 @@ FrameBuffer::FrameBuffer(SurfaceResolution resolution, Array<TextureFormat> form
 {
     for (auto& format : formats)
     {
-        renderTargets.emplace_back(std::make_unique<RenderTarget>(format, resolution));
+        renderTargets.emplace_back(MakeUnique<RenderTarget>(format, resolution));
     }
 
     if (depthBufferEnabled)
     {
-        depthStencil = std::make_unique<DepthStencil>(resolution);
+        depthStencil = MakeUnique<DepthStencil>(resolution);
     }
 }
 

@@ -27,19 +27,19 @@ export struct MaterialsConstantBuffer
 export class Material
 {
 public:
-    Material(std::string name);
+    Material(String name);
     ~Material();
 
     void RefreshBuffer();
 
-    std::string Name;
+    String Name;
     Array<Color> Colors;
-    Array<std::shared_ptr<Texture>> Textures;
+    Array<Ptr<Texture>> Textures;
 
     int32 Index;
 
-    std::shared_ptr<Effect> ShadowEffect;
-    std::shared_ptr<Effect> Effect;
+    Ptr<Effect> ShadowEffect;
+    Ptr<Effect> Effect;
 };
 
 static_assert(sizeof(MaterialData) == 80);

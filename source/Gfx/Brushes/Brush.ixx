@@ -5,5 +5,7 @@ import Material;
 
 export class Brush
 {
-    std::shared_ptr<Material> material;
+public:
+    String name;
+    Ptr<Material> material;
 };

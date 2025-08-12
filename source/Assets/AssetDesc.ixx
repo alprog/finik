@@ -17,7 +17,7 @@ export struct AssetDesc
     {
     }
 
-    std::shared_ptr<Asset> get_asset()
+    Ptr<Asset> get_asset()
     {
         if (!is_loaded())
         {
@@ -63,5 +63,5 @@ export struct AssetDesc
     int32 version;
     AssetBundle* actual_bundle;
 
-    std::shared_ptr<Asset> loaded_asset;
+    Ptr<Asset> loaded_asset;
 };

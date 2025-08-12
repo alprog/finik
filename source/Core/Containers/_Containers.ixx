@@ -9,3 +9,4 @@ export import :String;
 export import :RingBuffer;
 export import :Table;
 export import :BinaryHeap;
+export import :Ptr;

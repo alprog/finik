@@ -170,7 +170,7 @@ public:
         return false;
     }
 
-    std::shared_ptr<Asset> get_asset(AssetPath path)
+    Ptr<Asset> get_asset(AssetPath path)
     {
         auto it = asset_descs.find_value(path);
         if (it)
@@ -181,7 +181,7 @@ public:
     }
 
     template <typename T>
-    std::shared_ptr<T> get(AssetPath path)
+    Ptr<T> get(AssetPath path)
     {
         return std::dynamic_pointer_cast<T, Asset>(get_asset(path));
     }

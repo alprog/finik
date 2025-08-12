@@ -31,7 +31,7 @@ Character::Character()
     
     sprite = SpriteManager::GetInstance().get(texture->getPath());
     
-    /*std::shared_ptr image = Images::loadPng(Path::combine("C:/finik/assets", texturePath));
+    /*Ptr image = Images::loadPng(Path::combine("C:/finik/assets", texturePath));
     MarchingSquares squares(*image, 128);
     squares.run();
 

@@ -77,7 +77,7 @@ Texture::Texture(Image& image)
 
 void Texture::hot_reload(ByteBlob& blob)
 {
-    std::shared_ptr image = Images::loadPng(blob);
+    Ptr image = Images::loadPng(blob);
     resize(image->width, image->height);
     setData(*image);
 

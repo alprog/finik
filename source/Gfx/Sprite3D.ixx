@@ -10,15 +10,15 @@ import Mesh;
 export class Sprite3D
 {
 public:
-    Sprite3D(std::shared_ptr<Asset> asset);
+    Sprite3D(Ptr<Asset> asset);
     void rebuild();
 
 private:
-    void createMesh(std::shared_ptr<Image> image);
+    void createMesh(Ptr<Image> image);
 
 public:
-    std::shared_ptr<Mesh> mesh;
-    std::shared_ptr<Texture> texture;
+    Ptr<Mesh> mesh;
+    Ptr<Texture> texture;
 
     AssetDependencies hotreloadDependencies;
 };

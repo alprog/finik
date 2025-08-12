@@ -65,23 +65,23 @@ private:
     MyPtr<ID3D12CommandAllocator> commandAllocators[3];
     MyPtr<ID3D12GraphicsCommandList> commandList;
 
-    std::unique_ptr<MainRootSignature> mainRootSignature;
-    std::unique_ptr<ComputeRootSignature> computeRootSignature;
+    UniquePtr<MainRootSignature> mainRootSignature;
+    UniquePtr<ComputeRootSignature> computeRootSignature;
 
     GpuProfiler* gpuProfiler = nullptr;
 
-    std::unique_ptr<RenderContext> renderContext;
+    UniquePtr<RenderContext> renderContext;
 
-    std::unique_ptr<DescriptorHeap> rtvHeap; // Render Target View
-    std::unique_ptr<DescriptorHeap> dsvHeap; // Depth Stencil View
-    std::unique_ptr<DescriptorHeap> srvCbvUavHeap;
+    UniquePtr<DescriptorHeap> rtvHeap; // Render Target View
+    UniquePtr<DescriptorHeap> dsvHeap; // Depth Stencil View
+    UniquePtr<DescriptorHeap> srvCbvUavHeap;
 
     MyPtr<ID3D12Device> device;
 
-    std::shared_ptr<PipelineState> pipelineState;
+    Ptr<PipelineState> pipelineState;
 
     D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;
 
-    std::unique_ptr<CommandListPool> commandListPool;
-    std::unique_ptr<finik::gpumem::OneshotAllocator> oneshotAllocator;
+    UniquePtr<CommandListPool> commandListPool;
+    UniquePtr<finik::gpumem::OneshotAllocator> oneshotAllocator;
 };

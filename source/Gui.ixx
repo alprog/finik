@@ -23,5 +23,5 @@ private:
     DesktopWindow& window;
 
 public:
-    Array<std::unique_ptr<View>> views;
+    Array<UniquePtr<View>> views;
 };

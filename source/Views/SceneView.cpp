@@ -25,7 +25,7 @@ SceneView::SceneView(const char* name, Scene& scene)
     auto& settings = QualityManager::GetInstance().getCurrent();
     SurfaceResolution surfaceResolution = SurfaceResolution{1024, 800, getSampleCount(settings.msaa)};
     
-    renderLane = std::make_shared<SceneRenderLane>(scene, camera, surfaceResolution);
+    renderLane = MakePtr<SceneRenderLane>(scene, camera, surfaceResolution);
 }
 
 const CameraController& SceneView::getCameraController() const
@@ -105,7 +105,7 @@ void SceneView::draw_content()
                 ID3D12GraphicsCommandList* commandList = ImGuiGetCurrentCommandList();
 
                 String effectName = Depth ? "imgui_ms_depth" : "imgui_ms";
-                std::shared_ptr effect = EffectManager::GetInstance().get(effectName);
+                Ptr effect = EffectManager::GetInstance().get(effectName);
                 commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
                 effect->getPipelineState()->use();
             

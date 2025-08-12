@@ -34,7 +34,7 @@ Scene::Scene()
 
     actors[1]->mesh = Assets::GetInstance().get<Model>("models/airplane.obj")->mesh;
 
-    light.shadowMap = std::make_unique<FrameBuffer>(SurfaceResolution(2048, 2048, 1), Array<TextureFormat>{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true);
+    light.shadowMap = MakeUnique<FrameBuffer>(SurfaceResolution(2048, 2048, 1), Array<TextureFormat>{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true);
     light.direction = Vector4(-1, -1, -1, 0).getNormalized();
 }
 

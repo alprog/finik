@@ -14,8 +14,8 @@ CommandQueue::CommandQueue(RenderSystem& renderSystem)
     auto result = renderSystem.get_device()->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
     if (FAILED(result)) throw;
 
-    frameFence = std::make_unique<Fence>(renderSystem, *queueImpl.Get());
-    fence = std::make_unique<Fence>(renderSystem, *queueImpl.Get());
+    frameFence = MakeUnique<Fence>(renderSystem, *queueImpl.Get());
+    fence = MakeUnique<Fence>(renderSystem, *queueImpl.Get());
 }
 
 ID3D12CommandQueue* CommandQueue::operator->() 

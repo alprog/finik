@@ -5,8 +5,8 @@ import Images;
 
 TileMap::TileMap()
 {
-    image = std::make_shared<Image>(256, 256);
+    image = MakePtr<Image>(256, 256);
     image->generateChessboard();
 
-    texture = std::make_shared<Texture>(*image);
+    texture = MakePtr<Texture>(*image);
 }

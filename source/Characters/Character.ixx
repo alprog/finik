@@ -19,7 +19,7 @@ public:
 
     LineVertexBuffer* debugLines;
 
-    std::shared_ptr<Sprite3D> sprite;
+    Ptr<Sprite3D> sprite;
 };
 
 

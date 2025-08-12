@@ -2,7 +2,7 @@ module Material;
 
 import MaterialManager;
 
-Material::Material(std::string name)
+Material::Material(String name)
     : Name{name}
 {
     Index = MaterialManager::GetInstance().Register(this);

@@ -10,15 +10,15 @@ void AssetDesc::create_asset()
 
     if (extension == ".png")
     {
-        loaded_asset = std::make_shared<Texture>(virtual_path);
+        loaded_asset = MakePtr<Texture>(virtual_path);
     }
     else if (extension == ".inc" || extension == ".hlsl")
     {
-        loaded_asset = std::make_shared<ShaderSourceFile>(virtual_path);
+        loaded_asset = MakePtr<ShaderSourceFile>(virtual_path);
     }
     else if (extension == ".obj")
     {
-        loaded_asset = std::make_shared<Model>(virtual_path);
+        loaded_asset = MakePtr<Model>(virtual_path);
     }
     else
     {

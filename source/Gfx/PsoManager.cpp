@@ -8,7 +8,7 @@ import RenderSystem;
 import RootSignature;
 import GBuffer;
 
-std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
+Ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
 {
     auto it = states.find_value(settings);
     if (it)
@@ -16,7 +16,7 @@ std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& setti
         return *it;
     }
 
-    std::shared_ptr<PipelineState> result;
+    Ptr<PipelineState> result;
     if (settings.type == PipelineType::Geometry)
     {
         result = standardCompile(settings);
@@ -49,7 +49,7 @@ std::shared_ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& setti
     return result;
 }
 
-std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
+Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
 {
     auto& renderSystem = Single::Get<RenderSystem>();
     auto device = renderSystem.get_device();
@@ -125,10 +125,10 @@ std::shared_ptr<PipelineState> PSOManager::standardCompile(const PipelineSetting
 
     ID3D12PipelineState* pipelineState = nullptr;
     device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pipelineState)) MUST;
-    return std::make_shared<PipelineState>(pipelineState);
+    return MakePtr<PipelineState>(pipelineState);
 }
 
-std::shared_ptr<PipelineState> PSOManager::imguiCompile(const PipelineSettings& settings)
+Ptr<PipelineState> PSOManager::imguiCompile(const PipelineSettings& settings)
 {
     auto& renderSystem = Single::Get<RenderSystem>();
     auto device = renderSystem.get_device();
@@ -141,6 +141,6 @@ std::shared_ptr<PipelineState> PSOManager::imguiCompile(const PipelineSettings& 
     
     ID3D12PipelineState* pipelineState = nullptr;
     device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pipelineState)) MUST;
-    return std::make_shared<PipelineState>(pipelineState);
+    return MakePtr<PipelineState>(pipelineState);
 }
 

@@ -9,7 +9,7 @@ import Sprite3D;
 export class SpriteManager : public Singleton<SpriteManager>
 {
 public:
-    std::shared_ptr<Sprite3D> get(AssetPath path)
+    Ptr<Sprite3D> get(AssetPath path)
     {
         auto ptr = sprites.find_value(path);
         if (ptr)
@@ -17,13 +17,13 @@ public:
             return *ptr;
         }
 
-        std::shared_ptr asset = Assets::GetInstance().get_asset(path); 
+        Ptr asset = Assets::GetInstance().get_asset(path); 
         if (!asset)
         {
             return nullptr;
         }
 
-        auto sprite = std::make_shared<Sprite3D>(asset);
+        auto sprite = MakePtr<Sprite3D>(asset);
         sprites[path] = sprite;
         return sprite;
     }
@@ -58,6 +58,6 @@ private:
     }
 
 private:
-    HashMap<AssetPath, std::shared_ptr<Sprite3D>> sprites;
+    HashMap<AssetPath, Ptr<Sprite3D>> sprites;
     bool hotReloadNeeded = false;
 };

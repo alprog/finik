@@ -28,5 +28,5 @@ protected:
     Camera camera;
     CameraController cameraContoller;
 
-    std::shared_ptr<SceneRenderLane> renderLane;
+    Ptr<SceneRenderLane> renderLane;
 };

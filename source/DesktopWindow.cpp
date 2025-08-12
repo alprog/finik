@@ -35,7 +35,7 @@ DesktopWindow::DesktopWindow(int width, int height)
 void DesktopWindow::setIcon()
 {
     ByteBlob blob("assets/icon.png");
-    std::shared_ptr image = Images::loadPng(blob, ImageOrigin::TopLeft);
+    Ptr image = Images::loadPng(blob, ImageOrigin::TopLeft);
     int32 w = image->width;
     int32 h = image->height;
     SDL_Surface* icon = SDL_CreateRGBSurfaceFrom(image->data, w, h, 32, w * 4,

@@ -46,5 +46,5 @@ export struct AssetDependencies
     }
 
 private:
-    Array<std::pair<std::shared_ptr<Asset>, int32>> dependencies;
+    Array<std::pair<Ptr<Asset>, int32>> dependencies;
 };

@@ -49,7 +49,7 @@ ShaderCompiler::~ShaderCompiler()
 
 ShaderCompiler::Output ShaderCompiler::Compile(ShaderKey key)
 {
-    std::shared_ptr<ShaderSourceFile> source_file = Assets::GetInstance().get<ShaderSourceFile>(key.AssetPath);
+    Ptr<ShaderSourceFile> source_file = Assets::GetInstance().get<ShaderSourceFile>(key.AssetPath);
     const String& sourceText = source_file->GetSourceText();
 
     auto output = Compile(sourceText, key.Type, key.EntryPoint);
@@ -62,7 +62,7 @@ ShaderCompiler::Output ShaderCompiler::Compile(const String& sourceText, ShaderT
     Output output;
     
     IncludeHandler includeHandler([this, &output](const String& filename) {
-        std::shared_ptr<ShaderSourceFile> sourceFile = Assets::GetInstance().get<ShaderSourceFile>(filename.c_str());
+        Ptr<ShaderSourceFile> sourceFile = Assets::GetInstance().get<ShaderSourceFile>(filename.c_str());
         output.sourceAssets.add(sourceFile);
 
         MyPtr<IDxcBlobEncoding> includeBlob;

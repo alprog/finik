@@ -92,7 +92,7 @@ void SwapChain::CreateRenderTargets()
 
     for (uint32 i = 0; i < NUM_BACK_BUFFER; i++)
     {
-        auto renderTarget = std::make_shared<SwapChainRenderTarget>();
+        auto renderTarget = MakePtr<SwapChainRenderTarget>();
         DescriptorHeap* heap = render_system.getRtvHeap();
         renderTarget->handle = heap->getNextHandle();
 

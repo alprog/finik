@@ -11,12 +11,12 @@ import WindingOrder;
 export class PSOManager
 {
 public:
-    std::shared_ptr<PipelineState> get_pso(const PipelineSettings& settings);
+    Ptr<PipelineState> get_pso(const PipelineSettings& settings);
 
 private:
-    std::shared_ptr<PipelineState> standardCompile(const PipelineSettings& settings);
-    std::shared_ptr<PipelineState> imguiCompile(const PipelineSettings& settings);
+    Ptr<PipelineState> standardCompile(const PipelineSettings& settings);
+    Ptr<PipelineState> imguiCompile(const PipelineSettings& settings);
 
 private:
-    HashMap<PipelineSettings, std::shared_ptr<PipelineState>> states;
+    HashMap<PipelineSettings, Ptr<PipelineState>> states;
 };

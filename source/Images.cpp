@@ -71,13 +71,13 @@ void readData(png_structp pngPtr, png_bytep data, png_size_t length)
     stream->read((char*)data, length);
 }
 
-std::shared_ptr<Image> Images::loadPng(Path path)
+Ptr<Image> Images::loadPng(Path path)
 {
     ByteBlob blob(path);
     return loadPng(blob);
 }
 
-std::shared_ptr<Image> Images::loadPng(ByteBlob& blob, ImageOrigin origin)
+Ptr<Image> Images::loadPng(ByteBlob& blob, ImageOrigin origin)
 {
     std::istringstream inputStream(blob.asString());
     if (validate(inputStream))
@@ -107,7 +107,7 @@ std::shared_ptr<Image> Images::loadPng(ByteBlob& blob, ImageOrigin origin)
 
         const unsigned int stride = imgWidth * bitdepth * channels / 8;
 
-        auto image = std::make_shared<Image>(imgWidth, imgHeight);
+        auto image = MakePtr<Image>(imgWidth, imgHeight);
 
         auto rowPtrs = new png_bytep[imgHeight];
         for (size_t i = 0; i < imgHeight; i++)

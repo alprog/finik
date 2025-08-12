@@ -19,20 +19,20 @@ public:
     String name;
 
     void setPipelineType(PipelineType type);
-    void setVertexShader(std::shared_ptr<Shader> shader);
-    void setPixelShader(std::shared_ptr<Shader> shader);
+    void setVertexShader(Ptr<Shader> shader);
+    void setPixelShader(Ptr<Shader> shader);
     
     PipelineType getPipelineType() const
     {
         return type;
     }
 
-    std::shared_ptr<Shader> getVertexShader() const
+    Ptr<Shader> getVertexShader() const
     {
         return vertexShader;
     }
 
-    std::shared_ptr<Shader> getPixelShader() const
+    Ptr<Shader> getPixelShader() const
     {
         return pixelShader;
     }
@@ -42,12 +42,12 @@ public:
         pipelineState = nullptr;
     }
 
-    std::shared_ptr<PipelineState> getPipelineState();
+    Ptr<PipelineState> getPipelineState();
 
 private:
     PipelineType type = PipelineType::Geometry;
-    std::shared_ptr<Shader> vertexShader;
-    std::shared_ptr<Shader> pixelShader;
+    Ptr<Shader> vertexShader;
+    Ptr<Shader> pixelShader;
 
-    std::shared_ptr<PipelineState> pipelineState;
+    Ptr<PipelineState> pipelineState;
 };
