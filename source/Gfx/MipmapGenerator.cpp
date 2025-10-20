@@ -111,9 +111,9 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     auto& computeContext = commandList.getComputeContext();
 
     // Set up state
+    commandList.listImpl->SetDescriptorHeaps(1, descriptorHeap.GetAddressOf());
     computeContext.setupRoot();
     commandList.listImpl->SetPipelineState(pso.Get());
-    commandList.listImpl->SetDescriptorHeaps(1, descriptorHeap.GetAddressOf());
 
     D3D12_GPU_DESCRIPTOR_HANDLE handle(descriptorHeap->GetGPUDescriptorHandleForHeapStart());
     computeContext.setTexture(handle);
