@@ -91,10 +91,10 @@ private:
             for (int y = 0; y < cells.height - 1; y++)
             {
                 int n = 0;
-                n += cells.get(x + 0, y + 0).isFilled() * 8;
-                n += cells.get(x + 1, y + 0).isFilled() * 4;
-                n += cells.get(x + 1, y + 1).isFilled() * 2;
-                n += cells.get(x + 0, y + 1).isFilled() * 1;
+                n += cells.get(x + 0, y + 1).isFilled() * 8;
+                n += cells.get(x + 1, y + 1).isFilled() * 4;
+                n += cells.get(x + 1, y + 0).isFilled() * 2;
+                n += cells.get(x + 0, y + 0).isFilled() * 1;
 
                 if (n == 0 || n == 15)
                     continue;
@@ -102,8 +102,8 @@ private:
                 int baseIndex = edges.getIndex(x * 2 + 1, y * 2 + 1);
                 int left = baseIndex - 1;
                 int right = baseIndex + 1;
-                int top = baseIndex - edges.width;
-                int bottom = baseIndex + edges.width;
+                int top = baseIndex + edges.width;
+                int bottom = baseIndex - edges.width;
               
                 switch (n)
                 {

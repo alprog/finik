@@ -14,7 +14,7 @@ Sprite3D::Sprite3D(Ptr<Asset> asset)
 void Sprite3D::rebuild()
 {
     auto path = hotreloadDependencies.getDependency(0).first->getPath();
-    Ptr image = Images::loadPng(Path::combine("C:/finik/assets", path));
+    Ptr image = Images::loadPng(Path::combine("C:/projects/finik/assets", path));
     createMesh(image);
 }
 

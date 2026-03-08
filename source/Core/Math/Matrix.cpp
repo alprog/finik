@@ -219,6 +219,10 @@ Matrix Matrix::getInverse() const
     {
         det += m[0][i] * matrix.m[i][0];
     }
+    if (det == 0)
+    {
+        throw "no inverse exists";
+    }
     matrix.scaleComponents(1.0f / det);
     return matrix;
 }

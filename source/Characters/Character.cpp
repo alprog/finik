@@ -31,24 +31,32 @@ Character::Character()
     
     sprite = SpriteManager::GetInstance().get(texture->getPath());
     
-    /*Ptr image = Images::loadPng(Path::combine("C:/finik/assets", texturePath));
+    Ptr image = Images::loadPng(Path::combine("C:/projects/finik/assets", texturePath));
     MarchingSquares squares(*image, 128);
     squares.run();
 
     LineBuilder builder;
     builder.setColor(Color::Red);
-    builder.line({0, -0.5, 0}, {0, 0.5, 0});
-    builder.line({0, -0.5, 2}, {0, 0.5, 2});
-    builder.line({0, -0.5, 0}, {0, -0.5, 2});
-    builder.line({0, 0.5, 0}, {0, 0.5, 2});
-
+    builder.line({-0.5, 0, 0}, {0.5, 0, 0});
+    builder.line({-0.5, 0, 2}, {0.5, 0, 2});
+    builder.line({-0.5, 0, 0}, {-0.5, 0, 2});
+    builder.line({0.5, 0, 0}, {0.5, 0, 2});
+     
     auto mult = [](Vector2 p) {
         p = p / 64.0f;
-        p.y = 1 - p.y;
-        return Vector3(0, 0.5 - p.x, p.y * 2);
+        return Vector3(0.5 - p.x, 0, p.y * 2);
     };
 
     auto& contours = squares.getContours();
+
+    static int ccwCount = 0;
+    for (auto& simplePolygon : contours)
+    {
+        if (simplePolygon.isCCW())
+        {            
+            ccwCount++;
+        }
+    }
 
     PolygonSimplifier simplifier;
     simplifier.simplify(contours, 30);
@@ -70,7 +78,6 @@ Character::Character()
         builder.line(mult(a), mult(b));
         builder.line(mult(b), mult(c));
         builder.line(mult(c), mult(a));
-        break;
     }    
 
     builder.setColor(Color::Red);
@@ -85,5 +92,5 @@ Character::Character()
         }
     }
 
-    debugLines = builder.build();*/
+    debugLines = builder.build();
 }

@@ -83,6 +83,6 @@ GBufferOutput2 PSMain(PSInput input)
 	Out.RT4 = float4(1, 1, 0, 1);
 
 	
-
+	
 	return Out;
 }
