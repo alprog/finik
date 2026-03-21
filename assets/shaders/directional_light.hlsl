@@ -48,47 +48,52 @@ float4 restoreWorldPosition(float2 uv, uint sampleIndex)
     return worldPos / worldPos.w;
 }
 
-float getShadow(float2 shadowUV, float refDepth)
+float getShadow(float2 shadowUV, float refDepth, float bias)
 {
 	if (shadowUV.x < 0 || shadowUV.x > 1 || shadowUV.y < 0 || shadowUV.y > 1)
 	{
 		return 0;
 	}
 
-	float bias = 0.005;
+
+	
+	int s = 2;
 	
 	float result = 0;
-	for (int x = -2; x <= 2; x++)
+	int count = 0;
+	for (int x = -s; x <= s; x++)
 	{
-		for (int y = -2; y <= 2; y++)
+		for (int y = -s; y <= s; y++)
 		{
             float shadowValue = sampleTex(ShadowTextureId, shadowUV + float2(x, y) / 2048, PointSampler).r;
 			result += refDepth > shadowValue + bias ? 1 : 0;
+			count += 1;
 		}
 	}
 
-	return result / 25;
+	return result / count;
 }
 
 float4 calcLighting(float2 uv, uint sampleIndex)
 {
 	float4 albedo = sampleGTex(RT0Id, uv, sampleIndex);
 	float3 normal = sampleGTex(RT1Id, uv, sampleIndex).rgb;
-
 	normal = normalize(normal * 2 - 1);
 
 	float4 ambient = float4(0.2, 0.2, 0.2, 1);
 
-	float diffuse = saturate(dot(normal, -LightDirection.xyz));	
+	float NL = dot(normal, -LightDirection.xyz);
+	float diffuse = saturate(NL);	
 
 	float4 worldPos = restoreWorldPosition(uv, sampleIndex);
 	worldPos = worldPos / worldPos.w;
 		
 	float4 shadowPos = mul(worldPos, ShadowViewProjection);
 	shadowPos = shadowPos / shadowPos.w;
-	float2 shadowUV = float2(shadowPos.x / 2 + 0.5, shadowPos.y / 2 + 0.5);
+	float2 shadowUV = shadowPos.xy / 2 + 0.5;
 	
-	float shadow = getShadow(shadowUV, shadowPos.z);
+	float bias = 0.005;
+	float shadow = getShadow(shadowUV, shadowPos.z, bias);
 	
 	diffuse = lerp(diffuse, 0, shadow);
 	

@@ -22,15 +22,17 @@ public:
         ObjLoader loader;
         loader.load(blob.asString());
 
+        bool sameHand = true;
+
         MeshBuilder builder;
         for (auto& face : loader.faces)
         {
             Array<StandardVertex> vertices;
             vertices.resize(face.count());
-            int32 index = face.count();
+            int32 index = sameHand ? 0 : face.count();
             for (auto& desc : face)
             {
-                StandardVertex& vertex = vertices[--index];
+                StandardVertex& vertex = vertices[sameHand ? index++ : --index];
                 vertex.position = rub_to_rfu(loader.positions[desc.pi]);
                 vertex.normal = rub_to_rfu(loader.normals[desc.ni]);
                 vertex.texCoord = loader.tex_coords[desc.ti];

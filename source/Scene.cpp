@@ -27,12 +27,18 @@ Scene::Scene()
 
     actors.append(new Actor());
     actors.append(new Actor());
+    actors.append(new Actor());
+    actors.append(new Actor());
+    actors.append(new Actor());
 
     characters.append(new Character());
 
     characters[0]->transformMatrix = Matrix::RotationZ(std::numbers::pi) * Matrix::Translation({14.5f, 14.5f, 0});
 
     actors[1]->mesh = Assets::GetInstance().get<Model>("models/airplane.obj")->mesh;
+    actors[2]->mesh = Assets::GetInstance().get<Model>("models/Axis.obj")->mesh;
+    actors[3]->mesh = Assets::GetInstance().get<Model>("models/littleman.obj")->mesh;
+    actors[4]->mesh = Assets::GetInstance().get<Model>("models/wooden watch tower2.obj")->mesh;
 
     light.shadowMap = MakeUnique<FrameBuffer>(SurfaceResolution(2048, 2048, 1), Array<TextureFormat>{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true);
     light.direction = Vector4(-1, -1, -1, 0).getNormalized();
@@ -42,8 +48,12 @@ void Scene::update(float deltaTime)
 {
     light.direction = light.direction * Matrix::RotationZ(deltaTime / 2);
 
-    actors[0]->transformMatrix = Matrix::Translation(Vector3(castedPos.x, castedPos.y, 0.0f));
+    actors[0]->transformMatrix = Matrix::Translation(Vector3(castedPos.x, castedPos.y, 0.5f));
     actors[1]->transformMatrix = Matrix::Translation(Vector3(32, 32, 5));
+
+    actors[2]->transformMatrix = Matrix::Translation(Vector3(0, 0, 0));
+    actors[3]->transformMatrix = Matrix::Translation(Vector3(64, 64, 0.5));
+    actors[4]->transformMatrix = Matrix::Translation(Vector3(32, 64, -1));
 }
 
 void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, Camera& camera)
@@ -73,13 +83,15 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     auto h = calcLightPos({+1, -1}, maxHeight);
     BoundBox<Vector3> boundBox(a, b, c, d, e, f, g, h);
 
-    auto diagonalLength = boundBox.size().length();
-
-
     auto size = boundBox.size();
-    size.y = 0;
+    auto center = boundBox.center();
+   
+    auto offset = Vector3(center.x, 0, center.z);
+    offset = light.shadowCamera.viewMatrix.getTransposed().MultiplyPoint(offset);
+    light.shadowCamera.lookAt += offset;
+    light.shadowCamera.position += offset;
 
-    light.shadowCamera.OrthoSize = size.length();
+    light.shadowCamera.OrthoSize = std::max(size.x, size.z);
     light.shadowCamera.FieldOfView = 0;
     light.shadowCamera.NearPlane = boundBox.min.y;
     light.shadowCamera.FarPlane = boundBox.max.y;   
