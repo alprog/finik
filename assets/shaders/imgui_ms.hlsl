@@ -40,5 +40,7 @@ float4 PSMain(PS_INPUT input) : SV_Target
 		color += texture0.Load(pos, i);
 	}
 	
+	//color.xyz = float3(color.x, color.z, color.y);
+	
 	return color / sampleCount;
 }

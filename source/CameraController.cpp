@@ -63,6 +63,10 @@ void CameraController::HandleInput(float deltaTime)
     {
         PanningScreenPerSecond *= 3;
     }
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+    {
+        PanningScreenPerSecond /= 5;
+    }
     FocusPosition += moveDirection * GetVisibleAreaLength() * PanningScreenPerSecond * deltaTime;
 
     if (ImGui::IsKeyDown(ImGuiKey_Z))
@@ -122,8 +126,9 @@ void CameraController::RefreshCameraPosition()
     Camera.lookAt = FocusPosition;
 
     Camera.FieldOfView = GetFieldOfView();
-    Camera.OrthoSize = GetVisibleAreaLength() * std::sin(angle);
 
+    Camera.OrthoSize.y = GetVisibleAreaLength() * std::sin(angle);
+    
     Camera.calcViewMatrix();
     Camera.calcProjectionMatrix();
 }

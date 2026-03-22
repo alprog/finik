@@ -18,6 +18,7 @@ import Assets;
 import Model;
 import SurfaceResolution;
 import EffectManager;
+import QualityManager;
 
 // for intellisense
 
@@ -40,13 +41,14 @@ Scene::Scene()
     actors[3]->mesh = Assets::GetInstance().get<Model>("models/littleman.obj")->mesh;
     actors[4]->mesh = Assets::GetInstance().get<Model>("models/wooden watch tower2.obj")->mesh;
 
-    light.shadowMap = MakeUnique<FrameBuffer>(SurfaceResolution(2048, 2048, 1), Array<TextureFormat>{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true);
+    auto size = QualityManager::GetInstance().getCurrent().shadowMapResolution;
+    light.shadowMap = MakeUnique<FrameBuffer>(SurfaceResolution(size, size, 1), Array<TextureFormat>{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true);
     light.direction = Vector4(-1, -1, -1, 0).getNormalized();
 }
 
 void Scene::update(float deltaTime)
 {
-    light.direction = light.direction * Matrix::RotationZ(deltaTime / 2);
+    //light.direction = light.direction * Matrix::RotationZ(deltaTime / 2);
 
     actors[0]->transformMatrix = Matrix::Translation(Vector3(castedPos.x, castedPos.y, 0.5f));
     actors[1]->transformMatrix = Matrix::Translation(Vector3(32, 32, 5));
@@ -60,8 +62,8 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
 {
     light.shadowMap->startRendering(commandList);
 
-    light.shadowCamera.lookAt = camera.lookAt;
-    light.shadowCamera.position = light.shadowCamera.lookAt - light.direction.xyz() * 1000;
+    light.shadowCamera.lookAt = Vector3::Zero;
+    light.shadowCamera.position = -light.direction.xyz() * 1000;
     light.shadowCamera.calcViewMatrix();
 
     auto minHeight = -1;
@@ -83,15 +85,24 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     auto h = calcLightPos({+1, -1}, maxHeight);
     BoundBox<Vector3> boundBox(a, b, c, d, e, f, g, h);
 
-    auto size = boundBox.size();
-    auto center = boundBox.center();
-   
-    auto offset = Vector3(center.x, 0, center.z);
-    offset = light.shadowCamera.viewMatrix.getTransposed().MultiplyPoint(offset);
-    light.shadowCamera.lookAt += offset;
-    light.shadowCamera.position += offset;
+    auto minSize = std::max(boundBox.size().x, boundBox.size().z);
+    auto logSize = std::pow(2.0f, std::ceil(std::log2(minSize)));
 
-    light.shadowCamera.OrthoSize = std::max(size.x, size.z);
+    auto size = Vector3::One * logSize;
+    auto center = boundBox.center();
+
+    auto qualitySettings = QualityManager::GetInstance().getCurrent();
+    if (qualitySettings.shadowSnapping)
+    {
+        float texelWorldSize = std::max(size.x, size.z) / qualitySettings.shadowMapResolution;
+
+        center.x = std::floor(center.x / texelWorldSize) * texelWorldSize;
+        center.z = std::floor(center.z / texelWorldSize) * texelWorldSize;
+    }
+
+    light.shadowCamera.OrthoSize.y = std::max(size.x, size.z);
+    light.shadowCamera.OrthoOffset = -Vector2(center.x, center.z);
+
     light.shadowCamera.FieldOfView = 0;
     light.shadowCamera.NearPlane = boundBox.min.y;
     light.shadowCamera.FarPlane = boundBox.max.y;   

@@ -40,8 +40,6 @@ void Camera::calcProjectionMatrix()
         0, 0, 0, 1
     };
 
-    float jx = Jitter.x;
-    float jy = Jitter.y;
     if (FieldOfView)
     {
         // perspective
@@ -54,15 +52,24 @@ void Camera::calcProjectionMatrix()
         projectionMatrix = Matrix{
             scaleX, 0, 0, 0,
             0, scaleY, 0, 0,
-            jx, jy, m22, 1,
+            0, 0, m22, 1,
             0,  0,  m32, 0
         };
     }
     else
     {
         // orthogonal
-        auto height = OrthoSize;
-        auto width = height * AspectRatio;
+        auto height = OrthoSize.y;
+        auto width = OrthoSize.x ? OrthoSize.x : height * AspectRatio;
+
+        auto r = OrthoOffset.x + width / 2;
+        auto l = OrthoOffset.x - width / 2;
+        auto t = OrthoOffset.y + height / 2;
+        auto b = OrthoOffset.y - height / 2;
+                
+        auto tx = (r + l) / width;
+        auto ty = (t + b) / height;
+
         auto depth = FarPlane - NearPlane;
 
         float scaleX = 2.0f / width;
@@ -75,11 +82,12 @@ void Camera::calcProjectionMatrix()
             scaleX, 0, 0, 0,
             0, scaleY, 0, 0,
             0, 0, scaleZ, 0,
-            jx, jy, m32, 1
+            tx, ty, m32, 1
         };
     }
 
-    projectionMatrix = rfu2ruf * projectionMatrix;
+    auto jitter = Matrix::Translation(Vector3(Jitter, 0));
+    projectionMatrix = rfu2ruf * projectionMatrix * jitter;
 }
 
 Ray Camera::castRay(Vector2 ndcPoint) const

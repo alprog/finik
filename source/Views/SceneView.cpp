@@ -16,6 +16,20 @@ import FrameBuffer;
 
 // for intellisense
 
+const char* bufferNames[] = { 
+    "Default", "GBuffer", "LightBuffer", "ShadowMap", "ResolveBuffer", "DebugBuffer"
+};
+
+enum BufferType
+{
+    Default,
+    GBuffer,
+    LightBuffer,
+    ShadowMap,
+    ResolveBuffer,
+    DebugBuffer
+};
+
 SceneView::SceneView(const char* name, Scene& scene)
     : View{name}
     , scene{scene}
@@ -40,45 +54,48 @@ void SceneView::update(float deltaTime)
     DeltaTime = deltaTime;
 }
 
-FrameBuffer& getBuffer(SceneRenderLane& renderLane, Scene& scene, int BufferType)
+FrameBuffer& getBuffer(SceneRenderLane& renderLane, Scene& scene, BufferType bufferType)
 {
-    if (BufferType == 0)
+    switch (bufferType)
     {
-        return renderLane.getGBuffer();
-    }
-    else if (BufferType == 1)
-    {
-        return renderLane.getLightBuffer();
-    }
-    else if (BufferType == 2)
-    {
-        return *scene.light.shadowMap;
-    }
-    else if (BufferType == 3)
-    {
-        return renderLane.getResolveBuffer();
-    }
-    else
-    {
-        return renderLane.getDebugBuffer();
+        case BufferType::GBuffer:
+            return renderLane.getGBuffer();
+
+        case BufferType::LightBuffer:
+            return renderLane.getLightBuffer();
+
+        case BufferType::ShadowMap:
+            return *scene.light.shadowMap;
+
+        case BufferType::ResolveBuffer:
+            return renderLane.getResolveBuffer();
+
+        case BufferType::DebugBuffer:
+            return renderLane.getDebugBuffer();
+
+        default:
+            const bool isTaa = QualityManager::GetInstance().getCurrent().taa;
+            bufferType = isTaa ? BufferType::ResolveBuffer : BufferType::LightBuffer;
+            return getBuffer(renderLane, scene, bufferType);
     }
 }
 
 void SceneView::draw_content()
 {
-    static int BufferType = 3;
-    static int SelectedType = 0;
+    static BufferType bufferType = BufferType::Default;
+    static MRT selectedType = MRT::RT0;
 
-    static const char* items[]{"GBuffer", "LightBuffer", "ShadowMap", "ResolveBuffer", "DebugBuffer"};
+    BufferType* bufferTypePtr = &bufferType;
+
     ImGui::SetNextItemWidth(100);
-    ImGui::Combo("Buffer", &BufferType, items, 5);
+    ImGui::Combo("Buffer", reinterpret_cast<int*>(&bufferType), bufferNames, 5);
     ImGui::SameLine();
     ImGui::SetNextItemWidth(100);
-    static const char* items2[]{"RT0", "RT1", "RT2", "RT3", "DS"};
-    ImGui::Combo("Surface", &SelectedType, items2, 5);
+    static const char* rtNames[]{"RT0", "RT1", "RT2", "RT3", "DS"};
+    ImGui::Combo("Surface", reinterpret_cast<int*>(&selectedType), rtNames, 5);
 
     static bool Depth;
-    Depth = SelectedType == MRT::DS;
+    Depth = selectedType == MRT::DS;
 
     auto imSize = ImGui::GetContentRegionAvail();
     auto msaa = QualityManager::GetInstance().getCurrent().msaa;
@@ -89,8 +106,8 @@ void SceneView::draw_content()
         getSampleCount(msaa)
     });
 
-    auto& buffer = getBuffer(*renderLane, scene, BufferType);
-    auto surface = buffer.getRenderSurface(static_cast<MRT>(SelectedType));
+    auto& buffer = getBuffer(*renderLane, scene, bufferType);
+    auto surface = buffer.getRenderSurface(selectedType);
     if (surface)
     {
         D3D12_GPU_DESCRIPTOR_HANDLE handle = surface->textureHandle.getGPU();

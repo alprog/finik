@@ -22,7 +22,8 @@ public:
     Vector3 position;
     Vector3 lookAt;
     float FieldOfView;
-    float OrthoSize;
+    Vector2 OrthoSize;
+    Vector2 OrthoOffset;
     float FarPlane = 400.0f;
     float NearPlane = 0.1f;
     float AspectRatio = 1.0f;

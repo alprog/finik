@@ -31,6 +31,7 @@ void QualityView::draw_content()
     settings.msaa = static_cast<MSAA>(selectedMsaaType);
 
     ImGui::Checkbox("TAA", &settings.taa);
+    ImGui::Checkbox("ShadowSnapping", &settings.shadowSnapping);
 
     bool IsSame = QualityManager::GetInstance().getCurrent() == settings;
 

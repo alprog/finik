@@ -92,7 +92,7 @@ float4 calcLighting(float2 uv, uint sampleIndex)
 	shadowPos = shadowPos / shadowPos.w;
 	float2 shadowUV = shadowPos.xy / 2 + 0.5;
 	
-	float bias = 0.005;
+	float bias = 0.02 * (1 - NL);
 	float shadow = getShadow(shadowUV, shadowPos.z, bias);
 	
 	diffuse = lerp(diffuse, 0, shadow);
