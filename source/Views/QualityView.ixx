@@ -19,5 +19,4 @@ protected:
 
     QualitySettings settings;
     bool needApply = false;
-    int selectedMsaaType = 0;
 };

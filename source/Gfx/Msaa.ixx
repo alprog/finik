@@ -1,6 +1,6 @@
 export module Msaa;
 
-export enum class MSAA : char
+export enum class MSAA : int
 {
     Off = 0,
     x2 = 1,

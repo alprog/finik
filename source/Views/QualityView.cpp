@@ -21,17 +21,17 @@ void QualityView::update(float deltaTime)
 void QualityView::loadCurrent()
 {
     settings = QualityManager::GetInstance().getCurrent();
-    selectedMsaaType = static_cast<int32>(settings.msaa);
 }
 
 void QualityView::draw_content()
 {
     static const char* items[]{"Off", "MSAAx2", "MSAAx4", "MSAAx8"};
-    ImGui::Combo("Surface", &selectedMsaaType, items, 4);
-    settings.msaa = static_cast<MSAA>(selectedMsaaType);
+    ImGui::Combo("Surface", reinterpret_cast<int*>(&settings.msaa), items, 4);
 
     ImGui::Checkbox("TAA", &settings.taa);
     ImGui::Checkbox("ShadowSnapping", &settings.shadowSnapping);
+
+    ImGui::InputInt("ShadowMapSize", &settings.shadowMapResolution);
 
     bool IsSame = QualityManager::GetInstance().getCurrent() == settings;
 

@@ -86,21 +86,20 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     BoundBox<Vector3> boundBox(a, b, c, d, e, f, g, h);
 
     auto minSize = std::max(boundBox.size().x, boundBox.size().z);
-    auto logSize = std::pow(2.0f, std::ceil(std::log2(minSize)));
+    auto size = std::pow(2.0f, std::ceil(std::log2(minSize)));
 
-    auto size = Vector3::One * logSize;
     auto center = boundBox.center();
 
     auto qualitySettings = QualityManager::GetInstance().getCurrent();
     if (qualitySettings.shadowSnapping)
     {
-        float texelWorldSize = std::max(size.x, size.z) / qualitySettings.shadowMapResolution;
+        float texelWorldSize = size / light.shadowMap->resolution.width;
 
         center.x = std::floor(center.x / texelWorldSize) * texelWorldSize;
         center.z = std::floor(center.z / texelWorldSize) * texelWorldSize;
     }
 
-    light.shadowCamera.OrthoSize.y = std::max(size.x, size.z);
+    light.shadowCamera.OrthoSize.y = size;
     light.shadowCamera.OrthoOffset = -Vector2(center.x, center.z);
 
     light.shadowCamera.FieldOfView = 0;

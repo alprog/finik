@@ -57,7 +57,7 @@ float getShadow(float2 shadowUV, float refDepth, float bias)
 
 
 	
-	int s = 2;
+	int s = 0;
 	
 	float result = 0;
 	int count = 0;

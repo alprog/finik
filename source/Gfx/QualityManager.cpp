@@ -1,6 +1,10 @@
 module QualityManager;
 
 import EffectManager;
+import App;
+import SurfaceResolution;
+import Scene;
+import RenderSystem;
 
 void QualityManager::apply(QualitySettings settings)
 {
@@ -14,5 +18,18 @@ void QualityManager::apply(QualitySettings settings)
             }
         }
     }
+
+    if (this->settings.shadowMapResolution != settings.shadowMapResolution)
+    {
+        RenderSystem& render_system = Single::Get<RenderSystem>();
+        render_system.get_command_queue().Flush();
+
+        SurfaceResolution surfaceResolution = {settings.shadowMapResolution, settings.shadowMapResolution, 1};
+        for (Scene* scene : App::GetInstance().scene_manager.scenes)
+        {
+            scene->light.shadowMap->resize(surfaceResolution);
+        }
+    }
+
     this->settings = settings;
 }
