@@ -1,6 +1,7 @@
 export module Finik.Core.Math:LineSegment;
 
 import :Vector2;
+import :Vector3;
 
 export struct LineSegment
 {

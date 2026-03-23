@@ -83,12 +83,12 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     auto f = calcLightPos({+1, +1}, maxHeight);
     auto g = calcLightPos({-1, -1}, maxHeight);
     auto h = calcLightPos({+1, -1}, maxHeight);
-    BoundBox<Vector3> boundBox(a, b, c, d, e, f, g, h);
+    BoundBox<Vector3> viewFrustrumBoundBox(a, b, c, d, e, f, g, h);
 
-    auto minSize = std::max(boundBox.size().x, boundBox.size().z);
+    auto minSize = std::max(viewFrustrumBoundBox.size().x, viewFrustrumBoundBox.size().z);
     auto size = std::pow(2.0f, std::ceil(std::log2(minSize)));
 
-    auto center = boundBox.center();
+    auto center = viewFrustrumBoundBox.center();
 
     auto qualitySettings = QualityManager::GetInstance().getCurrent();
     if (qualitySettings.shadowSnapping)
@@ -103,8 +103,8 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     light.shadowCamera.OrthoOffset = -Vector2(center.x, center.z);
 
     light.shadowCamera.FieldOfView = 0;
-    light.shadowCamera.NearPlane = boundBox.min.y;
-    light.shadowCamera.FarPlane = boundBox.max.y;   
+    light.shadowCamera.NearPlane = viewFrustrumBoundBox.min.y;
+    light.shadowCamera.FarPlane = viewFrustrumBoundBox.max.y;   
     light.shadowCamera.calcProjectionMatrix();
 
     render(context, light.shadowCamera, Matrix::Identity, Vector2::Zero, RenderPass::Shadow);
