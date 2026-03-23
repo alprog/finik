@@ -32,6 +32,7 @@ void QualityView::draw_content()
     ImGui::Checkbox("ShadowSnapping", &settings.shadowSnapping);
 
     ImGui::InputInt("ShadowMapSize", &settings.shadowMapResolution);
+    ImGui::InputInt("PCFSize", &settings.pcfSize);
 
     bool IsSame = QualityManager::GetInstance().getCurrent() == settings;
 

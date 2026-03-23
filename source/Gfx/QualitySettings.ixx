@@ -8,6 +8,7 @@ export struct QualitySettings
     bool taa = false;
     bool shadowSnapping = true;
     int shadowMapResolution = 2048;
+    int pcfSize = 3;
 
     bool operator==(const QualitySettings&) const = default;
     bool operator!=(const QualitySettings&) const = default;

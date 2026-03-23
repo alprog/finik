@@ -6,6 +6,7 @@ cbuffer LightConstantBuffer : register(b3)
 	float4 LightDirection;
 	float4x4 ShadowViewProjection;
 	uint ShadowTextureId;
+	uint PCFSize;
 };
 
 struct VSInput
@@ -57,7 +58,7 @@ float getShadow(float2 shadowUV, float refDepth, float bias)
 
 
 	
-	int s = 0;
+	int s = PCFSize;
 	
 	float result = 0;
 	int count = 0;

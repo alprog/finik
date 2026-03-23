@@ -40,6 +40,7 @@ export struct LightConstants
     Vector4 LightDirection;
     Matrix ShadowViewProjection;
     uint32 ShadowTextureId;
+    uint32 PCFSize;
 };
 
 export struct TAAConstants

@@ -123,6 +123,7 @@ void SceneRenderLane::render()
         lightConstants->LightDirection = light.direction;
         lightConstants->ShadowViewProjection = light.shadowCamera.viewMatrix * light.shadowCamera.projectionMatrix;
         lightConstants->ShadowTextureId = light.shadowMap->depthStencil->textureHandle.getIndex();
+        lightConstants->PCFSize = QualityManager::GetInstance().getCurrent().pcfSize;
 
         commandList.getRenderContext().commandList.SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
         
