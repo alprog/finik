@@ -1,4 +1,4 @@
-export module Finik.Core.Geometry:Polygon;
+export module Finik.Core.Geometry2D:Polygon;
 
 import Finik.Core.Math;
 import Finik.Core.Containers;
@@ -25,7 +25,7 @@ export struct Polygon
         float result = 0;
         for (int32 i = 0; i < pointCount(); i++)
         {
-            result += getSegment(i).calcSignedAreaUnderSegment();
+            result += getSegment(i). calcSignedAreaUnderSegment();
         }
         return result;
     }

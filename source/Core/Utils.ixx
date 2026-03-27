@@ -86,6 +86,11 @@ export
         return a * (1.0f - k) + b * k;
     }
 
+    Vector3 lerp(Vector3 a, Vector3 b, float k)
+    {
+        return a * (1.0f - k) + b * k;
+    }
+
     float triangleArea(Vector2 a, Vector2 b, Vector2 c)
     {
         return 0.5f * std::abs(a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y));

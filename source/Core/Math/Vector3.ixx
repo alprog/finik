@@ -4,7 +4,14 @@ import :Vector2;
 
 export struct Vector3
 {
-    float x, y, z;
+    union
+    {
+        struct
+        {
+            float x, y, z;
+        };
+        float components[3];
+    };
 
     static const Vector3 Zero;
     static const Vector3 One;

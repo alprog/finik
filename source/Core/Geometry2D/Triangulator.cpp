@@ -1,6 +1,6 @@
 module;
 #include "CDT.h"
-module Finik.Core.Geometry:Triangulator;
+module Finik.Core.Geometry2D:Triangulator;
 
 void Triangulator::addPolygon(const Polygon& polygon)
 {

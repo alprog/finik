@@ -2,7 +2,7 @@ module Sprite3D;
 
 import Assets;
 import Images;
-import Finik.Core.Geometry;
+import Finik.Core.Geometry2D;
 import MeshBuilder;
 
 Sprite3D::Sprite3D(Ptr<Asset> asset)

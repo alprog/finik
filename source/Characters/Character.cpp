@@ -5,7 +5,7 @@ import Texture;
 import EffectManager;
 import LineBuilder;
 import Images;
-import Finik.Core.Geometry;
+import Finik.Core.Geometry2D;
 import SpriteManager;
 
 Character::Character()

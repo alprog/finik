@@ -1,6 +1,6 @@
 module;
 #include "CDT.h"
-export module Finik.Core.Geometry:Triangulator;
+export module Finik.Core.Geometry2D:Triangulator;
 
 import Finik.Core;
 import :Polygon;

@@ -1,4 +1,4 @@
-export module Finik.Core.Geometry:MarchingSquares;
+export module Finik.Core.Geometry2D:MarchingSquares;
 
 import Finik.Core;
 import Images;

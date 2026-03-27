@@ -20,6 +20,8 @@ import SurfaceResolution;
 import EffectManager;
 import QualityManager;
 
+import Finik.Core.Geometry3D;
+
 // for intellisense
 
 Scene::Scene()
@@ -66,8 +68,8 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     light.shadowCamera.position = -light.direction.xyz() * 1000;
     light.shadowCamera.calcViewMatrix();
 
-    auto minHeight = -1;
-    auto maxHeight = +15;
+    auto minHeight = -1.f;
+    auto maxHeight = +15.f;
     
     auto calcLightPos = [this, &camera](Vector2 ndcPos, float height) {
 
@@ -99,12 +101,33 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
         center.z = std::floor(center.z / texelWorldSize) * texelWorldSize;
     }
 
+    BoundBox<Vector3> sceneBoundBox(
+        Vector3{0, 0, minHeight},
+        Vector3{256, 256, maxHeight}
+    );
+
+    Clipper clipper;
+    clipper.addBoundBox(sceneBoundBox, light.shadowCamera.viewMatrix);
+    clipper.clipX(-size / 2, size / 2);
+    clipper.clipZ(-size / 2, size / 2);
+
+    float nearPlane = std::numeric_limits<float>::max();
+    float farPlane = std::numeric_limits<float>::lowest();
+    for (auto& triangle : clipper.triangles)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            nearPlane = std::min(nearPlane, triangle.points[i].y);
+            farPlane = std::max(farPlane, triangle.points[i].y);
+        }
+    }
+
     light.shadowCamera.OrthoSize.y = size;
     light.shadowCamera.OrthoOffset = -Vector2(center.x, center.z);
 
     light.shadowCamera.FieldOfView = 0;
-    light.shadowCamera.NearPlane = viewFrustrumBoundBox.min.y;
-    light.shadowCamera.FarPlane = viewFrustrumBoundBox.max.y;   
+    light.shadowCamera.NearPlane = nearPlane;
+    light.shadowCamera.FarPlane = farPlane;   
     light.shadowCamera.calcProjectionMatrix();
 
     render(context, light.shadowCamera, Matrix::Identity, Vector2::Zero, RenderPass::Shadow);

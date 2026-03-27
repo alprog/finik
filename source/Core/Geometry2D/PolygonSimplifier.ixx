@@ -1,4 +1,4 @@
-export module Finik.Core.Geometry:PolygonSimplifier;
+export module Finik.Core.Geometry2D:PolygonSimplifier;
 
 import Finik.Core.Containers;
 import Finik.Core.Math;
