@@ -69,7 +69,7 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     light.shadowCamera.calcViewMatrix();
 
     auto minHeight = -1.f;
-    auto maxHeight = +15.f;
+    auto maxHeight = +10.f;
     
     auto calcLightPos = [this, &camera](Vector2 ndcPos, float height) {
 
@@ -108,8 +108,8 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
 
     Clipper clipper;
     clipper.addBoundBox(sceneBoundBox, light.shadowCamera.viewMatrix);
-    clipper.clipX(-size / 2, size / 2);
-    clipper.clipZ(-size / 2, size / 2);
+    clipper.clipX(center.x - size / 2, center.x + size / 2);
+    clipper.clipZ(center.z - size / 2, center.z + size / 2);
 
     float nearPlane = std::numeric_limits<float>::max();
     float farPlane = std::numeric_limits<float>::lowest();
