@@ -1,5 +1,6 @@
 module StatsView;
 
+import Finik.Core.Math;
 import Imgui;
 import Scene;
 
@@ -13,7 +14,7 @@ void StatsView::draw_content()
 {
     auto& controller = sceneView.getCameraController();
 
-    constexpr float radToDegree = 180 / std::numbers::pi;
+    constexpr float radToDegree = 180 / PI;
 
     ImGui::Text("focus: %f %f", controller.FocusPosition.x, controller.FocusPosition.y);
     ImGui::Text("rotation: %f", controller.Rotation * radToDegree);

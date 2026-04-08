@@ -73,7 +73,7 @@ void App::run_game_loop()
         SpriteManager::GetInstance().update();
         Cleaner::GetInstance().update();
 
-        auto completedValue = render_system.get_command_queue().fence->GetCompletedValue();
+        auto completedValue = (int32)render_system.get_command_queue().fence->GetCompletedValue();
         render_system.get_command_queue().freeCompletedLists();
         render_system.getOneshotAllocator().FreePages();
         render_system.getProfiler()->grabReadyStamps(completedValue);

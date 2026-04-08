@@ -116,7 +116,7 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
     psoDesc.NumRenderTargets = 4;
 
     const auto& RTFormats = GBuffer::GetRTFormats();
-    for (int32 i = 0; i < psoDesc.NumRenderTargets; i++)
+    for (uint32 i = 0; i < psoDesc.NumRenderTargets; i++)
     {
         psoDesc.RTVFormats[i] = RTFormats[i];
     }

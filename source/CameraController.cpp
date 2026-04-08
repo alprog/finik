@@ -102,11 +102,11 @@ void CameraController::HandleInput(float deltaTime)
 
     if (ImGui::IsKeyDown(ImGuiKey_Y))
     {
-        Rotation -= std::numbers::pi * deltaTime / 4;
+        Rotation -= PI * deltaTime / 4;
     }
     if (ImGui::IsKeyDown(ImGuiKey_U))
     {
-        Rotation += std::numbers::pi * deltaTime / 4;
+        Rotation += PI * deltaTime / 4;
     }
 }
 

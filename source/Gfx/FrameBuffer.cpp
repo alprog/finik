@@ -64,9 +64,9 @@ void FrameBuffer::startRendering(CommandList& commandList)
     commandList.listImpl->SetDescriptorHeaps(1, &a);
 
     viewport.TopLeftX = 0;
-    viewport.TopLeftY = resolution.height;
-    viewport.Width = resolution.width;
-    viewport.Height = -resolution.height;
+    viewport.TopLeftY = (float)resolution.height;
+    viewport.Width = (float)resolution.width;
+    viewport.Height = (float)-resolution.height;
     viewport.MinDepth = 0.0f;
     viewport.MaxDepth = 1.0f;
     commandList.listImpl->RSSetViewports(1, &viewport);

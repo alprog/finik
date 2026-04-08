@@ -68,7 +68,10 @@ export
 
     std::string toStr(std::wstring wstr)
     {
+#pragma warning(push)
+#pragma warning(disable : 4244)
         return std::string(wstr.begin(), wstr.end());
+#pragma warning(pop)
     }
 
     std::wstring toWStr(std::string str)

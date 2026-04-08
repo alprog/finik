@@ -708,7 +708,6 @@ bool ImGui_ImplDX12_CreateDeviceObjects()
 
     ID3DBlob* vertexShaderBlob;
     ID3DBlob* pixelShaderBlob;
-    ID3DBlob* customPixelShaderBlob;
 
     // Create the vertex shader
     {

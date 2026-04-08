@@ -68,15 +68,17 @@ public:
     {
         switch (type)
         {
-        case ShaderType::Vertex:
-            return fallbackVertexByteCode;
+            case ShaderType::Vertex:
+                return fallbackVertexByteCode;
 
-        case ShaderType::Pixel:
-            return fallbackPixelByteCode;
+            case ShaderType::Pixel:
+                return fallbackPixelByteCode;
 
-        case ShaderType::Compute:
-            return fallbackComputeByteCode;
+            case ShaderType::Compute:
+                return fallbackComputeByteCode;
         }
+
+        throw std::runtime_error("Invalid shader type");
     }
 
     auto getAllShaders() const

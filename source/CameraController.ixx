@@ -28,12 +28,12 @@ public:
 
     int ZoomStepCount = 20;
 
-    static constexpr float MinFov = std::numbers::pi / 30.0f;
-    static constexpr float MaxFov = std::numbers::pi / 3.0f;
+    static constexpr float MinFov = PI / 30.0f;
+    static constexpr float MaxFov = PI / 3.0f;
     float FovK = 0.16f;
 
-    static constexpr float MinAngle = std::numbers::pi * 0.200f;
-    static constexpr float MaxAngle = std::numbers::pi * 0.499f;
+    static constexpr float MinAngle = PI * 0.200f;
+    static constexpr float MaxAngle = PI * 0.499f;
     float AngleK = 0.5f;
 
     Camera& Camera;

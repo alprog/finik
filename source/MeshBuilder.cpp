@@ -53,10 +53,10 @@ void MeshBuilder::AddTile(int x, int y)
 {
     auto vertexCount = Vertices.count();
 
-    Vertices.append({Vector3(x + 0, y + 0, 0), Vector3(0, 0, 1), Vector2(0, 0), x, y});
-    Vertices.append({Vector3(x + 1, y + 0, 0), Vector3(0, 0, 1), Vector2(1, 0), x, y});    
-    Vertices.append({Vector3(x + 1, y + 1, 0), Vector3(0, 0, 1), Vector2(1, 1), x, y});
-    Vertices.append({Vector3(x + 0, y + 1, 0), Vector3(0, 0, 1), Vector2(0, 1), x, y});
+    Vertices.append({Vector3(x + 0.f, y + 0.f, 0.f), Vector3(0.f, 0.f, 1.f), Vector2(0.f, 0.f), x, y});
+    Vertices.append({Vector3(x + 1.f, y + 0.f, 0.f), Vector3(0.f, 0.f, 1.f), Vector2(1.f, 0.f), x, y});
+    Vertices.append({Vector3(x + 1.f, y + 1.f, 0.f), Vector3(0.f, 0.f, 1.f), Vector2(1.f, 1.f), x, y});
+    Vertices.append({Vector3(x + 0.f, y + 1.f, 0.f), Vector3(0.f, 0.f, 1.f), Vector2(0.f, 1.f), x, y});
 
     int i = vertexCount;
     Indices.append(i + 0);

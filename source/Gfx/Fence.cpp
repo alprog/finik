@@ -16,23 +16,23 @@ Fence::Fence(RenderSystem& renderSystem, ID3D12CommandQueue& queue)
     if (!FenceEvent) throw;
 }
 
-int Fence::SignalNext()
+uint64 Fence::SignalNext()
 {
     Queue.Signal(FenceImpl.Get(), ++LastSignaledValue);
     return LastSignaledValue;
 }
 
-int Fence::GetLastSignaledValue()
+uint64 Fence::GetLastSignaledValue()
 {
     return LastSignaledValue;
 }
 
-int Fence::GetCompletedValue()
+uint64 Fence::GetCompletedValue()
 {
     return FenceImpl->GetCompletedValue();
 }
 
-void Fence::WaitForValue(int value)
+void Fence::WaitForValue(uint64 value)
 {
     if (value != 0)
     {

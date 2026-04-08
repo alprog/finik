@@ -218,7 +218,7 @@ void RenderSystem::scheduleQueryResolving()
     ID3D12GraphicsCommandList* command_list = commandList.Get();
     get_command_queue()->ExecuteCommandLists(1, (ID3D12CommandList* const*)&command_list);
 
-    auto fenceValue = get_command_queue().fence->SignalNext();
+    auto fenceValue = (int32)get_command_queue().fence->SignalNext();
     gpuProfiler->endFrameRange(fenceValue);
 
     i = (i + 1) % 3;

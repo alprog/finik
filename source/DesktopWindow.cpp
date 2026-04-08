@@ -60,7 +60,7 @@ void DesktopWindow::renderScene()
     static Camera camera;
     camera.position = Vector3(0, 1, -3);
     camera.lookAt = Vector3::Zero;
-    camera.FieldOfView = std::numbers::pi / 2.0f;
+    camera.FieldOfView = PI / 2.0f;
     camera.calcViewMatrix();
     camera.calcProjectionMatrix();
 

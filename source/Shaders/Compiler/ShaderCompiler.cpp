@@ -71,7 +71,7 @@ ShaderCompiler::Output ShaderCompiler::Compile(const String& sourceText, ShaderT
         return includeBlob.Detach();
      });
     
-    DxcBuffer sourceBuffer{&sourceText[0], sourceText.size(), DXC_CP_UTF8};
+    DxcBuffer sourceBuffer{&sourceText[0], (SIZE_T)sourceText.size(), DXC_CP_UTF8};
 
     DxcArgs args;
     args << "-E" << entryPoint;

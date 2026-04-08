@@ -100,13 +100,14 @@ void GpuProfiler::grabReadyStamps(int completedValue)
         StampRange range = queue.front();
         queue.pop();
 
-        int start = range.startIndex % MAX_TIMESTAMP;
-        int end = range.endIndex % MAX_TIMESTAMP;
+        uint32 start = range.startIndex % MAX_TIMESTAMP;
+        uint32 end = range.endIndex % MAX_TIMESTAMP;
 
-        auto helper = [this, &lane](int start, int end) {
+        auto helper = [this, &lane](uint32 start, uint32 end) {
+
             D3D12_RANGE readRange = { start * readBackRecordSize, end * readBackRecordSize };
 
-            int count = end - start;
+            uint32 count = end - start;
             if (count > 0)
             {
                 Array<uint64> stamps;

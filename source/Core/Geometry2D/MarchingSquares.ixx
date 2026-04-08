@@ -76,8 +76,8 @@ private:
             float b = std::abs(cellB.value);
             float k = a / (a + b);
 
-            auto posA = Vector2(x1, y1);
-            auto posB = Vector2(x2, y2);
+            auto posA = Vector2((float)x1, (float)y1);
+            auto posB = Vector2((float)x2, (float)y2);
             auto point = lerp(posA, posB, k) + Vector2::One / 2;
 
             edges.get(x1 + x2, y1 + y2).point = point;

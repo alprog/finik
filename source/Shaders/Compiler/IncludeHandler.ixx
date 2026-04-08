@@ -4,6 +4,7 @@ module;
 export module IncludeHandler;
 
 import Finik.Core;
+import Finik.Core.Utils;
 
 // for intellisense
 
@@ -43,7 +44,7 @@ public:
     HRESULT STDMETHODCALLTYPE LoadSource(LPCWSTR pFilename, IDxcBlob** ppIncludeSource) override
     {
         const std::wstring wideFilename = pFilename;
-        const std::string filename = std::string(wideFilename.begin(), wideFilename.end());
+        const std::string filename = toStr(wideFilename);
         *ppIncludeSource = callback(filename);
         return S_OK;
     }

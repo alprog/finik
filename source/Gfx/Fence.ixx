@@ -1,5 +1,6 @@
 export module Fence;
 
+import Finik.Core.PrimitiveTypes;
 import Myptr;
 import DX;
 import RenderSystemFwd;
@@ -9,14 +10,14 @@ export class Fence
 public:
     Fence(RenderSystem& renderSystem, ID3D12CommandQueue& queue);
 
-    int SignalNext();
-    int GetLastSignaledValue();
-    int GetCompletedValue();
-    void WaitForValue(int value);
+    uint64 SignalNext();
+    uint64 GetLastSignaledValue();
+    uint64 GetCompletedValue();
+    void WaitForValue(uint64 value);
 
 private:
     ID3D12CommandQueue& Queue;
     MyPtr<ID3D12Fence> FenceImpl;
     HANDLE FenceEvent = nullptr;
-    int LastSignaledValue = 0;
+    uint64 LastSignaledValue = 0;
 };

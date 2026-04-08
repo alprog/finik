@@ -95,7 +95,7 @@ void Texture::setData(Image& image)
     commandList.transition(*this, D3D12_RESOURCE_STATE_COPY_DEST);
 
     const uint64 uploadBufferSize = GetRequiredIntermediateSize(InternalResource, 0, 1);
-    UploadBuffer uploadBuffer(renderSystem, uploadBufferSize);
+    UploadBuffer uploadBuffer(renderSystem, (int32)uploadBufferSize);
 
     if (uploadBufferSize == image.getByteSize())
     {
