@@ -1,12 +1,12 @@
-module;
-class IDxcCompiler3;
-class IDxcUtils;
 export module ShaderCompiler;
 
 import Finik.Core;
 import AssetDependencies;
 import AssetPath;
 import Shader;
+
+extern "C++" class IDxcCompiler3;
+extern "C++" class IDxcUtils;
 
 // for intellisense
 
