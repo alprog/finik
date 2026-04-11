@@ -6,8 +6,6 @@ import TextureId;
 import Effect;
 import Myptr;
 
-// for intellisense
-
 export struct MaterialData
 {
     Color ColorA;

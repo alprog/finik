@@ -4,8 +4,6 @@ import Finik.Core;
 import SceneSystemFwd;
 import RenderSystemFwd;
 
-// for intellisense
-
 export class Camera
 {
 public:

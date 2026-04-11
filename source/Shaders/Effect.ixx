@@ -8,8 +8,6 @@ import DX;
 import Shader;
 import PipelineState;
 
-// for intellisense
-
 export class Effect
 {
 public:

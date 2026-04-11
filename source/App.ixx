@@ -7,8 +7,6 @@ import SceneManager;
 import InputSystem;
 import DesktopSystem;
 
-// for intellisense
-
 export class App
 {
 public:

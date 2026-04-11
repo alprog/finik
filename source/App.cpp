@@ -15,8 +15,6 @@ import Gui;
 import Cleaner;
 import SpriteManager;
 
-// for intellisense
-
 App& App::GetInstance()
 {
     static App instance;

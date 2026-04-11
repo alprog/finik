@@ -9,8 +9,6 @@ import RenderPass;
 import Effect;
 import VertexBuffer;
 
-// for intellisense
-
 export class RenderContext
 {
 public:

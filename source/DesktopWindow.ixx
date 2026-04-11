@@ -9,8 +9,6 @@ import SwapChain;
 import Gui;
 import Scene;
 
-// for intellisense
-
 export class DesktopWindow
 {
 public:

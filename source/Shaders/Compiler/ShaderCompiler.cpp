@@ -10,8 +10,6 @@ import AssetDependencies;
 import IncludeHandler;
 import DxcArgs;
 
-// for intellisense
-
 const char* getShaderVersion(ShaderType type)
 {
     switch (type)

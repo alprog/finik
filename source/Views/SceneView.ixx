@@ -7,8 +7,6 @@ import Camera;
 import CameraController;
 import Scene;
 
-// for intellisense
-
 export class SceneView : public View
 {
 public:

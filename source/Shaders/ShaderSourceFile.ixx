@@ -4,8 +4,6 @@ import Finik.Core;
 import Asset;
 import ShaderManager;
 
-// for intellisence
-
 export class ShaderSourceFile : public Asset
 {
 public:

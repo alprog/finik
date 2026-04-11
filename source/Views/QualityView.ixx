@@ -4,8 +4,6 @@ import Finik.Core;
 import View;
 import QualitySettings;
 
-// for intellisense
-
 export class QualityView : public View
 {
 public:

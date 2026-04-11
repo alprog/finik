@@ -6,8 +6,6 @@ export module IncludeHandler;
 import Finik.Core;
 import Finik.Core.Utils;
 
-// for intellisense
-
 template <typename T>
 class DefaultQueryInterface : public T
 {

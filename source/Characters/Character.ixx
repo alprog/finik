@@ -7,8 +7,6 @@ import Material;
 import VertexBuffer;
 import Sprite3D;
 
-// for intellisense
-
 export class Character
 {
 public:

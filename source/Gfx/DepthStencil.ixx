@@ -3,8 +3,6 @@ export module DepthStencil;
 import DX;
 import RenderSurface;
 
-// for intellisense
-
 export class DepthStencil : public RenderSurface
 {
 public:

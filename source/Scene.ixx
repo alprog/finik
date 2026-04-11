@@ -12,8 +12,6 @@ import RenderSystemFwd;
 import RenderPass;
 import Character;
 
-// for intellisense
-
 export class Scene
 {
 public:

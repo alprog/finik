@@ -9,8 +9,6 @@ import ByteBlob;
 import Asset;
 import AssetPath;
 
-// for intellisense
-
 export class Texture : public GpuResource, public Asset
 {
 public:

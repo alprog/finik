@@ -6,8 +6,6 @@ import PipelineSettings;
 import PipelineState;
 import WindingOrder;
 
-// for intellisense
-
 export class PSOManager : public Singleton<PSOManager>
 {
 public:

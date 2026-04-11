@@ -14,8 +14,6 @@ import SurfaceResolution;
 import Mrt;
 import FrameBuffer;
 
-// for intellisense
-
 const char* bufferNames[] = { 
     "Default", "GBuffer", "LightBuffer", "ShadowMap", "ResolveBuffer", "DebugBuffer"
 };

@@ -22,8 +22,6 @@ import QualityManager;
 
 import Finik.Core.Geometry3D;
 
-// for intellisense
-
 Scene::Scene()
 {
     grid = new Grid();

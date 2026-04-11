@@ -4,8 +4,6 @@ import Finik.Core;
 import DX;
 import FrameBuffer;
 
-// for intellisense
-
 export class GBuffer : public FrameBuffer
 {
 public:

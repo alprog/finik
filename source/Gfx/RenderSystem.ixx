@@ -17,8 +17,6 @@ import RootSignature;
 import DescriptorHeap;
 import PipelineState;
 
-// for intellisense
-
 export class RenderSystem : public Singleton<RenderSystem>
 {
 public:

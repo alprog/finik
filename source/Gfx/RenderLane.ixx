@@ -9,8 +9,6 @@ import SurfaceResolution;
 import Mesh;
 export import Msaa;
 
-// for intellisense
-
 export class SceneRenderLane
 {
 public:

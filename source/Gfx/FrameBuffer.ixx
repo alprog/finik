@@ -11,8 +11,6 @@ import DepthStencil;
 import Mrt;
 import Msaa;
 
-// for intellisense
-
 export class FrameBuffer
 {
 public:

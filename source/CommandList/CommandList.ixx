@@ -5,8 +5,6 @@ import RenderSystemFwd;
 import RenderContext;
 import ComputeContext;
 
-// for intellisense
-
 export class CommandList
 {
 public:

@@ -3,8 +3,6 @@ export module RootSignatureParams;
 import Finik.Core;
 import SurfaceResolution;
 
-// for intellisense
-
 export struct MeshConstants
 {
     Matrix Model;

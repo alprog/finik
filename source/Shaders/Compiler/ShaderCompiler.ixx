@@ -9,8 +9,6 @@ import Finik.Core.Singleton;
 extern "C++" class IDxcCompiler3;
 extern "C++" class IDxcUtils;
 
-// for intellisense
-
 export class ShaderCompiler : public Singleton<ShaderCompiler>
 {
 public:
