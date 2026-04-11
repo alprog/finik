@@ -26,21 +26,30 @@ void Triangulator::run()
         vertices.begin(),
         vertices.end(),
         [](const Vector2& p) { return p.x; },
-        [](const Vector2& p) { return p.y; }
-    );
+        [](const Vector2& p) { return p.y; });
 
     cdt.insertEdges(
         edges.begin(),
         edges.end(),
-        [](const CDT::Edge& e) { return e.v1(); },
-        [](const CDT::Edge& e) { return e.v2(); }
-    );
+        [](const Edge& e) { return e.first; },
+        [](const Edge& e) { return e.second; });
 
     cdt.eraseOuterTrianglesAndHoles();
 
     triangles.reserve(cdt.triangles.size());
     for (auto& t : cdt.triangles)
     {
-        triangles.append(t);
+        Triangle& triangle = triangles.emplace_back();
+        triangle.vertices.reserve(t.vertices.size());
+        for (auto& v : t.vertices)
+        {
+            triangle.vertices.append(v);
+        }
+
+        triangle.neighbors.reserve(t.neighbors.size());
+        for (auto& n : t.neighbors)
+        {
+            triangle.neighbors.append(n);
+        }
     }
 }

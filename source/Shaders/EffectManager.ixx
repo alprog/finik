@@ -2,6 +2,7 @@ export module EffectManager;
 
 import Finik.Core;
 import Finik.Core.Singleton;
+import Myptr;
 import Effect;
 import Shader;
 

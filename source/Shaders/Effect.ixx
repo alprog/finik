@@ -1,11 +1,11 @@
 export module Effect;
 
 import Finik.Core;
-import RenderSystemFwd;
 import PipelineSettings;
 import ConstantBuffer;
 import Myptr;
 import DX;
+import Shader;
 import PipelineState;
 
 // for intellisense

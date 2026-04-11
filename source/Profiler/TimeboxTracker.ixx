@@ -1,11 +1,10 @@
 export module TimeboxTracker;
 
 import Finik.Core;
+import Timebox;
 
 export namespace finik::profiler
 {
-    struct Timebox;
-
     struct TimeboxTracker
     {
         explicit TimeboxTracker(const char* label);

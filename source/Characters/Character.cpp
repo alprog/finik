@@ -78,7 +78,7 @@ Character::Character()
         builder.line(mult(a), mult(b));
         builder.line(mult(b), mult(c));
         builder.line(mult(c), mult(a));
-    }    
+    }
 
     builder.setColor(Color::Red);
     for (auto& simplePolygon : contours)

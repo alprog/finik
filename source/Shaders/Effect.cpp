@@ -1,7 +1,6 @@
 module Effect;
 
 import RenderSystem;
-import Shader;
 import PsoManager;
 import ShaderManager;
 import QualityManager;

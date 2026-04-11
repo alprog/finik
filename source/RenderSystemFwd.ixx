@@ -1,17 +1,15 @@
 export module RenderSystemFwd;
 
-export class RenderSystem;
+export extern "C++" class RenderSystem;
 
-export class CommandQueue;
-export class CommandList;
-export class CommandListPool;
-export class UploadBuffer;
-export class Shader;
-export class PipelineState;
-export class ConstantBuffer;
-export class Mesh;
-export struct DescriptorHandle;
-export class DescriptorHeap;
-export class RenderSurface;
-export class RenderContext;
-export class GpuResource;
+export extern "C++" class CommandQueue;
+export extern "C++" class CommandList;
+export extern "C++" class CommandListPool;
+export extern "C++" class UploadBuffer;
+export extern "C++" class ConstantBuffer;
+export extern "C++" class Mesh;
+export extern "C++" struct DescriptorHandle;
+export extern "C++" class DescriptorHeap;
+export extern "C++" class RenderSurface;
+export extern "C++" class RenderContext;
+export extern "C++" class GpuResource;

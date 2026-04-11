@@ -1,5 +1,3 @@
-module;
-class Window;
 export module RenderSystem;
 
 export import RenderSystemFwd;
@@ -17,6 +15,7 @@ import Myptr;
 import OneshotAllocator;
 import RootSignature;
 import DescriptorHeap;
+import PipelineState;
 
 // for intellisense
 

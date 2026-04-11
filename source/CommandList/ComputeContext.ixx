@@ -3,7 +3,6 @@ export module ComputeContext;
 import Finik.Core;
 import DX;
 import RenderSystemFwd;
-import ConstantBuffer;
 
 export class ComputeContext
 {

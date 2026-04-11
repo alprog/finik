@@ -1,4 +1,4 @@
 export module SceneSystemFwd;
 
-export class Scene;
-export class Camera;
+export extern "C++" class Scene;
+export extern "C++" class Camera;

@@ -4,6 +4,7 @@ import Finik.Core;
 import Texture;
 import TextureId;
 import Effect;
+import Myptr;
 
 // for intellisense
 
