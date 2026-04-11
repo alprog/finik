@@ -4,17 +4,16 @@ import Finik.Core;
 import AssetDependencies;
 import AssetPath;
 import Shader;
+import Finik.Core.Singleton;
 
 extern "C++" class IDxcCompiler3;
 extern "C++" class IDxcUtils;
 
 // for intellisense
 
-export class ShaderCompiler
+export class ShaderCompiler : public Singleton<ShaderCompiler>
 {
-    friend class Single;
-
-private:
+public:
     ShaderCompiler();
     ~ShaderCompiler();
 

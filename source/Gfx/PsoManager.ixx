@@ -8,7 +8,7 @@ import WindingOrder;
 
 // for intellisense
 
-export class PSOManager
+export class PSOManager : public Singleton<PSOManager>
 {
 public:
     Ptr<PipelineState> get_pso(const PipelineSettings& settings);

@@ -19,7 +19,6 @@ public:
     template <typename T>
     static T& Get()
     {
-        static T instance;
-        return instance;
+        return typename T::GetInstance();
     }
 };

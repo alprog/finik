@@ -8,10 +8,10 @@ import Shader;
 
 export class EffectManager : public Singleton<EffectManager>
 {
-    friend class QualityManager;
-
 public:
     void init();
+
+    auto& getEffects() const { return Effects; }
 
     Ptr<Effect> get(String key)
     {

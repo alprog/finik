@@ -19,10 +19,9 @@ import PipelineState;
 
 // for intellisense
 
-export class RenderSystem
+export class RenderSystem : public Singleton<RenderSystem>
 {
-    friend class Single;
-
+public:
     RenderSystem();
 
 public:
