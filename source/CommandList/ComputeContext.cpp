@@ -5,15 +5,15 @@ import RootSignature;
 
 using Params = ComputeRootSignature::Params;
 
-ComputeContext::ComputeContext(RenderSystem& renderSystem, ID3D12GraphicsCommandList& commandList)
-    : renderSystem{renderSystem}
+ComputeContext::ComputeContext(RenderEngine& engine, ID3D12GraphicsCommandList& commandList)
+    : engine{engine}
     , commandList{commandList}
 {
 }
 
 void ComputeContext::setupRoot()
 {
-    commandList.SetComputeRootSignature(renderSystem.getComputeRootSignature().signatureImpl.Get());
+    commandList.SetComputeRootSignature(engine.getComputeRootSignature().signatureImpl.Get());
 }
 
 void ComputeContext::setConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)

@@ -83,17 +83,17 @@ void SceneRenderLane::render()
     camera.Jitter = taaEnabled ? GetJitter(resolution.resolution(), frameIndex) : Vector2::Zero;
     camera.calcProjectionMatrix();
 
-    RenderSystem& renderSystem = Single::Get<RenderSystem>();
-    auto& commandQueue = renderSystem.get_command_queue();
+    RenderEngine& engine = Single::Get<RenderSystem>().engine;
+    auto& commandQueue = engine.get_command_queue();
     {
         Profile _("wait");
         commandQueue.fence->WaitForValue(fenceValue);
     }
 
-    CommandList& commandList = renderSystem.getFreeCommandList();
+    CommandList& commandList = engine.getFreeCommandList();
     commandList.startRecording();
 
-    RenderContext context(renderSystem, *commandList.listImpl.Get());
+    RenderContext context(engine, *commandList.listImpl.Get());
 
     scene.renderShadowMaps(commandList, context, camera);
 
@@ -107,7 +107,7 @@ void SceneRenderLane::render()
     }
 
     {
-        auto gBufferConstants = renderSystem.getOneshotAllocator().Allocate<GBufferConstants>();
+        auto gBufferConstants = engine.getOneshotAllocator().Allocate<GBufferConstants>();
         gBufferConstants->Resolution = gBuffer.resolution;
         gBufferConstants->RT0Id = gBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
         gBufferConstants->RT1Id = gBuffer.getRenderSurface(MRT::RT1)->textureHandle.getIndex();
@@ -119,7 +119,7 @@ void SceneRenderLane::render()
         lightBuffer.startRendering(commandList);
 
         auto& light = scene.light;
-        auto lightConstants = renderSystem.getOneshotAllocator().Allocate<LightConstants>();
+        auto lightConstants = engine.getOneshotAllocator().Allocate<LightConstants>();
         lightConstants->LightDirection = light.direction;
         lightConstants->ShadowViewProjection = light.shadowCamera.viewMatrix * light.shadowCamera.projectionMatrix;
         lightConstants->ShadowTextureId = light.shadowMap->depthStencil->textureHandle.getIndex();
@@ -135,7 +135,7 @@ void SceneRenderLane::render()
 
     if (QualityManager::GetInstance().getCurrent().taa)
     {
-        auto taaConstants = renderSystem.getOneshotAllocator().Allocate<TAAConstants>();
+        auto taaConstants = engine.getOneshotAllocator().Allocate<TAAConstants>();
         taaConstants->LightBufferId = lightBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
         taaConstants->HistoryBufferId = historyBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
         commandList.listImpl->SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, taaConstants.GpuAddress);

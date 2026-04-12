@@ -2,18 +2,18 @@ export module RenderContext;
 
 import Finik.Core;
 import DX;
-import RenderSystemFwd;
 import Material;
 import ConstantBuffer;
 import RenderPass;
 import Effect;
 import VertexBuffer;
 import Mesh;
+import RenderEngine;
 
 export class RenderContext
 {
 public:
-    RenderContext(RenderSystem& renderSystem, ID3D12GraphicsCommandList& commandList);
+    RenderContext(RenderEngine& engine, ID3D12GraphicsCommandList& commandList);
 
     void setupRoot();
     void setFrameConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress);
@@ -27,6 +27,6 @@ public:
 
     void drawFullScreenQuad();
 
-    RenderSystem& renderSystem;
+    RenderEngine& engine;
     ID3D12GraphicsCommandList& commandList;
 };

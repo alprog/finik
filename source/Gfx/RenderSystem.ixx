@@ -1,7 +1,5 @@
 export module RenderSystem;
 
-export import RenderSystemFwd;
-
 export import Finik.Core.Singleton;
 
 import GfxDevice;
@@ -9,7 +7,7 @@ import RenderContext;
 export import RenderEngine;
 import RootSignature;
 
-export extern "C++" class RenderSystem : public Singleton<RenderSystem>
+export class RenderSystem : public Singleton<RenderSystem>
 {
 public:
     RenderSystem();
@@ -39,8 +37,8 @@ public:
 private:
     void createRenderContext();
 
+public:
     RenderEngine engine;
-
     UniquePtr<RenderContext> renderContext;
 
     

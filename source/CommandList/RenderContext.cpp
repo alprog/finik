@@ -10,15 +10,15 @@ import UploadBuffer;
 
 using Params = MainRootSignature::Params;
 
-RenderContext::RenderContext(RenderSystem& renderSystem, ID3D12GraphicsCommandList& commandList)
-    : renderSystem{renderSystem}
+RenderContext::RenderContext(RenderEngine& engine, ID3D12GraphicsCommandList& commandList)
+    : engine{engine}
     , commandList{commandList}
 {
 }
 
 void RenderContext::setupRoot()
 {
-    commandList.SetGraphicsRootSignature(renderSystem.getRootSignature().signatureImpl.Get());
+    commandList.SetGraphicsRootSignature(engine.getRootSignature().signatureImpl.Get());
 
     UploadBuffer* uploadBuffer = MaterialManager::GetInstance().ConstantBuffer->uploadBuffer;
     auto address = uploadBuffer->GetGPUVirtualAddress();
@@ -42,7 +42,7 @@ void RenderContext::setModelMatrix(const Matrix& matrix)
 
 void RenderContext::setModelMatrix(const Matrix& currentMatrix, const Matrix& prevMatrix)
 {
-    auto meshConstantBuffer = renderSystem.getOneshotAllocator().Allocate<MeshConstants>();
+    auto meshConstantBuffer = engine.getOneshotAllocator().Allocate<MeshConstants>();
     meshConstantBuffer.Data->Model = currentMatrix;
     meshConstantBuffer.Data->PrevModel = prevMatrix;
     commandList.SetGraphicsRootConstantBufferView(Params::MeshConstantBufferView, meshConstantBuffer.GpuAddress);

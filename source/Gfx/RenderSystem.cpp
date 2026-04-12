@@ -94,7 +94,7 @@ finik::gpumem::OneshotAllocator& RenderSystem::getOneshotAllocator()
 
 void RenderSystem::createRenderContext()
 {
-    renderContext = MakeUnique<RenderContext>(*this, *engine.get_command_list());
+    renderContext = MakeUnique<RenderContext>(engine, *engine.get_command_list());
 }
 
 void RenderSystem::scheduleQueryResolving()

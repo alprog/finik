@@ -37,8 +37,8 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     stagingDesc.Flags |= D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
     stagingDesc.Format = DXGI_FORMAT_R8G8B8A8_TYPELESS;
 
-    auto& renderSystem = Single::Get<RenderSystem>();
-    auto device = renderSystem.getInternalDevice();
+    auto& engine = Single::Get<RenderSystem>().engine;
+    auto device = engine.getInternalDevice();
 
     const CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
@@ -108,7 +108,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     uav2srvDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
     uav2srvDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
 
-    ComputeContext computeContext(renderSystem, *commandList.listImpl.Get());
+    ComputeContext computeContext(engine, *commandList.listImpl.Get());
 
     // Set up state
     commandList.listImpl->SetDescriptorHeaps(1, descriptorHeap.GetAddressOf());
@@ -137,7 +137,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
         computeContext.setUnorderedAccessView(uavH);
 
         // Set constants
-        auto constants = renderSystem.getOneshotAllocator().Allocate<ConstantData>();
+        auto constants = engine.getOneshotAllocator().Allocate<ConstantData>();
         constants->SrcMipIndex = mip - 1;
         constants->InvOutTexelSize = Vector2(1.0f / float(mipWidth), 1.0f / float(mipHeight));
         computeContext.setConstants(constants.GpuAddress);

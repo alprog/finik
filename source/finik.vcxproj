@@ -343,7 +343,6 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Profiler\TimeboxTracker.ixx" />
     <ClCompile Include="Views\ProfilerView.cpp" />
     <ClCompile Include="Views\ProfilerView.ixx" />
-    <ClCompile Include="RenderSystemFwd.ixx" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Resource.ixx" />
     <ClCompile Include="Scene.ixx" />

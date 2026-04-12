@@ -136,8 +136,8 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
 {
     renderContext.setupRoot();
 
-    RenderSystem& renderSystem = renderContext.renderSystem;
-    auto frameConstants = renderSystem.getOneshotAllocator().Allocate<FrameConstants>();
+    RenderEngine& engine = renderContext.engine;
+    auto frameConstants = engine.getOneshotAllocator().Allocate<FrameConstants>();
     auto V = camera.viewMatrix;
     auto P = camera.projectionMatrix;
     frameConstants->View = V;
@@ -178,8 +178,8 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
 
 void Scene::debugRender(RenderContext& renderContext, const Camera& camera, const Matrix& prevViewProjection, const Vector2& prevJitter)
 {
-    RenderSystem& renderSystem = renderContext.renderSystem;
-    auto frameConstants = renderSystem.getOneshotAllocator().Allocate<FrameConstants>();
+    RenderEngine& engine = renderContext.engine;
+    auto frameConstants = engine.getOneshotAllocator().Allocate<FrameConstants>();
     auto V = camera.viewMatrix;
     auto P = camera.projectionMatrix;
     frameConstants->View = V;
