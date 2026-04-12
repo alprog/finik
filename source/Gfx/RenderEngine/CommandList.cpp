@@ -2,8 +2,6 @@ module;
 #include "gfx/dx.h"
 module RenderEngine:CommandList;
 
-import :CommandListPool;
-import :GpuProfiler;
 import RenderSystem;
 
 CommandList::CommandList(CommandListPool& pool, const int frameIndex)

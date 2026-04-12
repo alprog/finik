@@ -2,8 +2,7 @@ module;
 #include "../dx.h"
 module RenderEngine:Fence;
 
-import :RenderEngine;
-import :CommandQueue;
+import RenderSystem;
 
 Fence::Fence(CommandQueue& queue)
     : Queue { queue }

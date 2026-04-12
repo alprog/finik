@@ -5,8 +5,7 @@ module RenderEngine:GpuProfiler;
 import TimeboxTracker;
 import Timer;
 import App;
-import :RenderEngine;
-import :CommandQueue;
+import RenderSystem;
 
 int constexpr MAX_TIMESTAMP = 100;
 int constexpr readBackRecordSize = sizeof(uint64);

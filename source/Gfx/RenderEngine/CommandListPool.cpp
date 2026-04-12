@@ -1,9 +1,7 @@
 module RenderEngine:CommandListPool;
 
 import App;
-import :RenderEngine;
-import :CommandList;
-import :GpuProfiler;
+import RenderSystem;
 
 CommandListPool::CommandListPool(RenderEngine& engine)
     : engine{engine}

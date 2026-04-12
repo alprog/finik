@@ -1,6 +1,6 @@
 module;
 #include "../dx.h"
-module RenderEngine:RenderEngine;
+module RenderEngine;
 
 import RenderEngine;
 

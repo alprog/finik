@@ -2,9 +2,7 @@ module;
 #include "../dx.h"
 module RenderEngine:CommandQueue;
 
-import :RenderEngine;
-import :Fence;
-import :CommandList;
+import RenderSystem;
 
 CommandQueue::CommandQueue(RenderEngine& engine)
     : engine{engine}

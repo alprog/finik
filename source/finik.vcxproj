@@ -183,8 +183,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Geometry2D\Polygon.ixx" />
     <ClCompile Include="Gfx\Brushes\Brush.ixx" />
     <ClCompile Include="Gfx\Brushes\BrushManager.ixx" />
-    <ClCompile Include="Gfx\RenderEngine\RenderEngine.cpp" />
-    <ClCompile Include="Gfx\RenderEngine\RenderEngine.ixx" />
+    <ClCompile Include="Gfx\RenderEngine\_RenderEngine.cpp" />
     <ClCompile Include="Gfx\RenderEngine\Shared.ixx" />
     <ClCompile Include="Gfx\RenderEngine\_RenderEngine.ixx" />
     <ClCompile Include="Gfx\GbUffer.ixx" />
