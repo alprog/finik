@@ -19,5 +19,5 @@ public:
 
     UniquePtr<Fence> frameFence;
 
-    std::queue<CommandList*> RenderEngineQueue;
+    std::queue<CommandList*> ExecutionQueue;
 };
