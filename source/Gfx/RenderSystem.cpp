@@ -4,7 +4,7 @@ module RenderSystem;
 
 import App;
 import Imgui;
-import Execution;
+import RenderEngine;
 import GfxDevice;
 import DesktopWindow;
 
@@ -51,29 +51,29 @@ void RenderSystem::init()
 
 void RenderSystem::createDevice()
 {
-    device.init();
+    engine.device.init();
 }
 
 void RenderSystem::createCommandQueue()
 {
-    commandQueue = new CommandQueue(device);
+    commandQueue = new CommandQueue(engine);
 }
 
 void RenderSystem::createCommandListPool()
 {
-    commandListPool = MakeUnique<CommandListPool>(device, *gpuProfiler);
+    commandListPool = MakeUnique<CommandListPool>(engine, *gpuProfiler);
 }
 
 void RenderSystem::createProfiler()
 {
-    gpuProfiler = new GpuProfiler(device, *commandQueue);
+    gpuProfiler = new GpuProfiler(engine, *commandQueue);
 }
 
 void RenderSystem::createCommandAllocators()
 {
     for (int i = 0; i < 3; i++)
     {
-        auto result = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocators[i]));
+        auto result = engine.device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocators[i]));
         if (FAILED(result))
             throw;
     }
@@ -97,8 +97,8 @@ void RenderSystem::createRenderContext()
 
 void RenderSystem::createRootSignature()
 {
-    mainRootSignature = MakeUnique<MainRootSignature>(device);
-    computeRootSignature = MakeUnique<ComputeRootSignature>(device);
+    mainRootSignature = MakeUnique<MainRootSignature>(engine.device);
+    computeRootSignature = MakeUnique<ComputeRootSignature>(engine.device);
 }
 
 void RenderSystem::scheduleQueryResolving()
@@ -122,18 +122,18 @@ void RenderSystem::ImguiInitHelper()
 {
     const int NUM_FRAMES_IN_FLIGHT = 3;
 
-    DescriptorHandle handle = device.getCommonHeap()->getNextHandle();
-    ImGui_ImplDX12_Init(getInternalDevice(), NUM_FRAMES_IN_FLIGHT, DXGI_FORMAT_R8G8B8A8_UNORM, device.getCommonHeap()->get(), handle.getCPU(), handle.getGPU());
+    DescriptorHandle handle = engine.device.getCommonHeap()->getNextHandle();
+    ImGui_ImplDX12_Init(getInternalDevice(), NUM_FRAMES_IN_FLIGHT, DXGI_FORMAT_R8G8B8A8_UNORM, engine.device.getCommonHeap()->get(), handle.getCPU(), handle.getGPU());
 }
 
 GfxDevice& RenderSystem::getDevice()
 {
-    return device;
+    return engine.device;
 }
 
 ID3D12Device* RenderSystem::getInternalDevice()
 {
-    return device.getInternal();
+    return engine.device.getInternal();
 }
 
 CommandQueue& RenderSystem::get_command_queue()
@@ -148,17 +148,17 @@ ID3D12GraphicsCommandList* RenderSystem::get_command_list()
 
 DescriptorHeap* RenderSystem::getRtvHeap()
 {
-    return device.getRtvHeap();
+    return engine.device.getRtvHeap();
 }
 
 DescriptorHeap* RenderSystem::getDsvHeap()
 {
-    return device.getDsvHeap();
+    return engine.device.getDsvHeap();
 }
 
 DescriptorHeap* RenderSystem::getCommonHeap()
 {
-    return device.getCommonHeap();
+    return engine.device.getCommonHeap();
 }
 
 RenderContext* RenderSystem::getRenderContext()
@@ -188,5 +188,5 @@ CommandList& RenderSystem::getFreeCommandList()
 
 finik::gpumem::OneshotAllocator& RenderSystem::getOneshotAllocator()
 {
-    return device.getOneshotAllocator();
+    return engine.device.getOneshotAllocator();
 }

@@ -1,11 +1,13 @@
 module;
 #include "../dx.h"
-module Execution:Fence;
+module RenderEngine:Fence;
 
-Fence::Fence(GfxDevice& gfxDevice, ID3D12CommandQueue& queue)
+import :RenderEngine;
+
+Fence::Fence(RenderEngine& engine, ID3D12CommandQueue& queue)
     : Queue { queue }
 {
-    auto result = gfxDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)(&FenceImpl));
+    auto result = engine.device->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)(&FenceImpl));
     if (FAILED(result)) throw;
 
     FenceEvent = CreateEvent(nullptr, 0, 0, nullptr);

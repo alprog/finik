@@ -1,18 +1,20 @@
 module;
 #include "../dx.h"
-module Execution:CommandQueue;
+module RenderEngine:CommandQueue;
 
-CommandQueue::CommandQueue(GfxDevice& device)
+import RenderEngine;
+
+CommandQueue::CommandQueue(RenderEngine& engine)
 {
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-    auto result = device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
+    auto result = engine.device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
     if (FAILED(result)) throw;
 
-    frameFence = MakeUnique<Fence>(device, *queueImpl.Get());
-    fence = MakeUnique<Fence>(device, *queueImpl.Get());
+    frameFence = MakeUnique<Fence>(engine, *queueImpl.Get());
+    fence = MakeUnique<Fence>(engine, *queueImpl.Get());
 }
 
 ID3D12CommandQueue* CommandQueue::operator->() 
@@ -22,7 +24,7 @@ ID3D12CommandQueue* CommandQueue::operator->()
 
 void CommandQueue::execute(CommandList& commandList)
 {
-    executionQueue.push(&commandList);
+    RenderEngineQueue.push(&commandList);
     queueImpl->ExecuteCommandLists(1, (ID3D12CommandList* const*)&commandList);
 }
 
@@ -30,12 +32,12 @@ void CommandQueue::freeCompletedLists()
 {
     auto completedFrameIndex = frameFence->GetCompletedValue();
 
-    while (!executionQueue.empty())
+    while (!RenderEngineQueue.empty())
     {
-        if (executionQueue.front()->getFrameIndex() <= completedFrameIndex)
+        if (RenderEngineQueue.front()->getFrameIndex() <= completedFrameIndex)
         {
-            executionQueue.front()->returnToPool();
-            executionQueue.pop();
+            RenderEngineQueue.front()->returnToPool();
+            RenderEngineQueue.pop();
         }
         else
         {

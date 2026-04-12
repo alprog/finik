@@ -11,7 +11,6 @@ import Light;
 import RenderSystem;
 import RenderPass;
 import Character;
-import Execution;
 import RenderContext;
 
 export class Scene

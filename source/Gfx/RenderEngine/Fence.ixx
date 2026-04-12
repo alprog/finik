@@ -1,11 +1,11 @@
-export module Execution:Fence;
+export module RenderEngine:Fence;
 
 import :Shared;
 
 export class Fence
 {
 public:
-    Fence(GfxDevice& gfxDevice, ID3D12CommandQueue& queue);
+    Fence(RenderEngine& engine, ID3D12CommandQueue& queue);
 
     uint64 SignalNext();
     uint64 GetLastSignaledValue();

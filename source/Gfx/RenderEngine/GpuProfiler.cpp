@@ -1,22 +1,23 @@
 module;
 #include "../dx.h"
-module Execution:GpuProfiler;
+module RenderEngine:GpuProfiler;
 
 import TimeboxTracker;
 import Timer;
 import App;
+import :RenderEngine;
 
 int constexpr MAX_TIMESTAMP = 100;
 int constexpr readBackRecordSize = sizeof(uint64);
 
-GpuProfiler::GpuProfiler(GfxDevice& device, CommandQueue& commandQueue)
+GpuProfiler::GpuProfiler(RenderEngine& engine, CommandQueue& commandQueue)
 {
     D3D12_QUERY_HEAP_DESC queryHeapDesc = {};
     queryHeapDesc.Type = D3D12_QUERY_HEAP_TYPE_TIMESTAMP;
     queryHeapDesc.Count = MAX_TIMESTAMP;
     queryHeapDesc.NodeMask = 0;
 
-    device->CreateQueryHeap(&queryHeapDesc, IID_PPV_ARGS(&queryHeap));
+    engine.device->CreateQueryHeap(&queryHeapDesc, IID_PPV_ARGS(&queryHeap));
 
     D3D12_RESOURCE_DESC bufferDesc = {};
     bufferDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -31,7 +32,7 @@ GpuProfiler::GpuProfiler(GfxDevice& device, CommandQueue& commandQueue)
     D3D12_HEAP_PROPERTIES heapProps = {};
     heapProps.Type = D3D12_HEAP_TYPE_READBACK;
 
-    device->CreateCommittedResource(
+    engine.device->CreateCommittedResource(
         &heapProps,
         D3D12_HEAP_FLAG_NONE,
         &bufferDesc,

@@ -1,4 +1,4 @@
-export module Execution:CommandQueue;
+export module RenderEngine:CommandQueue;
 
 import :Shared;
 import :Fence;
@@ -7,7 +7,7 @@ import :CommandList;
 export class CommandQueue
 {
 public:
-    CommandQueue(GfxDevice& device);
+    CommandQueue(RenderEngine& engine);
 
     void execute(CommandList& commandList);
     void freeCompletedLists();
@@ -21,5 +21,5 @@ public:
 
     UniquePtr<Fence> frameFence;
 
-    std::queue<CommandList*> executionQueue;
+    std::queue<CommandList*> RenderEngineQueue;
 };

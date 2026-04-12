@@ -1,13 +1,13 @@
-export module Execution:CommandList;
+export module RenderEngine:CommandList;
 
 import :Shared;
 
-class CommandListPool;
+export class CommandListPool;
 
 export class CommandList
 {
 public:
-    explicit CommandList(GfxDevice& device, CommandListPool& pool, int frameIndex);
+    explicit CommandList(RenderEngine& engine, CommandListPool& pool, int frameIndex);
     void reset(int frameIndex);
     void returnToPool();
 
@@ -36,7 +36,7 @@ public:
     MyPtr<ID3D12CommandAllocator> commandAllocator;
 
 private:
-    GfxDevice& device;
+    RenderEngine& engine;
     CommandListPool& pool;
     int frameIndex;
 

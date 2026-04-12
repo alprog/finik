@@ -6,11 +6,10 @@ export import Finik.Core.Singleton;
 
 import GfxDevice;
 import RenderContext;
-import Execution;
+export import RenderEngine;
 import RootSignature;
-import PipelineState;
 
-export class RenderSystem : public Singleton<RenderSystem>
+export extern "C++" class RenderSystem : public Singleton<RenderSystem>
 {
 public:
     RenderSystem();
@@ -47,7 +46,7 @@ private:
     void createRenderContext();
     void createRootSignature();
 
-    GfxDevice device; 
+    RenderEngine engine; 
 
     CommandQueue* commandQueue = nullptr;
     MyPtr<ID3D12CommandAllocator> commandAllocators[3];
@@ -59,8 +58,6 @@ private:
     GpuProfiler* gpuProfiler = nullptr;
 
     UniquePtr<RenderContext> renderContext;
-
-    Ptr<PipelineState> pipelineState;
 
     UniquePtr<CommandListPool> commandListPool;
 };

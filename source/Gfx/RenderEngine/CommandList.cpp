@@ -1,21 +1,22 @@
 module;
 #include "gfx/dx.h"
-module Execution:CommandList;
+module RenderEngine:CommandList;
 
 import :CommandListPool;
 import :GpuProfiler;
+import RenderSystem;
 
-CommandList::CommandList(GfxDevice& device, CommandListPool& pool, const int frameIndex)
-    : device{device}
+CommandList::CommandList(RenderEngine& engine, CommandListPool& pool, const int frameIndex)
+    : engine{engine}
     , pool{pool}
     , frameIndex{frameIndex}
 {
-    auto result = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
+    auto result = engine.device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 
     if (FAILED(result))
         throw;
 
-    result = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&listImpl));
+    result = engine.device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&listImpl));
     if (FAILED(result))
         throw;
 

@@ -1,13 +1,14 @@
-export module Execution:CommandListPool;
+export module RenderEngine:CommandListPool;
 
 import :Shared;
-import :CommandList;
-import :GpuProfiler;
+
+export class GpuProfiler;
+export class CommandList;
 
 export class CommandListPool
 {
 public:
-    explicit CommandListPool(GfxDevice& device, GpuProfiler& profiler);
+    explicit CommandListPool(RenderEngine& engine, GpuProfiler& profiler);
 
     CommandList& retrieveOne();
     void putBack(CommandList& commandList);
@@ -15,7 +16,7 @@ public:
     GpuProfiler& getProfiler();
 
 private:
-    GfxDevice& device;
+    RenderEngine& engine;
     GpuProfiler& profiler;
 
     Array<UniquePtr<CommandList>> lists;

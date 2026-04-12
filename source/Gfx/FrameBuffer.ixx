@@ -1,7 +1,6 @@
 export module FrameBuffer;
 
-import GfxDevice;
-import Execution;
+import RenderEngine;
 import GpuResource;
 import RenderSurface;
 import RenderTarget;

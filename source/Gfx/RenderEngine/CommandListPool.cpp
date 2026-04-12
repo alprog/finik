@@ -1,9 +1,12 @@
-module Execution:CommandListPool;
+module RenderEngine:CommandListPool;
 
 import App;
+import :RenderEngine;
+import :CommandList;
+import :GpuProfiler;
 
-CommandListPool::CommandListPool(GfxDevice& device, GpuProfiler& profiler)
-    : device{device}
+CommandListPool::CommandListPool(RenderEngine& engine, GpuProfiler& profiler)
+    : engine{engine}
     , profiler{profiler}
 {
 }
@@ -14,7 +17,7 @@ CommandList& CommandListPool::retrieveOne()
     
     if (freeLists.empty())
     {
-        return *lists.emplace_back(MakeUnique<CommandList>(device, *this, frameIndex));
+        return *lists.emplace_back(MakeUnique<CommandList>(engine, *this, frameIndex));
     }
 
     auto& list = *freeLists.last();
