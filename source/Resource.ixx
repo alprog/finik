@@ -2,7 +2,6 @@ export module GpuResource;
 
 import Finik.Core;
 import DX;
-import RenderSystemFwd;
 
 export class GpuResource
 {
@@ -16,8 +15,6 @@ public:
     {
         return InternalResource;
     }
-
-    void transition_to(D3D12_RESOURCE_STATES newState, CommandList& list);
 
 private:
     void releaseInternal();

@@ -4,7 +4,6 @@ module;
 module GpuResource;
 
 import RenderSystem;
-import CommandList;
 
 GpuResource::~GpuResource()
 {
@@ -25,15 +24,6 @@ void GpuResource::reinit(D3D12_RESOURCE_DESC desc, D3D12_RESOURCE_STATES initial
         IID_PPV_ARGS(&InternalResource)) MUST;
 
     state = initialState;
-}
-
-void GpuResource::transition_to(D3D12_RESOURCE_STATES newState, CommandList& list)
-{
-    if (state != newState)
-    {
-        list.listImpl->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(InternalResource, state, newState));
-        state = newState;
-    }
 }
 
 void GpuResource::releaseInternal()
