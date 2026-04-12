@@ -7,7 +7,7 @@ import RenderSystem;
 import Assets;
 import Shader;
 import ShaderManager;
-import DescriptorHandle;
+import Descriptors;
 import OneshotAllocator;
 import ComputeContext;
 

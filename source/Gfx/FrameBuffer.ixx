@@ -1,7 +1,7 @@
 export module FrameBuffer;
 
 import Finik.Core;
-import DescriptorHandle;
+import Descriptors;
 import DX;
 import CommandList;
 import GpuResource;

@@ -1,7 +1,7 @@
 export module ConstantBuffer;
 
 import Finik.Core;
-import DescriptorHandle;
+import Descriptors;
 import GfxDevice;
 import UploadBuffer;
 

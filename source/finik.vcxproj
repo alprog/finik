@@ -268,10 +268,8 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="CommandList\ComputeContext.ixx" />
     <ClCompile Include="Gfx\ConstantBuffer.cpp" />
     <ClCompile Include="Gfx\ConstantBuffer.ixx" />
-    <ClCompile Include="Gfx\DescriptorHandle.cpp" />
-    <ClCompile Include="Gfx\DescriptorHandle.ixx" />
-    <ClCompile Include="Gfx\DescriptorHeap.cpp" />
-    <ClCompile Include="Gfx\DescriptorHeap.ixx" />
+    <ClCompile Include="Gfx\Descriptors.cpp" />
+    <ClCompile Include="Gfx\Descriptors.ixx" />
     <ClCompile Include="Gfx\Fence.cpp" />
     <ClCompile Include="Gfx\Fence.ixx" />
     <ClCompile Include="Gfx\GpuProfiler.cpp" />

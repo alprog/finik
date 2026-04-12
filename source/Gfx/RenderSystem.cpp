@@ -16,7 +16,7 @@ module RenderSystem;
 import App;
 import Imgui;
 import CommandQueue;
-import DescriptorHandle;
+import Descriptors;
 import DesktopWindow;
 
 class ResultChecker

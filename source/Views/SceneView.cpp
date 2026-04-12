@@ -4,7 +4,7 @@ module SceneView;
 
 import Imgui;
 import RenderSystem;
-import DescriptorHandle;
+import Descriptors;
 import Log;
 import Scene;
 import EffectManager;

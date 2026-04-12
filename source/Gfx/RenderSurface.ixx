@@ -4,7 +4,7 @@ import Finik.Core;
 import DX;
 
 import GpuResource;
-import DescriptorHandle;
+import Descriptors;
 import Msaa;
 export import SurfaceResolution;
 

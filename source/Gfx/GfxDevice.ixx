@@ -5,7 +5,7 @@ export import std;
 export import DX;
 
 import OneshotAllocator;
-import DescriptorHeap;
+import Descriptors;
 
 export class GfxDevice
 {

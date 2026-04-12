@@ -14,7 +14,7 @@ import GpuProfiler;
 import Myptr;
 import OneshotAllocator;
 import RootSignature;
-import DescriptorHeap;
+import Descriptors;
 import PipelineState;
 import GfxDevice;
 

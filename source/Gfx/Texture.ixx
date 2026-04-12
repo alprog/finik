@@ -2,7 +2,7 @@ export module Texture;
 
 import Finik.Core;
 import DX;
-import DescriptorHandle;
+import Descriptors;
 import Images;
 import GpuResource;
 import ByteBlob;

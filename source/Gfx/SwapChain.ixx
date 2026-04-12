@@ -4,7 +4,7 @@ export module SwapChain;
 
 import Finik.Core;
 import DX;
-import DescriptorHandle;
+import Descriptors;
 import RenderSystem;
 import RenderSurface;
 

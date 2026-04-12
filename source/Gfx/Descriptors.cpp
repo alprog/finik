@@ -2,15 +2,42 @@ module;
 #include <stdio.h>
 #include <asserts.h>
 #include "dx.h"
-module DescriptorHeap;
+module Descriptors;
 
-import DescriptorHandle;
+DescriptorHandle::DescriptorHandle()
+    : heap{nullptr}
+    , index{0}
+{
+}
+
+DescriptorHandle::DescriptorHandle(DescriptorHeap* heap, int index)
+    : heap{heap}
+    , index{index}
+{
+}
+
+int DescriptorHandle::getIndex() const
+{
+    return index;
+}
+
+CD3DX12_CPU_DESCRIPTOR_HANDLE DescriptorHandle::getCPU() const
+{
+    return heap->getCpuHandle(index);
+}
+
+CD3DX12_GPU_DESCRIPTOR_HANDLE DescriptorHandle::getGPU() const
+{
+    return heap->getGpuHandle(index);
+}
+
+//-----------------------------------------------------------------------------------------------
 
 DescriptorHeap::DescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int maxCount)
 {
     D3D12_DESCRIPTOR_HEAP_DESC desc = {};
     desc.NumDescriptors = maxCount;
-    desc.Type = type;    
+    desc.Type = type;
     const bool shaderVisible = type == D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
     desc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 
@@ -18,7 +45,8 @@ DescriptorHeap::DescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE 
     this->maxCount = maxCount;
 
     auto result = device->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&heap));
-    if (FAILED(result)) throw;
+    if (FAILED(result))
+        throw;
 
     cpuStartHandle = heap->GetCPUDescriptorHandleForHeapStart();
     if (shaderVisible)
