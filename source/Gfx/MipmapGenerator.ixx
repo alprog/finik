@@ -3,7 +3,7 @@ export module MipmapGenerator;
 import Finik.Core;
 
 import DX;
-import CommandList;
+import Execution;
 import Texture;
 
 export class MipMapGenerator : public Singleton<MipMapGenerator>

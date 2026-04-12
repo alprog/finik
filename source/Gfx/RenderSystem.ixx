@@ -6,11 +6,9 @@ export import Finik.Core.Singleton;
 
 import Finik.Core;
 import DX;
-import CommandQueue;
-import CommandListPool;
 
 import RenderContext;
-import GpuProfiler;
+import Execution;
 import Myptr;
 import OneshotAllocator;
 import RootSignature;

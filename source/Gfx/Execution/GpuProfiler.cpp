@@ -1,6 +1,6 @@
 module;
-#include "dx.h"
-module GpuProfiler;
+#include "../dx.h"
+module Execution:GpuProfiler;
 
 import TimeboxTracker;
 import RenderSystem;

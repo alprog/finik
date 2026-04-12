@@ -1,9 +1,9 @@
 module;
-#include "dx.h"
-module CommandQueue;
+#include "../dx.h"
+module Execution:CommandQueue;
 
 import RenderSystem;
-import CommandList;
+import :CommandList;
 
 CommandQueue::CommandQueue(GfxDevice& device)
 {

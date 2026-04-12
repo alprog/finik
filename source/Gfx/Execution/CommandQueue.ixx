@@ -1,9 +1,9 @@
-export module CommandQueue;
+export module Execution:CommandQueue;
 
 import Finik.Core;
 import DX;
-import Fence;
-import CommandList;
+import :Fence;
+import :CommandList;
 import GfxDevice;
 
 export class CommandQueue

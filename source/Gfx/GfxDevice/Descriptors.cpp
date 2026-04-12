@@ -1,7 +1,7 @@
 module;
 #include <stdio.h>
 #include <asserts.h>
-#include "dx.h"
+#include "../dx.h"
 module Descriptors;
 
 DescriptorHandle::DescriptorHandle()

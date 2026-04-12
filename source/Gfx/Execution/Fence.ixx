@@ -1,4 +1,4 @@
-export module Fence;
+export module Execution:Fence;
 
 import Finik.Core.PrimitiveTypes;
 import Myptr;

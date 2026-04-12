@@ -1,4 +1,4 @@
-export module GpuProfiler;
+export module Execution:GpuProfiler;
 
 import Finik.Core;
 import RenderSystemFwd;

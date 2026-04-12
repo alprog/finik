@@ -5,7 +5,7 @@ module Texture;
 import RenderSystem;
 import UploadBuffer;
 import Images;
-import CommandList;
+import Execution;
 import MipmapGenerator;
 import SpriteManager;
 

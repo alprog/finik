@@ -4,7 +4,7 @@ module;
 module SwapChain;
 
 import RenderSystem;
-import GpuProfiler;
+import Execution;
 import Log;
 import Timer;
 import DesktopWindow;
