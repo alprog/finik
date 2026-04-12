@@ -2,7 +2,6 @@ export module MemoryPage;
 
 import Finik.Core;
 import DX;
-import RenderSystemFwd;
 import Allocation;
 
 export namespace finik::gpumem
@@ -10,7 +9,7 @@ export namespace finik::gpumem
     class MemoryPage
     {
     public:
-        MemoryPage(RenderSystem& renderSystem, int size);
+        MemoryPage(ID3D12Device* device, int size);
 
         int GetFullSize() const;
         int GetAvailableSize() const;

@@ -6,13 +6,11 @@ import RenderSystem;
 
 using namespace finik::gpumem;
 
-MemoryPage::MemoryPage(RenderSystem& renderSystem, int size)
+MemoryPage::MemoryPage(ID3D12Device* device, int size)
     : FullSize{ size }
     , UsedSize { 0 }
     , UsingFrame { 0 }
 {
-    auto device = renderSystem.get_device();
-
     static D3D12_HEAP_PROPERTIES HeapProps;
     HeapProps.Type = D3D12_HEAP_TYPE_UPLOAD;
     HeapProps.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;

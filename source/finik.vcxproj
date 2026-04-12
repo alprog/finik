@@ -184,6 +184,8 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Gfx\Brushes\Brush.ixx" />
     <ClCompile Include="Gfx\Brushes\BrushManager.ixx" />
     <ClCompile Include="Gfx\GbUffer.ixx" />
+    <ClCompile Include="Gfx\GfxDevice.cpp" />
+    <ClCompile Include="Gfx\GfxDevice.ixx" />
     <ClCompile Include="Gfx\Jitter.ixx" />
     <ClCompile Include="Gfx\LineBuilder.ixx" />
     <ClCompile Include="Gfx\Sprite3D.cpp" />

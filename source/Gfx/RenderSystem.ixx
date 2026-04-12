@@ -16,6 +16,7 @@ import OneshotAllocator;
 import RootSignature;
 import DescriptorHeap;
 import PipelineState;
+import GfxDevice;
 
 export class RenderSystem : public Singleton<RenderSystem>
 {
@@ -44,18 +45,16 @@ public:
     void scheduleQueryResolving();
 
 private:
-    void enableDebugLayer();
     void createDevice();
-    void setupDebug();
     void createCommandQueue();
-    void createDescriptorHeap();
     void createCommandListPool();
     void createCommandAllocators();
-    void createOneshotAllocator();
     void createCommandList();
     void createRenderContext();
     void createProfiler();
     void createRootSignature();
+
+    GfxDevice device; 
 
     CommandQueue* commandQueue = nullptr;
     MyPtr<ID3D12CommandAllocator> commandAllocators[3];
@@ -68,16 +67,7 @@ private:
 
     UniquePtr<RenderContext> renderContext;
 
-    UniquePtr<DescriptorHeap> rtvHeap; // Render Target View
-    UniquePtr<DescriptorHeap> dsvHeap; // Depth Stencil View
-    UniquePtr<DescriptorHeap> srvCbvUavHeap;
-
-    MyPtr<ID3D12Device> device;
-
     Ptr<PipelineState> pipelineState;
 
-    D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;
-
     UniquePtr<CommandListPool> commandListPool;
-    UniquePtr<finik::gpumem::OneshotAllocator> oneshotAllocator;
 };

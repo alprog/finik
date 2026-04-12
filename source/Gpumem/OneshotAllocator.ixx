@@ -1,8 +1,8 @@
 export module OneshotAllocator;
 
 import Finik.Core;
+import DX;
 import MemoryPage;
-import RenderSystemFwd;
 import Allocation;
 
 export namespace finik::gpumem
@@ -10,7 +10,7 @@ export namespace finik::gpumem
     class OneshotAllocator
     {
     public:
-        explicit OneshotAllocator(RenderSystem& renderSystem);
+        explicit OneshotAllocator(ID3D12Device* device);
         
         RawAllocation Allocate(int size, int frame);
 
@@ -28,7 +28,7 @@ export namespace finik::gpumem
         
         MemoryPage& CreateNewPage();
 
-        RenderSystem& renderSystem;
+        ID3D12Device* device;
 
         Array<MemoryPage> pages;
     };

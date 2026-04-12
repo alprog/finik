@@ -5,8 +5,8 @@ import App;
 
 using namespace finik::gpumem;
 
-OneshotAllocator::OneshotAllocator(RenderSystem& renderSystem)
-    : renderSystem{ renderSystem }
+OneshotAllocator::OneshotAllocator(ID3D12Device* device)
+    : device{ device }
 {
 }
 
@@ -40,7 +40,7 @@ void OneshotAllocator::FreePages()
 
 MemoryPage& OneshotAllocator::CreateNewPage()
 {
-    return pages.emplace_back(renderSystem, 4096);
+    return pages.emplace_back(device, 4096);
 }
 
 int32 OneshotAllocator::GetCurrentFrame()
