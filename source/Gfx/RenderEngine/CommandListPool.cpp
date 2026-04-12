@@ -16,7 +16,7 @@ CommandList& CommandListPool::retrieveOne()
     
     if (freeLists.empty())
     {
-        return *lists.emplace_back(MakeUnique<CommandList>(engine, *this, frameIndex));
+        return *lists.emplace_back(MakeUnique<CommandList>(*this, frameIndex));
     }
 
     auto& list = *freeLists.last();

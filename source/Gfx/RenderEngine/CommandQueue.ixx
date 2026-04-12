@@ -14,6 +14,8 @@ public:
     
     void Flush();
 
+    RenderEngine& engine;
+
     MyPtr<ID3D12CommandQueue> queueImpl;
     UniquePtr<Fence> fence;
 

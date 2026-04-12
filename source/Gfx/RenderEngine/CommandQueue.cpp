@@ -7,6 +7,7 @@ import :Fence;
 import :CommandList;
 
 CommandQueue::CommandQueue(RenderEngine& engine)
+    : engine{engine}
 {
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
@@ -15,8 +16,8 @@ CommandQueue::CommandQueue(RenderEngine& engine)
     auto result = engine.getDevice()->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
     if (FAILED(result)) throw;
 
-    frameFence = MakeUnique<Fence>(engine, *queueImpl.Get());
-    fence = MakeUnique<Fence>(engine, *queueImpl.Get());
+    frameFence = MakeUnique<Fence>(*this);
+    fence = MakeUnique<Fence>(*this);
 }
 
 ID3D12CommandQueue* CommandQueue::operator->() 

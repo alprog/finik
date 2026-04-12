@@ -5,7 +5,7 @@ import :Shared;
 export class Fence
 {
 public:
-    Fence(RenderEngine& engine, ID3D12CommandQueue& queue);
+    Fence(CommandQueue& queue);
 
     uint64 SignalNext();
     uint64 GetLastSignaledValue();
@@ -13,7 +13,7 @@ public:
     void WaitForValue(uint64 value);
 
 private:
-    ID3D12CommandQueue& Queue;
+    CommandQueue& Queue;
     MyPtr<ID3D12Fence> FenceImpl;
     HANDLE FenceEvent = nullptr;
     uint64 LastSignaledValue = 0;

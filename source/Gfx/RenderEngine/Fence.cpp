@@ -3,11 +3,13 @@ module;
 module RenderEngine:Fence;
 
 import :RenderEngine;
+import :CommandQueue;
 
-Fence::Fence(RenderEngine& engine, ID3D12CommandQueue& queue)
+Fence::Fence(CommandQueue& queue)
     : Queue { queue }
 {
-    auto result = engine.getDevice()->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)(&FenceImpl));
+    auto& device = queue.engine.getDevice();
+    auto result = device->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)(&FenceImpl));
     if (FAILED(result)) throw;
 
     FenceEvent = CreateEvent(nullptr, 0, 0, nullptr);
@@ -16,7 +18,7 @@ Fence::Fence(RenderEngine& engine, ID3D12CommandQueue& queue)
 
 uint64 Fence::SignalNext()
 {
-    Queue.Signal(FenceImpl.Get(), ++LastSignaledValue);
+    Queue->Signal(FenceImpl.Get(), ++LastSignaledValue);
     return LastSignaledValue;
 }
 

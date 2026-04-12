@@ -6,17 +6,17 @@ import :CommandListPool;
 import :GpuProfiler;
 import RenderSystem;
 
-CommandList::CommandList(RenderEngine& engine, CommandListPool& pool, const int frameIndex)
-    : engine{engine}
-    , pool{pool}
+CommandList::CommandList(CommandListPool& pool, const int frameIndex)
+    : pool{pool}
     , frameIndex{frameIndex}
 {
-    auto result = engine.getDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
+    auto& device = pool.getEngine().getDevice();
+    auto result = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 
     if (FAILED(result))
         throw;
 
-    result = engine.getDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&listImpl));
+    result = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&listImpl));
     if (FAILED(result))
         throw;
 
