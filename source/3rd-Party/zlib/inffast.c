@@ -35,7 +35,7 @@
    available, an end-of-block is encountered, or a data error is encountered.
    When large enough input and output buffers are supplied to inflate(), for
    example, a 16K input buffer and a 64K output buffer, more than 95% of the
-   inflate RenderEngine time is spent in this routine.
+   inflate execution time is spent in this routine.
 
    Entry assumptions:
 

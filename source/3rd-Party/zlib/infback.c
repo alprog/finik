@@ -75,7 +75,7 @@ int stream_size;
    If BUILDFIXED is defined, then instead this routine builds the tables the
    first time it's called, and returns those tables the first time and
    thereafter.  This reduces the size of the code by about 2K bytes, in
-   exchange for a little RenderEngine time.  However, BUILDFIXED should not be
+   exchange for a little execution time.  However, BUILDFIXED should not be
    used for threaded applications, since the rewriting of the tables and virgin
    may not be thread-safe.
  */
