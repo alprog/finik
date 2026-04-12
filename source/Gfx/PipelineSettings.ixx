@@ -1,7 +1,6 @@
 export module PipelineSettings;
 
 import Finik.Core;
-import RenderSystemFwd;
 import Shader;
 import Msaa;
 
