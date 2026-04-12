@@ -8,7 +8,7 @@ import Actor;
 import Grid;
 import Texture;
 import Light;
-import RenderSystemFwd;
+import RenderSystem;
 import RenderPass;
 import Character;
 

@@ -2,15 +2,14 @@ module;
 #include "dx.h"
 module ConstantBuffer;
 
-import RenderSystem;
 import UploadBuffer;
 
-GpuDataBuffer::GpuDataBuffer(int32 size, RenderSystem& renderSystem)
+GpuDataBuffer::GpuDataBuffer(int32 size, GfxDevice& device)
     : size{size}
 {
     const int32 alignedSize = (sizeof(size) + 255) & ~255; // align 256
 
-    uploadBuffer = new UploadBuffer(renderSystem.getDevice(), alignedSize);
+    uploadBuffer = new UploadBuffer(device, alignedSize);
 
     D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
     cbvDesc.BufferLocation = uploadBuffer->GetGPUVirtualAddress();
@@ -18,8 +17,8 @@ GpuDataBuffer::GpuDataBuffer(int32 size, RenderSystem& renderSystem)
 
     data = (uint8*)uploadBuffer->GetData();
 
-    descriptorHandle = renderSystem.getCommonHeap()->getNextHandle();
-    renderSystem.getInternalDevice()->CreateConstantBufferView(&cbvDesc, descriptorHandle.getCPU());
+    descriptorHandle = device.getCommonHeap()->getNextHandle();
+    device->CreateConstantBufferView(&cbvDesc, descriptorHandle.getCPU());
 }
 
 GpuDataBuffer::~GpuDataBuffer()

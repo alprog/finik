@@ -1,8 +1,6 @@
 export module Camera;
 
 import Finik.Core;
-import SceneSystemFwd;
-import RenderSystemFwd;
 
 export class Camera
 {

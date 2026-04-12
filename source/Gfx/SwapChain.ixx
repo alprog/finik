@@ -5,7 +5,7 @@ export module SwapChain;
 import Finik.Core;
 import DX;
 import DescriptorHandle;
-import RenderSystemFwd;
+import RenderSystem;
 import RenderSurface;
 
 export constexpr int NUM_BACK_BUFFER = 3;

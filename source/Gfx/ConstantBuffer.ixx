@@ -2,13 +2,13 @@ export module ConstantBuffer;
 
 import Finik.Core;
 import DescriptorHandle;
-import RenderSystemFwd;
-import RootSignatureParams;
+import GfxDevice;
+import UploadBuffer;
 
 export class GpuDataBuffer
 {
 public:
-    GpuDataBuffer(int32 size, RenderSystem& renderSystem);
+    GpuDataBuffer(int32 size, GfxDevice& device);
     virtual ~GpuDataBuffer();
 
     UploadBuffer* uploadBuffer;
@@ -23,8 +23,8 @@ class GpuBuffer : public GpuDataBuffer
     using Base = GpuDataBuffer;
 
 public:
-    GpuBuffer(RenderSystem& renderSystem)
-        : GpuDataBuffer(sizeof(T), renderSystem)
+    GpuBuffer(GfxDevice& device)
+        : GpuDataBuffer(sizeof(T), device)
     {
         data = reinterpret_cast<T*>(Base::data);
     }
@@ -41,5 +41,3 @@ public:
         return data;
     }
 };
-
-export using FrameConstantBuffer = GpuBuffer<FrameConstants>;

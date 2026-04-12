@@ -1,7 +1,6 @@
 export module DescriptorHeap;
 
 import DX;
-import RenderSystemFwd;
 import DescriptorHandle;
 
 export class DescriptorHeap
