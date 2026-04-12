@@ -4,8 +4,8 @@ import Finik.Core;
 export import std;
 export import DX;
 
-import OneshotAllocator;
 import Descriptors;
+import OneshotAllocator;
 
 export class GfxDevice
 {

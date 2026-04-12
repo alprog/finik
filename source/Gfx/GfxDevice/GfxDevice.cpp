@@ -1,12 +1,9 @@
 module;
-#include <SDL.h>
-#include <SDL_syswm.h>
-
 #ifdef _DEBUG
 #define DX12_ENABLE_DEBUG_LAYER
 #endif
 
-#include "dx.h"
+#include "../dx.h"
 #ifdef DX12_ENABLE_DEBUG_LAYER
 #include <dxgidebug.h>
 #pragma comment(lib, "dxguid.lib")
