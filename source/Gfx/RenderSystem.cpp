@@ -67,12 +67,12 @@ void RenderSystem::createDevice()
 
 void RenderSystem::createCommandQueue()
 {
-    commandQueue = new CommandQueue(*this);
+    commandQueue = new CommandQueue(device);
 }
 
 void RenderSystem::createCommandListPool()
 {
-    commandListPool = MakeUnique<CommandListPool>(*this);
+    commandListPool = MakeUnique<CommandListPool>(device);
 }
 
 void RenderSystem::createCommandAllocators()
@@ -87,7 +87,7 @@ void RenderSystem::createCommandAllocators()
 
 void RenderSystem::createCommandList()
 {
-    auto result = get_device()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocators[0].Get(), nullptr, IID_PPV_ARGS(&commandList));
+    auto result = getInternalDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocators[0].Get(), nullptr, IID_PPV_ARGS(&commandList));
     if (FAILED(result))
         throw;
 
@@ -108,8 +108,8 @@ void RenderSystem::createProfiler()
 
 void RenderSystem::createRootSignature()
 {
-    mainRootSignature = MakeUnique<MainRootSignature>(*this);
-    computeRootSignature = MakeUnique<ComputeRootSignature>(*this);
+    mainRootSignature = MakeUnique<MainRootSignature>(device);
+    computeRootSignature = MakeUnique<ComputeRootSignature>(device);
 }
 
 void RenderSystem::scheduleQueryResolving()
@@ -134,10 +134,15 @@ void RenderSystem::ImguiInitHelper()
     const int NUM_FRAMES_IN_FLIGHT = 3;
 
     DescriptorHandle handle = device.getCommonHeap()->getNextHandle();
-    ImGui_ImplDX12_Init(get_device(), NUM_FRAMES_IN_FLIGHT, DXGI_FORMAT_R8G8B8A8_UNORM, device.getCommonHeap()->get(), handle.getCPU(), handle.getGPU());
+    ImGui_ImplDX12_Init(getInternalDevice(), NUM_FRAMES_IN_FLIGHT, DXGI_FORMAT_R8G8B8A8_UNORM, device.getCommonHeap()->get(), handle.getCPU(), handle.getGPU());
 }
 
-ID3D12Device* RenderSystem::get_device()
+GfxDevice& RenderSystem::getDevice()
+{
+    return device;
+}
+
+ID3D12Device* RenderSystem::getInternalDevice()
 {
     return device.getInternal();
 }

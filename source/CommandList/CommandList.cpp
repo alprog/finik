@@ -8,13 +8,11 @@ import CommandListPool;
 import GpuProfiler;
 import GpuResource;
 
-CommandList::CommandList(RenderSystem& renderSystem, CommandListPool& pool, const int frameIndex)
-    : renderSystem{renderSystem}
+CommandList::CommandList(GfxDevice& device, CommandListPool& pool, const int frameIndex)
+    : device{device}
     , pool{pool}
     , frameIndex{frameIndex}
 {
-    auto device = renderSystem.get_device();
-
     auto result = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 
     if (FAILED(result))
@@ -58,6 +56,7 @@ void CommandList::endRecording()
 
 int CommandList::addTimestampQuery()
 {
+    auto& renderSystem = Single::Get<RenderSystem>();
     return renderSystem.getProfiler()->addStamp(*listImpl.Get(), "list");
 }
 

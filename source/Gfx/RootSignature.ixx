@@ -2,12 +2,12 @@ export module RootSignature;
 
 import Finik.Core;
 import DX;
-import RenderSystemFwd;
+import GfxDevice;
 
 export class RootSignature
 {
 protected:
-    void init(RenderSystem& renderSystem, Array<CD3DX12_ROOT_PARAMETER>& parameters);
+    void init(GfxDevice& device, Array<CD3DX12_ROOT_PARAMETER>& parameters);
 
 public:
     MyPtr<ID3D12RootSignature> signatureImpl;
@@ -32,7 +32,7 @@ public:
         Count
     };
 
-    MainRootSignature(RenderSystem& renderSystem);
+    MainRootSignature(GfxDevice& device);
 };
 
 export class ComputeRootSignature : public RootSignature
@@ -47,5 +47,5 @@ public:
         Count
     };
 
-    ComputeRootSignature(RenderSystem& renderSystem);
+    ComputeRootSignature(GfxDevice& device);
 };

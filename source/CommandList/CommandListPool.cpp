@@ -3,8 +3,8 @@ module CommandListPool;
 import Finik.Core;
 import App;
 
-CommandListPool::CommandListPool(RenderSystem& renderSystem)
-    : renderSystem{ renderSystem }
+CommandListPool::CommandListPool(GfxDevice& device)
+    : device{device}
 {
 }
 
@@ -14,7 +14,7 @@ CommandList& CommandListPool::retrieveOne()
     
     if (freeLists.empty())
     {
-        return *lists.emplace_back(MakeUnique<CommandList>(renderSystem, *this, frameIndex));
+        return *lists.emplace_back(MakeUnique<CommandList>(device, *this, frameIndex));
     }
 
     auto& list = *freeLists.last();

@@ -63,7 +63,7 @@ SwapChain::SwapChain(DesktopWindow& window)
     CreateDepthStencil();
 
     for (uint32 i = 0; i < NUM_FRAMES_IN_FLIGHT; i++)
-        if (render_system.get_device()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameContext[i].CommandAllocator)) != S_OK)
+        if (render_system.getInternalDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameContext[i].CommandAllocator)) != S_OK)
             throw;
 }
 
@@ -98,7 +98,7 @@ void SwapChain::CreateRenderTargets()
 
         ID3D12Resource* pBackBuffer = nullptr;
         swapChain->GetBuffer(i, IID_PPV_ARGS(&pBackBuffer));
-        render_system.get_device()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle.getCPU());
+        render_system.getInternalDevice()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle.getCPU());
         renderTarget->resource = pBackBuffer;
 
         renderTargets.append(renderTarget);

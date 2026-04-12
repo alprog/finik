@@ -5,17 +5,17 @@ module CommandQueue;
 import RenderSystem;
 import CommandList;
 
-CommandQueue::CommandQueue(RenderSystem& renderSystem)
+CommandQueue::CommandQueue(GfxDevice& device)
 {
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-    auto result = renderSystem.get_device()->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
+    auto result = device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
     if (FAILED(result)) throw;
 
-    frameFence = MakeUnique<Fence>(renderSystem, *queueImpl.Get());
-    fence = MakeUnique<Fence>(renderSystem, *queueImpl.Get());
+    frameFence = MakeUnique<Fence>(device, *queueImpl.Get());
+    fence = MakeUnique<Fence>(device, *queueImpl.Get());
 }
 
 ID3D12CommandQueue* CommandQueue::operator->() 

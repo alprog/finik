@@ -52,7 +52,7 @@ Ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
 Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
 {
     auto& renderSystem = Single::Get<RenderSystem>();
-    auto device = renderSystem.get_device();
+    auto device = renderSystem.getInternalDevice();
 
     Array<D3D12_INPUT_ELEMENT_DESC> inputElementDescs = {
         {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
@@ -131,7 +131,7 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
 Ptr<PipelineState> PSOManager::imguiCompile(const PipelineSettings& settings)
 {
     auto& renderSystem = Single::Get<RenderSystem>();
-    auto device = renderSystem.get_device();
+    auto device = renderSystem.getInternalDevice();
 
     D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
     FillImguiPsoDesc(psoDesc);

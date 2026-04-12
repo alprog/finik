@@ -9,6 +9,7 @@ import Shader;
 import ShaderManager;
 import DescriptorHandle;
 import OneshotAllocator;
+import ComputeContext;
 
 struct ConstantData
 {
@@ -26,7 +27,7 @@ MipMapGenerator::MipMapGenerator()
     desc.CS = CD3DX12_SHADER_BYTECODE(shader->bytecode.Get());
     desc.pRootSignature = renderSystem.getComputeRootSignature().signatureImpl.Get();
 
-    renderSystem.get_device()->CreateComputePipelineState(&desc, IID_PPV_ARGS(&pso));
+    renderSystem.getInternalDevice()->CreateComputePipelineState(&desc, IID_PPV_ARGS(&pso));
 }
 
 void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
@@ -38,7 +39,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     stagingDesc.Format = DXGI_FORMAT_R8G8B8A8_TYPELESS;
 
     auto& renderSystem = Single::Get<RenderSystem>();
-    auto device = renderSystem.get_device();
+    auto device = renderSystem.getInternalDevice();
 
     const CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
@@ -108,7 +109,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     uav2srvDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
     uav2srvDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
 
-    auto& computeContext = commandList.getComputeContext();
+    ComputeContext computeContext(renderSystem, *commandList.listImpl.Get());
 
     // Set up state
     commandList.listImpl->SetDescriptorHeaps(1, descriptorHeap.GetAddressOf());

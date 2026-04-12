@@ -18,7 +18,7 @@ GpuProfiler::GpuProfiler(RenderSystem& renderSystem)
     queryHeapDesc.Count = MAX_TIMESTAMP;
     queryHeapDesc.NodeMask = 0;
 
-    renderSystem.get_device()->CreateQueryHeap(&queryHeapDesc, IID_PPV_ARGS(&queryHeap));
+    renderSystem.getInternalDevice()->CreateQueryHeap(&queryHeapDesc, IID_PPV_ARGS(&queryHeap));
 
     D3D12_RESOURCE_DESC bufferDesc = {};
     bufferDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -33,7 +33,7 @@ GpuProfiler::GpuProfiler(RenderSystem& renderSystem)
     D3D12_HEAP_PROPERTIES heapProps = {};
     heapProps.Type = D3D12_HEAP_TYPE_READBACK;
 
-    renderSystem.get_device()->CreateCommittedResource(
+    renderSystem.getInternalDevice()->CreateCommittedResource(
         &heapProps,
         D3D12_HEAP_FLAG_NONE,
         &bufferDesc,

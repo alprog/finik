@@ -3,12 +3,13 @@ export module CommandQueue;
 import Finik.Core;
 import DX;
 import Fence;
-import RenderSystemFwd;
+import CommandList;
+import GfxDevice;
 
 export class CommandQueue
 {
 public:
-    CommandQueue(RenderSystem& renderSystem);
+    CommandQueue(GfxDevice& device);
 
     void execute(CommandList& commandList);
     void freeCompletedLists();

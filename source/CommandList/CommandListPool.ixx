@@ -3,17 +3,18 @@ export module CommandListPool;
 import Finik.Core;
 import RenderSystemFwd;
 import CommandList;
+import GfxDevice;
 
 export class CommandListPool
 {
 public:
-    explicit CommandListPool(RenderSystem& renderSystem);
+    explicit CommandListPool(GfxDevice& device);
 
     CommandList& retrieveOne();
     void putBack(CommandList& commandList);
 
 private:
-    RenderSystem& renderSystem;
+    GfxDevice& device;
 
     Array<UniquePtr<CommandList>> lists;
     Array<CommandList*> freeLists;

@@ -6,7 +6,7 @@ import RenderSystem;
 
 void BaseVertexBuffer::Load()
 {
-    auto device = Single::Get<RenderSystem>().get_device();
+    auto device = Single::Get<RenderSystem>().getInternalDevice();
 
     const uint32 vertexBufferSize = GetVertexSize() * GetCount();
 

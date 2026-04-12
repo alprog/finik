@@ -14,7 +14,7 @@ void GpuResource::reinit(D3D12_RESOURCE_DESC desc, D3D12_RESOURCE_STATES initial
 {
     releaseInternal();
 
-    auto device = Single::Get<RenderSystem>().get_device();
+    auto device = Single::Get<RenderSystem>().getInternalDevice();
     device->CreateCommittedResource(
         &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
         D3D12_HEAP_FLAG_NONE,

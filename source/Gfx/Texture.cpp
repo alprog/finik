@@ -39,7 +39,7 @@ void Texture::resize(int32 width, int32 height)
     this->Height = height;
 
     auto& renderSystem = Single::Get<RenderSystem>();
-    auto* device = renderSystem.get_device();
+    auto* device = renderSystem.getInternalDevice();
 
     D3D12_RESOURCE_DESC textureDesc = {};
     textureDesc.MipLevels = calcMipMapCount();
@@ -88,14 +88,14 @@ void Texture::setData(Image& image)
 {
     auto& renderSystem = Single::Get<RenderSystem>();
 
-    auto device = renderSystem.get_device();
+    auto device = renderSystem.getInternalDevice();
     CommandList& commandList = renderSystem.getFreeCommandList();
     commandList.startRecording();
 
     commandList.transition(*this, D3D12_RESOURCE_STATE_COPY_DEST);
 
     const uint64 uploadBufferSize = GetRequiredIntermediateSize(InternalResource, 0, 1);
-    UploadBuffer uploadBuffer(renderSystem, (int32)uploadBufferSize);
+    UploadBuffer uploadBuffer(renderSystem.getDevice(), (int32)uploadBufferSize);
 
     if (uploadBufferSize == image.getByteSize())
     {

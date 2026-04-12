@@ -125,7 +125,7 @@ void SceneRenderLane::render()
         lightConstants->ShadowTextureId = light.shadowMap->depthStencil->textureHandle.getIndex();
         lightConstants->PCFSize = QualityManager::GetInstance().getCurrent().pcfSize;
 
-        commandList.getRenderContext().commandList.SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
+        commandList.listImpl->SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
         
         context.setEffect(*EffectManager::GetInstance().get("directional_light"));
         context.drawMesh(fullscreenQuad);
@@ -138,7 +138,7 @@ void SceneRenderLane::render()
         auto taaConstants = renderSystem.getOneshotAllocator().Allocate<TAAConstants>();
         taaConstants->LightBufferId = lightBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
         taaConstants->HistoryBufferId = historyBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
-        commandList.getRenderContext().commandList.SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, taaConstants.GpuAddress);
+        commandList.listImpl->SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, taaConstants.GpuAddress);
         
         resolvedBuffer.startRendering(commandList);
         context.setEffect(*EffectManager::GetInstance().get("taa_resolve"));

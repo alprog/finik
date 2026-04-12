@@ -6,7 +6,7 @@ import RenderSystem;
 
 void IndexBuffer::Load()
 {
-    auto device = Single::Get<RenderSystem>().get_device();
+    auto device = Single::Get<RenderSystem>().getInternalDevice();
 
     const uint32 indexBufferSize = indices.count() * sizeof(uint32);
 

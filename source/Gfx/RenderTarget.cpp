@@ -29,6 +29,6 @@ void RenderTarget::resize(SurfaceResolution resolution)
 
     resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);
 
-    render_system.get_device()->CreateRenderTargetView(resource.getInternal(), nullptr, handle.getCPU());
-    render_system.get_device()->CreateShaderResourceView(resource.getInternal(), nullptr, textureHandle.getCPU());
+    render_system.getInternalDevice()->CreateRenderTargetView(resource.getInternal(), nullptr, handle.getCPU());
+    render_system.getInternalDevice()->CreateShaderResourceView(resource.getInternal(), nullptr, textureHandle.getCPU());
 }

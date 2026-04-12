@@ -32,7 +32,7 @@ void DepthStencil::resize(SurfaceResolution resolution)
 
     resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue);
 
-    render_system.get_device()->CreateDepthStencilView(resource.getInternal(), nullptr, handle.getCPU());
+    render_system.getInternalDevice()->CreateDepthStencilView(resource.getInternal(), nullptr, handle.getCPU());
 
     // Create the shader resource view
     D3D12_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
@@ -41,5 +41,5 @@ void DepthStencil::resize(SurfaceResolution resolution)
     SRVDesc.Texture2D.MipLevels = 1;    
 
     SRVDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    render_system.get_device()->CreateShaderResourceView(resource.getInternal(), &SRVDesc, textureHandle.getCPU());
+    render_system.getInternalDevice()->CreateShaderResourceView(resource.getInternal(), &SRVDesc, textureHandle.getCPU());
 }

@@ -25,7 +25,7 @@ D3D12_STATIC_SAMPLER_DESC getSamplerDesc(int32 shaderRegister, D3D12_FILTER filt
     return sampler;
 }
 
-void RootSignature::init(RenderSystem& renderSystem, Array<CD3DX12_ROOT_PARAMETER>& parameters)
+void RootSignature::init(GfxDevice& device, Array<CD3DX12_ROOT_PARAMETER>& parameters)
 {
     auto defaultSampler = getSamplerDesc(0, D3D12_FILTER_ANISOTROPIC);
     auto pointSampler = getSamplerDesc(1, D3D12_FILTER_MIN_MAG_MIP_POINT);
@@ -43,13 +43,12 @@ void RootSignature::init(RenderSystem& renderSystem, Array<CD3DX12_ROOT_PARAMETE
     if (FAILED(result))
         throw;
 
-    auto device = renderSystem.get_device();
     result = device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&signatureImpl));
     if (FAILED(result))
         throw;
 }
 
-MainRootSignature::MainRootSignature(RenderSystem& renderSystem)
+MainRootSignature::MainRootSignature(GfxDevice& device)
 {
     Array<CD3DX12_ROOT_PARAMETER> parameters;
     parameters.resize(Params::Count);
@@ -62,10 +61,10 @@ MainRootSignature::MainRootSignature(RenderSystem& renderSystem)
     parameters[Params::MeshConstantBufferView].InitAsConstantBufferView(3); // b3
     parameters[Params::MaterialInlineConstants].InitAsConstants(1, 4);      // b4
 
-    init(renderSystem, parameters);
+    init(device, parameters);
 }
 
-ComputeRootSignature::ComputeRootSignature(RenderSystem& renderSystem)
+ComputeRootSignature::ComputeRootSignature(GfxDevice& device)
 {
     Array<CD3DX12_ROOT_PARAMETER> parameters;
     parameters.resize(Params::Count);
@@ -74,5 +73,5 @@ ComputeRootSignature::ComputeRootSignature(RenderSystem& renderSystem)
     parameters[Params::ShaderResourceView].InitAsDescriptorTable(1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0));  // t0
     parameters[Params::UnorderedAccessView].InitAsDescriptorTable(1, &CD3DX12_DESCRIPTOR_RANGE(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 0)); // u0
 
-    init(renderSystem, parameters);
+    init(device, parameters);
 }

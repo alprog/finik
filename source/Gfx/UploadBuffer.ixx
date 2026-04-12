@@ -1,13 +1,12 @@
 export module UploadBuffer;
 
 import Finik.Core;
-import DX;
-import RenderSystemFwd;
+import GfxDevice;
 
 export class UploadBuffer
 {
 public:
-    UploadBuffer(RenderSystem& renderSystem, int size);
+    UploadBuffer(GfxDevice& device, int size);
     ~UploadBuffer();
 
     int GetSize() const;

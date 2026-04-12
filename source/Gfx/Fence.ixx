@@ -3,12 +3,12 @@ export module Fence;
 import Finik.Core.PrimitiveTypes;
 import Myptr;
 import DX;
-import RenderSystemFwd;
+import GfxDevice;
 
 export class Fence
 {
 public:
-    Fence(RenderSystem& renderSystem, ID3D12CommandQueue& queue);
+    Fence(GfxDevice& gfxDevice, ID3D12CommandQueue& queue);
 
     uint64 SignalNext();
     uint64 GetLastSignaledValue();

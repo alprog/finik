@@ -10,7 +10,7 @@ GpuDataBuffer::GpuDataBuffer(int32 size, RenderSystem& renderSystem)
 {
     const int32 alignedSize = (sizeof(size) + 255) & ~255; // align 256
 
-    uploadBuffer = new UploadBuffer(renderSystem, alignedSize);
+    uploadBuffer = new UploadBuffer(renderSystem.getDevice(), alignedSize);
 
     D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
     cbvDesc.BufferLocation = uploadBuffer->GetGPUVirtualAddress();
@@ -19,7 +19,7 @@ GpuDataBuffer::GpuDataBuffer(int32 size, RenderSystem& renderSystem)
     data = (uint8*)uploadBuffer->GetData();
 
     descriptorHandle = renderSystem.getCommonHeap()->getNextHandle();
-    renderSystem.get_device()->CreateConstantBufferView(&cbvDesc, descriptorHandle.getCPU());
+    renderSystem.getInternalDevice()->CreateConstantBufferView(&cbvDesc, descriptorHandle.getCPU());
 }
 
 GpuDataBuffer::~GpuDataBuffer()

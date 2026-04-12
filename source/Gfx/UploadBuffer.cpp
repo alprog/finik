@@ -6,11 +6,9 @@ module UploadBuffer;
 import Imgui;
 import RenderSystem;
 
-UploadBuffer::UploadBuffer(RenderSystem& renderSystem, int size)
+UploadBuffer::UploadBuffer(GfxDevice& device, int size)
     : Size{size}
 {
-    auto device = renderSystem.get_device();
-
     auto result = device->CreateCommittedResource(
         &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
         D3D12_HEAP_FLAG_NONE,

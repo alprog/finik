@@ -6,10 +6,10 @@ import Log;
 import Timer;
 import RenderSystem;
 
-Fence::Fence(RenderSystem& renderSystem, ID3D12CommandQueue& queue)
+Fence::Fence(GfxDevice& gfxDevice, ID3D12CommandQueue& queue)
     : Queue { queue }
 {
-    auto result = renderSystem.get_device()->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)(&FenceImpl));
+    auto result = gfxDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)(&FenceImpl));
     if (FAILED(result)) throw;
 
     FenceEvent = CreateEvent(nullptr, 0, 0, nullptr);
