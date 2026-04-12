@@ -186,7 +186,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Gfx\RenderEngine\_RenderEngine.cpp" />
     <ClCompile Include="Gfx\RenderEngine\Shared.ixx" />
     <ClCompile Include="Gfx\RenderEngine\_RenderEngine.ixx" />
-    <ClCompile Include="Gfx\GbUffer.ixx" />
+    <ClCompile Include="Gfx\GBuffer.ixx" />
     <ClCompile Include="Gfx\GfxDevice\GfxDevice.cpp" />
     <ClCompile Include="Gfx\GfxDevice\GfxDevice.ixx" />
     <ClCompile Include="Gfx\Jitter.ixx" />
