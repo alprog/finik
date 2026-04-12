@@ -7,8 +7,7 @@ import RenderSystem;
 import Assets;
 import Shader;
 import ShaderManager;
-import Descriptors;
-import OneshotAllocator;
+import GfxDevice;
 import ComputeContext;
 
 struct ConstantData

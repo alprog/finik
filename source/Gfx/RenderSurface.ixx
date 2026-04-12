@@ -1,10 +1,7 @@
 export module RenderSurface;
 
-import Finik.Core;
-import DX;
-
+import GfxDevice;
 import GpuResource;
-import Descriptors;
 import Msaa;
 export import SurfaceResolution;
 

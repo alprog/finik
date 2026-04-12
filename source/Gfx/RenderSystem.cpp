@@ -5,7 +5,7 @@ module RenderSystem;
 import App;
 import Imgui;
 import Execution;
-import Descriptors;
+import GfxDevice;
 import DesktopWindow;
 
 class ResultChecker

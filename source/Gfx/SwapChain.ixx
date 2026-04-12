@@ -3,8 +3,7 @@ class DesktopWindow;
 export module SwapChain;
 
 import Finik.Core;
-import DX;
-import Descriptors;
+import GfxDevice;
 import RenderSystem;
 import RenderSurface;
 

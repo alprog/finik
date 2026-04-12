@@ -1,8 +1,6 @@
 export module Texture;
 
-import Finik.Core;
-import DX;
-import Descriptors;
+import GfxDevice;
 import Images;
 import GpuResource;
 import ByteBlob;

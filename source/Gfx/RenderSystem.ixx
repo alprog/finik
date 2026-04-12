@@ -4,17 +4,11 @@ export import RenderSystemFwd;
 
 export import Finik.Core.Singleton;
 
-import Finik.Core;
-import DX;
-
+import GfxDevice;
 import RenderContext;
 import Execution;
-import Myptr;
-import OneshotAllocator;
 import RootSignature;
-import Descriptors;
 import PipelineState;
-import GfxDevice;
 
 export class RenderSystem : public Singleton<RenderSystem>
 {

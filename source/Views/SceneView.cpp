@@ -2,9 +2,9 @@ module;
 #include "gfx/dx.h"
 module SceneView;
 
+import GfxDevice;
 import Imgui;
 import RenderSystem;
-import Descriptors;
 import Log;
 import Scene;
 import EffectManager;

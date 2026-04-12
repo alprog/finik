@@ -1,8 +1,8 @@
 export module ResourceStorage;
 
 import Finik.Core;
+import GfxDevice;
 import GpuResource;
-import Descriptors;
 
 export class ResourceStorage
 {
