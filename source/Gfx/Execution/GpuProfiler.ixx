@@ -1,8 +1,7 @@
 export module Execution:GpuProfiler;
 
-import Finik.Core;
-import RenderSystemFwd;
-import DX;
+import :Shared;
+import :CommandQueue;
 
 export struct StampRange
 {
@@ -16,7 +15,7 @@ export struct StampRange
 export class GpuProfiler
 {
 public:
-    GpuProfiler(RenderSystem& renderSystem);
+    GpuProfiler(GfxDevice& device, CommandQueue& commandQueue);
 
     int addStamp(ID3D12GraphicsCommandList& commandList, void* name);
     void scheduleFrameResolve(ID3D12GraphicsCommandList& commandList);

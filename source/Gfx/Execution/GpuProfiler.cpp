@@ -3,22 +3,20 @@ module;
 module Execution:GpuProfiler;
 
 import TimeboxTracker;
-import RenderSystem;
-import Log;
 import Timer;
 import App;
 
 int constexpr MAX_TIMESTAMP = 100;
 int constexpr readBackRecordSize = sizeof(uint64);
 
-GpuProfiler::GpuProfiler(RenderSystem& renderSystem)
+GpuProfiler::GpuProfiler(GfxDevice& device, CommandQueue& commandQueue)
 {
     D3D12_QUERY_HEAP_DESC queryHeapDesc = {};
     queryHeapDesc.Type = D3D12_QUERY_HEAP_TYPE_TIMESTAMP;
     queryHeapDesc.Count = MAX_TIMESTAMP;
     queryHeapDesc.NodeMask = 0;
 
-    renderSystem.getInternalDevice()->CreateQueryHeap(&queryHeapDesc, IID_PPV_ARGS(&queryHeap));
+    device->CreateQueryHeap(&queryHeapDesc, IID_PPV_ARGS(&queryHeap));
 
     D3D12_RESOURCE_DESC bufferDesc = {};
     bufferDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -33,7 +31,7 @@ GpuProfiler::GpuProfiler(RenderSystem& renderSystem)
     D3D12_HEAP_PROPERTIES heapProps = {};
     heapProps.Type = D3D12_HEAP_TYPE_READBACK;
 
-    renderSystem.getInternalDevice()->CreateCommittedResource(
+    device->CreateCommittedResource(
         &heapProps,
         D3D12_HEAP_FLAG_NONE,
         &bufferDesc,
@@ -42,10 +40,10 @@ GpuProfiler::GpuProfiler(RenderSystem& renderSystem)
         IID_PPV_ARGS(&readBackBuffer));
 
     uint64 gpuFrequency;
-    renderSystem.get_command_queue()->GetTimestampFrequency(&gpuFrequency);
+    commandQueue->GetTimestampFrequency(&gpuFrequency);
     ticksInMicrosecond = gpuFrequency / 1'000'000;
 
-    renderSystem.get_command_queue()->GetClockCalibration(&syncedGpuTimestamp, &syncedCpuTimestamp);
+    commandQueue->GetClockCalibration(&syncedGpuTimestamp, &syncedCpuTimestamp);
     syncedCpuMicroseconds = toMicroseconds(syncedCpuTimestamp);
 }
 

@@ -46,11 +46,11 @@ public:
 private:
     void createDevice();
     void createCommandQueue();
+    void createProfiler();
     void createCommandListPool();
     void createCommandAllocators();
     void createCommandList();
     void createRenderContext();
-    void createProfiler();
     void createRootSignature();
 
     GfxDevice device; 

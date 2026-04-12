@@ -41,11 +41,11 @@ void RenderSystem::init()
 {
     createDevice();
     createCommandQueue();
+    createProfiler();
     createCommandListPool();
     createCommandAllocators();
     createCommandList();
     createRenderContext();
-    createProfiler();
     createRootSignature();
 }
 
@@ -61,7 +61,12 @@ void RenderSystem::createCommandQueue()
 
 void RenderSystem::createCommandListPool()
 {
-    commandListPool = MakeUnique<CommandListPool>(device);
+    commandListPool = MakeUnique<CommandListPool>(device, *gpuProfiler);
+}
+
+void RenderSystem::createProfiler()
+{
+    gpuProfiler = new GpuProfiler(device, *commandQueue);
 }
 
 void RenderSystem::createCommandAllocators()
@@ -88,11 +93,6 @@ void RenderSystem::createCommandList()
 void RenderSystem::createRenderContext()
 {
     renderContext = MakeUnique<RenderContext>(*this, *commandList.Get());
-}
-
-void RenderSystem::createProfiler()
-{
-    gpuProfiler = new GpuProfiler(*this);
 }
 
 void RenderSystem::createRootSignature()

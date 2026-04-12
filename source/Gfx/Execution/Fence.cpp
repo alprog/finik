@@ -2,10 +2,6 @@ module;
 #include "../dx.h"
 module Execution:Fence;
 
-import Log;
-import Timer;
-import RenderSystem;
-
 Fence::Fence(GfxDevice& gfxDevice, ID3D12CommandQueue& queue)
     : Queue { queue }
 {

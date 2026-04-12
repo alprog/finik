@@ -1,9 +1,6 @@
 export module Execution:Fence;
 
-import Finik.Core.PrimitiveTypes;
-import Myptr;
-import DX;
-import GfxDevice;
+import :Shared;
 
 export class Fence
 {

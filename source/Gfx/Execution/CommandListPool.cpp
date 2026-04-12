@@ -1,10 +1,10 @@
 module Execution:CommandListPool;
 
-import Finik.Core;
 import App;
 
-CommandListPool::CommandListPool(GfxDevice& device)
+CommandListPool::CommandListPool(GfxDevice& device, GpuProfiler& profiler)
     : device{device}
+    , profiler{profiler}
 {
 }
 
@@ -26,4 +26,9 @@ CommandList& CommandListPool::retrieveOne()
 void CommandListPool::putBack(CommandList& commandList)
 {
     freeLists.append(&commandList);
+}
+
+GpuProfiler& CommandListPool::getProfiler()
+{
+    return profiler;
 }

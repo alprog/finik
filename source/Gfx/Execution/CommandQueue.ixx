@@ -1,10 +1,8 @@
 export module Execution:CommandQueue;
 
-import Finik.Core;
-import DX;
+import :Shared;
 import :Fence;
 import :CommandList;
-import GfxDevice;
 
 export class CommandQueue
 {

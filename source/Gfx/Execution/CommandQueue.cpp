@@ -2,9 +2,6 @@ module;
 #include "../dx.h"
 module Execution:CommandQueue;
 
-import RenderSystem;
-import :CommandList;
-
 CommandQueue::CommandQueue(GfxDevice& device)
 {
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};

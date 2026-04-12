@@ -2,10 +2,8 @@ module;
 #include "gfx/dx.h"
 module Execution:CommandList;
 
-import RenderSystem;
 import :CommandListPool;
 import :GpuProfiler;
-import GpuResource;
 
 CommandList::CommandList(GfxDevice& device, CommandListPool& pool, const int frameIndex)
     : device{device}
@@ -55,8 +53,7 @@ void CommandList::endRecording()
 
 int CommandList::addTimestampQuery()
 {
-    auto& renderSystem = Single::Get<RenderSystem>();
-    return renderSystem.getProfiler()->addStamp(*listImpl.Get(), "list");
+    return pool.getProfiler().addStamp(*listImpl.Get(), "list");
 }
 
 void CommandList::transition(GpuResource& resource, D3D12_RESOURCE_STATES newState)

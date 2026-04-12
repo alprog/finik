@@ -1,10 +1,8 @@
 export module Execution:CommandList;
 
-import DX;
-import RenderSystemFwd;
-import RenderContext;
-import ComputeContext;
-import GfxDevice;
+import :Shared;
+
+class CommandListPool;
 
 export class CommandList
 {
