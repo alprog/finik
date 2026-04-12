@@ -7,9 +7,9 @@ import RenderSystem;
 DepthStencil::DepthStencil(SurfaceResolution resolution)
     : RenderSurface{TextureFormat::DXGI_FORMAT_D24_UNORM_S8_UINT}
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
-    handle = render_system.getDsvHeap()->getNextHandle();
-    textureHandle = render_system.getCommonHeap()->getNextHandle();
+    auto& engine = Single::Get<RenderSystem>().engine;
+    handle = engine.getDsvHeap()->getNextHandle();
+    textureHandle = engine.getCommonHeap()->getNextHandle();
     resize(resolution);
 }
 

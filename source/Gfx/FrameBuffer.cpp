@@ -36,7 +36,7 @@ void FrameBuffer::resize(SurfaceResolution resolution)
 
 void FrameBuffer::startRendering(CommandList& commandList)
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     Array<CD3DX12_CPU_DESCRIPTOR_HANDLE> RTHandles;
     for (auto& renderTarget : renderTargets)
@@ -60,7 +60,7 @@ void FrameBuffer::startRendering(CommandList& commandList)
         FALSE,
         depthStencil ? &depthStencil->handle.getCPU() : nullptr);
 
-    ID3D12DescriptorHeap* a = render_system.getCommonHeap()->get();
+    ID3D12DescriptorHeap* a = engine.getCommonHeap()->get();
     commandList.listImpl->SetDescriptorHeaps(1, &a);
 
     viewport.TopLeftX = 0;

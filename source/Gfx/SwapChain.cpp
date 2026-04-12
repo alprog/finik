@@ -33,7 +33,7 @@ SwapChain::SwapChain(DesktopWindow& window)
         sd.Stereo = FALSE;
     }
 
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     {
         MyPtr<IDXGIFactory3> dxgiFactory;
@@ -47,7 +47,7 @@ SwapChain::SwapChain(DesktopWindow& window)
         if (FAILED(result))
             throw;
 
-        result = dxgiFactory->CreateSwapChainForHwnd(render_system.get_command_queue().queueImpl.Get(), window.hwnd, &sd, nullptr, nullptr, &dxgiSwapChain1);
+        result = dxgiFactory->CreateSwapChainForHwnd(engine.get_command_queue().queueImpl.Get(), window.hwnd, &sd, nullptr, nullptr, &dxgiSwapChain1);
         if (FAILED(result))
             throw;
 
@@ -63,7 +63,7 @@ SwapChain::SwapChain(DesktopWindow& window)
     CreateDepthStencil();
 
     for (uint32 i = 0; i < NUM_FRAMES_IN_FLIGHT; i++)
-        if (render_system.getInternalDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameContext[i].CommandAllocator)) != S_OK)
+        if (engine.getInternalDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameContext[i].CommandAllocator)) != S_OK)
             throw;
 }
 
@@ -88,17 +88,17 @@ SwapChain::~SwapChain()
 
 void SwapChain::CreateRenderTargets()
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     for (uint32 i = 0; i < NUM_BACK_BUFFER; i++)
     {
         auto renderTarget = MakePtr<SwapChainRenderTarget>();
-        DescriptorHeap* heap = render_system.getRtvHeap();
+        DescriptorHeap* heap = engine.getRtvHeap();
         renderTarget->handle = heap->getNextHandle();
 
         ID3D12Resource* pBackBuffer = nullptr;
         swapChain->GetBuffer(i, IID_PPV_ARGS(&pBackBuffer));
-        render_system.getInternalDevice()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle.getCPU());
+        engine.getDevice()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle.getCPU());
         renderTarget->resource = pBackBuffer;
 
         renderTargets.append(renderTarget);
@@ -139,14 +139,14 @@ FrameContext* SwapChain::WaitForNextFrameResources()
     //HANDLE waitableObjects[] = { hSwapChainWaitableObject, nullptr };
     //DWORD numWaitableObjects = 1;
 
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     FrameContext* frameCtx = &frameContext[nextFrameIndex % NUM_FRAMES_IN_FLIGHT];
     uint64 fenceValue = frameCtx->FenceValue;
     if (fenceValue != 0) // means no fence was signaled
     {
         frameCtx->FenceValue = 0;
-        render_system.get_command_queue().fence->WaitForValue(fenceValue);
+        engine.get_command_queue().fence->WaitForValue(fenceValue);
         //waitableObjects[1] = fenceEvent;
         //numWaitableObjects = 2;
     }
@@ -158,7 +158,7 @@ FrameContext* SwapChain::WaitForNextFrameResources()
 
 void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     current_frame_ctx = WaitForNextFrameResources();
 
@@ -166,7 +166,7 @@ void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
     current_frame_ctx->CommandAllocator->Reset();
 
     command_list->Reset(current_frame_ctx->CommandAllocator, nullptr);
-    //render_system.getProfiler()->addStamp(*command_list, "start");
+    //engine.getProfiler()->addStamp(*command_list, "start");
 
     D3D12_RESOURCE_BARRIER barrier = {};
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -185,7 +185,7 @@ void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
     //command_list->ClearDepthStencilView(depthStencilHandle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     command_list->OMSetRenderTargets(1, &handle, FALSE, nullptr);
 
-    ID3D12DescriptorHeap* heap = render_system.getCommonHeap()->get();
+    ID3D12DescriptorHeap* heap = engine.getCommonHeap()->get();
     command_list->SetDescriptorHeaps(1, &heap);
 
     viewport.Width = static_cast<float>(1024);
@@ -218,19 +218,19 @@ void SwapChain::finish_frame(ID3D12GraphicsCommandList* command_list)
 
 void SwapChain::execute(ID3D12GraphicsCommandList* command_list)
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
-    render_system.get_command_queue()->ExecuteCommandLists(1, (ID3D12CommandList* const*)&command_list);
+    auto& engine = Single::Get<RenderSystem>().engine;
+    engine.get_command_queue()->ExecuteCommandLists(1, (ID3D12CommandList* const*)&command_list);
 }
 
 void SwapChain::present()
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     bool vsyncEnabled = true;
     HRESULT hr = swapChain->Present(vsyncEnabled ? 1 : 0, 0);
 
     swapChainOccluded = (hr == DXGI_STATUS_OCCLUDED);
 
-    uint64 fenceValue = render_system.get_command_queue().fence->SignalNext();
+    uint64 fenceValue = engine.get_command_queue().fence->SignalNext();
     current_frame_ctx->FenceValue = fenceValue;
 }

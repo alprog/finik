@@ -16,8 +16,8 @@ Texture::Texture(AssetPath asset_path)
     , Width{0}
     , Height{0}
 {
-    auto& renderSystem = Single::Get<RenderSystem>();
-    DescriptorHeap* heap = renderSystem.getCommonHeap();
+    auto& engine = Single::Get<RenderSystem>().engine;
+    DescriptorHeap* heap = engine.getCommonHeap();
     descriptorHandle = heap->getNextHandle();
 }
 
@@ -86,16 +86,16 @@ void Texture::hot_reload(ByteBlob& blob)
 
 void Texture::setData(Image& image)
 {
-    auto& renderSystem = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
-    auto device = renderSystem.getInternalDevice();
-    CommandList& commandList = renderSystem.getFreeCommandList();
+    
+    CommandList& commandList = engine.getFreeCommandList();
     commandList.startRecording();
 
     commandList.transition(*this, D3D12_RESOURCE_STATE_COPY_DEST);
 
     const uint64 uploadBufferSize = GetRequiredIntermediateSize(InternalResource, 0, 1);
-    UploadBuffer uploadBuffer(renderSystem.getDevice(), (int32)uploadBufferSize);
+    UploadBuffer uploadBuffer(engine.getDevice(), (int32)uploadBufferSize);
 
     if (uploadBufferSize == image.getByteSize())
     {
@@ -113,7 +113,8 @@ void Texture::setData(Image& image)
     D3D12_PLACED_SUBRESOURCE_FOOTPRINT srcFootprint;
     uint32 numRows;
     uint64 rowSizeInBytes, totalBytes;
-    device->GetCopyableFootprints(&InternalResource->GetDesc(), 0, 1, 0, &srcFootprint, &numRows, &rowSizeInBytes, &totalBytes);
+
+    engine.getDevice()->GetCopyableFootprints(&InternalResource->GetDesc(), 0, 1, 0, &srcFootprint, &numRows, &rowSizeInBytes, &totalBytes);
 
     const CD3DX12_TEXTURE_COPY_LOCATION Src(uploadBuffer.GetResource(), srcFootprint);
     const CD3DX12_TEXTURE_COPY_LOCATION Dst(InternalResource, 0);
@@ -125,7 +126,7 @@ void Texture::setData(Image& image)
 
     commandList.endRecording();
 
-    auto& commandQueue = renderSystem.get_command_queue();
+    auto& commandQueue = engine.get_command_queue();
     commandQueue.execute(commandList);
     commandQueue.Flush();
 

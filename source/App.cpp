@@ -56,7 +56,7 @@ void App::handle_input()
 
 void App::run_game_loop()
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     profiler.start();
 
@@ -71,10 +71,10 @@ void App::run_game_loop()
         SpriteManager::GetInstance().update();
         Cleaner::GetInstance().update();
 
-        auto completedValue = (int32)render_system.get_command_queue().fence->GetCompletedValue();
-        render_system.get_command_queue().freeCompletedLists();
-        render_system.getOneshotAllocator().FreePages();
-        render_system.getProfiler()->grabReadyStamps(completedValue);
+        auto completedValue = (int32)engine.get_command_queue().fence->GetCompletedValue();
+        engine.get_command_queue().freeCompletedLists();
+        engine.getOneshotAllocator().FreePages();
+        engine.getProfiler()->grabReadyStamps(completedValue);
 
         {
             Profile _("input");
@@ -120,7 +120,7 @@ void App::run_game_loop()
             Profile _("render windows");
             for (auto window : desktop_system.windows)
             {
-                auto command_list = render_system.get_command_list();
+                auto command_list = engine.get_command_list();
                 window->swap_chain->start_frame(command_list);
                 //window->renderScene();
                 window->gui->render(command_list);
@@ -139,9 +139,9 @@ void App::run_game_loop()
             }
         }
 
-        render_system.scheduleQueryResolving();
+        engine.scheduleQueryResolving();
 
-        auto signaled = render_system.get_command_queue().frameFence->SignalNext();
+        auto signaled = engine.get_command_queue().frameFence->SignalNext();
         //assert(signaled == profiler.getFrameIndex());
 
         profiler.endFrame();

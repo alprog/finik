@@ -17,18 +17,11 @@ public:
 
     GfxDevice& getDevice();
     ID3D12Device* getInternalDevice();
-    CommandQueue& get_command_queue();
-    ID3D12GraphicsCommandList* get_command_list();
-    DescriptorHeap* getRtvHeap();
-    DescriptorHeap* getDsvHeap();
-    DescriptorHeap* getCommonHeap();
+
     RenderContext* getRenderContext();
     GpuProfiler* getProfiler();
     MainRootSignature& getRootSignature();
     ComputeRootSignature& getComputeRootSignature();
-
-    CommandList& getFreeCommandList();
-    finik::gpumem::OneshotAllocator& getOneshotAllocator();
 
     void ImguiInitHelper();
 
@@ -39,7 +32,5 @@ private:
 
 public:
     RenderEngine engine;
-    UniquePtr<RenderContext> renderContext;
-
-    
+    UniquePtr<RenderContext> renderContext;  
 };

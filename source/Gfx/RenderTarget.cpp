@@ -7,9 +7,9 @@ import RenderSystem;
 RenderTarget::RenderTarget(TextureFormat format, SurfaceResolution resolution)
     : RenderSurface{format}
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
-    handle = render_system.getRtvHeap()->getNextHandle();
-    textureHandle = render_system.getCommonHeap()->getNextHandle();
+    auto& engine = Single::Get<RenderSystem>().engine;
+    handle = engine.getRtvHeap()->getNextHandle();
+    textureHandle = engine.getCommonHeap()->getNextHandle();
     resize(resolution);
 }
 

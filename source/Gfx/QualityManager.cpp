@@ -21,8 +21,8 @@ void QualityManager::apply(QualitySettings settings)
 
     if (this->settings.shadowMapResolution != settings.shadowMapResolution)
     {
-        RenderSystem& render_system = Single::Get<RenderSystem>();
-        render_system.get_command_queue().Flush();
+        auto& engine = Single::Get<RenderSystem>().engine;
+        engine.get_command_queue().Flush();
 
         SurfaceResolution surfaceResolution = {settings.shadowMapResolution, settings.shadowMapResolution, 1};
         for (Scene* scene : App::GetInstance().scene_manager.scenes)

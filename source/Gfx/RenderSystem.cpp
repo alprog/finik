@@ -37,31 +37,6 @@ ID3D12Device* RenderSystem::getInternalDevice()
     return engine.getInternalDevice();
 }
 
-CommandQueue& RenderSystem::get_command_queue()
-{
-    return engine.get_command_queue();
-}
-
-ID3D12GraphicsCommandList* RenderSystem::get_command_list()
-{
-    return engine.get_command_list();
-}
-
-DescriptorHeap* RenderSystem::getRtvHeap()
-{
-    return engine.getRtvHeap();
-}
-
-DescriptorHeap* RenderSystem::getDsvHeap()
-{
-    return engine.getDsvHeap();
-}
-
-DescriptorHeap* RenderSystem::getCommonHeap()
-{
-    return engine.getCommonHeap();
-}
-
 RenderContext* RenderSystem::getRenderContext()
 {
     return renderContext.get();
@@ -80,16 +55,6 @@ MainRootSignature& RenderSystem::getRootSignature()
 ComputeRootSignature& RenderSystem::getComputeRootSignature()
 {
     return engine.getComputeRootSignature();
-}
-
-CommandList& RenderSystem::getFreeCommandList()
-{
-    return engine.getFreeCommandList();
-}
-
-finik::gpumem::OneshotAllocator& RenderSystem::getOneshotAllocator()
-{
-    return engine.getOneshotAllocator();
 }
 
 void RenderSystem::createRenderContext()

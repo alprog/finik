@@ -31,8 +31,8 @@ void SceneRenderLane::resize(SurfaceResolution resolution)
 {
     if (this->resolution != resolution)
     {
-        RenderSystem& render_system = Single::Get<RenderSystem>();
-        render_system.get_command_queue().Flush();
+        auto& engine = Single::Get<RenderSystem>().engine;
+        engine.get_command_queue().Flush();
 
         gBuffer.resize(resolution);
 
@@ -83,7 +83,7 @@ void SceneRenderLane::render()
     camera.Jitter = taaEnabled ? GetJitter(resolution.resolution(), frameIndex) : Vector2::Zero;
     camera.calcProjectionMatrix();
 
-    RenderEngine& engine = Single::Get<RenderSystem>().engine;
+    auto& engine = Single::Get<RenderSystem>().engine;
     auto& commandQueue = engine.get_command_queue();
     {
         Profile _("wait");
