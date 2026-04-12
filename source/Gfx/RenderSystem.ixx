@@ -15,11 +15,7 @@ public:
 public:
     void init();
 
-    GfxDevice& getDevice();
-    ID3D12Device* getInternalDevice();
-
     RenderContext* getRenderContext();
-    GpuProfiler* getProfiler();
     MainRootSignature& getRootSignature();
     ComputeRootSignature& getComputeRootSignature();
 

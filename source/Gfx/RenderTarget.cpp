@@ -15,7 +15,7 @@ RenderTarget::RenderTarget(TextureFormat format, SurfaceResolution resolution)
 
 void RenderTarget::resize(SurfaceResolution resolution)
 {
-    RenderSystem& render_system = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
     CD3DX12_RESOURCE_DESC resourceDesc(
         D3D12_RESOURCE_DIMENSION_TEXTURE2D, 0,
         static_cast<uint32>(resolution.width),
@@ -29,6 +29,6 @@ void RenderTarget::resize(SurfaceResolution resolution)
 
     resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);
 
-    render_system.getInternalDevice()->CreateRenderTargetView(resource.getInternal(), nullptr, handle.getCPU());
-    render_system.getInternalDevice()->CreateShaderResourceView(resource.getInternal(), nullptr, textureHandle.getCPU());
+    engine.getDevice()->CreateRenderTargetView(resource.getInternal(), nullptr, handle.getCPU());
+    engine.getDevice()->CreateShaderResourceView(resource.getInternal(), nullptr, textureHandle.getCPU());
 }

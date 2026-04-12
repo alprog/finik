@@ -15,7 +15,6 @@ public:
     void init();
 
     GfxDevice& getDevice();
-    ID3D12Device* getInternalDevice();
     CommandQueue& get_command_queue();
     ID3D12GraphicsCommandList* get_command_list();
     DescriptorHeap* getRtvHeap();

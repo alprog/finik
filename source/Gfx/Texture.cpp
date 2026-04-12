@@ -38,8 +38,8 @@ void Texture::resize(int32 width, int32 height)
     this->Width = width;
     this->Height = height;
 
-    auto& renderSystem = Single::Get<RenderSystem>();
-    auto* device = renderSystem.getInternalDevice();
+    auto& engine = Single::Get<RenderSystem>().engine;
+    auto& device = engine.getDevice();
 
     D3D12_RESOURCE_DESC textureDesc = {};
     textureDesc.MipLevels = calcMipMapCount();

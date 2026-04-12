@@ -63,7 +63,7 @@ SwapChain::SwapChain(DesktopWindow& window)
     CreateDepthStencil();
 
     for (uint32 i = 0; i < NUM_FRAMES_IN_FLIGHT; i++)
-        if (engine.getInternalDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameContext[i].CommandAllocator)) != S_OK)
+        if (engine.getDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameContext[i].CommandAllocator)) != S_OK)
             throw;
 }
 

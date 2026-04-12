@@ -51,8 +51,8 @@ Ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
 
 Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
 {
-    auto& renderSystem = Single::Get<RenderSystem>();
-    auto device = renderSystem.getInternalDevice();
+    auto& engine = Single::Get<RenderSystem>().engine;
+    auto& device = engine.getDevice();
 
     Array<D3D12_INPUT_ELEMENT_DESC> inputElementDescs = {
         {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
@@ -69,7 +69,7 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
 
     D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
     psoDesc.InputLayout = {&inputElementDescs[0], (uint32)inputElementDescs.count()};
-    psoDesc.pRootSignature = renderSystem.getRootSignature().signatureImpl.Get();
+    psoDesc.pRootSignature = engine.getRootSignature().signatureImpl.Get();
 
     psoDesc.VS = CD3DX12_SHADER_BYTECODE(settings.vertexByteCode.Get());
     if (settings.pixelByteCode)
@@ -130,8 +130,8 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
 
 Ptr<PipelineState> PSOManager::imguiCompile(const PipelineSettings& settings)
 {
-    auto& renderSystem = Single::Get<RenderSystem>();
-    auto device = renderSystem.getInternalDevice();
+    auto& engine = Single::Get<RenderSystem>().engine;
+    auto& device = engine.getDevice();
 
     D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
     FillImguiPsoDesc(psoDesc);

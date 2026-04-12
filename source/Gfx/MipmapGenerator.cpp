@@ -18,15 +18,15 @@ struct ConstantData
 
 MipMapGenerator::MipMapGenerator()
 {
-    auto& renderSystem = Single::Get<RenderSystem>();
+    auto& engine = Single::Get<RenderSystem>().engine;
 
     auto shader = ShaderManager::GetInstance().getComputeShader("shaders/mipmaps.hlsl", "CSMain");
 
     D3D12_COMPUTE_PIPELINE_STATE_DESC desc = {};
     desc.CS = CD3DX12_SHADER_BYTECODE(shader->bytecode.Get());
-    desc.pRootSignature = renderSystem.getComputeRootSignature().signatureImpl.Get();
+    desc.pRootSignature = engine.getComputeRootSignature().signatureImpl.Get();
 
-    renderSystem.getInternalDevice()->CreateComputePipelineState(&desc, IID_PPV_ARGS(&pso));
+    engine.getDevice()->CreateComputePipelineState(&desc, IID_PPV_ARGS(&pso));
 }
 
 void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
@@ -38,7 +38,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     stagingDesc.Format = DXGI_FORMAT_R8G8B8A8_TYPELESS;
 
     auto& engine = Single::Get<RenderSystem>().engine;
-    auto device = engine.getInternalDevice();
+    auto& device = engine.getDevice();
 
     const CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 

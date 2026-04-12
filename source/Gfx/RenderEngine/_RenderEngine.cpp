@@ -20,11 +20,6 @@ GfxDevice& RenderEngine::getDevice()
     return device;
 }
 
-ID3D12Device* RenderEngine::getInternalDevice()
-{
-    return device.getInternal();
-}
-
 CommandQueue& RenderEngine::get_command_queue()
 {
     return *commandQueue;
