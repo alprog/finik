@@ -2,7 +2,9 @@ module;
 #include "../dx.h"
 module RenderEngine:CommandQueue;
 
-import RenderEngine;
+import :RenderEngine;
+import :Fence;
+import :CommandList;
 
 CommandQueue::CommandQueue(RenderEngine& engine)
 {
@@ -10,7 +12,7 @@ CommandQueue::CommandQueue(RenderEngine& engine)
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-    auto result = engine.device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
+    auto result = engine.getDevice()->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&queueImpl));
     if (FAILED(result)) throw;
 
     frameFence = MakeUnique<Fence>(engine, *queueImpl.Get());

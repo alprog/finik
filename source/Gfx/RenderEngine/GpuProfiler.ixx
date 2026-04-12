@@ -1,7 +1,6 @@
 export module RenderEngine:GpuProfiler;
 
 import :Shared;
-import :CommandQueue;
 
 export struct StampRange
 {
@@ -15,7 +14,7 @@ export struct StampRange
 export class GpuProfiler
 {
 public:
-    GpuProfiler(RenderEngine& engine, CommandQueue& commandQueue);
+    GpuProfiler(RenderEngine& engine);
 
     int addStamp(ID3D12GraphicsCommandList& commandList, void* name);
     void scheduleFrameResolve(ID3D12GraphicsCommandList& commandList);

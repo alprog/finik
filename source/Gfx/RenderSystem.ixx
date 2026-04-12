@@ -37,27 +37,11 @@ public:
     void scheduleQueryResolving();
 
 private:
-    void createDevice();
-    void createCommandQueue();
-    void createProfiler();
-    void createCommandListPool();
-    void createCommandAllocators();
-    void createCommandList();
     void createRenderContext();
-    void createRootSignature();
 
-    RenderEngine engine; 
-
-    CommandQueue* commandQueue = nullptr;
-    MyPtr<ID3D12CommandAllocator> commandAllocators[3];
-    MyPtr<ID3D12GraphicsCommandList> commandList;
-
-    UniquePtr<MainRootSignature> mainRootSignature;
-    UniquePtr<ComputeRootSignature> computeRootSignature;
-
-    GpuProfiler* gpuProfiler = nullptr;
+    RenderEngine engine;
 
     UniquePtr<RenderContext> renderContext;
 
-    UniquePtr<CommandListPool> commandListPool;
+    
 };

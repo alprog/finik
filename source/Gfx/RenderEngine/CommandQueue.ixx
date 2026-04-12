@@ -1,8 +1,6 @@
 export module RenderEngine:CommandQueue;
 
 import :Shared;
-import :Fence;
-import :CommandList;
 
 export class CommandQueue
 {

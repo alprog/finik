@@ -5,9 +5,8 @@ import :RenderEngine;
 import :CommandList;
 import :GpuProfiler;
 
-CommandListPool::CommandListPool(RenderEngine& engine, GpuProfiler& profiler)
+CommandListPool::CommandListPool(RenderEngine& engine)
     : engine{engine}
-    , profiler{profiler}
 {
 }
 
@@ -29,9 +28,4 @@ CommandList& CommandListPool::retrieveOne()
 void CommandListPool::putBack(CommandList& commandList)
 {
     freeLists.append(&commandList);
-}
-
-GpuProfiler& CommandListPool::getProfiler()
-{
-    return profiler;
 }

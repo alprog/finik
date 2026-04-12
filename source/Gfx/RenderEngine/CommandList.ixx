@@ -2,8 +2,6 @@ export module RenderEngine:CommandList;
 
 import :Shared;
 
-export class CommandListPool;
-
 export class CommandList
 {
 public:

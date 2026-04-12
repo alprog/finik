@@ -11,12 +11,12 @@ CommandList::CommandList(RenderEngine& engine, CommandListPool& pool, const int 
     , pool{pool}
     , frameIndex{frameIndex}
 {
-    auto result = engine.device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
+    auto result = engine.getDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 
     if (FAILED(result))
         throw;
 
-    result = engine.device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&listImpl));
+    result = engine.getDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&listImpl));
     if (FAILED(result))
         throw;
 
@@ -54,7 +54,7 @@ void CommandList::endRecording()
 
 int CommandList::addTimestampQuery()
 {
-    return pool.getProfiler().addStamp(*listImpl.Get(), "list");
+    return pool.getEngine().getProfiler()->addStamp(*listImpl.Get(), "list");
 }
 
 void CommandList::transition(GpuResource& resource, D3D12_RESOURCE_STATES newState)
