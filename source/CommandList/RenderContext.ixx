@@ -8,6 +8,7 @@ import ConstantBuffer;
 import RenderPass;
 import Effect;
 import VertexBuffer;
+import Mesh;
 
 export class RenderContext
 {
