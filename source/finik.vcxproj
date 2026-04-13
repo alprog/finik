@@ -347,7 +347,6 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Resource.ixx" />
     <ClCompile Include="Scene.ixx" />
     <ClCompile Include="SceneManager.ixx" />
-    <ClCompile Include="SceneSystemFwd.ixx" />
     <ClCompile Include="Views\QualityView.cpp" />
     <ClCompile Include="Views\QualityView.ixx" />
     <ClCompile Include="Views\SceneView.cpp" />
