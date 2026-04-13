@@ -2,7 +2,7 @@ export module SceneManager;
 
 import Finik.Core;
 
-import SceneSystemFwd;
+import Scene;
 
 export class SceneManager
 {

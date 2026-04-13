@@ -1,7 +1,6 @@
 export module Scene;
 
 import Effect;
-import SceneSystemFwd;
 
 import Finik.Core;
 import Actor;
@@ -12,6 +11,7 @@ import RenderSystem;
 import RenderPass;
 import Character;
 import RenderContext;
+import Camera;
 
 export class Scene
 {
