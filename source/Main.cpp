@@ -1,4 +1,4 @@
-#include "SDL.h"
+#include <Windows.h>
 
 import Finik.Core;
 import App;
@@ -19,15 +19,18 @@ import Model;
 import ShaderManager;
 import QualityView;
 
-int main(int argc, char* argv[])
+int WINAPI WinMain(HINSTANCE hInstance,
+                   HINSTANCE hPrevInstance,
+                   LPSTR lpCmdLine,
+                   int nCmdShow)
 {
     initTimer();
 
     App& app = App::GetInstance();
 
-    Scene& scene = app.scene_manager.create_scene();
     DesktopWindow* window = app.desktop_system.create_window(1024, 800);
 
+    Scene& scene = app.scene_manager.create_scene();
     window->scene = &scene;
 
     window->gui->views.append(MakeUnique<ConsoleView>("consoleView"));

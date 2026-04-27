@@ -25,7 +25,24 @@ void RenderSystem::ImguiInitHelper()
 
     auto& device = engine.getDevice();
     DescriptorHandle handle = device.getCommonHeap()->getNextHandle();
-    ImGui_ImplDX12_Init(device.getInternal(), NUM_FRAMES_IN_FLIGHT, DXGI_FORMAT_R8G8B8A8_UNORM, device.getCommonHeap()->get(), handle.getCPU(), handle.getGPU());
+
+    ImGui_ImplDX12_InitInfo init_info = {};
+    init_info.Device = engine.getDevice().getInternal();
+    init_info.CommandQueue = engine.get_command_queue().queueImpl.Get();
+    init_info.NumFramesInFlight = NUM_FRAMES_IN_FLIGHT;
+    init_info.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+    init_info.DSVFormat = DXGI_FORMAT_UNKNOWN;
+    init_info.SrvDescriptorHeap = engine.getDevice().getCommonHeap()->get();
+    init_info.SrvDescriptorAllocFn = [](ImGui_ImplDX12_InitInfo*, D3D12_CPU_DESCRIPTOR_HANDLE* out_cpu_handle, D3D12_GPU_DESCRIPTOR_HANDLE* out_gpu_handle) { 
+        
+        auto& handle = RenderSystem::GetInstance().engine.getCommonHeap()->getNextHandle();
+        *out_cpu_handle = handle.getCPU();
+        *out_gpu_handle = handle.getGPU();
+    };
+    init_info.SrvDescriptorFreeFn = [](ImGui_ImplDX12_InitInfo*, D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle, D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle) { 
+        // TODO: NOT IMPLEMENTED
+    };
+    ImGui_ImplDX12_Init(&init_info);
 }
 
 RenderContext* RenderSystem::getRenderContext()

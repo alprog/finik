@@ -109,7 +109,7 @@ void SceneView::draw_content()
     if (surface)
     {
         D3D12_GPU_DESCRIPTOR_HANDLE handle = surface->textureHandle.getGPU();
-        ImTextureID textureId = (void*)handle.ptr;
+        ImTextureID textureId = (ImTextureID)handle.ptr;
 
         auto imageStartPos = ImGui::GetCursorScreenPos();
         bool AdvancedShader = true;

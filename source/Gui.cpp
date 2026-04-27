@@ -24,7 +24,7 @@ Gui::Gui(DesktopWindow& window)
     //ImGui::StyleColorsLight();
 
     // Setup Platform/Renderer backends
-    ImGui_ImplSDL2_InitForD3D(window.get_impl());
+    ImGui_ImplSDL3_InitForD3D(window.get_impl());
 
     RenderSystem& render_system = Single::Get<RenderSystem>();
     render_system.ImguiInitHelper();
@@ -34,7 +34,7 @@ Gui::~Gui()
 {
     ImGui::SetCurrentContext(impl);
     ImGui_ImplDX12_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
 }
 
@@ -46,8 +46,9 @@ void Gui::set_context()
 void Gui::prepare()
 {
     // Start the Dear ImGui frame
+    ImGui_ImplSDL3_NewFrame();
     ImGui_ImplDX12_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
+    
     ImGui::NewFrame();
     ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 

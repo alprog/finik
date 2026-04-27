@@ -1,6 +1,5 @@
 module;
-#include <SDL.h>
-#include <SDL_syswm.h>
+#include <SDL3/SDL.h>
 module App;
 
 import RenderSystem;
@@ -37,7 +36,7 @@ void App::handle_input()
         auto window = desktop_system.get_window_by_id(event.window.windowID);
         if (window)
         {
-            if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)
+            if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED)
             {
                 desktop_system.close_window(window);
             }
@@ -49,7 +48,7 @@ void App::handle_input()
 
         if (ImGui::GetCurrentContext())
         {
-            ImGui_ImplSDL2_ProcessEvent(&event);
+            ImGui_ImplSDL3_ProcessEvent(&event);
         }
     }
 }

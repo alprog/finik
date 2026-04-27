@@ -19,7 +19,7 @@ void TextureView::draw_content()
     auto texture = scene.grid->tileMap->texture;
     D3D12_GPU_DESCRIPTOR_HANDLE handle = texture->descriptorHandle.getGPU();
 
-    ImTextureID textureId = (void*)handle.ptr;
+    ImTextureID textureId = (ImTextureID)handle.ptr;
     
     auto size = ImVec2((float)texture->Width, (float)texture->Height);
     ImGui::Image(textureId, size, ImVec2(0, 1), ImVec2(1, 0));

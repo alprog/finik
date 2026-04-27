@@ -1,5 +1,5 @@
 module;
-#include <SDL.h>
+#include <SDL3/SDL.h>
 module DesktopSystem;
 
 DesktopSystem::DesktopSystem()

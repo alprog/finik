@@ -1,6 +1,5 @@
 module;
-#include <SDL.h>
-#include <SDL_syswm.h>
+#include <SDL3/SDL.h>
 module DesktopWindow;
 
 import RenderSystem;
@@ -15,16 +14,14 @@ DesktopWindow::DesktopWindow(int width, int height)
     : width{width}
     , height{height}
 {
-    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MAXIMIZED);
-    impl = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, window_flags);
+    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_MAXIMIZED);
+    impl = SDL_CreateWindow("title", 0, 0, window_flags);
     SDL_GetWindowSize(impl, &this->width, &this->height);
 
     id = SDL_GetWindowID(impl);
 
-    SDL_SysWMinfo wmInfo;
-    SDL_VERSION(&wmInfo.version);
-    SDL_GetWindowWMInfo(impl, &wmInfo);
-    hwnd = (HWND)wmInfo.info.win.window;
+    SDL_PropertiesID properties = SDL_GetWindowProperties(impl);
+    hwnd = (HWND)SDL_GetPointerProperty(properties, SDL_PROP_WINDOW_WIN32_HWND_POINTER, nullptr);
 
     swap_chain = new SwapChain(*this);
     gui = new Gui(*this);
@@ -38,13 +35,7 @@ void DesktopWindow::setIcon()
     Ptr image = Images::loadPng(blob, ImageOrigin::TopLeft);
     int32 w = image->width;
     int32 h = image->height;
-    SDL_Surface* icon = SDL_CreateRGBSurfaceFrom(image->data, w, h, 32, w * 4,
-        0x000000FF, // Rmask
-        0x0000FF00, // Gmask
-        0x00FF0000, // Bmask
-        0xFF000000  // Amask
-    );
-
+    SDL_Surface* icon = SDL_CreateSurfaceFrom(w, h, SDL_PIXELFORMAT_RGBA32, image->data, w * 4);
     SDL_SetWindowIcon(impl, icon);
 }
 
