@@ -32,7 +32,7 @@
     <ClInclude Include="CDT\include\Triangulation.hpp" />
     <ClInclude Include="dx\d3dx12.h" />
     <ClInclude Include="imgui-docking\backends\imgui_impl_dx12.h" />
-    <ClInclude Include="imgui-docking\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="imgui-docking\backends\imgui_impl_sdl3.h" />
     <ClInclude Include="imgui-docking\imconfig.h" />
     <ClInclude Include="imgui-docking\imgui.h" />
     <ClInclude Include="imgui-docking\imgui_internal.h" />
@@ -60,7 +60,7 @@
   <ItemGroup>
     <ClCompile Include="CDT\src\CDT.cpp" />
     <ClCompile Include="imgui-docking\backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="imgui-docking\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="imgui-docking\backends\imgui_impl_sdl3.cpp" />
     <ClCompile Include="imgui-docking\imgui.cpp" />
     <ClCompile Include="imgui-docking\imgui_demo.cpp" />
     <ClCompile Include="imgui-docking\imgui_draw.cpp" />
@@ -196,7 +196,7 @@
       <LanguageStandard>stdcpp23</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch;$(SolutionDir)\3rd-party\CDT\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL3-3.4.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch;$(SolutionDir)\3rd-party\CDT\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -215,7 +215,7 @@
       <LanguageStandard>stdcpp23</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL2-2.30.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch;$(SolutionDir)\3rd-party\CDT\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\3rd-party;$(SolutionDir)\3rd-party\SDL3-3.4.4\include;$(SolutionDir)\3rd-party\imgui-docking;$(SolutionDir)\3rd-party\zlib;$(SolutionDir)\3rd-party\libpng;$(SolutionDir)\3rd-party\filewatch;$(SolutionDir)\3rd-party\CDT\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
