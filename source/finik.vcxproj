@@ -46,16 +46,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\..\build\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\..\build\obj\$(Configuration)\</IntDir>
-    <IncludePath>
-    </IncludePath>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
     <ExecutablePath>C:\projects\cl-wrapper\bin;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\..\build\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\..\build\obj\$(Configuration)\</IntDir>
-    <IncludePath>
-    </IncludePath>
     <ExecutablePath>C:\projects\cl-wrapper\bin;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
