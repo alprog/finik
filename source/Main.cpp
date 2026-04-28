@@ -1,4 +1,5 @@
-#include <Windows.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 
 import Finik.Core;
 import App;
@@ -19,10 +20,7 @@ import Model;
 import ShaderManager;
 import QualityView;
 
-int WINAPI WinMain(HINSTANCE hInstance,
-                   HINSTANCE hPrevInstance,
-                   LPSTR lpCmdLine,
-                   int nCmdShow)
+int main(int argc, char* argv[])
 {
     initTimer();
 
