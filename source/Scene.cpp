@@ -41,7 +41,7 @@ Scene::Scene()
     actors[4]->mesh = Assets::GetInstance().get<Model>("models/wooden watch tower2.obj")->mesh;
 
     auto size = QualityManager::GetInstance().getCurrent().shadowMapResolution;
-    light.shadowMap = MakeUnique<FrameBuffer>(SurfaceResolution(size, size, 1), Array<TextureFormat>{TextureFormat::DXGI_FORMAT_R8G8B8A8_UNORM}, true);
+    light.shadowMap = MakeUnique<FrameBuffer>(SurfaceResolution(size, size, 1), Array<TextureFormat>{TextureFormat::DXGI_FORMAT_R16G16_FLOAT}, true);
     light.direction = Vector4(-1, -1, -1, 0).getNormalized();
 }
 

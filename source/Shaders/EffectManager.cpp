@@ -115,7 +115,10 @@ Ptr<Effect> EffectManager::getShadowEffect(Effect& baseEffect)
     auto effect = MakePtr<Effect>(shadowEffectName);
     effect->setPipelineType(PipelineType::Shadow);
     effect->setVertexShader(baseEffect.getVertexShader());
-    effect->setPixelShader(baseEffect.getPixelShader()); // TODO: not always
+
+    auto pixelShader = ShaderManager::GetInstance().getPixelShader("shaders/shadow.hlsl", "PSMain");
+    effect->setPixelShader(pixelShader);
+    
     Effects[effect->name] = effect;
 
     return effect;

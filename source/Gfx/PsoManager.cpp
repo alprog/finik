@@ -8,6 +8,18 @@ import RenderSystem;
 import RootSignature;
 import GBuffer;
 
+bool isDepthEnabled(const PipelineType& type)
+{
+    switch (type)
+    {
+        case PipelineType::ScreenSpace:
+        case PipelineType::DebugLines:
+            return false;
+    }
+
+    return true;
+}
+
 Ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
 {
     auto it = states.find_value(settings);
@@ -100,7 +112,7 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
     }
 
     CD3DX12_DEPTH_STENCIL_DESC depthStencilDesc(D3D12_DEFAULT);
-    depthStencilDesc.DepthEnable = settings.type != PipelineType::ScreenSpace && settings.type != PipelineType::DebugLines;
+    depthStencilDesc.DepthEnable = isDepthEnabled(settings.type);
     depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
     depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
     depthStencilDesc.StencilEnable = FALSE;
@@ -120,7 +132,13 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
     {
         psoDesc.RTVFormats[i] = RTFormats[i];
     }
-    psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+    if (settings.type == PipelineType::Shadow)
+    {
+        psoDesc.RTVFormats[0] = DXGI_FORMAT_R16G16_FLOAT;
+    }
+
+    psoDesc.DSVFormat = isDepthEnabled(settings.type) ? DXGI_FORMAT_D24_UNORM_S8_UINT : DXGI_FORMAT_UNKNOWN;
     psoDesc.SampleDesc.Count = getSampleCount(settings.msaa);
 
     ID3D12PipelineState* pipelineState = nullptr;
