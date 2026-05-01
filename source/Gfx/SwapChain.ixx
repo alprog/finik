@@ -6,13 +6,24 @@ import Finik.Core;
 import GfxDevice;
 import RenderSystem;
 import RenderSurface;
+import GpuResource;
 
 export constexpr int NUM_BACK_BUFFER = 3;
 export constexpr int NUM_FRAMES_IN_FLIGHT = 3;
 
-export struct SwapChainRenderTarget
+export class SwapChainRenderTarget : public GpuResource
 {
-    MyPtr<ID3D12Resource> resource;
+public:
+    void setResource(ID3D12Resource* resource)
+    {
+        releaseInternal();
+
+        internalResource = resource;
+        internalResource->AddRef();
+
+        state = D3D12_RESOURCE_STATE_PRESENT;
+    }
+
     DescriptorHandle handle;
 };
 

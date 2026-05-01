@@ -88,7 +88,7 @@ void SwapChain::CreateRenderTargets()
         ID3D12Resource* pBackBuffer = nullptr;
         swapChain->GetBuffer(i, IID_PPV_ARGS(&pBackBuffer));
         engine.getDevice()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle.getCPU());
-        renderTarget->resource = pBackBuffer;
+        renderTarget->setResource(pBackBuffer);
 
         renderTargets.append(renderTarget);
     }
@@ -117,10 +117,7 @@ void SwapChain::start_frame(CommandList& list)
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
     //engine.getProfiler()->addStamp(*command_list, "start");
 
-    command_list->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(
-        renderTargets[backBufferIdx]->resource.Get(),
-        D3D12_RESOURCE_STATE_PRESENT,
-        D3D12_RESOURCE_STATE_RENDER_TARGET));
+    list.transition(*renderTargets[backBufferIdx], D3D12_RESOURCE_STATE_RENDER_TARGET);
 
     // Render Dear ImGui graphics
     const float clear_color_with_alpha[4] = {0.2f, 0.2f, 0.2f, 1.0f};
@@ -140,10 +137,7 @@ void SwapChain::finish_frame(CommandList& list)
 
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
 
-    command_list->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(
-        renderTargets[backBufferIdx]->resource.Get(),
-        D3D12_RESOURCE_STATE_RENDER_TARGET,                                 
-        D3D12_RESOURCE_STATE_PRESENT));
+    list.transition(*renderTargets[backBufferIdx], D3D12_RESOURCE_STATE_PRESENT);
 
     //App::GetInstance().render_system.getProfiler()->addStamp(*command_list, "end");
 
