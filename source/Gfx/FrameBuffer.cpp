@@ -41,7 +41,7 @@ void FrameBuffer::startRendering(CommandList& commandList)
     Array<CD3DX12_CPU_DESCRIPTOR_HANDLE> RTHandles;
     for (auto& renderTarget : renderTargets)
     {
-        commandList.transition(renderTarget->resource, D3D12_RESOURCE_STATE_RENDER_TARGET);
+        commandList.transition(*renderTarget, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
         const float clear_color_with_alpha[4] = {0, 0, 0, 0};
         commandList.listImpl->ClearRenderTargetView(renderTarget->handle.getCPU(), clear_color_with_alpha, 0, nullptr);
@@ -50,7 +50,7 @@ void FrameBuffer::startRendering(CommandList& commandList)
     }
     if (depthStencil)
     {
-        commandList.transition(depthStencil->resource, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+        commandList.transition(*depthStencil, D3D12_RESOURCE_STATE_DEPTH_WRITE);
         commandList.listImpl->ClearDepthStencilView(depthStencil->handle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     }
 
@@ -82,11 +82,11 @@ void FrameBuffer::endRendering(CommandList& commandList)
 {
     for (auto& renderTarget : renderTargets)
     {
-        commandList.transition(renderTarget->resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        commandList.transition(*renderTarget, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
     }
     if (depthStencil)
     {
-        commandList.transition(depthStencil->resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        commandList.transition(*depthStencil, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
     }
 }
 

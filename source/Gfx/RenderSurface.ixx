@@ -5,7 +5,7 @@ import GpuResource;
 import GfxEnums;
 export import SurfaceResolution;
 
-export class RenderSurface
+export class RenderSurface : public GpuResource
 {
 protected:
     RenderSurface(TextureFormat format)
@@ -16,7 +16,7 @@ protected:
 public:
     SurfaceResolution getResolution() const
     {
-        const auto& desc = resource.getInternal()->GetDesc();
+        const auto& desc = getInternal()->GetDesc();
         return {
             static_cast<int32>(desc.Width),
             static_cast<int32>(desc.Height),
@@ -27,7 +27,6 @@ public:
     virtual void resize(SurfaceResolution resolution) = 0;
 
     TextureFormat format;
-    GpuResource resource;
     DescriptorHandle handle;
     DescriptorHandle textureHandle;
 };

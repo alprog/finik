@@ -27,10 +27,10 @@ void RenderTarget::resize(SurfaceResolution resolution)
     D3D12_CLEAR_VALUE clearValue;
     clearValue.Format = format;
 
-    resource.reinit(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);
+    reinit(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);
 
-    engine.getDevice()->CreateRenderTargetView(resource.getInternal(), nullptr, handle.getCPU());
-    engine.getDevice()->CreateShaderResourceView(resource.getInternal(), nullptr, textureHandle.getCPU());
+    engine.getDevice()->CreateRenderTargetView(getInternal(), nullptr, handle.getCPU());
+    engine.getDevice()->CreateShaderResourceView(getInternal(), nullptr, textureHandle.getCPU());
 }
 
 void RenderTarget::changeFormat(TextureFormat format)
