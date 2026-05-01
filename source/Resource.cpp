@@ -35,12 +35,15 @@ void GpuResource::transition(D3D12_RESOURCE_STATES newState, ID3D12GraphicsComma
     }
 }
 
-void GpuResource::releaseInternal()
+void GpuResource::releaseInternal(bool mustBeZero)
 {
     if (internalResource)
     {
         int32 Result = internalResource->Release();
-        ASSERT(Result == 0);
+        if (mustBeZero)
+        {
+            ASSERT(Result == 0);
+        }
         internalResource = nullptr;
     }
 }

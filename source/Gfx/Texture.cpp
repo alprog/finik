@@ -17,8 +17,7 @@ Texture::Texture(AssetPath asset_path)
     , Height{0}
 {
     auto& engine = Single::Get<RenderSystem>().engine;
-    DescriptorHeap* heap = engine.getCommonHeap();
-    descriptorHandle = heap->getNextHandle();
+    descriptorHandle = engine.getCommonHeap()->getNextHandle();
 }
 
 int32 Texture::calcMipMapCount()

@@ -10,13 +10,14 @@ public:
     virtual ~GpuResource();
 
     ID3D12Resource* getInternal() const { return internalResource; }
+    D3D12_RESOURCE_STATES getState() const { return state; }
 
     void transition(D3D12_RESOURCE_STATES newState, ID3D12GraphicsCommandList* commandListImpl);
 
 protected:
     void reinitInternalResource(D3D12_RESOURCE_DESC desc, D3D12_RESOURCE_STATES initialState, const D3D12_CLEAR_VALUE* clearValue = nullptr);
 
-    void releaseInternal();
+    void releaseInternal(bool mustBeZero = true);
 
 protected:
     ID3D12Resource* internalResource = nullptr;

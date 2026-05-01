@@ -157,6 +157,8 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Gfx\SpriteManager.ixx" />
     <ClCompile Include="Gfx\Sprite3D.ixx" />
     <ClCompile Include="Gfx\SurfaceResolution.ixx" />
+    <ClCompile Include="Gfx\SwapChainBackBuffer.cpp" />
+    <ClCompile Include="Gfx\SwapChainBackBuffer.ixx" />
     <ClCompile Include="Gfx\TextureFormat.ixx" />
     <ClCompile Include="Gfx\VertexBuffer.cpp" />
     <ClCompile Include="Gfx\WindingOrder.ixx" />

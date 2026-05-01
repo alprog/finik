@@ -7,25 +7,10 @@ import GfxDevice;
 import RenderSystem;
 import RenderSurface;
 import GpuResource;
+import SwapChainBackBuffer;
 
 export constexpr int NUM_BACK_BUFFER = 3;
 export constexpr int NUM_FRAMES_IN_FLIGHT = 3;
-
-export class SwapChainRenderTarget : public GpuResource
-{
-public:
-    void setResource(ID3D12Resource* resource)
-    {
-        releaseInternal();
-
-        internalResource = resource;
-        internalResource->AddRef();
-
-        state = D3D12_RESOURCE_STATE_PRESENT;
-    }
-
-    DescriptorHandle handle;
-};
 
 export class SwapChain
 {
@@ -47,7 +32,7 @@ public:
     MyPtr<IDXGISwapChain3> swapChain;
 
     HANDLE hSwapChainWaitableObject;
-    Array<Ptr<SwapChainRenderTarget>> renderTargets;
+    Array<Ptr<SwapChainBackBuffer>> backBuffers;
 
     MyPtr<ID3D12Resource> depthStencil;
     DescriptorHandle depthStencilHandle;

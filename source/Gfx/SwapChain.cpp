@@ -81,16 +81,9 @@ void SwapChain::CreateRenderTargets()
 
     for (uint32 i = 0; i < NUM_BACK_BUFFER; i++)
     {
-        auto renderTarget = MakePtr<SwapChainRenderTarget>();
-        DescriptorHeap* heap = engine.getRtvHeap();
-        renderTarget->handle = heap->getNextHandle();
-
-        ID3D12Resource* pBackBuffer = nullptr;
-        swapChain->GetBuffer(i, IID_PPV_ARGS(&pBackBuffer));
-        engine.getDevice()->CreateRenderTargetView(pBackBuffer, nullptr, renderTarget->handle.getCPU());
-        renderTarget->setResource(pBackBuffer);
-
-        renderTargets.append(renderTarget);
+        auto backBuffer = MakePtr<SwapChainBackBuffer>();
+        backBuffer->set(*swapChain.Get(), i);
+        backBuffers.append(backBuffer);
     }
 }
 
@@ -117,12 +110,12 @@ void SwapChain::start_frame(CommandList& list)
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
     //engine.getProfiler()->addStamp(*command_list, "start");
 
-    list.transition(*renderTargets[backBufferIdx], D3D12_RESOURCE_STATE_RENDER_TARGET);
+    list.transition(*backBuffers[backBufferIdx], D3D12_RESOURCE_STATE_RENDER_TARGET);
 
     // Render Dear ImGui graphics
     const float clear_color_with_alpha[4] = {0.2f, 0.2f, 0.2f, 1.0f};
 
-    D3D12_CPU_DESCRIPTOR_HANDLE handle = renderTargets[backBufferIdx]->handle.getCPU();
+    D3D12_CPU_DESCRIPTOR_HANDLE handle = backBuffers[backBufferIdx]->descriptorHandle.getCPU();
     command_list->ClearRenderTargetView(handle, clear_color_with_alpha, 0, nullptr);
     //command_list->ClearDepthStencilView(depthStencilHandle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     command_list->OMSetRenderTargets(1, &handle, FALSE, nullptr);
@@ -137,7 +130,7 @@ void SwapChain::finish_frame(CommandList& list)
 
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
 
-    list.transition(*renderTargets[backBufferIdx], D3D12_RESOURCE_STATE_PRESENT);
+    list.transition(*backBuffers[backBufferIdx], D3D12_RESOURCE_STATE_PRESENT);
 
     //App::GetInstance().render_system.getProfiler()->addStamp(*command_list, "end");
 
