@@ -64,8 +64,3 @@ void RenderSystem::createRenderContext()
 {
     renderContext = MakeUnique<RenderContext>(engine, *engine.get_command_list());
 }
-
-void RenderSystem::scheduleQueryResolving()
-{
-    engine.scheduleQueryResolving();
-}

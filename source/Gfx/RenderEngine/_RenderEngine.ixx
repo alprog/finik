@@ -27,6 +27,7 @@ public:
     finik::gpumem::OneshotAllocator& getOneshotAllocator();
 
     void scheduleQueryResolving();
+    void signalEndFrame();
 
 private:
     void createDevice();

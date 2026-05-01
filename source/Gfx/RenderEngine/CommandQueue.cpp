@@ -31,7 +31,7 @@ void CommandQueue::execute(CommandList& commandList)
 
 void CommandQueue::freeCompletedLists()
 {
-    auto completedFrameIndex = frameFence->GetCompletedValue();
+    auto completedFrameIndex = static_cast<int64>(frameFence->GetCompletedValue());
 
     while (!ExecutionQueue.empty())
     {

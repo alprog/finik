@@ -139,9 +139,11 @@ void App::run_game_loop()
         }
 
         engine.scheduleQueryResolving();
+        engine.signalEndFrame();
 
         auto signaled = engine.get_command_queue().frameFence->SignalNext();
-        //assert(signaled == profiler.getFrameIndex());
+        if (signaled != profiler.getFrameIndex())
+            throw;
 
         profiler.endFrame();
     }

@@ -119,17 +119,15 @@ void RenderEngine::createRootSignature()
 
 void RenderEngine::scheduleQueryResolving()
 {
-    static int i = 0;
-    commandList->Reset(commandAllocators[i].Get(), nullptr);
-    //gpuProfiler->addStamp(*commandList.Get(), "resolving");
-    gpuProfiler->scheduleFrameResolve(*commandList.Get());
-    commandList->Close();
+    CommandList& list = commandListPool->retrieveOne();
+    list.startRecording();
+    gpuProfiler->scheduleFrameResolve(*list.listImpl.Get());
+    list.endRecording();
+    commandQueue->execute(list);
+}
 
-    ID3D12GraphicsCommandList* command_list = commandList.Get();
-    get_command_queue()->ExecuteCommandLists(1, (ID3D12CommandList* const*)&command_list);
-
+void RenderEngine::signalEndFrame()
+{
     auto fenceValue = (int32)get_command_queue().fence->SignalNext();
     gpuProfiler->endFrameRange(fenceValue);
-
-    i = (i + 1) % 3;
 }

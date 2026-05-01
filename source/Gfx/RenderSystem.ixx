@@ -21,8 +21,6 @@ public:
 
     void ImguiInitHelper();
 
-    void scheduleQueryResolving();
-
 private:
     void createRenderContext();
 
