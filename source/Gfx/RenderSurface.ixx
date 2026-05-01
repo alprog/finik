@@ -16,7 +16,7 @@ protected:
 public:
     SurfaceResolution getResolution() const
     {
-        const auto& desc = getInternal()->GetDesc();
+        const auto& desc = internalResource->GetDesc();
         return {
             static_cast<int32>(desc.Width),
             static_cast<int32>(desc.Height),

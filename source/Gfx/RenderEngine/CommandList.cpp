@@ -57,9 +57,5 @@ int CommandList::addTimestampQuery()
 
 void CommandList::transition(GpuResource& resource, D3D12_RESOURCE_STATES newState)
 {
-    if (resource.state != newState)
-    {
-        listImpl->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(resource.getInternal(), resource.state, newState));
-        resource.state = newState;
-    }
+    resource.transition(newState, listImpl.Get());
 }

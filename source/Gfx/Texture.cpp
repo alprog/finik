@@ -52,7 +52,7 @@ void Texture::resize(int32 width, int32 height)
     textureDesc.SampleDesc.Quality = 0;
     textureDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 
-    reinit(textureDesc, D3D12_RESOURCE_STATE_COPY_DEST);
+    reinitInternalResource(textureDesc, D3D12_RESOURCE_STATE_COPY_DEST);
 
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
@@ -60,7 +60,7 @@ void Texture::resize(int32 width, int32 height)
     srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
     srvDesc.Texture2D.MipLevels = textureDesc.MipLevels;
 
-    device->CreateShaderResourceView(InternalResource, &srvDesc, descriptorHandle.getCPU());
+    device->CreateShaderResourceView(internalResource, &srvDesc, descriptorHandle.getCPU());
 }
 
 Texture::Texture(int32 width, int32 height)
@@ -94,7 +94,7 @@ void Texture::setData(Image& image)
 
     commandList.transition(*this, D3D12_RESOURCE_STATE_COPY_DEST);
 
-    const uint64 uploadBufferSize = GetRequiredIntermediateSize(InternalResource, 0, 1);
+    const uint64 uploadBufferSize = GetRequiredIntermediateSize(internalResource, 0, 1);
     UploadBuffer uploadBuffer(engine.getDevice(), (int32)uploadBufferSize);
 
     if (uploadBufferSize == image.getByteSize())
@@ -107,17 +107,17 @@ void Texture::setData(Image& image)
         textureData.pData = image.data;
         textureData.RowPitch = image.width * TexturePixelSize;
         textureData.SlicePitch = textureData.RowPitch * image.height;
-        UpdateSubresources(commandList.listImpl.Get(), InternalResource, uploadBuffer.GetResource(), 0, 0, 1, &textureData);
+        UpdateSubresources(commandList.listImpl.Get(), internalResource, uploadBuffer.GetResource(), 0, 0, 1, &textureData);
     }
 
     D3D12_PLACED_SUBRESOURCE_FOOTPRINT srcFootprint;
     uint32 numRows;
     uint64 rowSizeInBytes, totalBytes;
 
-    engine.getDevice()->GetCopyableFootprints(&InternalResource->GetDesc(), 0, 1, 0, &srcFootprint, &numRows, &rowSizeInBytes, &totalBytes);
+    engine.getDevice()->GetCopyableFootprints(&internalResource->GetDesc(), 0, 1, 0, &srcFootprint, &numRows, &rowSizeInBytes, &totalBytes);
 
     const CD3DX12_TEXTURE_COPY_LOCATION Src(uploadBuffer.GetResource(), srcFootprint);
-    const CD3DX12_TEXTURE_COPY_LOCATION Dst(InternalResource, 0);
+    const CD3DX12_TEXTURE_COPY_LOCATION Dst(internalResource, 0);
     commandList.listImpl->CopyTextureRegion(&Dst, 0, 0, 0, &Src, nullptr);
 
     commandList.transition(*this, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);

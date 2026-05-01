@@ -10,7 +10,7 @@ GpuResource::~GpuResource()
     releaseInternal();
 }
 
-void GpuResource::reinit(D3D12_RESOURCE_DESC desc, D3D12_RESOURCE_STATES initialState, const D3D12_CLEAR_VALUE* clearValue)
+void GpuResource::reinitInternalResource(D3D12_RESOURCE_DESC desc, D3D12_RESOURCE_STATES initialState, const D3D12_CLEAR_VALUE* clearValue)
 {
     releaseInternal();
 
@@ -21,17 +21,26 @@ void GpuResource::reinit(D3D12_RESOURCE_DESC desc, D3D12_RESOURCE_STATES initial
         &desc,
         initialState,
         clearValue,
-        IID_PPV_ARGS(&InternalResource)) MUST;
+        IID_PPV_ARGS(&internalResource)) MUST;
 
     state = initialState;
 }
 
+void GpuResource::transition(D3D12_RESOURCE_STATES newState, ID3D12GraphicsCommandList* commandListImpl)
+{
+    if (state != newState)
+    {
+        commandListImpl->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(internalResource, state, newState));
+        state = newState;
+    }
+}
+
 void GpuResource::releaseInternal()
 {
-    if (InternalResource)
+    if (internalResource)
     {
-        int32 Result = InternalResource->Release();
+        int32 Result = internalResource->Release();
         ASSERT(Result == 0);
-        InternalResource = nullptr;
+        internalResource = nullptr;
     }
 }

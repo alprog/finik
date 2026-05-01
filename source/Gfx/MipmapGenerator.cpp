@@ -42,7 +42,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
 
     const CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 
-    ManualGpuResource& staging = *new ManualGpuResource(); // leak
+    CustomGpuResource& staging = *new CustomGpuResource(); // leak
     staging.reinit(stagingDesc, D3D12_RESOURCE_STATE_COPY_DEST);
 
     commandList.transition(texture, D3D12_RESOURCE_STATE_COPY_SOURCE);
