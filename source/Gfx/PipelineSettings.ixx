@@ -2,7 +2,7 @@ export module PipelineSettings;
 
 import Finik.Core;
 import Shader;
-import Msaa;
+import GfxEnums;
 
 export enum class PipelineType : char
 {
@@ -34,6 +34,7 @@ public:
 
     CullMode cullMode;
     MSAA msaa;
+    TextureFormat shadowFormat;
 
     bool operator==(const PipelineSettings& lhs) const = default;
     bool operator!=(const PipelineSettings& lhs) const = default;

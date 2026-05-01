@@ -5,18 +5,24 @@ import App;
 import SurfaceResolution;
 import Scene;
 import RenderSystem;
+import PipelineSettings;
+
+void resetPsoForPipelineType(PipelineType type)
+{
+    for (auto& [name, effect] : EffectManager::GetInstance().getEffects())
+    {
+        if (effect->getPipelineType() == type)
+        {
+            effect->resetPso();
+        }
+    }
+}
 
 void QualityManager::apply(QualitySettings settings)
 {
     if (this->settings.msaa != settings.msaa)
     {
-        for (auto& [name, effect] : EffectManager::GetInstance().getEffects())
-        {
-            if (effect->getPipelineType() == PipelineType::Geometry)
-            {
-                effect->resetPso();
-            }
-        }
+        resetPsoForPipelineType(PipelineType::Geometry);
     }
 
     if (this->settings.shadowMapResolution != settings.shadowMapResolution)
@@ -29,6 +35,21 @@ void QualityManager::apply(QualitySettings settings)
         {
             scene->light.shadowMap->resize(surfaceResolution);
         }
+    }
+
+    if (this->settings.shadowMapPrecision != settings.shadowMapPrecision)
+    {
+        auto& engine = Single::Get<RenderSystem>().engine;
+        engine.get_command_queue().Flush();
+
+        SurfaceResolution surfaceResolution = {settings.shadowMapResolution, settings.shadowMapResolution, 1};
+        auto format = settings.getShadowMapFormat();
+        for (Scene* scene : App::GetInstance().scene_manager.scenes)
+        {
+            scene->light.shadowMap->renderTargets[0]->changeFormat(format);
+        }
+
+        resetPsoForPipelineType(PipelineType::Shadow);
     }
 
     this->settings = settings;

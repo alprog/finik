@@ -44,10 +44,13 @@ Ptr<PipelineState> Effect::getPipelineState()
         ShaderByteCode pixelBytecode = pixelShader ? pixelShader->bytecode : ShaderByteCode();
         PipelineSettings settings(vertexShader->bytecode, pixelBytecode);
         settings.type = type;
+        
+        auto& qualitySettings = QualityManager::GetInstance().getCurrent();
         if (type == PipelineType::Geometry)
         {
-            settings.msaa = QualityManager::GetInstance().getCurrent().msaa;
+            settings.msaa = qualitySettings.msaa;
         }
+        settings.shadowFormat = qualitySettings.getShadowMapFormat();
         
         pipelineState = Single::Get<PSOManager>().get_pso(settings);
     }

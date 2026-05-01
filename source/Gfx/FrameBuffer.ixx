@@ -6,7 +6,7 @@ import RenderSurface;
 import RenderTarget;
 import DepthStencil;
 import Mrt;
-import Msaa;
+import GfxEnums;
 
 export class FrameBuffer
 {

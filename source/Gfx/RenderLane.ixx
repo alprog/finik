@@ -8,7 +8,7 @@ import Camera;
 import RenderPass;
 import SurfaceResolution;
 import Mesh;
-export import Msaa;
+export import GfxEnums;
 
 export class SceneRenderLane
 {

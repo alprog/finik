@@ -32,3 +32,9 @@ void RenderTarget::resize(SurfaceResolution resolution)
     engine.getDevice()->CreateRenderTargetView(resource.getInternal(), nullptr, handle.getCPU());
     engine.getDevice()->CreateShaderResourceView(resource.getInternal(), nullptr, textureHandle.getCPU());
 }
+
+void RenderTarget::changeFormat(TextureFormat format)
+{
+    this->format = format;
+    resize(getResolution());
+}

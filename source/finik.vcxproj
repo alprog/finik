@@ -169,7 +169,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Gfx\DepthStencil.cpp" />
     <ClCompile Include="Gfx\DepthStencil.ixx" />
     <ClCompile Include="Gfx\Mrt.ixx" />
-    <ClCompile Include="Gfx\Msaa.ixx" />
+    <ClCompile Include="Gfx\GfxEnums.ixx" />
     <ClCompile Include="Gfx\PipelineState.ixx" />
     <ClCompile Include="Gfx\PsoManager.cpp" />
     <ClCompile Include="Gfx\PsoManager.ixx" />
