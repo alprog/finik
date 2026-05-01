@@ -49,14 +49,12 @@ float4 restoreWorldPosition(float2 uv, uint sampleIndex)
     return worldPos / worldPos.w;
 }
 
-float getShadow(float2 shadowUV, float refDepth, float bias)
+float getShadow2(float2 shadowUV, float refDepth, float bias)
 {
 	if (shadowUV.x < 0 || shadowUV.x > 1 || shadowUV.y < 0 || shadowUV.y > 1)
 	{
 		return 0;
 	}
-
-
 	
 	int s = PCFSize;
 	
@@ -74,6 +72,33 @@ float getShadow(float2 shadowUV, float refDepth, float bias)
 
 	return result / count;
 }
+
+float reduceLightBleeding(float value, float min)  
+{  
+    return clamp((value - min) / (1 - min), 0, 1);  
+}  
+
+float getShadow(float2 uv, float refDepth, float bias)  
+{  
+    if (uv.x < 0 || uv.x > 1 || uv.y < 0 || uv.y > 1)
+    {
+        return 1;
+    }
+
+    float2 M = sampleTex(ShadowTextureId, uv, LinearSampler).rg;
+
+    float p = refDepth <= M[0] ? 1 : 0;
+    
+    float variance = M[1] - M[0] * M[0];
+    variance = max(variance, 0.000002);
+    
+    float d = refDepth - M[0];
+    float p_max = variance / (variance + d * d);
+    
+    p_max = reduceLightBleeding(p_max, 0.5);
+    
+    return 1 - max(p, p_max);    
+}  
 
 float4 calcLighting(float2 uv, uint sampleIndex)
 {
