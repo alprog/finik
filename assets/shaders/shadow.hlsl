@@ -5,7 +5,17 @@ struct PSInput
 	float4 position : SV_POSITION;
 };
 
-float4 PSMain(PSInput input) : SV_TARGET
+float2 PSMain(PSInput input) : SV_TARGET
 {
-	return input.position.z;
+    float depth = input.position.z; // 0..1, NDC space
+
+    float2 moments;
+    moments.x = depth;
+    moments.y = depth * depth;
+
+    float dx = ddx(depth);
+	float dy = ddy(depth);
+	moments.y += 0.25 * (dx * dx + dy * dy);
+
+	return moments;
 }
