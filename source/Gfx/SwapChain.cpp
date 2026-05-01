@@ -8,6 +8,7 @@ import RenderEngine;
 import Log;
 import Timer;
 import DesktopWindow;
+import App;
 
 D3D12_VIEWPORT viewport;
 D3D12_RECT scissorRect;
@@ -60,22 +61,10 @@ SwapChain::SwapChain(DesktopWindow& window)
     }
 
     CreateRenderTargets();
-    CreateDepthStencil();
-
-    for (uint32 i = 0; i < NUM_FRAMES_IN_FLIGHT; i++)
-        if (engine.getDevice()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameContext[i].CommandAllocator)) != S_OK)
-            throw;
 }
 
 SwapChain::~SwapChain()
 {
-    for (uint32 i = 0; i < NUM_FRAMES_IN_FLIGHT; i++)
-        if (frameContext[i].CommandAllocator)
-        {
-            frameContext[i].CommandAllocator->Release();
-            frameContext[i].CommandAllocator = nullptr;
-        }
-
     if (swapChain)
     {
         swapChain->SetFullscreenState(false, nullptr);
@@ -105,77 +94,33 @@ void SwapChain::CreateRenderTargets()
     }
 }
 
-void SwapChain::CreateDepthStencil()
+void SwapChain::WaitForNextFrameResources()
 {
-
-}
-
-void SwapChain::CleanupRenderTarget()
-{
-    WaitForLastSubmittedFrame();
-}
-
-void SwapChain::WaitForLastSubmittedFrame()
-{
-    //    FrameContext* frameCtx = &frameContext[frameIndex % NUM_FRAMES_IN_FLIGHT];
-    //
-    //    uint64 fenceValue = frameCtx->FenceValue;
-    //    if (fenceValue == 0)
-    //        return; // No fence was signaled
-    //
-    //    frameCtx->FenceValue = 0;
-    //    if (fence->GetCompletedValue() >= fenceValue)
-    //        return;
-    //
-    //    fence->SetEventOnCompletion(fenceValue, fenceEvent);
-    //    WaitForSingleObject(fenceEvent, INFINITE);
-}
-
-FrameContext* SwapChain::WaitForNextFrameResources()
-{
-    uint32 nextFrameIndex = frameIndex + 1;
-    frameIndex = nextFrameIndex;
-
-    //HANDLE waitableObjects[] = { hSwapChainWaitableObject, nullptr };
-    //DWORD numWaitableObjects = 1;
-
-    auto& engine = Single::Get<RenderSystem>().engine;
-
-    FrameContext* frameCtx = &frameContext[nextFrameIndex % NUM_FRAMES_IN_FLIGHT];
-    uint64 fenceValue = frameCtx->FenceValue;
-    if (fenceValue != 0) // means no fence was signaled
+    if (presentFenceValues.size() >= NUM_FRAMES_IN_FLIGHT)
     {
-        frameCtx->FenceValue = 0;
+        uint64 fenceValue = presentFenceValues.front();
+        auto& engine = Single::Get<RenderSystem>().engine;
         engine.get_command_queue().fence->WaitForValue(fenceValue);
-        //waitableObjects[1] = fenceEvent;
-        //numWaitableObjects = 2;
+        presentFenceValues.pop();
     }
-
-    //WaitForMultipleObjects(numWaitableObjects, waitableObjects, TRUE, INFINITE);
-
-    return frameCtx;
 }
 
 void SwapChain::start_frame(CommandList& list)
 {
+    WaitForNextFrameResources();
+
     list.startRecording();
 
     auto command_list = list.listImpl.Get();
     auto& engine = Single::Get<RenderSystem>().engine;
 
-    current_frame_ctx = WaitForNextFrameResources();
-
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
     //engine.getProfiler()->addStamp(*command_list, "start");
 
-    D3D12_RESOURCE_BARRIER barrier = {};
-    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-    barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.Get();
-    barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-    command_list->ResourceBarrier(1, &barrier);
+    command_list->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(
+        renderTargets[backBufferIdx]->resource.Get(),
+        D3D12_RESOURCE_STATE_PRESENT,
+        D3D12_RESOURCE_STATE_RENDER_TARGET));
 
     // Render Dear ImGui graphics
     const float clear_color_with_alpha[4] = {0.2f, 0.2f, 0.2f, 1.0f};
@@ -187,32 +132,18 @@ void SwapChain::start_frame(CommandList& list)
 
     ID3D12DescriptorHeap* heap = engine.getCommonHeap()->get();
     command_list->SetDescriptorHeaps(1, &heap);
-
-    viewport.Width = static_cast<float>(1024);
-    viewport.Height = static_cast<float>(800);
-    viewport.MaxDepth = 1.0f;
-    command_list->RSSetViewports(1, &viewport);
-
-    scissorRect.right = static_cast<LONG>(1024);
-    scissorRect.bottom = static_cast<LONG>(800);
-    command_list->RSSetScissorRects(1, &scissorRect);
 }
 
 void SwapChain::finish_frame(CommandList& list)
 {
-
     auto command_list = list.listImpl.Get();
 
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
 
-    D3D12_RESOURCE_BARRIER barrier = {};
-    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-    barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = renderTargets[backBufferIdx]->resource.Get();
-    barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-    command_list->ResourceBarrier(1, &barrier);
+    command_list->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(
+        renderTargets[backBufferIdx]->resource.Get(),
+        D3D12_RESOURCE_STATE_RENDER_TARGET,                                 
+        D3D12_RESOURCE_STATE_PRESENT));
 
     //App::GetInstance().render_system.getProfiler()->addStamp(*command_list, "end");
 
@@ -235,5 +166,5 @@ void SwapChain::present()
     swapChainOccluded = (hr == DXGI_STATUS_OCCLUDED);
 
     uint64 fenceValue = engine.get_command_queue().fence->SignalNext();
-    current_frame_ctx->FenceValue = fenceValue;
+    presentFenceValues.push(fenceValue);
 }

@@ -123,9 +123,6 @@ void SceneView::draw_content()
                 Ptr effect = EffectManager::GetInstance().get(effectName);
                 commandList->SetPipelineState(effect->getPipelineState()->getInternalObject());
                 effect->getPipelineState()->use();
-            
-                //int32 values[3] = {Size.width, Size.height, sampleCount};
-                //commandList->SetGraphicsRoot32BitConstants(2, 3, &values, 0);    
             };
             GImGui->CurrentWindow->DrawList->AddCallback(Callback, nullptr);
         }

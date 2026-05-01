@@ -10,12 +10,6 @@ import RenderSurface;
 export constexpr int NUM_BACK_BUFFER = 3;
 export constexpr int NUM_FRAMES_IN_FLIGHT = 3;
 
-export struct FrameContext
-{
-    ID3D12CommandAllocator* CommandAllocator;
-    uint64                  FenceValue;
-};
-
 export struct SwapChainRenderTarget
 {
     MyPtr<ID3D12Resource> resource;
@@ -29,10 +23,7 @@ public:
     ~SwapChain();
 
     void CreateRenderTargets();
-    void CreateDepthStencil();
-    void CleanupRenderTarget();
-    void WaitForLastSubmittedFrame();
-    FrameContext* WaitForNextFrameResources();
+    void WaitForNextFrameResources();
 
     void start_frame(CommandList& list);
     void finish_frame(CommandList& list);
@@ -51,7 +42,6 @@ public:
     DescriptorHandle depthStencilHandle;
 
     bool swapChainOccluded = false;
-    FrameContext frameContext[NUM_FRAMES_IN_FLIGHT] = {};
-    uint32 frameIndex = 0;
-    FrameContext* current_frame_ctx;
+
+    std::queue<uint64> presentFenceValues;
 }; 

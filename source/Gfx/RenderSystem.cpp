@@ -33,7 +33,6 @@ void RenderSystem::ImguiInitHelper()
     init_info.DSVFormat = DXGI_FORMAT_UNKNOWN;
     init_info.SrvDescriptorHeap = engine.getDevice().getCommonHeap()->get();
     init_info.SrvDescriptorAllocFn = [](ImGui_ImplDX12_InitInfo*, D3D12_CPU_DESCRIPTOR_HANDLE* out_cpu_handle, D3D12_GPU_DESCRIPTOR_HANDLE* out_gpu_handle) { 
-        
         auto& handle = RenderSystem::GetInstance().engine.getCommonHeap()->getNextHandle();
         *out_cpu_handle = handle.getCPU();
         *out_gpu_handle = handle.getGPU();

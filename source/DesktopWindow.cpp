@@ -21,7 +21,7 @@ DesktopWindow::DesktopWindow(int width, int height)
     , height{height}
 {
     SDL_WindowFlags window_flags = (SDL_WindowFlags)( SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_MAXIMIZED);
-    impl = SDL_CreateWindow("title", 0, 0, window_flags);
+    impl = SDL_CreateWindow("title", 1000, 800, window_flags);
     id = SDL_GetWindowID(impl);
     SDL_GetWindowSize(impl, &this->width, &this->height);
 
