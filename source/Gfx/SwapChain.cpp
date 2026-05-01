@@ -23,7 +23,7 @@ SwapChain::SwapChain(DesktopWindow& window)
         sd.Width = window.width;
         sd.Height = window.height;
         sd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-        sd.Flags = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
+        sd.Flags = 0; //DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
         sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
         sd.SampleDesc.Count = 1;
         sd.SampleDesc.Quality = 0;
