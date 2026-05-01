@@ -7,7 +7,6 @@ export module DesktopWindow;
 import Finik.Core;
 import SwapChain;
 import Gui;
-import Scene;
 
 export class DesktopWindow
 {
@@ -15,7 +14,6 @@ public:
     DesktopWindow(int width, int height);
     ~DesktopWindow();
 
-    void renderScene();
     void setIcon();
 
     WindowImpl* get_impl()
@@ -26,7 +24,6 @@ public:
     unsigned int id;
     HWND hwnd;
     SwapChain* swap_chain;
-    Scene* scene;
     Gui* gui;
 
     int width;

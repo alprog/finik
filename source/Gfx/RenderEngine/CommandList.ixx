@@ -6,6 +6,10 @@ export class CommandList
 {
 public:
     explicit CommandList(CommandListPool& pool, int frameIndex);
+
+    CommandList(const CommandList&) = delete;
+    CommandList& operator=(const CommandList&) = delete;
+
     void reset(int frameIndex);
     void returnToPool();
 

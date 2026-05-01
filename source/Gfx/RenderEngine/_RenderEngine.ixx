@@ -16,7 +16,6 @@ public:
 
     GfxDevice& getDevice();
     CommandQueue& get_command_queue();
-    ID3D12GraphicsCommandList* get_command_list();
     DescriptorHeap* getRtvHeap();
     DescriptorHeap* getDsvHeap();
     DescriptorHeap* getCommonHeap();
@@ -34,15 +33,11 @@ private:
     void createCommandQueue();
     void createProfiler();
     void createCommandListPool();
-    void createCommandAllocators();
-    void createCommandList();
     void createRootSignature();
 
 private:
     GfxDevice device;
     CommandQueue* commandQueue = nullptr;
-    MyPtr<ID3D12CommandAllocator> commandAllocators[3];
-    MyPtr<ID3D12GraphicsCommandList> commandList;
     UniquePtr<CommandListPool> commandListPool;
     GpuProfiler* gpuProfiler = nullptr;
 

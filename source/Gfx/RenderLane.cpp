@@ -12,6 +12,7 @@ import EffectManager;
 import App;
 import Jitter;
 import QualityManager;
+import RenderContext;
 
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution resolution)
     : scene{scene}

@@ -51,19 +51,3 @@ DesktopWindow::~DesktopWindow()
     delete swap_chain;
     SDL_DestroyWindow(impl);
 }
-
-void DesktopWindow::renderScene()
-{
-    static Camera camera;
-    camera.position = Vector3(0, 1, -3);
-    camera.lookAt = Vector3::Zero;
-    camera.FieldOfView = PI / 2.0f;
-    camera.calcViewMatrix();
-    camera.calcProjectionMatrix();
-
-    if (scene != nullptr)
-    {
-        auto context = Single::Get<RenderSystem>().getRenderContext();
-        scene->render(*context, camera, Matrix::Identity, Vector2::Zero, RenderPass::Geometry);
-    }
-}

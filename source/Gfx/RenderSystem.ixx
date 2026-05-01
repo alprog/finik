@@ -15,16 +15,11 @@ public:
 public:
     void init();
 
-    RenderContext* getRenderContext();
     MainRootSignature& getRootSignature();
     ComputeRootSignature& getComputeRootSignature();
 
     void ImguiInitHelper();
 
-private:
-    void createRenderContext();
-
 public:
-    RenderEngine engine;
-    UniquePtr<RenderContext> renderContext;  
+    RenderEngine engine;  
 };

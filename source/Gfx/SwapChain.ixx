@@ -34,9 +34,9 @@ public:
     void WaitForLastSubmittedFrame();
     FrameContext* WaitForNextFrameResources();
 
-    void start_frame(ID3D12GraphicsCommandList* command_list);
-    void finish_frame(ID3D12GraphicsCommandList* command_list);
-    void execute(ID3D12GraphicsCommandList* command_list);
+    void start_frame(CommandList& list);
+    void finish_frame(CommandList& list);
+    void execute(CommandList& list);
     void present();
 
 public:

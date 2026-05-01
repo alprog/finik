@@ -10,8 +10,6 @@ void RenderEngine::init()
     createCommandQueue();
     createProfiler();
     createCommandListPool();
-    createCommandAllocators();
-    createCommandList();
     createRootSignature();
 }
 
@@ -23,11 +21,6 @@ GfxDevice& RenderEngine::getDevice()
 CommandQueue& RenderEngine::get_command_queue()
 {
     return *commandQueue;
-}
-
-ID3D12GraphicsCommandList* RenderEngine::get_command_list()
-{
-    return commandList.Get();
 }
 
 DescriptorHeap* RenderEngine::getRtvHeap()
@@ -88,27 +81,6 @@ void RenderEngine::createCommandListPool()
 void RenderEngine::createProfiler()
 {
     gpuProfiler = new GpuProfiler(*this);
-}
-
-void RenderEngine::createCommandAllocators()
-{
-    for (int i = 0; i < 3; i++)
-    {
-        auto result = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocators[i]));
-        if (FAILED(result))
-            throw;
-    }
-}
-
-void RenderEngine::createCommandList()
-{
-    auto result = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocators[0].Get(), nullptr, IID_PPV_ARGS(&commandList));
-    if (FAILED(result))
-        throw;
-
-    result = commandList->Close();
-    if (FAILED(result))
-        throw;
 }
 
 void RenderEngine::createRootSignature()

@@ -29,8 +29,7 @@ int main(int argc, char* argv[])
     DesktopWindow* window = app.desktop_system.create_window(1024, 800);
 
     Scene& scene = app.scene_manager.create_scene();
-    window->scene = &scene;
-
+    
     window->gui->views.append(MakeUnique<ConsoleView>("consoleView"));
     window->gui->views.append(MakeUnique<SceneView>("sceneView1", scene));
     //window->gui->views.append(MakeUnique<SceneView>("sceneView2", scene));

@@ -16,7 +16,6 @@ RenderSystem::RenderSystem()
 void RenderSystem::init()
 {
     engine.init();
-    createRenderContext();
 }
 
 void RenderSystem::ImguiInitHelper()
@@ -45,11 +44,6 @@ void RenderSystem::ImguiInitHelper()
     ImGui_ImplDX12_Init(&init_info);
 }
 
-RenderContext* RenderSystem::getRenderContext()
-{
-    return renderContext.get();
-}
-
 MainRootSignature& RenderSystem::getRootSignature()
 {
     return engine.getRootSignature();
@@ -58,9 +52,4 @@ MainRootSignature& RenderSystem::getRootSignature()
 ComputeRootSignature& RenderSystem::getComputeRootSignature()
 {
     return engine.getComputeRootSignature();
-}
-
-void RenderSystem::createRenderContext()
-{
-    renderContext = MakeUnique<RenderContext>(engine, *engine.get_command_list());
 }

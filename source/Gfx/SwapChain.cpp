@@ -156,16 +156,16 @@ FrameContext* SwapChain::WaitForNextFrameResources()
     return frameCtx;
 }
 
-void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
+void SwapChain::start_frame(CommandList& list)
 {
+    list.startRecording();
+
+    auto command_list = list.listImpl.Get();
     auto& engine = Single::Get<RenderSystem>().engine;
 
     current_frame_ctx = WaitForNextFrameResources();
 
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
-    current_frame_ctx->CommandAllocator->Reset();
-
-    command_list->Reset(current_frame_ctx->CommandAllocator, nullptr);
     //engine.getProfiler()->addStamp(*command_list, "start");
 
     D3D12_RESOURCE_BARRIER barrier = {};
@@ -198,8 +198,11 @@ void SwapChain::start_frame(ID3D12GraphicsCommandList* command_list)
     command_list->RSSetScissorRects(1, &scissorRect);
 }
 
-void SwapChain::finish_frame(ID3D12GraphicsCommandList* command_list)
+void SwapChain::finish_frame(CommandList& list)
 {
+
+    auto command_list = list.listImpl.Get();
+
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
 
     D3D12_RESOURCE_BARRIER barrier = {};
@@ -213,13 +216,13 @@ void SwapChain::finish_frame(ID3D12GraphicsCommandList* command_list)
 
     //App::GetInstance().render_system.getProfiler()->addStamp(*command_list, "end");
 
-    command_list->Close();
+    list.endRecording();
 }
 
-void SwapChain::execute(ID3D12GraphicsCommandList* command_list)
+void SwapChain::execute(CommandList& list)
 {
     auto& engine = Single::Get<RenderSystem>().engine;
-    engine.get_command_queue()->ExecuteCommandLists(1, (ID3D12CommandList* const*)&command_list);
+    engine.get_command_queue().execute(list);
 }
 
 void SwapChain::present()

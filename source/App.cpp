@@ -119,12 +119,11 @@ void App::run_game_loop()
             Profile _("render windows");
             for (auto window : desktop_system.windows)
             {
-                auto command_list = engine.get_command_list();
-                window->swap_chain->start_frame(command_list);
-                //window->renderScene();
-                window->gui->render(command_list);
-                window->swap_chain->finish_frame(command_list);
-                window->swap_chain->execute(command_list);
+                auto& list = engine.getFreeCommandList();
+                window->swap_chain->start_frame(list);
+                window->gui->render(list);
+                window->swap_chain->finish_frame(list);
+                window->swap_chain->execute(list);
                 window->swap_chain->present();
             }
         }

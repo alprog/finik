@@ -144,7 +144,8 @@ void Gui::prepare()
     ImGui::Render();
 }
 
-void Gui::render(ID3D12GraphicsCommandList* command_list)
+void Gui::render(CommandList& list)
 {
+    auto command_list = list.listImpl.Get();
     ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), command_list);
 }

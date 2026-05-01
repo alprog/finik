@@ -2,11 +2,11 @@ module;
 class DesktopWindow;
 struct ImGuiContext;
 using GuiImpl = ImGuiContext;
-struct ID3D12GraphicsCommandList;
 export module Gui;
 
 import Finik.Core;
 import View;
+import RenderSystem;
 
 export class Gui
 {
@@ -15,7 +15,7 @@ public:
     Gui::~Gui();
 
     void prepare();
-    void render(ID3D12GraphicsCommandList* command_list);
+    void render(CommandList& list);
     void set_context();
 
 private:
