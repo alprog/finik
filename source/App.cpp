@@ -42,8 +42,9 @@ void App::handle_input()
         else
         {
             // ImGui Undocked Windows (part of some main context)
-            if (ImGui::GetCurrentContext())
+            for (auto window : desktop_system.windows)
             {
+                window->gui->set_context();
                 ImGui_ImplSDL3_ProcessEvent(&event);
             }
         }
@@ -116,6 +117,8 @@ void App::run_game_loop()
             Profile _("render windows");
             for (auto window : desktop_system.windows)
             {
+                window->gui->set_context();
+
                 auto& list = engine.getFreeCommandList();
                 window->swap_chain->start_frame(list);
                 window->gui->render(list);
@@ -125,8 +128,10 @@ void App::run_game_loop()
             }
         }
 
+        for (auto window : desktop_system.windows)
         {
             Profile _("render platform windows");
+            window->gui->set_context();
             if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
             {
                 ImGui::UpdatePlatformWindows();
