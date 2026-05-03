@@ -12,6 +12,7 @@ public:
     virtual ~SwapChainBackBuffer();
 
     void set(IDXGISwapChain3& swapChain, int32 bufferIndex);
+    void reset();
 
     DescriptorHandle descriptorHandle;
 };

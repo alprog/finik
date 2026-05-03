@@ -18,7 +18,9 @@ public:
     SwapChain(DesktopWindow& window);
     ~SwapChain();
 
-    void CreateRenderTargets();
+    void resize();
+
+    void createBackBuffers();
     void WaitForNextFrameResources();
 
     void start_frame(CommandList& list);
@@ -28,8 +30,9 @@ public:
 
 public:
     DesktopWindow& window;
-
+    
     MyPtr<IDXGISwapChain3> swapChain;
+    IntSize resolution;
 
     HANDLE hSwapChainWaitableObject;
     Array<Ptr<SwapChainBackBuffer>> backBuffers;

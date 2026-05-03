@@ -36,19 +36,16 @@ void App::handle_input()
         auto window = desktop_system.get_window_by_id(event.window.windowID);
         if (window)
         {
-            if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED)
-            {
-                desktop_system.close_window(window);
-            }
-            else
-            {
-                window->gui->set_context();
-            }
+            // Main Finik Engine Windows (separate gui contexts)
+            window->processEvent(event);
         }
-
-        if (ImGui::GetCurrentContext())
+        else
         {
-            ImGui_ImplSDL3_ProcessEvent(&event);
+            // ImGui Undocked Windows (part of some main context)
+            if (ImGui::GetCurrentContext())
+            {
+                ImGui_ImplSDL3_ProcessEvent(&event);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 module;
 #include "windows.h"
 struct SDL_Window;
+struct SDL_Event;
 using WindowImpl = SDL_Window;
 export module DesktopWindow;
 
@@ -15,6 +16,8 @@ public:
     ~DesktopWindow();
 
     void setIcon();
+
+    void processEvent(SDL_Event& event);
 
     WindowImpl* get_impl()
     {

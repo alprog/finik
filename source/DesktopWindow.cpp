@@ -9,6 +9,8 @@ import Camera;
 import Gui;
 import Images;
 import ByteBlob;
+import App;
+import Imgui;
 
 void FlushSDLEvents()
 {
@@ -51,3 +53,21 @@ DesktopWindow::~DesktopWindow()
     delete swap_chain;
     SDL_DestroyWindow(impl);
 }
+
+void DesktopWindow::processEvent(SDL_Event& event)
+{
+    gui->set_context();
+    ImGui_ImplSDL3_ProcessEvent(&event);
+
+    if (event.type == SDL_EVENT_WINDOW_RESIZED)
+    {
+        SDL_GetWindowSize(impl, &this->width, &this->height);
+        swap_chain->resize();
+    }
+
+    if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED)
+    {
+        App::GetInstance().desktop_system.close_window(this);
+    }
+}
+

@@ -33,34 +33,34 @@ SwapChain::SwapChain(DesktopWindow& window)
         sd.Scaling = DXGI_SCALING_STRETCH;
         sd.Stereo = FALSE;
     }
+    
+    resolution = {window.width, window.height};
 
     auto& engine = Single::Get<RenderSystem>().engine;
 
-    {
-        MyPtr<IDXGIFactory3> dxgiFactory;
-        MyPtr<IDXGISwapChain1> dxgiSwapChain1;
+    MyPtr<IDXGIFactory3> dxgiFactory;
+    MyPtr<IDXGISwapChain1> dxgiSwapChain1;
 
-        uint32 createFactoryFlags = 0;
+    uint32 createFactoryFlags = 0;
 #if defined(_DEBUG)
-        createFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
+    createFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
 #endif
-        auto result = CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&dxgiFactory));
-        if (FAILED(result))
-            throw;
+    auto result = CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&dxgiFactory));
+    if (FAILED(result))
+        throw;
 
-        result = dxgiFactory->CreateSwapChainForHwnd(engine.get_command_queue().queueImpl.Get(), window.hwnd, &sd, nullptr, nullptr, &dxgiSwapChain1);
-        if (FAILED(result))
-            throw;
+    result = dxgiFactory->CreateSwapChainForHwnd(engine.get_command_queue().queueImpl.Get(), window.hwnd, &sd, nullptr, nullptr, &dxgiSwapChain1);
+    if (FAILED(result))
+        throw;
 
-        result = dxgiSwapChain1->QueryInterface(IID_PPV_ARGS(&swapChain));
-        if (FAILED(result))
-            throw;
+    result = dxgiSwapChain1->QueryInterface(IID_PPV_ARGS(&swapChain));
+    if (FAILED(result))
+        throw;
 
-        swapChain->SetMaximumFrameLatency(NUM_BACK_BUFFER);
-        hSwapChainWaitableObject = swapChain->GetFrameLatencyWaitableObject();
-    }
-
-    CreateRenderTargets();
+    swapChain->SetMaximumFrameLatency(NUM_BACK_BUFFER);
+    hSwapChainWaitableObject = swapChain->GetFrameLatencyWaitableObject();
+  
+    createBackBuffers();
 }
 
 SwapChain::~SwapChain()
@@ -75,7 +75,35 @@ SwapChain::~SwapChain()
     }
 }
 
-void SwapChain::CreateRenderTargets()
+void SwapChain::resize()
+{
+    IntSize windowSize {window.width, window.height};
+    if (this->resolution != windowSize)
+    {
+        auto& engine = Single::Get<RenderSystem>().engine;
+        engine.get_command_queue().Flush();
+    
+        for (auto& backBuffer : backBuffers)
+        {
+            backBuffer->reset();
+        }
+
+        engine.get_command_queue().Flush();
+
+        DXGI_SWAP_CHAIN_DESC desc = {};
+        swapChain->GetDesc(&desc);
+        swapChain->ResizeBuffers(NUM_BACK_BUFFER, window.width, window.height, desc.BufferDesc.Format, desc.Flags) MUST;
+    
+        for (int32 i = 0; i < backBuffers.count(); i++)
+        {
+            backBuffers[i]->set(*swapChain.Get(), i);
+        }
+
+        this->resolution = windowSize;
+    }
+}
+
+void SwapChain::createBackBuffers()
 {
     auto& engine = Single::Get<RenderSystem>().engine;
 
