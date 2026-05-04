@@ -34,6 +34,7 @@ void QualityManager::apply(QualitySettings settings)
         for (Scene* scene : App::GetInstance().scene_manager.scenes)
         {
             scene->light.shadowMap->resize(surfaceResolution);
+            scene->light.pingPongBuffer->resize(surfaceResolution);
         }
     }
 
@@ -47,9 +48,11 @@ void QualityManager::apply(QualitySettings settings)
         for (Scene* scene : App::GetInstance().scene_manager.scenes)
         {
             scene->light.shadowMap->renderTargets[0]->changeFormat(format);
+            scene->light.pingPongBuffer->renderTargets[0]->changeFormat(format);
         }
 
         resetPsoForPipelineType(PipelineType::Shadow);
+        resetPsoForPipelineType(PipelineType::ShadowPost);
     }
 
     this->settings = settings;

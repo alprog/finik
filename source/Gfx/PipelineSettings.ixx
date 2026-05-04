@@ -8,6 +8,7 @@ export enum class PipelineType : char
 {
     Geometry,
     Shadow,
+    ShadowPost,
     Lighting,
     DebugLines,
     ScreenSpace,

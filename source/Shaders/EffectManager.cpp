@@ -101,6 +101,33 @@ void EffectManager::init()
         effect->setPixelShader(shaderManager.getPixelShader("shaders/imgui_custom.hlsl", "PSMain"));
         Effects[effect->name] = effect;
     }
+
+    {
+        auto effect = MakePtr<Effect>("taa_resolve");
+        AssetPath path = "shaders/taa_resolve.hlsl";
+        effect->setPipelineType(PipelineType::ScreenSpace);
+        effect->setVertexShader(shaderManager.getVertexShader(path, "VSMain"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
+        Effects[effect->name] = effect;
+    }
+
+    {
+        auto effect = MakePtr<Effect>("blur_x");
+        AssetPath path = "shaders/blur.hlsl";
+        effect->setPipelineType(PipelineType::ShadowPost);
+        effect->setVertexShader(shaderManager.getVertexShader(path, "BlurX"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
+        Effects[effect->name] = effect;
+    }
+
+    {
+        auto effect = MakePtr<Effect>("blur_y");
+        AssetPath path = "shaders/blur.hlsl";
+        effect->setPipelineType(PipelineType::ShadowPost);
+        effect->setVertexShader(shaderManager.getVertexShader(path, "BlurY"));
+        effect->setPixelShader(shaderManager.getPixelShader(path, "PSMain"));
+        Effects[effect->name] = effect;
+    }
 }
 
 Ptr<Effect> EffectManager::getShadowEffect(Effect& baseEffect)

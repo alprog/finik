@@ -8,6 +8,8 @@ import Camera;
 import RenderPass;
 import SurfaceResolution;
 import Mesh;
+import RenderEngine;
+import RenderContext;
 export import GfxEnums;
 
 export class SceneRenderLane
@@ -23,6 +25,9 @@ public:
     FrameBuffer& getDebugBuffer();
 
     void render();
+
+private:
+    void blurShadowMap(CommandList& commandList, RenderContext& context);
 
 private:
     Scene& scene;

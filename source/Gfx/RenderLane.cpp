@@ -12,7 +12,6 @@ import EffectManager;
 import App;
 import Jitter;
 import QualityManager;
-import RenderContext;
 
 SceneRenderLane::SceneRenderLane(Scene& scene, Camera& camera, SurfaceResolution resolution)
     : scene{scene}
@@ -97,6 +96,7 @@ void SceneRenderLane::render()
     RenderContext context(engine, *commandList.listImpl.Get());
 
     scene.renderShadowMaps(commandList, context, camera);
+    blurShadowMap(commandList, context);
 
     {
         gBuffer.startRendering(commandList);
@@ -156,4 +156,23 @@ void SceneRenderLane::render()
     commandQueue.execute(commandList);
 
     fenceValue = commandQueue.fence->SignalNext();
+}
+
+void SceneRenderLane::blurShadowMap(CommandList& commandList, RenderContext& context)
+{
+    auto textureId = scene.light.shadowMap->renderTargets[0]->textureHandle.getIndex();
+    commandList.listImpl->SetGraphicsRoot32BitConstant(MainRootSignature::Params::MaterialInlineConstants, textureId, 0);
+
+    scene.light.pingPongBuffer->startRendering(commandList);
+    context.setEffect(*EffectManager::GetInstance().get("blur_x"));
+    context.drawMesh(fullscreenQuad);
+    resolvedBuffer.endRendering(commandList);
+
+    textureId = scene.light.pingPongBuffer->renderTargets[0]->textureHandle.getIndex();
+    commandList.listImpl->SetGraphicsRoot32BitConstant(MainRootSignature::Params::MaterialInlineConstants, textureId, 0);
+
+    scene.light.shadowMap->startRendering(commandList);
+    context.setEffect(*EffectManager::GetInstance().get("blur_y"));
+    context.drawMesh(fullscreenQuad);
+    scene.light.shadowMap->endRendering(commandList);
 }

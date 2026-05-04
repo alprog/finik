@@ -13,6 +13,7 @@ bool isDepthEnabled(const PipelineType& type)
     switch (type)
     {
         case PipelineType::ScreenSpace:
+        case PipelineType::ShadowPost:
         case PipelineType::DebugLines:
             return false;
     }
@@ -34,6 +35,10 @@ Ptr<PipelineState> PSOManager::get_pso(const PipelineSettings& settings)
         result = standardCompile(settings);
     }
     else if (settings.type == PipelineType::Shadow)
+    {
+        result = standardCompile(settings);
+    }
+    else if (settings.type == PipelineType::ShadowPost)
     {
         result = standardCompile(settings);
     }
@@ -133,7 +138,7 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
         psoDesc.RTVFormats[i] = RTFormats[i];
     }
 
-    if (settings.type == PipelineType::Shadow)
+    if (settings.type == PipelineType::Shadow || settings.type == PipelineType::ShadowPost)
     {
         psoDesc.RTVFormats[0] = settings.shadowFormat;
     }

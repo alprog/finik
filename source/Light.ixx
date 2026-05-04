@@ -9,4 +9,5 @@ export struct Light
     Vector4 direction;
     Camera shadowCamera;
     UniquePtr<FrameBuffer> shadowMap;
+    UniquePtr<FrameBuffer> pingPongBuffer;
 };

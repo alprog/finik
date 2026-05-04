@@ -87,10 +87,10 @@ float getShadow(float2 uv, float refDepth, float bias)
 
     float2 M = sampleTex(ShadowTextureId, uv, LinearSampler).rg;
 
-    float p = refDepth <= M[0] ? 1 : 0;
+    float p = refDepth <= M[0];
     
     float variance = M[1] - M[0] * M[0];
-    variance = max(variance, 0.000002);
+    variance = max(variance, 0.00002);
     
     float d = refDepth - M[0];
     float p_max = variance / (variance + d * d);

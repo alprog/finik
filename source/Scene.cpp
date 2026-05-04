@@ -18,6 +18,7 @@ import Model;
 import SurfaceResolution;
 import EffectManager;
 import QualityManager;
+import QualitySettings;
 
 import Finik.Core.Geometry3D;
 
@@ -43,6 +44,7 @@ Scene::Scene()
     auto settings = QualityManager::GetInstance().getCurrent();
     auto size = settings.shadowMapResolution;
     light.shadowMap = MakeUnique<FrameBuffer>(SurfaceResolution(size, size, 1), Array<TextureFormat>{settings.getShadowMapFormat()}, true);
+    light.pingPongBuffer = MakeUnique<FrameBuffer>(SurfaceResolution(size, size, 1), Array<TextureFormat>{settings.getShadowMapFormat()}, false);
     light.direction = Vector4(-1, -1, -1, 0).getNormalized();
 }
 
