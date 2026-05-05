@@ -12,8 +12,27 @@ void ProfilerView::draw_content()
     ImGui::Text("deltaTime: %f", profiler.getDeltaTime());
     ImGui::Text("FPS: %f", profiler.getFPS());
 
-    auto& cpuTimeboxes = profiler.GetCpuLane().timeboxes;
+    if (ImGui::Checkbox("pause", &paused))
+    {
+        if (paused)
+        {
+            cpuTimeboxes = profiler.GetCpuLane().timeboxes;
+            gpuTimeboxes = profiler.GetGpuLane().timeboxes;
+        }
+    }
 
+    if (paused)
+    {
+        drawTimeboxes(cpuTimeboxes, gpuTimeboxes);
+    }
+    else
+    {
+        drawTimeboxes(profiler.GetCpuLane().timeboxes, profiler.GetGpuLane().timeboxes);
+    }
+}
+
+void ProfilerView::drawTimeboxes(Timeboxes& cpuTimeboxes, Timeboxes gpuTimeboxes)
+{    
     int32 start = 0;
     int32 end = 0;
 
@@ -46,7 +65,6 @@ void ProfilerView::draw_content()
 
     finik::drawFlamegraph(cpuTimeboxes, start, end, startTime, endTime, Vector2(900, 30));
 
-    auto& gpuTimeboxes = profiler.GetGpuLane().timeboxes;
 
     if (gpuTimeboxes.empty())
         return;

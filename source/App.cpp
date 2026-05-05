@@ -124,7 +124,11 @@ void App::run_game_loop()
                 window->gui->render(list);
                 window->swap_chain->finish_frame(list);
                 window->swap_chain->execute(list);
-                window->swap_chain->present();
+                {
+                    Profile _("present");                    
+                    window->swap_chain->present();
+                }
+                
             }
         }
 
