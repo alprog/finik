@@ -34,14 +34,14 @@ PSInput BlurX(VSInput input)
 	PSInput result;
 	result.position = screenToNDC(input.position);
 
-	float r = 2.0f / 2048.0f;
-	result.uv0 = input.uv + float2(0.0, -3.0 * r);
-	result.uv1 = input.uv + float2(0.0, -2.0 * r);
-	result.uv2 = input.uv + float2(0.0, -1.0 * r);
+	float r = 1.0f / 2048.0f;
+	result.uv0 = input.uv + float2(0.0, -5.5 * r);
+	result.uv1 = input.uv + float2(0.0, -3.5 * r);
+	result.uv2 = input.uv + float2(0.0, -1.5 * r);
 	result.uv3 = input.uv;
-	result.uv4 = input.uv + float2(0.0,  1.0 * r);
-	result.uv5 = input.uv + float2(0.0,  2.0 * r);
-	result.uv6 = input.uv + float2(0.0,  3.0 * r);
+	result.uv4 = input.uv + float2(0.0,  1.5 * r);
+	result.uv5 = input.uv + float2(0.0,  3.5 * r);
+	result.uv6 = input.uv + float2(0.0,  5.5 * r);
 	return result;
 }
 
@@ -50,14 +50,14 @@ PSInput BlurY(VSInput input)
 	PSInput result;
 	result.position = screenToNDC(input.position);
 
-	float r = 2.0f / 2048.0f;
-	result.uv0 = input.uv + float2(-3.0 * r, 0.0);
-	result.uv1 = input.uv + float2(-2.0 * r, 0.0);
-	result.uv2 = input.uv + float2(-1.0 * r, 0.0);
+	float r = 1.0f / 2048.0f;
+	result.uv0 = input.uv + float2(-5.5 * r, 0.0);
+	result.uv1 = input.uv + float2(-3.5 * r, 0.0);
+	result.uv2 = input.uv + float2(-1.5 * r, 0.0);
 	result.uv3 = input.uv;
-	result.uv4 = input.uv + float2( 1.0 * r, 0.0);
-	result.uv5 = input.uv + float2( 2.0 * r, 0.0);
-	result.uv6 = input.uv + float2( 3.0 * r, 0.0);
+	result.uv4 = input.uv + float2( 1.5 * r, 0.0);
+	result.uv5 = input.uv + float2( 3.5 * r, 0.0);
+	result.uv6 = input.uv + float2( 5.5 * r, 0.0);
 	return result;
 }
 
