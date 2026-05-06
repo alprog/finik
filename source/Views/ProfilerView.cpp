@@ -12,6 +12,8 @@ void ProfilerView::draw_content()
     ImGui::Text("deltaTime: %f", profiler.getDeltaTime());
     ImGui::Text("FPS: %f", profiler.getFPS());
 
+    ImGui::InputInt("frame count", &frameCount, 1, 30);
+    ImGui::SameLine();
     if (ImGui::Checkbox("pause", &paused))
     {
         if (paused)
@@ -36,7 +38,7 @@ void ProfilerView::drawTimeboxes(Timeboxes& cpuTimeboxes, Timeboxes gpuTimeboxes
     int32 start = 0;
     int32 end = 0;
 
-    int32 frameCount = 10;
+    int32 frameCount = this->frameCount;
 
     for (int32 i = cpuTimeboxes.count() - 1; i >= 0; i--)
     {
@@ -48,7 +50,7 @@ void ProfilerView::drawTimeboxes(Timeboxes& cpuTimeboxes, Timeboxes gpuTimeboxes
             }
             else
             {
-                if (!frameCount--)
+                if (!--frameCount)
                 {
                     start = i;
                     break;
@@ -73,7 +75,7 @@ void ProfilerView::drawTimeboxes(Timeboxes& cpuTimeboxes, Timeboxes gpuTimeboxes
 
     for (start = end - 1; start > 0; start--)
     {
-        if (gpuTimeboxes[start].startTimestamp < startTime)
+        if (gpuTimeboxes[start].startTimestamp != 0 && gpuTimeboxes[start].startTimestamp < startTime)
             break;
     }
 

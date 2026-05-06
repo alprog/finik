@@ -12,6 +12,14 @@ Timebox::Timebox(const char* label, uint8 level)
 {
 }
 
+Timebox::Timebox(const char* label, uint8 level, uint64 startTimestamp, uint64 endTimestamp)
+    : label{label}
+    , level{level}
+    , startTimestamp{startTimestamp}
+    , endTimestamp{endTimestamp}
+{
+}
+
 void Timebox::end()
 {
     endTimestamp = getMicroseconds();

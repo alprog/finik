@@ -11,18 +11,36 @@ export struct StampRange
     int readyFenceValue = 0;
 };
 
+export enum StampType
+{
+    TimeboxStart,
+    TimeboxEnd,
+    CustomStamp
+};
+
+export struct StampInfo
+{
+    int32 timeboxIndex;
+    StampType type;
+};
+
 export class GpuProfiler
 {
 public:
     GpuProfiler(RenderEngine& engine);
 
-    int addStamp(ID3D12GraphicsCommandList& commandList, void* name);
+    int32 startTimebox(ID3D12GraphicsCommandList& commandList, const char* label);
+    void endTimebox(ID3D12GraphicsCommandList& commandList, int32 timeboxIndex);
+
+    int32 addStamp(ID3D12GraphicsCommandList& commandList);
     void scheduleFrameResolve(ID3D12GraphicsCommandList& commandList);
     void endFrameRange(int readyFenceValue);
 
     void grabReadyStamps(int completedValue);
 
 private:
+    Array<StampInfo> stampInfos;
+
     MyPtr<ID3D12QueryHeap> queryHeap;
     MyPtr<ID3D12Resource> readBackBuffer;
 

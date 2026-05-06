@@ -19,4 +19,5 @@ private:
 
     Timeboxes cpuTimeboxes = Timeboxes(0);
     Timeboxes gpuTimeboxes = Timeboxes(0);
+    int32 frameCount = 10;
 };

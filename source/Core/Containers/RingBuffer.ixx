@@ -28,6 +28,11 @@ public:
         return data[wrapIndex(headIndex - size + 1 + index)];
     }
 
+    int32 getHeadIndex() const
+    {
+        return headIndex;
+    }
+
     template <typename... Args>
     T& emplace_next(Args&&... args)
     {

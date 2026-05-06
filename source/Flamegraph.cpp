@@ -34,6 +34,10 @@ namespace finik
         for (int i = startIndex; i < endIndex; i++)
         {
             auto& timebox = timeboxes[i];
+            if (timebox.startTimestamp == 0 || timebox.endTimestamp == 0)
+            {
+                continue;
+            }
 
             ImVec2 startPos = cursorPos;
             ImVec2 endPos = cursorPos;

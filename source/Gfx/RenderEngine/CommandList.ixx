@@ -1,6 +1,7 @@
 export module RenderEngine:CommandList;
 
 import :Shared;
+import :GpuProfiler;
 
 export class CommandList
 {
@@ -31,6 +32,5 @@ private:
     CommandListPool& pool;
     int frameIndex;
 
-    int startTimestampIndex;
-    int endTimestampIndex;
+    int32 gpuTimeboxIndex;
 };

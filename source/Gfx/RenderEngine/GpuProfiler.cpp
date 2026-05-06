@@ -7,7 +7,7 @@ import Timer;
 import App;
 import RenderSystem;
 
-int constexpr MAX_TIMESTAMP = 100;
+int constexpr MAX_TIMESTAMP = 500;
 int constexpr readBackRecordSize = sizeof(uint64);
 
 GpuProfiler::GpuProfiler(RenderEngine& engine)
@@ -46,11 +46,36 @@ GpuProfiler::GpuProfiler(RenderEngine& engine)
 
     engine.get_command_queue()->GetClockCalibration(&syncedGpuTimestamp, &syncedCpuTimestamp);
     syncedCpuMicroseconds = toMicroseconds(syncedCpuTimestamp);
+
+    stampInfos.resize(MAX_TIMESTAMP);
 }
 
-int GpuProfiler::addStamp(ID3D12GraphicsCommandList& commandList, void* name)
+int32 GpuProfiler::startTimebox(ID3D12GraphicsCommandList& commandList, const char* label)
 {
-    int index = currentRange.endIndex++ % MAX_TIMESTAMP;
+    int32 circularStampIndex = addStamp(commandList);
+
+    auto& lane = App::GetInstance().profiler.GetGpuLane();
+    lane.timeboxes.emplace_next(label, 4, 0, 0);
+    
+    auto& stampInfo = stampInfos[circularStampIndex];
+    stampInfo.type = StampType::TimeboxStart;
+    stampInfo.timeboxIndex = lane.timeboxes.getHeadIndex();
+
+    return stampInfo.timeboxIndex;
+}
+
+void GpuProfiler::endTimebox(ID3D12GraphicsCommandList& commandList, int32 timeboxIndex)
+{
+    int32 circularStampIndex = addStamp(commandList);
+
+    auto& stampInfo = stampInfos[circularStampIndex];
+    stampInfo.type = StampType::TimeboxEnd;
+    stampInfo.timeboxIndex = timeboxIndex;
+}
+
+int32 GpuProfiler::addStamp(ID3D12GraphicsCommandList& commandList)
+{
+    int32 index = currentRange.endIndex++ % MAX_TIMESTAMP;
     commandList.EndQuery(queryHeap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, index);
     return index;
 }
@@ -119,16 +144,26 @@ void GpuProfiler::grabReadyStamps(int completedValue)
                 std::memcpy(&stamps[0], &stampsData[start], count * readBackRecordSize);
                 readBackBuffer->Unmap(0, nullptr);
 
-                for (auto& stamp : stamps)
+                
+                for (uint32 index = start; index < end; index++)
                 {
+                    uint64 stamp = stamps[index - start];
+                    if (stamp == 0)
+                    {
+                        continue;
+                    }
+
+                    auto& stampInfo = stampInfos[index];
                     uint64 microseconds = (stamp - syncedGpuTimestamp) / ticksInMicrosecond + syncedCpuMicroseconds;
 
-                    finik::profiler::Timebox timebox("label", 4);
-
-                    timebox.startTimestamp = microseconds;
-                    timebox.endTimestamp = microseconds + 100;
-
-                    lane.timeboxes.emplace_next(timebox);
+                    if (stampInfo.type == StampType::TimeboxStart)
+                    {
+                        lane.timeboxes[stampInfo.timeboxIndex].startTimestamp = microseconds;
+                    }
+                    else if (stampInfo.type == StampType::TimeboxEnd)
+                    {
+                        lane.timeboxes[stampInfo.timeboxIndex].endTimestamp = microseconds;
+                    }
                 }
             }
         };

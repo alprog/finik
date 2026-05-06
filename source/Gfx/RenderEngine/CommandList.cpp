@@ -2,6 +2,7 @@ module;
 #include "gfx/dx.h"
 module RenderEngine:CommandList;
 
+import RenderEngine;
 import RenderSystem;
 
 CommandList::CommandList(CommandListPool& pool, const int frameIndex)
@@ -41,18 +42,18 @@ int CommandList::getFrameIndex() const
 
 void CommandList::startRecording()
 {
-    startTimestampIndex = addTimestampQuery();
+    gpuTimeboxIndex = pool.getEngine().getProfiler()->startTimebox(*listImpl.Get(), "list");
 }
 
 void CommandList::endRecording()
 {
-    endTimestampIndex = addTimestampQuery();
+    pool.getEngine().getProfiler()->endTimebox(*listImpl.Get(), gpuTimeboxIndex);
     listImpl->Close();
 }
 
 int CommandList::addTimestampQuery()
 {
-    return pool.getEngine().getProfiler()->addStamp(*listImpl.Get(), "list");
+    return pool.getEngine().getProfiler()->addStamp(*listImpl.Get());
 }
 
 void CommandList::transition(GpuResource& resource, D3D12_RESOURCE_STATES newState)
