@@ -89,6 +89,11 @@ void RenderEngine::createRootSignature()
     computeRootSignature = MakeUnique<ComputeRootSignature>(device);
 }
 
+int32 RenderEngine::getCompletedFrameIndex()
+{
+    return static_cast<int32>(get_command_queue().frameFence->GetCompletedValue());
+}
+
 void RenderEngine::scheduleQueryResolving()
 {
     CommandList& list = commandListPool->retrieveOne();
@@ -100,6 +105,8 @@ void RenderEngine::scheduleQueryResolving()
 
 void RenderEngine::signalEndFrame()
 {
-    auto fenceValue = (int32)get_command_queue().fence->SignalNext();
-    gpuProfiler->endFrameRange(fenceValue);
+    get_command_queue().fence->SignalNext();
+
+    auto frameIndex = (int32)get_command_queue().frameFence->SignalNext();
+    gpuProfiler->endFrameRange(frameIndex);
 }

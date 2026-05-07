@@ -109,9 +109,9 @@ void GpuProfiler::scheduleFrameResolve(ID3D12GraphicsCommandList& commandList)
     }    
 }
 
-void GpuProfiler::endFrameRange(const int readyFenceValue)
+void GpuProfiler::endFrameRange(const int frameIndex)
 {
-    currentRange.readyFenceValue = readyFenceValue;
+    currentRange.frameIndex = frameIndex;
     currentRange.endIndex -= 2;
     queue.push(currentRange);
     currentRange = { currentRange.endIndex, currentRange.endIndex, 0 };
@@ -121,7 +121,7 @@ void GpuProfiler::grabReadyStamps(int completedValue)
 {
     auto& lane = App::GetInstance().profiler.GetGpuLane();
 
-    while (!queue.empty() && completedValue >= queue.front().readyFenceValue)
+    while (!queue.empty() && completedValue >= queue.front().frameIndex)
     {
         StampRange range = queue.front();
         queue.pop();

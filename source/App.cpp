@@ -68,10 +68,10 @@ void App::run_game_loop()
         SpriteManager::GetInstance().update();
         Cleaner::GetInstance().update();
 
-        auto completedValue = (int32)engine.get_command_queue().fence->GetCompletedValue();
+        auto gpuCompletedIndex = engine.getCompletedFrameIndex();
         engine.get_command_queue().freeCompletedLists();
         engine.getOneshotAllocator().FreePages();
-        engine.getProfiler()->grabReadyStamps(completedValue);
+        engine.getProfiler()->grabReadyStamps(gpuCompletedIndex);
 
         {
             Profile _("input");
@@ -138,8 +138,7 @@ void App::run_game_loop()
         engine.scheduleQueryResolving();
         engine.signalEndFrame();
 
-        auto signaled = engine.get_command_queue().frameFence->SignalNext();
-        if (signaled != profiler.getFrameIndex())
+        if (engine.get_command_queue().frameFence->GetLastSignaledValue() != profiler.getFrameIndex())
             throw;
 
         profiler.endFrame();

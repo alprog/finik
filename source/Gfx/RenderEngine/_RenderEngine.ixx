@@ -25,6 +25,8 @@ public:
     CommandList& getFreeCommandList();
     finik::gpumem::OneshotAllocator& getOneshotAllocator();
 
+    int32 getCompletedFrameIndex();
+
     void scheduleQueryResolving();
     void signalEndFrame();
 

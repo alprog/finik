@@ -8,7 +8,7 @@ export struct StampRange
 
     int startIndex = 0;
     int endIndex = 0;
-    int readyFenceValue = 0;
+    int frameIndex = 0;
 };
 
 export enum StampType
@@ -34,7 +34,7 @@ public:
 
     int32 addStamp(ID3D12GraphicsCommandList& commandList);
     void scheduleFrameResolve(ID3D12GraphicsCommandList& commandList);
-    void endFrameRange(int readyFenceValue);
+    void endFrameRange(int frameIndex);
 
     void grabReadyStamps(int completedValue);
 
