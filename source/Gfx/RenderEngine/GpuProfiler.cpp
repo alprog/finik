@@ -112,7 +112,6 @@ void GpuProfiler::scheduleFrameResolve(ID3D12GraphicsCommandList& commandList)
 void GpuProfiler::endFrameRange(const int frameIndex)
 {
     currentRange.frameIndex = frameIndex;
-    currentRange.endIndex -= 2;
     queue.push(currentRange);
     currentRange = { currentRange.endIndex, currentRange.endIndex, 0 };
 }

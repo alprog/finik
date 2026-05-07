@@ -42,12 +42,18 @@ int32 CommandList::getFrameIndex() const
 
 void CommandList::startRecording(const char* label)
 {
-    startTimebox(label);
+    if (label)
+    {
+        startTimebox(label);
+    }
 }
 
 void CommandList::endRecording()
 {
-    endTimebox();
+    if (!gpuTimeboxIndices.empty())
+    {
+        endTimebox();
+    }
     listImpl->Close();
 }
 
