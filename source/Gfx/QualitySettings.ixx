@@ -4,6 +4,7 @@ export import GfxEnums;
 
 export struct QualitySettings
 {
+    bool vsync = true;
     MSAA msaa = MSAA::Off;
     bool taa = false;
     bool shadowSnapping = true;

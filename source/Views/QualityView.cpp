@@ -25,6 +25,8 @@ void QualityView::loadCurrent()
 
 void QualityView::draw_content()
 {
+    ImGui::Checkbox("VSync", &settings.vsync);
+
     static const char* msaa_items[]{"Off", "MSAAx2", "MSAAx4", "MSAAx8"};
     ImGui::Combo("Surface", reinterpret_cast<int*>(&settings.msaa), msaa_items, 4);
 
@@ -37,15 +39,17 @@ void QualityView::draw_content()
     ImGui::InputInt("PCFSize", &settings.pcfSize);
 
     bool IsSame = QualityManager::GetInstance().getCurrent() == settings;
-
     ImGui::BeginDisabled(IsSame);
-    if (ImGui::Button("Apply"))
+    if (ImGui::Button("Apply") || (autoApply && !IsSame))
     {
         needApply = true;
     }
+    ImGui::SameLine();
     if (ImGui::Button("Restore"))
     {
         loadCurrent();
     }
     ImGui::EndDisabled();
+    ImGui::SameLine();
+    ImGui::Checkbox("AutoApply", &autoApply);
 }

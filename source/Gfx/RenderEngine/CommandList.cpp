@@ -5,7 +5,7 @@ module RenderEngine:CommandList;
 import RenderEngine;
 import RenderSystem;
 
-CommandList::CommandList(CommandListPool& pool, const int frameIndex)
+CommandList::CommandList(CommandListPool& pool, const int32 frameIndex)
     : pool{pool}
     , frameIndex{frameIndex}
 {
@@ -22,7 +22,7 @@ CommandList::CommandList(CommandListPool& pool, const int frameIndex)
     // open and ready to record
 }
 
-void CommandList::reset(const int frameIndex)
+void CommandList::reset(const int32 frameIndex)
 {
     commandAllocator->Reset();
     listImpl->Reset(commandAllocator.Get(), nullptr);
@@ -35,20 +35,34 @@ void CommandList::returnToPool()
     pool.putBack(*this);
 }
 
-int CommandList::getFrameIndex() const
+int32 CommandList::getFrameIndex() const
 {
     return frameIndex;
 }
 
-void CommandList::startRecording()
+void CommandList::startRecording(const char* label)
 {
-    gpuTimeboxIndex = pool.getEngine().getProfiler()->startTimebox(*listImpl.Get(), "list");
+    startTimebox(label);
 }
 
 void CommandList::endRecording()
 {
-    pool.getEngine().getProfiler()->endTimebox(*listImpl.Get(), gpuTimeboxIndex);
+    endTimebox();
     listImpl->Close();
+}
+
+void CommandList::startTimebox(const char* label)
+{
+    auto* profiler = pool.getEngine().getProfiler();
+    int32 index = profiler->startTimebox(*listImpl.Get(), label);
+    gpuTimeboxIndices.append(index);
+}
+
+void CommandList::endTimebox()
+{
+    auto* profiler = pool.getEngine().getProfiler();
+    profiler->endTimebox(*listImpl.Get(), gpuTimeboxIndices.last());
+    gpuTimeboxIndices.remove_last();
 }
 
 int CommandList::addTimestampQuery()

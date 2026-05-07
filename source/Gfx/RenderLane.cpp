@@ -91,7 +91,7 @@ void SceneRenderLane::render()
     }
 
     CommandList& commandList = engine.getFreeCommandList();
-    commandList.startRecording();
+    commandList.startRecording("render scene");
 
     RenderContext context(engine, *commandList.listImpl.Get());
 

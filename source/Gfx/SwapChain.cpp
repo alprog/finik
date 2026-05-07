@@ -9,6 +9,7 @@ import Log;
 import Timer;
 import DesktopWindow;
 import App;
+import QualityManager;
 
 D3D12_VIEWPORT viewport;
 D3D12_RECT scissorRect;
@@ -130,7 +131,7 @@ void SwapChain::start_frame(CommandList& list)
 {
     WaitForNextFrameResources();
 
-    list.startRecording();
+    list.startRecording("swap_chain");
 
     auto command_list = list.listImpl.Get();
     auto& engine = Single::Get<RenderSystem>().engine;
@@ -175,7 +176,7 @@ void SwapChain::present()
 {
     auto& engine = Single::Get<RenderSystem>().engine;
 
-    bool vsyncEnabled = true;
+    bool vsyncEnabled = QualityManager::GetInstance().getCurrent().vsync;
     HRESULT hr = swapChain->Present(vsyncEnabled ? 1 : 0, 0);
 
     swapChainOccluded = (hr == DXGI_STATUS_OCCLUDED);

@@ -97,7 +97,7 @@ int32 RenderEngine::getCompletedFrameIndex()
 void RenderEngine::scheduleQueryResolving()
 {
     CommandList& list = commandListPool->retrieveOne();
-    list.startRecording();
+    list.startRecording("scheduleQueryResolving");
     gpuProfiler->scheduleFrameResolve(*list.listImpl.Get());
     list.endRecording();
     commandQueue->execute(list);

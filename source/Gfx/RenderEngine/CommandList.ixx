@@ -6,15 +6,15 @@ import :GpuProfiler;
 export class CommandList
 {
 public:
-    explicit CommandList(CommandListPool& pool, int frameIndex);
+    explicit CommandList(CommandListPool& pool, int32 frameIndex);
 
     CommandList(const CommandList&) = delete;
     CommandList& operator=(const CommandList&) = delete;
 
-    void reset(int frameIndex);
+    void reset(int32 frameIndex);
     void returnToPool();
 
-    void startRecording();
+    void startRecording(const char* label);
     void endRecording();
 
     int getFrameIndex() const;
@@ -22,6 +22,9 @@ public:
     void transition(GpuResource& resource, D3D12_RESOURCE_STATES newState);
 
 private:
+    void startTimebox(const char* label);
+    void endTimebox();
+
     int addTimestampQuery();
 
 public:
@@ -30,7 +33,7 @@ public:
 
 private:
     CommandListPool& pool;
-    int frameIndex;
+    int32 frameIndex;
 
-    int32 gpuTimeboxIndex;
+    Array<int32> gpuTimeboxIndices;
 };

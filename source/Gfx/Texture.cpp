@@ -89,7 +89,7 @@ void Texture::setData(Image& image)
 
     
     CommandList& commandList = engine.getFreeCommandList();
-    commandList.startRecording();
+    commandList.startRecording("texture (mipmap)");
 
     commandList.transition(*this, D3D12_RESOURCE_STATE_COPY_DEST);
 
