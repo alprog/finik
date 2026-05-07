@@ -13,7 +13,7 @@ namespace finik
 
     }
 
-    void drawFlamegraph(RingBuffer<profiler::Timebox>& timeboxes, int startIndex, int endIndex, uint64 startTime, uint64 endTime, Vector2 size)
+    void drawFlamegraph(HistoryRingBuffer<profiler::Timebox>& timeboxes, int startIndex, int endIndex, uint64 startTime, uint64 endTime, Vector2 size)
     {
         ImGuiWindow* window = ImGui::GetCurrentWindow();
 

@@ -6,7 +6,7 @@ export import :HashSet;
 export import :SortedArray;
 export import :SortedMap;
 export import :String;
-export import :RingBuffer;
+export import :HistoryRingBuffer;
 export import :Table;
 export import :BinaryHeap;
 export import :Ptr;

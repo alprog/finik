@@ -6,7 +6,7 @@ import Timebox;
 
 export class ProfilerView : public View
 {
-    using Timeboxes = RingBuffer<finik::profiler::Timebox>;
+    using Timeboxes = HistoryRingBuffer<finik::profiler::Timebox>;
 
     using View::View;
 

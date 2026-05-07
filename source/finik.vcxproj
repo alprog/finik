@@ -128,7 +128,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Containers\BinaryHeap.ixx" />
     <ClCompile Include="Core\Containers\Ptr.ixx" />
     <ClCompile Include="Core\Containers\Table.ixx" />
-    <ClCompile Include="Core\Containers\RingBuffer.ixx" />
+    <ClCompile Include="Core\Containers\HistoryRingBuffer.ixx" />
     <ClCompile Include="Core\Containers\SortedMap.ixx" />
     <ClCompile Include="Core\Geometry2D\PolygonSimplifier.ixx" />
     <ClCompile Include="Core\Geometry3D\Cliper.ixx" />

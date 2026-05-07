@@ -40,7 +40,9 @@ void ProfilerView::drawTimeboxes(Timeboxes& cpuTimeboxes, Timeboxes gpuTimeboxes
 
     int32 frameCount = this->frameCount;
 
-    for (int32 i = cpuTimeboxes.count() - 1; i >= 0; i--)
+    int32 min = cpuTimeboxes.getMinIndex();
+    int32 max = cpuTimeboxes.getMaxIndex();
+    for (int32 i = max; i >= min; i--)
     {
         if (!strcmp(cpuTimeboxes[i].label, "frame"))
         {
@@ -71,11 +73,12 @@ void ProfilerView::drawTimeboxes(Timeboxes& cpuTimeboxes, Timeboxes gpuTimeboxes
     if (gpuTimeboxes.empty())
         return;
 
-    end = gpuTimeboxes.count() - 1;
+    end = gpuTimeboxes.getMaxIndex();
 
     for (start = end - 1; start > 0; start--)
     {
-        if (gpuTimeboxes[start].startTimestamp != 0 && gpuTimeboxes[start].startTimestamp < startTime)
+        auto box = gpuTimeboxes[start];
+        if (box.startTimestamp != 0 && box.startTimestamp < startTime)
             break;
     }
 

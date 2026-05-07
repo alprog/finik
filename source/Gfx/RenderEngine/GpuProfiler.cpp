@@ -60,7 +60,7 @@ int32 GpuProfiler::startTimebox(ID3D12GraphicsCommandList& commandList, const ch
     
     auto& stampInfo = stampInfos[circularStampIndex];
     stampInfo.type = StampType::TimeboxStart;
-    stampInfo.timeboxIndex = lane.timeboxes.getHeadIndex();
+    stampInfo.timeboxIndex = lane.timeboxes.getMaxIndex();
 
     return stampInfo.timeboxIndex;
 }
@@ -163,6 +163,11 @@ void GpuProfiler::grabReadyStamps(int completedValue)
                     if (stampInfo.type == StampType::TimeboxStart)
                     {
                         lane.timeboxes[stampInfo.timeboxIndex].startTimestamp = microseconds;
+
+                        if (lane.timeboxes[stampInfo.timeboxIndex].label == "scheduleQueryResolving")
+                        {
+                            //throw;
+                        }
                     }
                     else if (stampInfo.type == StampType::TimeboxEnd)
                     {

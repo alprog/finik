@@ -10,7 +10,7 @@ export namespace finik::profiler
     public:
         Lane();
 
-        RingBuffer<Timebox> timeboxes;
+        HistoryRingBuffer<Timebox> timeboxes;
         int level;
 
         Timebox& startTimebox(const char* label);
