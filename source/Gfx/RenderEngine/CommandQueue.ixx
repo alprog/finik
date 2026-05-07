@@ -17,9 +17,9 @@ public:
     RenderEngine& engine;
 
     MyPtr<ID3D12CommandQueue> queueImpl;
-    UniquePtr<Fence> fence;
 
-    UniquePtr<Fence> frameFence;
+    UniquePtr<Fence> fence;      // value = incremental progress
+    UniquePtr<Fence> frameFence; // value = completed frame index
 
     std::queue<CommandList*> ExecutionQueue;
 };

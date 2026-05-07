@@ -1,5 +1,6 @@
 module;
 #include "../dx.h"
+#include "Asserts.h"
 module RenderEngine:GpuProfiler;
 
 import TimeboxTracker;
@@ -111,6 +112,7 @@ void GpuProfiler::scheduleFrameResolve(ID3D12GraphicsCommandList& commandList)
 void GpuProfiler::endFrameRange(const int readyFenceValue)
 {
     currentRange.readyFenceValue = readyFenceValue;
+    currentRange.endIndex -= 2;
     queue.push(currentRange);
     currentRange = { currentRange.endIndex, currentRange.endIndex, 0 };
 }
@@ -147,9 +149,11 @@ void GpuProfiler::grabReadyStamps(int completedValue)
                 
                 for (uint32 index = start; index < end; index++)
                 {
-                    uint64 stamp = stamps[index - start];
+                    uint64& stamp = stamps[index - start];
                     if (stamp == 0)
                     {
+                        ASSERT(false && "Timestamp added to command list on frame X was not hit by GPU during "
+                           "frame X execution. Command lists should be sent to execute on the same frame");
                         continue;
                     }
 
@@ -164,6 +168,8 @@ void GpuProfiler::grabReadyStamps(int completedValue)
                     {
                         lane.timeboxes[stampInfo.timeboxIndex].endTimestamp = microseconds;
                     }
+
+                    stamp = 0; // clear stamp to detect missing stamps in the future
                 }
             }
         };
