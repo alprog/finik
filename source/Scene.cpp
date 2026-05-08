@@ -162,27 +162,36 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
 
     //----------------------
 
+    renderContext.commandList.startTimebox("a");
     for (auto& actor : actors)
     {
         renderContext.setModelMatrix(actor->transformMatrix);
         renderContext.setMaterial(*actor->material, pass);
         renderContext.drawMesh(actor->mesh);
     }
+    renderContext.commandList.endTimebox();
 
     //----------------------
 
+    renderContext.commandList.startTimebox("b");
     for (auto& character : characters)
     {
         renderContext.setModelMatrix(character->transformMatrix);
         renderContext.setMaterial(*character->material, pass);
         renderContext.drawMesh(character->sprite->mesh.get());
     }
+    renderContext.commandList.endTimebox();
 
     //----------------------
 
+    renderContext.commandList.startTimebox("c");
     renderContext.setModelMatrix(Matrix::Identity);
     renderContext.setMaterial(*grid->material, pass);
     renderContext.drawMesh(grid->mesh);
+    renderContext.commandList.endTimebox();
+
+    renderContext.commandList.startTimebox("d");
+    renderContext.commandList.endTimebox();
 }
 
 void Scene::debugRender(RenderContext& renderContext, const Camera& camera, const Matrix& prevViewProjection, const Vector2& prevJitter)

@@ -29,11 +29,11 @@ export class GpuProfiler
 public:
     GpuProfiler(RenderEngine& engine);
 
-    int32 startTimebox(ID3D12GraphicsCommandList& commandList, const char* label, uint8 level);
-    void endTimebox(ID3D12GraphicsCommandList& commandList, int32 timeboxIndex);
+    int32 startTimebox(CommandList& commandList, const char* label, uint8 level);
+    void endTimebox(CommandList& commandList, int32 timeboxIndex);
 
-    int32 addStamp(ID3D12GraphicsCommandList& commandList);
-    void scheduleFrameResolve(ID3D12GraphicsCommandList& commandList);
+    int32 addStamp(CommandList& commandList);
+    void scheduleFrameResolve(CommandList& commandList);
     void endFrameRange(int frameIndex);
 
     void grabReadyStamps(int completedValue);

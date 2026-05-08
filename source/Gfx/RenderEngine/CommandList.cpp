@@ -60,20 +60,20 @@ void CommandList::endRecording()
 void CommandList::startTimebox(const char* label)
 {
     auto* profiler = pool.getEngine().getProfiler();
-    int32 index = profiler->startTimebox(*listImpl.Get(), label, gpuTimeboxIndices.count());
+    int32 index = profiler->startTimebox(*this, label, gpuTimeboxIndices.count());
     gpuTimeboxIndices.append(index);
 }
 
 void CommandList::endTimebox()
 {
     auto* profiler = pool.getEngine().getProfiler();
-    profiler->endTimebox(*listImpl.Get(), gpuTimeboxIndices.last());
+    profiler->endTimebox(*this, gpuTimeboxIndices.last());
     gpuTimeboxIndices.remove_last();
 }
 
 int CommandList::addTimestampQuery()
 {
-    return pool.getEngine().getProfiler()->addStamp(*listImpl.Get());
+    return pool.getEngine().getProfiler()->addStamp(*this);
 }
 
 void CommandList::transition(GpuResource& resource, D3D12_RESOURCE_STATES newState)

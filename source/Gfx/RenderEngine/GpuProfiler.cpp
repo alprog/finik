@@ -51,7 +51,7 @@ GpuProfiler::GpuProfiler(RenderEngine& engine)
     stampInfos.resize(MAX_TIMESTAMP);
 }
 
-int32 GpuProfiler::startTimebox(ID3D12GraphicsCommandList& commandList, const char* label, uint8 level)
+int32 GpuProfiler::startTimebox(CommandList& commandList, const char* label, uint8 level)
 {
     int32 circularStampIndex = addStamp(commandList);
 
@@ -65,7 +65,7 @@ int32 GpuProfiler::startTimebox(ID3D12GraphicsCommandList& commandList, const ch
     return stampInfo.timeboxIndex;
 }
 
-void GpuProfiler::endTimebox(ID3D12GraphicsCommandList& commandList, int32 timeboxIndex)
+void GpuProfiler::endTimebox(CommandList& commandList, int32 timeboxIndex)
 {
     int32 circularStampIndex = addStamp(commandList);
 
@@ -74,14 +74,14 @@ void GpuProfiler::endTimebox(ID3D12GraphicsCommandList& commandList, int32 timeb
     stampInfo.timeboxIndex = timeboxIndex;
 }
 
-int32 GpuProfiler::addStamp(ID3D12GraphicsCommandList& commandList)
+int32 GpuProfiler::addStamp(CommandList& commandList)
 {
     int32 index = currentRange.endIndex++ % MAX_TIMESTAMP;
-    commandList.EndQuery(queryHeap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, index);
+    commandList->EndQuery(queryHeap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, index);
     return index;
 }
 
-void GpuProfiler::scheduleFrameResolve(ID3D12GraphicsCommandList& commandList)
+void GpuProfiler::scheduleFrameResolve(CommandList& commandList)
 {
     //assert(currentRange.count() <= MAX_TIMESTAMP);
 
@@ -92,7 +92,7 @@ void GpuProfiler::scheduleFrameResolve(ID3D12GraphicsCommandList& commandList)
         {
             auto type = D3D12_QUERY_TYPE_TIMESTAMP;
             int offset = start * readBackRecordSize;
-            commandList.ResolveQueryData(queryHeap.Get(), type, start, count, readBackBuffer.Get(), offset);
+            commandList->ResolveQueryData(queryHeap.Get(), type, start, count, readBackBuffer.Get(), offset);
         }
     };
 

@@ -96,11 +96,11 @@ int32 RenderEngine::getCompletedFrameIndex()
 
 void RenderEngine::scheduleQueryResolving()
 {
-    CommandList& list = commandListPool->retrieveOne();
-    list.startRecording(nullptr);
-    gpuProfiler->scheduleFrameResolve(*list.listImpl.Get());
-    list.endRecording();
-    commandQueue->execute(list);
+    CommandList& commandList = commandListPool->retrieveOne();
+    commandList.startRecording(nullptr);
+    gpuProfiler->scheduleFrameResolve(commandList);
+    commandList.endRecording();
+    commandQueue->execute(commandList);
 }
 
 void RenderEngine::signalEndFrame()
