@@ -11,6 +11,8 @@ public:
     CommandList(const CommandList&) = delete;
     CommandList& operator=(const CommandList&) = delete;
 
+    ID3D12GraphicsCommandList* operator->() const { return listImpl.Get(); }
+
     void reset(int32 frameIndex);
     void returnToPool();
 
@@ -20,11 +22,10 @@ public:
     int getFrameIndex() const;
 
     void transition(GpuResource& resource, D3D12_RESOURCE_STATES newState);
-
-private:
     void startTimebox(const char* label);
     void endTimebox();
 
+private:
     int addTimestampQuery();
 
 public:

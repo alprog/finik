@@ -29,7 +29,7 @@ export class GpuProfiler
 public:
     GpuProfiler(RenderEngine& engine);
 
-    int32 startTimebox(ID3D12GraphicsCommandList& commandList, const char* label);
+    int32 startTimebox(ID3D12GraphicsCommandList& commandList, const char* label, uint8 level);
     void endTimebox(ID3D12GraphicsCommandList& commandList, int32 timeboxIndex);
 
     int32 addStamp(ID3D12GraphicsCommandList& commandList);

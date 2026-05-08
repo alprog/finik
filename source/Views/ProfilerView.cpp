@@ -82,5 +82,7 @@ void ProfilerView::drawTimeboxes(Timeboxes& cpuTimeboxes, Timeboxes gpuTimeboxes
             break;
     }
 
+    ImGui::Dummy(ImVec2(0.0f, 90.0f));
+
     finik::drawFlamegraph(gpuTimeboxes, start, end, startTime, endTime, Vector2(900, 30));
 }

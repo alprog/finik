@@ -10,7 +10,7 @@ import UploadBuffer;
 
 using Params = MainRootSignature::Params;
 
-RenderContext::RenderContext(RenderEngine& engine, ID3D12GraphicsCommandList& commandList)
+RenderContext::RenderContext(RenderEngine& engine, CommandList& commandList)
     : engine{engine}
     , commandList{commandList}
 {
@@ -18,21 +18,21 @@ RenderContext::RenderContext(RenderEngine& engine, ID3D12GraphicsCommandList& co
 
 void RenderContext::setupRoot()
 {
-    commandList.SetGraphicsRootSignature(engine.getRootSignature().signatureImpl.Get());
+    commandList->SetGraphicsRootSignature(engine.getRootSignature().signatureImpl.Get());
 
     UploadBuffer* uploadBuffer = MaterialManager::GetInstance().ConstantBuffer->uploadBuffer;
     auto address = uploadBuffer->GetGPUVirtualAddress();
-    commandList.SetGraphicsRootConstantBufferView(Params::MaterialsConstantBufferView, address);
+    commandList->SetGraphicsRootConstantBufferView(Params::MaterialsConstantBufferView, address);
 }
 
 void RenderContext::setFrameConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)
 {
-    commandList.SetGraphicsRootConstantBufferView(Params::FrameConstantBufferView, gpuAddress);
+    commandList->SetGraphicsRootConstantBufferView(Params::FrameConstantBufferView, gpuAddress);
 }
 
 void RenderContext::setGBufferConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress)
 {
-    commandList.SetGraphicsRootConstantBufferView(Params::GBufferConstantBufferView, gpuAddress);
+    commandList->SetGraphicsRootConstantBufferView(Params::GBufferConstantBufferView, gpuAddress);
 }
 
 void RenderContext::setModelMatrix(const Matrix& matrix)
@@ -45,37 +45,37 @@ void RenderContext::setModelMatrix(const Matrix& currentMatrix, const Matrix& pr
     auto meshConstantBuffer = engine.getOneshotAllocator().Allocate<MeshConstants>();
     meshConstantBuffer.Data->Model = currentMatrix;
     meshConstantBuffer.Data->PrevModel = prevMatrix;
-    commandList.SetGraphicsRootConstantBufferView(Params::MeshConstantBufferView, meshConstantBuffer.GpuAddress);
+    commandList->SetGraphicsRootConstantBufferView(Params::MeshConstantBufferView, meshConstantBuffer.GpuAddress);
 }
 
 void RenderContext::setMaterial(const Material& material, RenderPass pass)
 {
     auto effect = pass == RenderPass::Shadow ? material.ShadowEffect : material.Effect;
     setEffect(*effect);
-    commandList.SetGraphicsRoot32BitConstant(Params::MaterialInlineConstants, material.Index, 0);
+    commandList->SetGraphicsRoot32BitConstant(Params::MaterialInlineConstants, material.Index, 0);
 }
 
 void RenderContext::setEffect(Effect& effect)
 {
-    commandList.SetPipelineState(effect.getPipelineState()->getInternalObject()); // set effect
+    commandList->SetPipelineState(effect.getPipelineState()->getInternalObject()); // set effect
     effect.getPipelineState()->use();
 }
 
 void RenderContext::drawMesh(Mesh* mesh)
 {
-    commandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    commandList.IASetVertexBuffers(0, 1, &mesh->vertexBuffer->vertexBufferView);
-    commandList.IASetIndexBuffer(&mesh->indexBuffer->indexBufferView);
+    commandList->IASetVertexBuffers(0, 1, &mesh->vertexBuffer->vertexBufferView);
+    commandList->IASetIndexBuffer(&mesh->indexBuffer->indexBufferView);
 
-    commandList.DrawIndexedInstanced(mesh->indexBuffer->indices.count(), 1, 0, 0, 0);
+    commandList->DrawIndexedInstanced(mesh->indexBuffer->indices.count(), 1, 0, 0, 0);
 }
 
 void RenderContext::drawLines(LineVertexBuffer* linesVertexBuffer)
 {
-    commandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
-    commandList.IASetVertexBuffers(0, 1, &linesVertexBuffer->vertexBufferView);
-    commandList.DrawInstanced(linesVertexBuffer->vertices.count(), 1, 0, 0);
+    commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+    commandList->IASetVertexBuffers(0, 1, &linesVertexBuffer->vertexBufferView);
+    commandList->DrawInstanced(linesVertexBuffer->vertices.count(), 1, 0, 0);
 }
 
 void RenderContext::drawFullScreenQuad()

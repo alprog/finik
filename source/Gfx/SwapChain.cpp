@@ -127,49 +127,46 @@ void SwapChain::WaitForNextFrameResources()
     }
 }
 
-void SwapChain::start_frame(CommandList& list)
+void SwapChain::start_frame(CommandList& commandList)
 {
     WaitForNextFrameResources();
 
-    list.startRecording("swap_chain");
+    commandList.startRecording("swap_chain");
 
-    auto command_list = list.listImpl.Get();
     auto& engine = Single::Get<RenderSystem>().engine;
 
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
     //engine.getProfiler()->addStamp(*command_list, "start");
 
-    list.transition(*backBuffers[backBufferIdx], D3D12_RESOURCE_STATE_RENDER_TARGET);
+    commandList.transition(*backBuffers[backBufferIdx], D3D12_RESOURCE_STATE_RENDER_TARGET);
 
     // Render Dear ImGui graphics
     const float clear_color_with_alpha[4] = {0.2f, 0.2f, 0.2f, 1.0f};
 
     D3D12_CPU_DESCRIPTOR_HANDLE handle = backBuffers[backBufferIdx]->descriptorHandle.getCPU();
-    command_list->ClearRenderTargetView(handle, clear_color_with_alpha, 0, nullptr);
+    commandList->ClearRenderTargetView(handle, clear_color_with_alpha, 0, nullptr);
     //command_list->ClearDepthStencilView(depthStencilHandle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-    command_list->OMSetRenderTargets(1, &handle, FALSE, nullptr);
+    commandList->OMSetRenderTargets(1, &handle, FALSE, nullptr);
 
     ID3D12DescriptorHeap* heap = engine.getCommonHeap()->get();
-    command_list->SetDescriptorHeaps(1, &heap);
+    commandList->SetDescriptorHeaps(1, &heap);
 }
 
-void SwapChain::finish_frame(CommandList& list)
+void SwapChain::finish_frame(CommandList& commandList)
 {
-    auto command_list = list.listImpl.Get();
-
     uint32 backBufferIdx = swapChain->GetCurrentBackBufferIndex();
 
-    list.transition(*backBuffers[backBufferIdx], D3D12_RESOURCE_STATE_PRESENT);
+    commandList.transition(*backBuffers[backBufferIdx], D3D12_RESOURCE_STATE_PRESENT);
 
     //App::GetInstance().render_system.getProfiler()->addStamp(*command_list, "end");
 
-    list.endRecording();
+    commandList.endRecording();
 }
 
-void SwapChain::execute(CommandList& list)
+void SwapChain::execute(CommandList& commandList)
 {
     auto& engine = Single::Get<RenderSystem>().engine;
-    engine.get_command_queue().execute(list);
+    engine.get_command_queue().execute(commandList);
 }
 
 void SwapChain::present()

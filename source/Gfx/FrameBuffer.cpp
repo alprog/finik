@@ -44,24 +44,24 @@ void FrameBuffer::startRendering(CommandList& commandList)
         commandList.transition(*renderTarget, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
         const float clear_color_with_alpha[4] = {0, 0, 0, 0};
-        commandList.listImpl->ClearRenderTargetView(renderTarget->handle.getCPU(), clear_color_with_alpha, 0, nullptr);
+        commandList->ClearRenderTargetView(renderTarget->handle.getCPU(), clear_color_with_alpha, 0, nullptr);
     
         RTHandles.append(renderTarget->handle.getCPU());
     }
     if (depthStencil)
     {
         commandList.transition(*depthStencil, D3D12_RESOURCE_STATE_DEPTH_WRITE);
-        commandList.listImpl->ClearDepthStencilView(depthStencil->handle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+        commandList->ClearDepthStencilView(depthStencil->handle.getCPU(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     }
 
-    commandList.listImpl->OMSetRenderTargets(
+    commandList->OMSetRenderTargets(
         RTHandles.count(),
         !RTHandles.empty() ? &RTHandles[0] : nullptr,
         FALSE,
         depthStencil ? &depthStencil->handle.getCPU() : nullptr);
 
     ID3D12DescriptorHeap* a = engine.getCommonHeap()->get();
-    commandList.listImpl->SetDescriptorHeaps(1, &a);
+    commandList->SetDescriptorHeaps(1, &a);
 
     viewport.TopLeftX = 0;
     viewport.TopLeftY = (float)resolution.height;
@@ -69,13 +69,13 @@ void FrameBuffer::startRendering(CommandList& commandList)
     viewport.Height = (float)-resolution.height;
     viewport.MinDepth = 0.0f;
     viewport.MaxDepth = 1.0f;
-    commandList.listImpl->RSSetViewports(1, &viewport);
+    commandList->RSSetViewports(1, &viewport);
 
     scissorRect.left = static_cast<LONG>(0);
     scissorRect.top = static_cast<LONG>(0);
     scissorRect.right = static_cast<LONG>(resolution.width);
     scissorRect.bottom = static_cast<LONG>(resolution.height);
-    commandList.listImpl->RSSetScissorRects(1, &scissorRect);
+    commandList->RSSetScissorRects(1, &scissorRect);
 }
 
 void FrameBuffer::endRendering(CommandList& commandList)

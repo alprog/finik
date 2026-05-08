@@ -60,7 +60,7 @@ void CommandList::endRecording()
 void CommandList::startTimebox(const char* label)
 {
     auto* profiler = pool.getEngine().getProfiler();
-    int32 index = profiler->startTimebox(*listImpl.Get(), label);
+    int32 index = profiler->startTimebox(*listImpl.Get(), label, gpuTimeboxIndices.count());
     gpuTimeboxIndices.append(index);
 }
 

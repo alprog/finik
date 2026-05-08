@@ -49,7 +49,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
 
     const CD3DX12_TEXTURE_COPY_LOCATION src(texture.getInternal(), 0);
     const CD3DX12_TEXTURE_COPY_LOCATION dst(staging.getInternal(), 0);
-    commandList.listImpl->CopyTextureRegion(&dst, 0, 0, 0, &src, nullptr);
+    commandList->CopyTextureRegion(&dst, 0, 0, 0, &src, nullptr);
 
     commandList.transition(staging, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
 
@@ -108,12 +108,12 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     uav2srvDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
     uav2srvDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
 
-    ComputeContext computeContext(engine, *commandList.listImpl.Get());
+    ComputeContext computeContext(engine, commandList);
 
     // Set up state
-    commandList.listImpl->SetDescriptorHeaps(1, descriptorHeap.GetAddressOf());
+    commandList->SetDescriptorHeaps(1, descriptorHeap.GetAddressOf());
     computeContext.setupRoot();
-    commandList.listImpl->SetPipelineState(pso.Get());
+    commandList->SetPipelineState(pso.Get());
 
     D3D12_GPU_DESCRIPTOR_HANDLE handle(descriptorHeap->GetGPUDescriptorHandleForHeapStart());
     computeContext.setTexture(handle);
@@ -131,7 +131,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
 
         // Transition the mip to a UAV
         srv2uavDesc.Transition.Subresource = mip;
-        commandList.listImpl->ResourceBarrier(1, &srv2uavDesc);
+        commandList->ResourceBarrier(1, &srv2uavDesc);
 
         // Bind the mip subresources
         computeContext.setUnorderedAccessView(uavH);
@@ -145,16 +145,16 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
         constexpr int ThreadGroupSize = 8;
 
         // Process this mip
-        commandList.listImpl->Dispatch(
+        commandList->Dispatch(
             (mipWidth + ThreadGroupSize - 1) / ThreadGroupSize,
             (mipHeight + ThreadGroupSize - 1) / ThreadGroupSize,
             1);
 
-        commandList.listImpl->ResourceBarrier(1, &barrierUAV);
+        commandList->ResourceBarrier(1, &barrierUAV);
 
         // Transition the mip to an SRV
         uav2srvDesc.Transition.Subresource = mip;
-        commandList.listImpl->ResourceBarrier(1, &uav2srvDesc);
+        commandList->ResourceBarrier(1, &uav2srvDesc);
 
         // Offset the descriptor heap handles
         uavH.Offset(descriptorSize);
@@ -164,7 +164,7 @@ void MipMapGenerator::Generate(Texture& texture, CommandList& commandList)
     commandList.transition(texture, D3D12_RESOURCE_STATE_COPY_DEST);
 
     //// Copy the entire resource back
-    commandList.listImpl->CopyResource(texture.getInternal(), staging.getInternal());
+    commandList->CopyResource(texture.getInternal(), staging.getInternal());
 
     //// Transition the target resource back to pixel shader resource
     commandList.transition(texture, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);

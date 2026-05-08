@@ -13,7 +13,7 @@ import RenderEngine;
 export class RenderContext
 {
 public:
-    RenderContext(RenderEngine& engine, ID3D12GraphicsCommandList& commandList);
+    RenderContext(RenderEngine& engine, CommandList& commandList);
 
     void setupRoot();
     void setFrameConstants(D3D12_GPU_VIRTUAL_ADDRESS gpuAddress);
@@ -28,5 +28,5 @@ public:
     void drawFullScreenQuad();
 
     RenderEngine& engine;
-    ID3D12GraphicsCommandList& commandList;
+    CommandList& commandList;
 };

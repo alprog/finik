@@ -23,9 +23,9 @@ public:
     void createBackBuffers();
     void WaitForNextFrameResources();
 
-    void start_frame(CommandList& list);
-    void finish_frame(CommandList& list);
-    void execute(CommandList& list);
+    void start_frame(CommandList& commandList);
+    void finish_frame(CommandList& commandList);
+    void execute(CommandList& commandList);
     void present();
 
 public:

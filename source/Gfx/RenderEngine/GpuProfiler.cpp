@@ -51,12 +51,12 @@ GpuProfiler::GpuProfiler(RenderEngine& engine)
     stampInfos.resize(MAX_TIMESTAMP);
 }
 
-int32 GpuProfiler::startTimebox(ID3D12GraphicsCommandList& commandList, const char* label)
+int32 GpuProfiler::startTimebox(ID3D12GraphicsCommandList& commandList, const char* label, uint8 level)
 {
     int32 circularStampIndex = addStamp(commandList);
 
     auto& lane = App::GetInstance().profiler.GetGpuLane();
-    lane.timeboxes.emplace_next(label, 4, 0, 0);
+    lane.timeboxes.emplace_next(label, level, 0, 0);
     
     auto& stampInfo = stampInfos[circularStampIndex];
     stampInfo.type = StampType::TimeboxStart;
@@ -162,11 +162,6 @@ void GpuProfiler::grabReadyStamps(int completedValue)
                     if (stampInfo.type == StampType::TimeboxStart)
                     {
                         lane.timeboxes[stampInfo.timeboxIndex].startTimestamp = microseconds;
-
-                        if (lane.timeboxes[stampInfo.timeboxIndex].label == "scheduleQueryResolving")
-                        {
-                            //throw;
-                        }
                     }
                     else if (stampInfo.type == StampType::TimeboxEnd)
                     {

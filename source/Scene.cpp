@@ -62,7 +62,9 @@ void Scene::update(float deltaTime)
 
 void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, Camera& camera)
 {
+    commandList.startTimebox("start");
     light.shadowMap->startRendering(commandList);
+    commandList.endTimebox();
 
     light.shadowCamera.lookAt = Vector3::Zero;
     light.shadowCamera.position = -light.direction.xyz() * 1000;
@@ -130,9 +132,13 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     light.shadowCamera.FarPlane = farPlane;   
     light.shadowCamera.calcProjectionMatrix();
 
+    commandList.startTimebox("render");
     render(context, light.shadowCamera, Matrix::Identity, Vector2::Zero, RenderPass::Shadow);
+    commandList.endTimebox();
 
+    commandList.startTimebox("end");
     light.shadowMap->endRendering(commandList);
+    commandList.endTimebox();
 }
 
 void Scene::render(RenderContext& renderContext, const Camera& camera, const Matrix& prevViewProjection, const Vector2& prevJitter, RenderPass pass)

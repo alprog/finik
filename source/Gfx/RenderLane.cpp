@@ -93,21 +93,30 @@ void SceneRenderLane::render()
     CommandList& commandList = engine.getFreeCommandList();
     commandList.startRecording("render scene");
 
-    RenderContext context(engine, *commandList.listImpl.Get());
+    RenderContext context(engine, commandList);
 
+    commandList.startTimebox("render shadow maps");
     scene.renderShadowMaps(commandList, context, camera);
+    commandList.endTimebox();
+
+    commandList.startTimebox("blur");
     blurShadowMap(commandList, context);
+    commandList.endTimebox();
 
     {
+        commandList.startTimebox("gbuffer");
         gBuffer.startRendering(commandList);
         scene.render(context, camera, prevViewProjection, prevJitter, RenderPass::Geometry);
         gBuffer.endRendering(commandList);
+        commandList.endTimebox();
 
         prevViewProjection = camera.viewMatrix * camera.projectionMatrix;
         prevJitter = camera.Jitter;
     }
 
     {
+        commandList.startTimebox("light buffer");
+
         auto gBufferConstants = engine.getOneshotAllocator().Allocate<GBufferConstants>();
         gBufferConstants->Resolution = gBuffer.resolution;
         gBufferConstants->RT0Id = gBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
@@ -126,20 +135,24 @@ void SceneRenderLane::render()
         lightConstants->ShadowTextureId = light.shadowMap->renderTargets[0]->textureHandle.getIndex();
         lightConstants->PCFSize = QualityManager::GetInstance().getCurrent().pcfSize;
 
-        commandList.listImpl->SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
+        commandList->SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, lightConstants.GpuAddress);
         
         context.setEffect(*EffectManager::GetInstance().get("directional_light"));
         context.drawMesh(fullscreenQuad);
         scene.debugRender(context, camera, prevViewProjection, prevJitter);
         lightBuffer.endRendering(commandList);
+
+        commandList.endTimebox();
     }
 
     if (QualityManager::GetInstance().getCurrent().taa)
     {
+        commandList.startTimebox("taa");
+
         auto taaConstants = engine.getOneshotAllocator().Allocate<TAAConstants>();
         taaConstants->LightBufferId = lightBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
         taaConstants->HistoryBufferId = historyBuffer.getRenderSurface(MRT::RT0)->textureHandle.getIndex();
-        commandList.listImpl->SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, taaConstants.GpuAddress);
+        commandList->SetGraphicsRootConstantBufferView(MainRootSignature::Params::MeshConstantBufferView, taaConstants.GpuAddress);
         
         resolvedBuffer.startRendering(commandList);
         context.setEffect(*EffectManager::GetInstance().get("taa_resolve"));
@@ -150,6 +163,8 @@ void SceneRenderLane::render()
         context.setEffect(*EffectManager::GetInstance().get("taa_resolve_debug"));
         context.drawMesh(fullscreenQuad);
         debugBuffer.endRendering(commandList);
+
+        commandList.endTimebox();
     }
 
     commandList.endRecording();
@@ -161,7 +176,7 @@ void SceneRenderLane::render()
 void SceneRenderLane::blurShadowMap(CommandList& commandList, RenderContext& context)
 {
     auto textureId = scene.light.shadowMap->renderTargets[0]->textureHandle.getIndex();
-    commandList.listImpl->SetGraphicsRoot32BitConstant(MainRootSignature::Params::MaterialInlineConstants, textureId, 0);
+    commandList->SetGraphicsRoot32BitConstant(MainRootSignature::Params::MaterialInlineConstants, textureId, 0);
 
     scene.light.pingPongBuffer->startRendering(commandList);
     context.setEffect(*EffectManager::GetInstance().get("blur_x"));
@@ -169,7 +184,7 @@ void SceneRenderLane::blurShadowMap(CommandList& commandList, RenderContext& con
     resolvedBuffer.endRendering(commandList);
 
     textureId = scene.light.pingPongBuffer->renderTargets[0]->textureHandle.getIndex();
-    commandList.listImpl->SetGraphicsRoot32BitConstant(MainRootSignature::Params::MaterialInlineConstants, textureId, 0);
+    commandList->SetGraphicsRoot32BitConstant(MainRootSignature::Params::MaterialInlineConstants, textureId, 0);
 
     scene.light.shadowMap->startRendering(commandList);
     context.setEffect(*EffectManager::GetInstance().get("blur_y"));

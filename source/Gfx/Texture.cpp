@@ -117,7 +117,7 @@ void Texture::setData(Image& image)
 
     const CD3DX12_TEXTURE_COPY_LOCATION Src(uploadBuffer.GetResource(), srcFootprint);
     const CD3DX12_TEXTURE_COPY_LOCATION Dst(internalResource, 0);
-    commandList.listImpl->CopyTextureRegion(&Dst, 0, 0, 0, &Src, nullptr);
+    commandList->CopyTextureRegion(&Dst, 0, 0, 0, &Src, nullptr);
 
     commandList.transition(*this, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
