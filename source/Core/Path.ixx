@@ -64,7 +64,7 @@ public:
 
     std::strong_ordering operator<=>(const Path& other) const = default;
 
-private:
+protected:
     static void fixSlashes(std::string& pathString);
     static void applyDots(std::string& pathString);
 

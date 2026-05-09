@@ -184,9 +184,9 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
 
     //----------------------
 
-    renderContext.commandList.startTimebox("c");
     renderContext.setModelMatrix(Matrix::Identity);
     renderContext.setMaterial(*grid->material, pass);
+    renderContext.commandList.startTimebox("c");
     renderContext.drawMesh(grid->mesh);
     renderContext.commandList.endTimebox();
 

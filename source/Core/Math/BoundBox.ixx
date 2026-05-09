@@ -11,14 +11,14 @@ struct BoundBox
     TVector min;
     TVector max;
 
-    BoundBox::BoundBox(Vector2 pos)
+    BoundBox(Vector2 pos)
         : min{pos}
         , max{pos}
     {
     }
 
     template <typename... Args>
-    BoundBox::BoundBox(TVector pos, Args... args)
+    BoundBox(TVector pos, Args... args)
         : min{pos}
         , max{pos}
     {

@@ -9,7 +9,7 @@ export class Grid
 public:
     Grid();
 
-    Mesh* Grid::CreateMesh();
+    Mesh* CreateMesh();
 
     TileMap* tileMap;
     Mesh* mesh;

@@ -12,7 +12,7 @@ export class Gui
 {
 public:
     Gui(DesktopWindow& window);
-    Gui::~Gui();
+    ~Gui();
 
     void prepare();
     void render(CommandList& list);

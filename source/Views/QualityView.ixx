@@ -17,5 +17,5 @@ protected:
 
     QualitySettings settings;
     bool needApply = false;
-    bool autoApply = false;
+    bool autoApply = true;
 };
