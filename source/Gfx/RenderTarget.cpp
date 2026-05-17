@@ -24,7 +24,7 @@ void RenderTarget::resize(SurfaceResolution resolution)
         D3D12_TEXTURE_LAYOUT_UNKNOWN,
         D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
 
-    D3D12_CLEAR_VALUE clearValue;
+    D3D12_CLEAR_VALUE clearValue = {};
     clearValue.Format = format;
 
     reinitInternalResource(resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue);

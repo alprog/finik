@@ -11,7 +11,7 @@ export class ShadersView : public View
 public:
     void draw_content() override
     {
-        auto& shaders = ShaderManager::GetInstance().getAllShaders();
+        const auto& shaders = ShaderManager::GetInstance().getAllShaders();
 
         for (auto& [key, shader] : shaders)
         {

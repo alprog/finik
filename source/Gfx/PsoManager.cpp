@@ -141,6 +141,11 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
     if (settings.type == PipelineType::Shadow || settings.type == PipelineType::ShadowPost)
     {
         psoDesc.RTVFormats[0] = settings.shadowFormat;
+        psoDesc.RTVFormats[1] = DXGI_FORMAT_UNKNOWN;
+        psoDesc.RTVFormats[2] = DXGI_FORMAT_UNKNOWN;
+        psoDesc.RTVFormats[3] = DXGI_FORMAT_UNKNOWN;
+
+        psoDesc.NumRenderTargets = 1;
     }
 
     psoDesc.DSVFormat = isDepthEnabled(settings.type) ? DXGI_FORMAT_D24_UNORM_S8_UINT : DXGI_FORMAT_UNKNOWN;

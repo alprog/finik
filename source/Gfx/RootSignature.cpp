@@ -33,7 +33,7 @@ void RootSignature::init(GfxDevice& device, Array<CD3DX12_ROOT_PARAMETER>& param
 
     D3D12_STATIC_SAMPLER_DESC staticSamplers[3] = {defaultSampler, pointSampler, linearSampler};
 
-    CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
+    CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc = {};
     auto Flags = D3D12_ROOT_SIGNATURE_FLAG_CBV_SRV_UAV_HEAP_DIRECTLY_INDEXED | D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
     rootSignatureDesc.Init(parameters.count(), &parameters[0], 3, staticSamplers, Flags);   
 
