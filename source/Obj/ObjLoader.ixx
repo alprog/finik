@@ -1,20 +1,34 @@
 export module ObjLoader;
 
+import AssetPath;
 import Finik.Core;
 
-struct VertexIndices
+export struct VertexIndices
 {
     int pi;
     int ti;
     int ni;
 };
 
-using Face = Array<VertexIndices>;
+export using Face = Array<VertexIndices>;
+
+export struct Mtl
+{
+    Mtl(String name)
+        : name{name}
+    {
+    }
+
+    String name;
+    Color diffuse;
+
+    Array<Face> faces;
+};
 
 export class ObjLoader
 {
 public:
-    void load(String text)
+    void load(const String& text, const std::function<String(String)>& mtllibReader)
     {
         Array<String> lines = text.split("\n");
 
@@ -22,9 +36,18 @@ public:
         normals.append({});
         tex_coords.append({});
 
+        int32 CurrentMaterialIndex = -1;
+
+        Array<Face>* activeFaces = &this->faces;
+
         for (auto& line : lines)
         {
             auto arr = line.get_trimmed().split(" ");
+            if (arr.empty())
+            {
+                continue;
+            }
+
             if (arr[0] == "v")
             {
                 auto x = std::stof(arr[1]);
@@ -50,7 +73,7 @@ public:
 
             if (arr[0] == "f")
             {
-                auto& face = faces.emplace_back();
+                auto& face = activeFaces->emplace_back();
                 for (int i = 1; i < arr.count(); i++)
                 {
                     auto components = arr[i].split("/");
@@ -66,25 +89,58 @@ public:
                 }
             }
 
-            // if (arr[0] == "mtllib")
-            //{
-            //     var directoryPath = new FileInfo(objPath).Directory.FullName;
-            //     var mtlPath = Path.Combine(directoryPath, arr[1]);
-            //     LoadMaterialLibrary(mtlPath);
-            // }
+            if (arr[0] == "mtllib")
+            {
+                const String& text = mtllibReader(arr[1]);
+                loadMtllib(text);
+            }
 
-            // if (arr[0] == "usemtl")
-            //{
-            //     CurrentMaterial = Materials[arr[1]];
-            // }
+            if (arr[0] == "usemtl")
+            {
+                activeFaces = &this->faces;
+                for (auto& mtl : mtls)
+                {
+                    if (mtl.name == arr[1])
+                    {
+                        activeFaces = &mtl.faces;
+                        break;
+                    }
+                }
+            }
         }
+    }
 
-        return;
+    void loadMtllib(const String& text)
+    {
+        Array<String> lines = text.split("\n");
+
+        for (auto& line : lines)
+        {
+            auto arr = line.get_trimmed().split(" ");
+            if (arr.empty())
+            {
+                continue;
+            }
+
+            if (arr[0] == "newmtl")
+            {
+                mtls.emplace_back(arr[1]);
+            }
+
+            if (arr[0] == "Kd")
+            {
+                auto r = std::stof(arr[1]);
+                auto g = std::stof(arr[2]);
+                auto b = std::stof(arr[3]);
+                mtls.last().diffuse = {r, g, b};
+            }
+        }
     }
 
 public:
     Array<Vector3> positions;
     Array<Vector3> normals;
     Array<Vector2> tex_coords;
+    Array<Mtl> mtls;
     Array<Face> faces;
 };

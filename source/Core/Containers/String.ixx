@@ -151,7 +151,7 @@ public:
         return data.size();
     }
 
-    Array<String> split(String separator)
+    Array<String> split(String separator) const
     {
         Array<String> result;
 
@@ -175,12 +175,12 @@ public:
         return result;
     }
 
-    bool startsWith(const String& pattern)
+    bool startsWith(const String& pattern) const
     {
         return substr(0, pattern.count()) == pattern;
     }
 
-    String substr(int32 startIndex, int32 count)
+    String substr(int32 startIndex, int32 count) const
     {
         return data.substr(startIndex, count);
     }

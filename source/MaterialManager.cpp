@@ -33,6 +33,11 @@ void MaterialManager::WriteToBuffer(Material* material)
     Dst.ColorC = Color(0, 0, 0);
     Dst.ColorD = Color(0, 0, 0);
 
+    if (material->Colors.count() > 0)
+    {
+        Dst.ColorA = material->Colors[0];
+    }
+
     auto Count = material->Textures.count();
     Dst.TextureA = Count > 0 ? material->Textures[0]->descriptorHandle.getIndex() : 0;
     Dst.TextureB = Count > 1 ? material->Textures[1]->descriptorHandle.getIndex() : 0;

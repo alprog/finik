@@ -12,8 +12,8 @@ public:
 
     bool empty() { return size() == 0; }
 
-    const std::string& asString() const { return str; }
+    const String& asString() const { return str; }
 
 private:
-    std::string str;
+    String str;
 };

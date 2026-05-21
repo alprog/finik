@@ -31,15 +31,17 @@ Scene::Scene()
     actors.append(new Actor());
     actors.append(new Actor());
     actors.append(new Actor());
+    actors.append(new Actor());
 
     characters.append(new Character());
 
     characters[0]->transformMatrix = Matrix::RotationZ(PI) * Matrix::Translation({14.5f, 14.5f, 0});
 
-    actors[1]->mesh = Assets::GetInstance().get<Model>("models/airplane.obj")->mesh;
-    actors[2]->mesh = Assets::GetInstance().get<Model>("models/Axis.obj")->mesh;
-    actors[3]->mesh = Assets::GetInstance().get<Model>("models/littleman.obj")->mesh;
-    actors[4]->mesh = Assets::GetInstance().get<Model>("models/wooden watch tower2.obj")->mesh;
+    actors[1]->model = Assets::GetInstance().get<Model>("models/airplane.obj");
+    actors[2]->model = Assets::GetInstance().get<Model>("models/Axis.obj");
+    actors[3]->model = Assets::GetInstance().get<Model>("models/littleman.obj");
+    actors[4]->model = Assets::GetInstance().get<Model>("models/wooden watch tower2.obj");
+    actors[5]->model = Assets::GetInstance().get<Model>("models/harbor.obj");
 
     auto settings = QualityManager::GetInstance().getCurrent();
     auto size = settings.shadowMapResolution;
@@ -52,12 +54,14 @@ void Scene::update(float deltaTime)
 {
     //light.direction = light.direction * Matrix::RotationZ(deltaTime / 2);
 
-    actors[0]->transformMatrix = Matrix::Translation(Vector3(castedPos.x, castedPos.y, 0.5f));
+    //actors[0]->transformMatrix = Matrix::Translation(Vector3(castedPos.x, castedPos.y, 0.5f));
+    actors[0]->transformMatrix = Matrix::Translation(Vector3(16, 16, 0.5f));
     actors[1]->transformMatrix = Matrix::Translation(Vector3(32, 32, 5));
 
     actors[2]->transformMatrix = Matrix::Translation(Vector3(0, 0, 0));
     actors[3]->transformMatrix = Matrix::Translation(Vector3(64, 64, 0.5));
     actors[4]->transformMatrix = Matrix::Translation(Vector3(32, 64, -1));
+    actors[5]->transformMatrix = Matrix::Scaling(Vector3::One * 0.1f) * Matrix::Translation(Vector3(64, 32, 0));
 }
 
 void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, Camera& camera)
@@ -165,9 +169,7 @@ void Scene::render(RenderContext& renderContext, const Camera& camera, const Mat
     renderContext.commandList.startTimebox("a");
     for (auto& actor : actors)
     {
-        renderContext.setModelMatrix(actor->transformMatrix);
-        renderContext.setMaterial(*actor->material, pass);
-        renderContext.drawMesh(actor->mesh);
+        actor->render(renderContext, pass);
     }
     renderContext.commandList.endTimebox();
 

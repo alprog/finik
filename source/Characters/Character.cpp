@@ -49,15 +49,6 @@ Character::Character()
 
     auto& contours = squares.getContours();
 
-    static int ccwCount = 0;
-    for (auto& simplePolygon : contours)
-    {
-        if (simplePolygon.isCCW())
-        {            
-            ccwCount++;
-        }
-    }
-
     PolygonSimplifier simplifier;
     simplifier.simplify(contours, 30);
 

@@ -5,7 +5,8 @@ struct VSInput
 {
 	float3 position : POSITION;
 	float3 normal : NORMAL;
-	float4 uv : TEXCOORD;
+	float4 uv : TEXCOORD0;
+	uint2 coord : TEXCOORD1;
 };
 
 struct PSInput
@@ -48,6 +49,7 @@ GBufferOutput PSMain(PSInput input)
     float4 texColor = sampleTex(Materials[MaterialId].TextureA, input.uv);
 	
 	float4 diffuseColor = lerp(color, texColor, 1);
+	diffuseColor = Materials[MaterialId].ColorA; // debug
 	
 	Out.Albedo = diffuseColor;
 	

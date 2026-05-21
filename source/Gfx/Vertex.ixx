@@ -7,6 +7,7 @@ export struct StandardVertex
     Vector3 position;
     Vector3 normal;
     Vector2 texCoord;
+    int32 materialIndex;
     int x;
     int y;
 };

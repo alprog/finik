@@ -3,6 +3,7 @@ module AssetDesc;
 import Texture;
 import ShaderSourceFile;
 import Model;
+import ShaderSourceFile;
 
 void AssetDesc::create_asset()
 {
@@ -19,6 +20,10 @@ void AssetDesc::create_asset()
     else if (extension == ".obj")
     {
         loaded_asset = MakePtr<Model>(virtual_path);
+    }
+    else if (extension == ".mtl")
+    {
+        loaded_asset = MakePtr<ShaderSourceFile>(virtual_path); // todo: text file
     }
     else
     {
