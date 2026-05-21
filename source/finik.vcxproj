@@ -117,6 +117,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Assets\AssetFolder.ixx" />
     <ClCompile Include="Assets\AssetDesc.ixx" />
     <ClCompile Include="Assets\AssetPath.ixx" />
+    <ClCompile Include="Assets\TextFile.ixx" />
     <ClCompile Include="ByteBlob.cpp" />
     <ClCompile Include="ByteBlob.ixx" />
     <ClCompile Include="Camera.cpp" />
