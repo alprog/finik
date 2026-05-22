@@ -27,9 +27,11 @@ public:
         ObjLoader loader;
         loader.load(blob.asString(), mtllibReader);
 
+        String coordinates = loader.getMeta("coordinates", "RUB");
+
         Matrix3x3 axesChangeMatrix =
-            assetPath.getName() == "Axis.obj" ? Matrix3x3::Identity :            
-            CoordinateSystem::World.getConversionMatrixFrom("RUB"); 
+            coordinates == "unchanged" ? Matrix3x3::Identity :            
+            CoordinateSystem::World.getConversionMatrixFrom(coordinates.c_str()); 
 
         bool sameHand = axesChangeMatrix.determinant() > 0;
 

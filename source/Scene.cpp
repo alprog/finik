@@ -38,7 +38,7 @@ Scene::Scene()
     characters[0]->transformMatrix = Matrix::RotationZ(PI) * Matrix::Translation({14.5f, 14.5f, 0});
 
     actors[1]->model = Assets::GetInstance().get<Model>("models/airplane.obj");
-    actors[2]->model = Assets::GetInstance().get<Model>("models/Axis.obj");
+    actors[2]->model = Assets::GetInstance().get<Model>("models/Axes.obj");
     actors[3]->model = Assets::GetInstance().get<Model>("models/littleman.obj");
     actors[4]->model = Assets::GetInstance().get<Model>("models/wooden watch tower2.obj");
     actors[5]->model = Assets::GetInstance().get<Model>("models/harbor.obj");

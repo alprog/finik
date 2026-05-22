@@ -1,6 +1,7 @@
 # Blender 3.6.0
 # www.blender.org
-mtllib Axis.mtl
+#meta coordinates unchanged
+mtllib Axes.mtl
 o Z
 v 0.000000 0.300000 1.400000
 v 0.058527 0.294236 1.400000

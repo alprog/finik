@@ -37,7 +37,7 @@ export class CoordinateSystem
 public:
     static const CoordinateSystem World;
 
-    constexpr CoordinateSystem(char axes[3])
+    constexpr CoordinateSystem(const char axes[3])
     {
         for (int i = 0; i < 3; i++)
         {
@@ -50,7 +50,7 @@ public:
         }
     }
 
-    Matrix3x3 getConversionMatrixFrom(char fromAxes[3]) const
+    Matrix3x3 getConversionMatrixFrom(const char fromAxes[3]) const
     {
         Matrix3x3 matrix;
         for (int i = 0; i < 3; i++)
@@ -61,12 +61,12 @@ public:
         return matrix;
     }
 
-    Matrix3x3 getConversionMatrixTo(char toAxes[3]) const
+    Matrix3x3 getConversionMatrixTo(const char toAxes[3]) const
     {
         return getConversionMatrixFrom(toAxes).getTransposed();
     }
 
-    static Matrix3x3 getConversionMatrix(char fromAxes[3], char toAxes[3])
+    static Matrix3x3 getConversionMatrix(const char fromAxes[3], const char toAxes[3])
     {
         return CoordinateSystem(fromAxes).getConversionMatrixTo(toAxes);
     }

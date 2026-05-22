@@ -107,6 +107,14 @@ public:
                     }
                 }
             }
+
+            if (arr[0] == "#meta")
+            {
+                if (arr.count() > 2)
+                {
+                    meta[arr[1]] = arr[2];
+                }
+            }
         }
     }
 
@@ -137,10 +145,17 @@ public:
         }
     }
 
+    String getMeta(String key, String fallback)
+    {
+        auto ptr = meta.find_value(key);
+        return ptr ? *ptr : fallback;
+    }
+
 public:
     Array<Vector3> positions;
     Array<Vector3> normals;
     Array<Vector2> tex_coords;
     Array<Mtl> mtls;
     Array<Face> faces;
+    HashMap<String, String> meta;
 };
