@@ -4,6 +4,8 @@ import :Vector3;
 
 export struct Matrix3x3
 {
+    static const Matrix3x3 Identity;
+
     union
     {
         struct // row-major
@@ -53,4 +55,10 @@ export struct Matrix3x3
             v.x * m.m13 + v.y * m.m23 + v.z * m.m33,
         };
     }
+};
+
+const Matrix3x3 Matrix3x3::Identity = {
+    1, 0, 0,
+    0, 1, 0,
+    0, 0, 1
 };

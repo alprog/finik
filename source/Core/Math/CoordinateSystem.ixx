@@ -35,7 +35,9 @@ SemanticDirection getSemanticDirection(char c)
 export class CoordinateSystem
 {
 public:
-    CoordinateSystem(char axes[3])
+    static const CoordinateSystem World;
+
+    constexpr CoordinateSystem(char axes[3])
     {
         for (int i = 0; i < 3; i++)
         {
@@ -48,7 +50,7 @@ public:
         }
     }
 
-    Matrix3x3 getConversionMatrixFrom(char fromAxes[3])
+    Matrix3x3 getConversionMatrixFrom(char fromAxes[3]) const
     {
         Matrix3x3 matrix;
         for (int i = 0; i < 3; i++)
@@ -59,7 +61,7 @@ public:
         return matrix;
     }
 
-    Matrix3x3 getConversionMatrixTo(char toAxes[3])
+    Matrix3x3 getConversionMatrixTo(char toAxes[3]) const
     {
         return getConversionMatrixFrom(toAxes).getTransposed();
     }
@@ -72,3 +74,5 @@ public:
 private:
     Vector3 semanticDirections[SemanticDirection::Count];
 };
+
+const CoordinateSystem CoordinateSystem::World{"RFU"};
