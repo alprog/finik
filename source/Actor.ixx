@@ -15,6 +15,8 @@ public:
     Matrix transformMatrix;
     Matrix oldTransformMatrix;
     Ptr<Model> model;
+    Mesh* mesh;
+    Ptr<Material> material;
 
     void render(RenderContext& context, RenderPass pass)
     {
@@ -27,6 +29,11 @@ public:
                 context.setMaterial(*model->materials[i], pass);
                 context.drawMesh(model->meshes[i]);
            }
+        }
+        else
+        {
+            context.setMaterial(*material, pass);
+            context.drawMesh(mesh);
         }
     }
 };

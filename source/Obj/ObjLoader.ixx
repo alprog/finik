@@ -21,6 +21,7 @@ export struct Mtl
 
     String name;
     Color diffuse;
+    String diffuseTexture;
 
     Array<Face> faces;
 };
@@ -141,6 +142,11 @@ public:
                 auto g = std::stof(arr[2]);
                 auto b = std::stof(arr[3]);
                 mtls.last().diffuse = {r, g, b};
+            }
+
+            if (arr[0] == "map_Kd")
+            {
+                mtls.last().diffuseTexture = arr[1];
             }
         }
     }

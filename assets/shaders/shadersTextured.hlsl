@@ -45,11 +45,11 @@ GBufferOutput PSMain(PSInput input)
 	float4 color = float4(input.normal, 1);
 	color.rgb = (color.rgb + 1) / 2;
 	Out.Normals = color;
-	
-    float4 texColor = sampleTex(Materials[MaterialId].TextureA, input.uv);
-	
-	float4 diffuseColor = lerp(color, texColor, 1);
-	diffuseColor = Materials[MaterialId].ColorA; // debug
+    
+	float4 diffuseColor = Materials[MaterialId].ColorA;
+	float2 uv = input.uv;
+	float4 texColor = sampleTex(Materials[MaterialId].TextureA, uv);
+	diffuseColor += texColor;
 	
 	Out.Albedo = diffuseColor;
 	

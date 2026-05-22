@@ -44,6 +44,14 @@ public:
 
             auto material = new Material(mtl.name);
             material->Colors.append(mtl.diffuse);
+            
+            if (!mtl.diffuseTexture.empty())
+            {
+                AssetPath texturePath = Path::combine(assetPath.getParentPath(), mtl.diffuseTexture);
+                Ptr diffuseTexture = Assets::GetInstance().get<Texture>(texturePath);
+                material->Textures.append(diffuseTexture);
+            }
+            
             material->RefreshBuffer();
             material->Effect = EffectManager::GetInstance().get("standard");
             material->ShadowEffect = EffectManager::GetInstance().getShadowEffect(*material->Effect);
