@@ -7,32 +7,29 @@ import Mesh;
 import MeshBuilder;
 import Vertex;
 import Assets;
-import ShaderSourceFile;
 import Material;
 import EffectManager;
+import TextFile;
 
 export class Model : public Asset
 {
 public:
     using Asset::Asset;
 
-    Vector3 rub_to_rfu(const Vector3 v)
-    {
-        return {v.x, -v.z, v.y};
-    }
-
     void hot_reload(ByteBlob& blob) override
     {
         auto mtllibReader = [&](String relPath) -> String {
             AssetPath path = Path::combine(assetPath.getParentPath(), relPath);
-            auto mtllib = Assets::GetInstance().get<ShaderSourceFile>(path);
-            return mtllib ? mtllib->GetSourceText() : "";
+            auto mtllib = Assets::GetInstance().get<TextFile>(path);
+            return mtllib ? mtllib->GetFileText() : "";
         };
         
         ObjLoader loader;
         loader.load(blob.asString(), mtllibReader);
 
-        bool sameHand = true;
+        Matrix3x3 axesChangeMatrix = CoordinateSystem::getConversionMatrix("RUB", "RFU"); 
+
+        bool sameHand = axesChangeMatrix.determinant() > 0;
 
         for (auto& mtl : loader.mtls)
         {
@@ -57,8 +54,8 @@ public:
                 for (auto& desc : face)
                 {
                     StandardVertex& vertex = vertices[sameHand ? index++ : --index];
-                    vertex.position = rub_to_rfu(loader.positions[desc.pi]);
-                    vertex.normal = rub_to_rfu(loader.normals[desc.ni]);
+                    vertex.position = loader.positions[desc.pi] * axesChangeMatrix;
+                    vertex.normal = loader.normals[desc.ni] * axesChangeMatrix;
                     vertex.texCoord = loader.tex_coords[desc.ti];
                 }
                 builder.addTriangleFan(vertices);

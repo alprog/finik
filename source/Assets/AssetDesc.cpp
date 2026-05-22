@@ -21,7 +21,7 @@ void AssetDesc::create_asset()
     {
         loaded_asset = MakePtr<TextFile>(virtual_path);
     }
-    else if (extension == ".inc" || extension == ".hlsl")
+    else if (extension == ".hlsl" || extension == ".inc")
     {
         loaded_asset = MakePtr<ShaderSourceFile>(virtual_path);
     }

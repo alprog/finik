@@ -142,6 +142,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Math\CardinalDirection.ixx" />
     <ClCompile Include="Core\Math\BoundBox.ixx" />
     <ClCompile Include="Core\Math\Constants.ixx" />
+    <ClCompile Include="Core\Math\CoordinateSystem.ixx" />
     <ClCompile Include="Core\Math\LineSegment.ixx" />
     <ClCompile Include="Core\Geometry2D\Polygon.ixx" />
     <ClCompile Include="Gfx\Brushes\Brush.ixx" />
@@ -200,7 +201,7 @@ xcopy /y /i $(SolutionDir)\3rd-party\dx\*.dll $(outputpath)</Command>
     <ClCompile Include="Core\Math\_Math.ixx" />
     <ClCompile Include="Core\Math\Matrix.cpp" />
     <ClCompile Include="Core\Math\Matrix.ixx" />
-    <ClCompile Include="Core\Math\Matrix3X3.ixx" />
+    <ClCompile Include="Core\Math\Matrix3x3.ixx" />
     <ClCompile Include="Core\Math\Quaternion.cpp" />
     <ClCompile Include="Core\Math\Quaternion.ixx" />
     <ClCompile Include="Core\Math\Ray.cpp" />
