@@ -16,14 +16,14 @@ void Camera::calcViewMatrix()
     Vector3 offset = position * -1.0f;
     Matrix offsetMatrix = Matrix::Translation(offset);
 
-    Vector3 forward = getForward();                                       // Y
-    Vector3 right = Vector3::cross(forward, Vector3::Up).getNormalized(); // X = Y ^ Z
-    Vector3 up = Vector3::cross(right, forward).getNormalized();          // Z = X ^ Y
+    Vector3 forward = getForward();                                       // X
+    Vector3 right = Vector3::cross(Vector3::Up, forward).getNormalized(); // Y = Z ^ X
+    Vector3 up = Vector3::cross(forward, right).getNormalized();          // Z = X ^ Y
 
     Matrix orientationMtrx;
     orientationMtrx.rows[0] = Vector4(right, 0);
-    orientationMtrx.rows[1] = Vector4(forward, 0);
-    orientationMtrx.rows[2] = Vector4(up, 0);
+    orientationMtrx.rows[1] = Vector4(up, 0);
+    orientationMtrx.rows[2] = Vector4(forward, 0);
     orientationMtrx.rows[3] = Vector4(0, 0, 0, 1);
     orientationMtrx.transpose();
 
@@ -32,14 +32,6 @@ void Camera::calcViewMatrix()
 
 void Camera::calcProjectionMatrix()
 {
-    Matrix rfu2ruf = 
-    {
-        1, 0, 0, 0,
-        0, 0, 1, 0,
-        0, 1, 0, 0,
-        0, 0, 0, 1
-    };
-
     if (FieldOfView)
     {
         // perspective
@@ -86,8 +78,16 @@ void Camera::calcProjectionMatrix()
         };
     }
 
+    Matrix flipY =
+    {
+        1, 0, 0, 0,
+        0, -1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+    };
+
     auto jitter = Matrix::Translation(Vector3(Jitter, 0));
-    projectionMatrix = rfu2ruf * projectionMatrix * jitter;
+    projectionMatrix = projectionMatrix * flipY * jitter;
 }
 
 Ray Camera::castRay(Vector2 ndcPoint) const

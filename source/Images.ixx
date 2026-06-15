@@ -25,12 +25,12 @@ public:
 
 export enum class ImageOrigin
 {
-    BottomLeft = 0,
-    TopLeft = 1
+    TopLeft = 0,
+    BottomLeft = 1
 };
 
 export namespace Images
 {
     Ptr<Image> loadPng(Path path);
-    Ptr<Image> loadPng(ByteBlob& blob, ImageOrigin origin = ImageOrigin::BottomLeft);
+    Ptr<Image> loadPng(ByteBlob& blob, ImageOrigin origin = ImageOrigin::TopLeft);
 }

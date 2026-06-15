@@ -69,6 +69,7 @@ public:
                     vertex.position = loader.positions[desc.pi] * axesChangeMatrix;
                     vertex.normal = loader.normals[desc.ni] * axesChangeMatrix;
                     vertex.texCoord = loader.tex_coords[desc.ti];
+                    vertex.texCoord.y = 1.0f - vertex.texCoord.y;
                 }
                 builder.addTriangleFan(vertices);
             }

@@ -93,7 +93,7 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     auto h = calcLightPos({+1, -1}, maxHeight);
     BoundBox<Vector3> viewFrustrumBoundBox(a, b, c, d, e, f, g, h);
 
-    auto minSize = std::max(viewFrustrumBoundBox.size().x, viewFrustrumBoundBox.size().z);
+    auto minSize = std::max(viewFrustrumBoundBox.size().x, viewFrustrumBoundBox.size().y);
     auto size = std::pow(2.0f, std::ceil(std::log2(minSize)));
 
     auto center = viewFrustrumBoundBox.center();
@@ -104,7 +104,7 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
         float texelWorldSize = size / light.shadowMap->resolution.width;
 
         center.x = std::floor(center.x / texelWorldSize) * texelWorldSize;
-        center.z = std::floor(center.z / texelWorldSize) * texelWorldSize;
+        center.y = std::floor(center.y / texelWorldSize) * texelWorldSize;
     }
 
     BoundBox<Vector3> sceneBoundBox(
@@ -115,7 +115,7 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     Clipper clipper;
     clipper.addBoundBox(sceneBoundBox, light.shadowCamera.viewMatrix);
     clipper.clipX(center.x - size / 2, center.x + size / 2);
-    clipper.clipZ(center.z - size / 2, center.z + size / 2);
+    clipper.clipY(center.y - size / 2, center.y + size / 2);
 
     float nearPlane = std::numeric_limits<float>::max();
     float farPlane = std::numeric_limits<float>::lowest();
@@ -123,13 +123,13 @@ void Scene::renderShadowMaps(CommandList& commandList, RenderContext& context, C
     {
         for (int i = 0; i < 3; i++)
         {
-            nearPlane = std::min(nearPlane, triangle.points[i].y);
-            farPlane = std::max(farPlane, triangle.points[i].y);
+            nearPlane = std::min(nearPlane, triangle.points[i].z);
+            farPlane = std::max(farPlane, triangle.points[i].z);
         }
     }
 
     light.shadowCamera.OrthoSize.y = size;
-    light.shadowCamera.OrthoOffset = -Vector2(center.x, center.z);
+    light.shadowCamera.OrthoOffset = -Vector2(center.x, center.y);
 
     light.shadowCamera.FieldOfView = 0;
     light.shadowCamera.NearPlane = nearPlane;

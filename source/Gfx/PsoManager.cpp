@@ -96,8 +96,8 @@ Ptr<PipelineState> PSOManager::standardCompile(const PipelineSettings& settings)
     psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
     psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
 
-    auto frontOrder = WindingOrder::CCW; // natural for right-handed. front face normals to the viewer (a^b = n)
-    auto gapiFrontOrder = reverse(frontOrder); // but we use flipped viewport, so reverse it
+    auto frontOrder = WindingOrder::CW; // natural for left-handed. front face normals to the viewer (a^b = n)
+    auto gapiFrontOrder = frontOrder; // we flip NDC + flip viewport = no changes
     psoDesc.RasterizerState.FrontCounterClockwise = gapiFrontOrder == WindingOrder::CCW;
 
     if (settings.type == PipelineType::Geometry)

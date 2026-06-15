@@ -75,4 +75,4 @@ private:
     Vector3 semanticDirections[SemanticDirection::Count];
 };
 
-const CoordinateSystem CoordinateSystem::World{"RFU"};
+const CoordinateSystem CoordinateSystem::World{"FRU"};
