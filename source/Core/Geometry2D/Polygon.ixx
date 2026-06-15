@@ -15,7 +15,7 @@ export struct Polygon
         return {points[index], points[(index + 1) % pointCount()]};
     }
 
-    bool isCCW() const
+    bool isPositiveWinding() const
     {
         return calcSignedArea() > 0;
     }
@@ -25,7 +25,7 @@ export struct Polygon
         float result = 0;
         for (int32 i = 0; i < pointCount(); i++)
         {
-            result += getSegment(i). calcSignedAreaUnderSegment();
+            result -= getSegment(i).calcSignedAreaUnderSegment();
         }
         return result;
     }
