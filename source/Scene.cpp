@@ -35,7 +35,7 @@ Scene::Scene()
 
     characters.append(new Character());
 
-    characters[0]->transformMatrix = Matrix::RotationZ(PI) * Matrix::Translation({14.5f, 14.5f, 0});
+    characters[0]->transformMatrix = Matrix::RotationZ(PI/2) * Matrix::Translation({14.5f, 14.5f, 0});
 
     actors[1]->model = Assets::GetInstance().get<Model>("models/airplane.obj");
     actors[2]->model = Assets::GetInstance().get<Model>("models/Axes.obj");

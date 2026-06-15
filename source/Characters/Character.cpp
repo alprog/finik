@@ -37,14 +37,14 @@ Character::Character()
 
     LineBuilder builder;
     builder.setColor(Color::Red);
-    builder.line({-0.5, 0, 0}, {0.5, 0, 0});
-    builder.line({-0.5, 0, 2}, {0.5, 0, 2});
-    builder.line({-0.5, 0, 0}, {-0.5, 0, 2});
-    builder.line({0.5, 0, 0}, {0.5, 0, 2});
+    builder.line({0, -0.5, 0}, {0, 0.5, 0});
+    builder.line({0, -0.5, 2}, {0, 0.5, 2});
+    builder.line({0, -0.5, 0}, {0, -0.5, 2});
+    builder.line({0, 0.5, 0}, {0, 0.5, 2});
      
     auto mult = [](Vector2 p) {
         p = p / 64.0f;
-        return Vector3(0.5f - p.x, 0.0f, p.y * 2.0f);
+        return Vector3(0.0f, 0.5f - p.x, (1.0f - p.y) * 2.0f);
     };
 
     auto& contours = squares.getContours();

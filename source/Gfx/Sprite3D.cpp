@@ -46,7 +46,7 @@ void Sprite3D::createMesh(Ptr<Image> image)
 
     auto mult = [](Vector2 p) {
         p = p / 64.0f;
-        return Vector3(0.5f - p.x, 0, p.y * 2.0f);
+        return Vector3(0.0f, 0.5f - p.x, (1.0f - p.y) * 2.0f);
     };
 
     for (auto& vertex2D : triangulator.getVertices())
